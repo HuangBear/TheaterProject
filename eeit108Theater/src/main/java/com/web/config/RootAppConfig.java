@@ -25,7 +25,7 @@ public class RootAppConfig {
 		ComboPooledDataSource ds = new ComboPooledDataSource();
 		
 		
-		try(InputStream input = getClass().getResourceAsStream("dataSourceConfig.properties")) {
+		try(InputStream input = getClass().getClassLoader().getResourceAsStream("dataSourceConfig.properties")) {
 			Properties prop = new Properties();
 			prop.load(input);
 			ds.setUser(prop.getProperty("ds.user"));
