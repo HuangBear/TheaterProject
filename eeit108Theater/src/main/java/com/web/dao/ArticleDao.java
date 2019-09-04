@@ -11,20 +11,24 @@ public interface ArticleDao {
 	int saveArticle(ArticleBean article);
 
 	// disable
-	int deleteArticle(String articleId);
+	int deleteArticleByNo(Integer articleNo);
 
 	int deleteAll();
 
 	// update
 	int updateArticle(ArticleBean article);
 
+	int discontinueAll(); // 全部下架
+
+	int continueAll(); // 全部上架
+
 	// query
-	ArticleBean getArticleById(String articleId);
-		
+	ArticleBean getArticleByNo(Integer articleNo);
+
 	List<MovieBean> getArticlesByTitle(String title);
-	
+
 	List<MovieBean> getArticlesByKeyword(String keyword);
-	
+
 	List<MovieBean> getArticlesByAuthor(String authorName);
 
 	List<MovieBean> getArticlesByMovie(String movieName);
@@ -32,6 +36,8 @@ public interface ArticleDao {
 	List<MovieBean> getArticlesBeforeDate(Date time);
 
 	List<MovieBean> getArticlesAfterDate(Date time);
-	
+
 	List<MovieBean> getAllArticles();
+
+	List<MovieBean> getAllAvailable();
 }
