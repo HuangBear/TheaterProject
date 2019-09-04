@@ -28,6 +28,7 @@ public class EmployeeBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "employee_no")
 	private Integer no;
+	private Boolean available;
 	private String name;
 	@NotNull	
 	private String employeeId;
@@ -137,5 +138,11 @@ public class EmployeeBean {
 	}
 	public void setSalary(Integer salary) {
 		this.salary = salary;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }

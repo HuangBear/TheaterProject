@@ -20,6 +20,7 @@ public class BullentinBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bullentin_no")
 	private Integer no;
+	private Boolean available;
 	private String tittle;
 	private String context;
 	private Date startDate;
@@ -114,6 +115,12 @@ public class BullentinBean {
 	public void setEmployee(EmployeeBean employee)
 	{
 		this.employee = employee;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 
 }

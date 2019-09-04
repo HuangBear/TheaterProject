@@ -27,6 +27,7 @@ public class OrderBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_no")
 	private Integer no;
+	private Boolean available;
 	private String orderId;
 	private Double totalPrice;	
 	@NotNull
@@ -34,7 +35,7 @@ public class OrderBean {
 	private String ownerId;//not owner, cannot find owner object directly
 	private String ownerName;
 	private String ownerEmail;
-	private String status; //paid/unpaid, checked/unchecked
+	//private String status; //paid/unpaid, checked/unchecked
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
@@ -104,10 +105,16 @@ public class OrderBean {
 	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
-	public String getStatus() {
-		return status;
+	public Boolean getAvailable() {
+		return available;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
+//	public String getStatus() {
+//		return status;
+//	}
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 }
