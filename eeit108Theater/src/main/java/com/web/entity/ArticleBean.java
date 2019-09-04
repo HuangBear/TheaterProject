@@ -18,7 +18,8 @@ public class ArticleBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "article_no")
-	private Integer no;
+	private Integer no;	
+	private Boolean available;
 	private String title;
 	private String content;
 	@NotNull
@@ -76,6 +77,12 @@ public class ArticleBean {
 	}
 	public void setDislikeCount(Integer dislikeCount) {
 		this.dislikeCount = dislikeCount;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 	
 }

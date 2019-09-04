@@ -28,6 +28,7 @@ public class TimeTableBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeTable_no")
 	private Integer no;
+	private Boolean available;
 	@NotNull
 	private String movieName;
 	@NotNull
@@ -76,5 +77,11 @@ public class TimeTableBean {
 	}
 	public void setSeats(Set<SeatBean> seats) {
 		this.seats = seats;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }
