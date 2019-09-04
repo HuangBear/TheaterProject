@@ -1,20 +1,16 @@
 package com.web.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import com.web.entity.BullentinBean;
 
 public interface BullentinDao {
-	List<Date> getRangeDate();
 
-	Integer[] getDiscont();
+	void saveBullentin(BullentinBean bb);
 
-	List<BullentinBean> saveBullentin();
-	
-	List<BullentinBean> updateBullentin();
+	void deletecBullentin(Integer bullentin_no);
 
-	List<Date> getStartDate();
-	
-	
+	List<BullentinBean> getBullentin();
+
+	void updateBullentin(BullentinBean bb);
 }

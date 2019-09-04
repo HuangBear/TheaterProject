@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.mysql.cj.jdbc.Blob;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -33,8 +34,17 @@ public class BullentinBean {
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
+	private Blob imageBlob;
 
 	
+	public Blob getImageBlob()
+	{
+		return imageBlob;
+	}
+	public void setImageBlob(Blob imageBlob)
+	{
+		this.imageBlob = imageBlob;
+	}
 	public Integer getNo()
 	{
 		return no;
