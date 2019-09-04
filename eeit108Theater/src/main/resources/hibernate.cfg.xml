@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password">passw0rd</property>
+		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Theater</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
+
+		<!-- 2. 其他與資料存取有關的設定 -->
+		<!-- 自動產生資料庫的Schema -->
+		<property name="hbm2ddl.auto">update</property>
+		<!-- 顯示實際操作資料庫時的SQL -->
+		<property name="show_sql">true</property>
+		<!-- 將顯示的SQL排版，方便觀看 -->
+		<property name="format_sql">true</property>
+
+		<property name="hibernate.current_session_context_class">thread</property>
+		<!-- 定義程式交易管理的類型，本範例使用JDBC Transaction -->
+<!-- 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property> -->
+        <property name="hibernate.transaction.coordinator_class">jdbc</property>
+		<!-- hibernate 相關效能設定 -->
+		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+		<property name="connection_pool_size">8</property>
+
+		<!-- 3. 宣告程式使用的Mapping檔 ，每個永續類別都需要定義一個Mapping檔 -->
+		<mapping class="com.web.entity.MemberBean"></mapping>
+		<mapping class="com.web.entity.ArticleBean"></mapping>
+		<mapping class="com.web.entity.EmployeeBean"></mapping>
+		<mapping class="com.web.entity.MovieBean"></mapping>
+		<mapping class="com.web.entity.OrderBean"></mapping>
+		<mapping class="com.web.entity.OrderItemBean"></mapping>
+		<mapping class="com.web.entity.ProductBean"></mapping>
+		<mapping class="com.web.entity.SeatBean"></mapping>
+		<mapping class="com.web.entity.TimeTableBean"></mapping>
+		
+
+	</session-factory>
+</hibernate-configuration>
