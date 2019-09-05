@@ -26,7 +26,7 @@ public class EmployeeBean {
 	@Column(name = "employee_no")
 	private Integer no;
 	private String name;
-	@NotNull	
+	@NotNull
 	private String employeeId;
 	@NotNull	
 	private String email; //as account

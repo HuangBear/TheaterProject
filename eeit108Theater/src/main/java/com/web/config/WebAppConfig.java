@@ -1,7 +1,5 @@
 package com.web.config;
 
-
-
 import java.util.ArrayList;
 
 import org.springframework.context.MessageSource;
@@ -21,10 +19,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.web.store")
+@ComponentScan("com.web")
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver internalResourceViewResolver() {

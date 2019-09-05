@@ -23,13 +23,11 @@ public class RootAppConfig {
 	@Bean
 	public DataSource dataSource() {
 		ComboPooledDataSource ds = new ComboPooledDataSource();
-		
-		
-		try(InputStream input = getClass().getResourceAsStream("dataSourceConfig.properties")) {
+		try (InputStream input = getClass().getClassLoader().getResourceAsStream("dataSourceConfig.properties")) {
 			Properties prop = new Properties();
 			prop.load(input);
 			ds.setUser(prop.getProperty("ds.user"));
-			ds.setPassword(prop.getProperty("ds.password"));;			
+			ds.setPassword(prop.getProperty("ds.password"));
 			ds.setDriverClass(prop.getProperty("ds.driverClass"));
 			ds.setJdbcUrl(prop.getProperty("ds.jdbcUrl"));
 			ds.setInitialPoolSize(Integer.valueOf(prop.getProperty("ds.initPoolSize")));
@@ -42,26 +40,24 @@ public class RootAppConfig {
 		}
 		return ds;
 	}
-	
+
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setDataSource(dataSource());
-		factory.setPackagesToScan(new String[] {
-				"com.web"
-		});
+		factory.setPackagesToScan(new String[] { "com.web" });
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
-	
-	@Bean(name="transactionManager")
+
+	@Bean(name = "transactionManager")
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(sessionFactory);
 		return txManager;
 	}
-	
+
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", org.hibernate.dialect.SQLServer2012Dialect.class);
