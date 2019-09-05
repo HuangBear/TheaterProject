@@ -53,4 +53,10 @@ public class ProductBean {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 }

@@ -84,4 +84,16 @@ public class TimeTableBean {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
+	public String getMovieName() {
+		return movieName;
+	}
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+	public Integer getDuration() {
+		return duration;
+	}
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
 }

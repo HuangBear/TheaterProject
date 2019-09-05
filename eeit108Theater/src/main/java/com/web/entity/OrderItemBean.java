@@ -65,4 +65,16 @@ public class OrderItemBean {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 }
