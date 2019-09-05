@@ -19,6 +19,9 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int saveProduct(ProductBean product) {
 		Session session = factory.getCurrentSession();
+		if(product.getNo() != null) 
+			//To save an entity bean, primary key must be null
+			return 0;
 		session.save(product);
 		return 1;
 	}
@@ -49,50 +52,68 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public int updateProduct(ProductBean product) {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = factory.getCurrentSession();
+		session.update(product);
+		return 1;
 	}
 
 	@Override
 	public int discontinueAll() {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE ProductBean p SET p.available = :false";
+		int cnt = session.createQuery(hql).setParameter("false", Boolean.FALSE).executeUpdate();
+		return cnt;
 	}
 
 	@Override
 	public int continueAll() {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE ProductBean p SET p.available = :true";
+		int cnt = session.createQuery(hql).setParameter("true", Boolean.TRUE).executeUpdate();
+		return cnt;
 	}
 
 	@Override
 	public ProductBean getProductByName(String productName) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p WHERE p.name = :name";
+		ProductBean pb = (ProductBean)session.createQuery(hql).setParameter("name", productName).getSingleResult();
+		return pb;
 	}
 
 	@Override
 	public ProductBean getProductByNo(Integer productNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p WHERE p.no = :no";
+		ProductBean pb = (ProductBean)session.createQuery(hql).setParameter("no", productNo).getSingleResult();
+		return pb;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean";
+		List<ProductBean> pb = session.createQuery(hql).getResultList();
+		return pb;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getAllAvailableProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p  WHERE p.available = :true";
+		List<ProductBean> pb = session.createQuery(hql).setParameter("true", Boolean.TRUE).getResultList();
+		return pb;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getProductsByType(String type) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p  WHERE p.type = :type";
+		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type).getResultList();
+		return pb;
 	}
 
 }
