@@ -14,13 +14,21 @@ import com.web.entity.ProductBean;
 public class ProductDaoImpl implements ProductDao {
 	@Autowired
 	SessionFactory factory;
-	
+
+	public Boolean isExist(Integer productNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p WHERE p.no = :no";
+		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("no", productNo).uniqueResult();
+		if (pb != null)
+			return true;
+		return false;
+	}
 
 	@Override
 	public int saveProduct(ProductBean product) {
 		Session session = factory.getCurrentSession();
-		if(product.getNo() != null) 
-			//To save an entity bean, primary key must be null
+		if (product.getNo() != null)
+			// To save an entity bean, primary key must be null
 			return 0;
 		session.save(product);
 		return 1;
@@ -29,7 +37,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int deleteProductByNo(Integer productNo) {
 		Session session = factory.getCurrentSession();
-		String hql="DELETE ProductBean p WHERE p.no = :pno";
+		String hql = "DELETE ProductBean p WHERE p.no = :pno";
 		int cnt = session.createQuery(hql).setParameter("pno", productNo).executeUpdate();
 		return cnt;
 	}
@@ -37,7 +45,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int deleteProductByName(String productName) {
 		Session session = factory.getCurrentSession();
-		String hql="DELETE ProductBean p WHERE p.name = :pname";
+		String hql = "DELETE ProductBean p WHERE p.name = :pname";
 		int cnt = session.createQuery(hql).setParameter("pname", productName).executeUpdate();
 		return cnt;
 	}
@@ -45,7 +53,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int deleteAll() {
 		Session session = factory.getCurrentSession();
-		String hql="DELETE ProductBean";
+		String hql = "DELETE ProductBean";
 		int cnt = session.createQuery(hql).executeUpdate();
 		return cnt;
 	}
@@ -77,15 +85,17 @@ public class ProductDaoImpl implements ProductDao {
 	public ProductBean getProductByName(String productName) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.name = :name";
-		ProductBean pb = (ProductBean)session.createQuery(hql).setParameter("name", productName).getSingleResult();
+		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("name", productName).uniqueResult();
 		return pb;
 	}
 
 	@Override
 	public ProductBean getProductByNo(Integer productNo) {
+		// 不直接用session.get(ProductBean.class, productNo)
+		// 是因為若該product在current session已取過，而又再取一次會丟exception
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.no = :no";
-		ProductBean pb = (ProductBean)session.createQuery(hql).setParameter("no", productNo).getSingleResult();
+		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("no", productNo).uniqueResult();
 		return pb;
 	}
 
