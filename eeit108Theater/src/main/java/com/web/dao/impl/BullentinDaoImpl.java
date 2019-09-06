@@ -1,82 +1,52 @@
 package com.web.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.web.dao.BullentinDao;
 import com.web.entity.BullentinBean;
 
+
+@Repository
 public class BullentinDaoImpl implements BullentinDao {
 
 	@Autowired
 	SessionFactory factory;
 
-	@Override
-	public List<Date> getStartDate()
+	@SuppressWarnings("unchecked")
+	public List<BullentinBean> getAllBullentin()
 	{
-		Session session = null;
-		List<Date> starList = new ArrayList<>();
-
-		session = factory.getCurrentSession();
-		List ST = session.createQuery("SELECT startDate FROM Bullentin").getResultList();
-
-		for (Object s : ST)
-		{
-
-		}
-		return starList;
-	}
-
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public List<Date> getRangeDate()
-//	{
-//		Session session = null;
-//		List<BullentinBean> listBean = new ArrayList<>();
-//		List<Date> starDate = new ArrayList<>();
-//		List<Date> endDate = new ArrayList<>();
-//
-//		session = factory.getCurrentSession();
-//		listBean = session.createQuery("FROM Bullentin").getResultList();
-//		for (int i = 0; i < listBean.size(); i++)
-//		{
-//			starDate.add(listBean.get(i).getStartDate());
-//			endDate.add(listBean.get(i).getEndtDate());
-//		}
-//		return listDate;
-//	}
-
-	@Override
-	public Integer[] getDiscont()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		List<BullentinBean> list = new ArrayList<>();
+		list = session.createQuery("FROM BullentinBean").getResultList();
+		//BullentinBean 要打類別名稱
+		return list;
 	}
 
 	@Override
-	public List<BullentinBean> saveBullentin()
+	public void saveBullentin(BullentinBean bb)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		session.save(bb);
 	}
 
 	@Override
-	public List<BullentinBean> updateBullentin()
+	public void updateBullentin(BullentinBean bb)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		session.update(bb);
 	}
 
 	@Override
-	public List<Date> getRangeDate()
+	public void deletecBullentin(Integer bullentin_no)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+		session.delete(bullentin_no);
 	}
 
 }

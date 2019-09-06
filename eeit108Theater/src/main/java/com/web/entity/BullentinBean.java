@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 import com.sun.istack.NotNull;
 
@@ -34,8 +36,17 @@ public class BullentinBean {
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
+	private Blob imageBlob;
 
 	
+	public Blob getImageBlob()
+	{
+		return imageBlob;
+	}
+	public void setImageBlob(Blob imageBlob)
+	{
+		this.imageBlob = imageBlob;
+	}
 	public Integer getNo()
 	{
 		return no;
