@@ -13,11 +13,10 @@
     <c:forEach var='movie' items='${movies}'>
         <div class="caption">
 			<div style = 'width: 700px; height: 700px;'>
-            	<img src = '${movie.movieImage}'>
+            	<img src = "<c:url value = '/getPicture/${movie.no}'/>" >
             	<b style='font-size: 16px;'>${movie.movieName}</b>
             	<b style = 'font-size: 16px;'>${movie.trailerLink}</b>
-            	<b style = 'font-size: 16px;'>${movie.casts}</b>
-            	
+            	<b style = 'font-size: 16px;'>${movie.casts}</b>  	
             </div>         
         </div>    
     </c:forEach>

@@ -37,11 +37,10 @@ public class MovieServiceImpl implements MovieService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Transactional
 	@Override
-	public MovieBean getMovieById(String movieId) {
-		// TODO Auto-generated method stub
-		return null;
+	public MovieBean getMovieById(Integer no) {
+		return dao.getMovieById(no);
 	}
 
 	@Override

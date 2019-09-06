@@ -13,7 +13,7 @@ public interface MovieDao {
 	// update
 	int updateMovie(MovieBean movie);
 	// query
-	MovieBean getMovieById(String movieId);
+	MovieBean getMovieById(Integer no);
 	//by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
 	List<MovieBean> getReleasedMovies();
