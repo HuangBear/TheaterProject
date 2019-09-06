@@ -25,6 +25,7 @@ public class MovieBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_no")
 	private Integer no;
+	private Boolean available;
 	@NotNull
 	private String movieName;
 	private String directors;
@@ -217,5 +218,11 @@ public class MovieBean {
 
 	public void setGenres(String genres) {
 		this.genres = genres;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }

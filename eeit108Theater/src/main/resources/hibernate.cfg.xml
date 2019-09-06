@@ -35,6 +35,7 @@
 		<mapping class="com.web.entity.ProductBean"></mapping>
 		<mapping class="com.web.entity.SeatBean"></mapping>
 		<mapping class="com.web.entity.TimeTableBean"></mapping>
+		<mapping class="com.web.entity.BullentinBean"></mapping>
 		
 
 	</session-factory>
