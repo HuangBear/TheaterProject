@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.mysql.cj.jdbc.Blob;
+
 import com.sun.istack.NotNull;
 
 @Entity

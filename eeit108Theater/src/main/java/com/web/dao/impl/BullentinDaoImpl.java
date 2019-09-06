@@ -5,46 +5,47 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.web.dao.BullentinDao;
 import com.web.entity.BullentinBean;
 
+
+@Repository
 public class BullentinDaoImpl implements BullentinDao {
 
 	@Autowired
 	SessionFactory factory;
-	@Autowired
-	Session session;
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public List<BullentinBean> getBullentin()
+	public List<BullentinBean> getAllBullentin()
 	{
+		Session session = factory.getCurrentSession();
 		List<BullentinBean> list = new ArrayList<>();
-		list = session.createQuery("FROM Bullentin").getResultList();
+		list = session.createQuery("FROM BullentinBean").getResultList();
+		//BullentinBean 要打類別名稱
 		return list;
 	}
 
-	@Test
 	@Override
 	public void saveBullentin(BullentinBean bb)
 	{
+		Session session = factory.getCurrentSession();
 		session.save(bb);
 	}
 
 	@Override
 	public void updateBullentin(BullentinBean bb)
 	{
-		
-bb.getNo();
-
+		Session session = factory.getCurrentSession();
+		session.update(bb);
 	}
 
 	@Override
 	public void deletecBullentin(Integer bullentin_no)
 	{
+		Session session = factory.getCurrentSession();
 		session.delete(bullentin_no);
 	}
 

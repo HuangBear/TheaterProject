@@ -10,7 +10,7 @@ public interface BullentinDao {
 
 	void deletecBullentin(Integer bullentin_no);
 
-	List<BullentinBean> getBullentin();
+	List<BullentinBean> getAllBullentin();
 
 	void updateBullentin(BullentinBean bb);
 }
