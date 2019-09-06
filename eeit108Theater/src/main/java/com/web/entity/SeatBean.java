@@ -21,6 +21,7 @@ public class SeatBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "seat_no")
 	private Integer no;
+	private Boolean available;
 	@Column(name = "row_X")
 	private String row;
 	@Column(name = "column_Y")
@@ -61,6 +62,12 @@ public class SeatBean {
 	}
 	public void setTimeTableId(Integer timeTableId) {
 		this.timeTableId = timeTableId;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 
 }

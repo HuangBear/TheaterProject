@@ -9,17 +9,25 @@ public interface SeatDao {
 	int saveSeat(SeatBean seat);
 
 	// disable
-	int deleteSeat(Integer seatId);
-
+	int deleteSeatByNo(Integer seatNo);
+	
+	int deleteSeatsByTimeTableNo(Integer timeTableNo);
+	
 	int deleteAll();
 
 	// update
 	int updateSeat(SeatBean seat);
 
+	int discontinueAll(); // 全部下架
+
+	int continueAll(); // 全部上架
+
 	// query
-	SeatBean getSeat(String seatId);
+	SeatBean getSeatByNo(Integer seatNo);
 
 	List<SeatBean> getAllSeats();
+
+	List<SeatBean> getAllAvailable();
 
 	List<SeatBean> getSeatsByTimeTable(Integer timeTableId);
 }

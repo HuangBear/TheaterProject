@@ -9,17 +9,21 @@ public interface MovieDao {
 	int saveMovie(MovieBean movie);
 
 	// disable
-	int deleteMovie(String movieId);
+	int deleteMovieByNo(Integer movieNo);
 
 	int deleteAll();
 
 	// update
 	int updateMovie(MovieBean movie);
 
-	// query
-	MovieBean getMovieById(String movieId);
+	int discontinueAll(); // 全部下架
 
-	//by director, by cast, by genre, or by something else
+	int continueAll(); // 全部上架
+
+	// query
+	MovieBean getMovieByNo(Integer movieNo);
+
+	// by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
 
 	List<MovieBean> getReleasedMovies();
@@ -27,4 +31,6 @@ public interface MovieDao {
 	List<MovieBean> getComingMovies();
 
 	List<MovieBean> getAllMovies();
+
+	List<MovieBean> getAllAvailable();
 }

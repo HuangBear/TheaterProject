@@ -6,24 +6,31 @@ import com.web.entity.MemberBean;
 
 public interface MemberDao {
 	// new
-		int saveMember(MemberBean member);
+	int saveMember(MemberBean member);
 
-		// disable
-		int deleteMember(String memberId);
-		
-		int deleteAll();
+	// disable
+	int deleteMemberByNo(Integer memberNo);
 
-		// update
-		int updateMember(MemberBean member);
+	int deleteMemberById(String memberId);
 
-		// query
-		MemberBean getMemberByNo(String memberNo);
+	int deleteAll();
 
-		MemberBean getMemberByEmail(String email);
+	// update
+	int updateMember(MemberBean member);
 
-		MemberBean getMemberByMemberId(String memberId);
+	int discontinueAll(); // 全部下架
 
-		List<MemberBean> getMembersByOwner(String memberId);
+	int continueAll(); // 全部上架
+	
+	// query
 
-		List<MemberBean> getAllMembers();
+	MemberBean getMemberByNo(Integer memberNo);
+
+	MemberBean getMemberByEmail(String email);
+
+	MemberBean getMemberById(String memberId);
+
+	List<MemberBean> getAllMembers();
+
+	List<MemberBean> getAllAvailable();
 }

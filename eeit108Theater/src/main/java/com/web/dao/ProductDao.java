@@ -9,21 +9,27 @@ public interface ProductDao {
 	int saveProduct(ProductBean product);
 
 	// disable
-	int deleteProduct(Integer productId);
+	int deleteProductByNo(Integer productNo);
 
-	int deleteProduct(String productName);
+	int deleteProductByName(String productName);
 
 	int deleteAll();
 
 	// update
 	int updateProduct(ProductBean product);
+	
+	int discontinueAll(); //全部下架
+	
+	int continueAll(); //全部上架
 
 	// query
-	ProductBean getProduct(String productName);
+	ProductBean getProductByName(String productName);
 
-	ProductBean getProduct(Integer productId);
+	ProductBean getProductByNo(Integer productNo);
 
-	List<ProductBean> getAllProducts();
+	List<ProductBean> getAll();
+	
+	List<ProductBean> getAllAvailableProducts();	
 
 	List<ProductBean> getProductsByType(String type);
 }
