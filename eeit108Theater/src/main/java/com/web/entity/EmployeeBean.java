@@ -30,7 +30,7 @@ public class EmployeeBean {
 	private Integer no;
 	private Boolean available;
 	private String name;
-	@NotNull	
+	@NotNull
 	private String employeeId;
 	@NotNull	
 	private String email; //as account
@@ -48,16 +48,16 @@ public class EmployeeBean {
 	
 	
 	@OneToMany(mappedBy = "employee")
-	private Set<BullentinBean> bullenit=new LinkedHashSet<BullentinBean>();
+	private Set<BulletinBean> bulletins=new LinkedHashSet<BulletinBean>();
 	
 	
-	public Set<BullentinBean> getBullenit()
+	public Set<BulletinBean> getBulletin()
 	{
-		return bullenit;
+		return bulletins;
 	}
-	public void setBullenit(Set<BullentinBean> bullenit)
+	public void setBulletin(Set<BulletinBean> bulletins)
 	{
-		this.bullenit = bullenit;
+		this.bulletins = bulletins;
 	}
 	
 	

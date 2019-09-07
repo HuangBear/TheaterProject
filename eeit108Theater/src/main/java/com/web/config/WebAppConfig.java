@@ -1,7 +1,5 @@
 package com.web.config;
 
-
-
 import java.util.ArrayList;
 
 import org.springframework.context.MessageSource;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-
 
 @Configuration
 @EnableWebMvc

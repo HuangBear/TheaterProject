@@ -7,21 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.web.entity.BullentinBean;
+import com.web.entity.BulletinBean;
 import com.web.service.impl.BulletinBoardService;
 
 @Controller
-public class BullentinController {
+public class BulletinController {
 
 	@Autowired
 	BulletinBoardService service;
 
-	@RequestMapping("/Bullentin")
+	@RequestMapping("/Bulletin")
 	public String list(Model model)
 	{
-		List<BullentinBean> list = service.getAllBullentin();
-		model.addAttribute("AllBullentin", list);
-		return "Bullentin";
+		List<BulletinBean> list = service.getAllBulletin();
+		model.addAttribute("AllBulletin", list);
+		return "Bulletin";
 	}
 	
 	@RequestMapping("/")

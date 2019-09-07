@@ -1,6 +1,7 @@
 package com.web.entity;
 
 import java.sql.Blob;
+//import java.sql.Date;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "Movie")
@@ -25,6 +30,7 @@ public class MovieBean {
 	private String movieName;
 	private String directors;
 	private String casts;
+	@Column(columnDefinition = "VARCHAR(max)")
 	private String introduction;
 	private String company;
 	private String[] trailerLink;

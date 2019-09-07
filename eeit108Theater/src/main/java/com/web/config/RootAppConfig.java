@@ -22,7 +22,6 @@ public class RootAppConfig {
 	@Bean
 	public DataSource dataSource() {
 		ComboPooledDataSource ds = new ComboPooledDataSource();
-
 		try (InputStream input = getClass().getClassLoader().getResourceAsStream("dataSourceConfig.properties")) {
 			Properties prop = new Properties();
 			if (input == null)

@@ -8,42 +8,42 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.web.dao.BullentinDao;
-import com.web.entity.BullentinBean;
+import com.web.dao.BulletinDao;
+import com.web.entity.BulletinBean;
 
 
 @Repository
-public class BullentinDaoImpl implements BullentinDao {
+public class BulletinDaoImpl implements BulletinDao {
 
 	@Autowired
 	SessionFactory factory;
 
 	@SuppressWarnings("unchecked")
-	public List<BullentinBean> getAllBullentin()
+	public List<BulletinBean> getAllBulletin()
 	{
 		Session session = factory.getCurrentSession();
-		List<BullentinBean> list = new ArrayList<>();
-		list = session.createQuery("FROM BullentinBean").getResultList();
-		//BullentinBean 要打類別名稱
+		List<BulletinBean> list = new ArrayList<>();
+		list = session.createQuery("FROM BulletinBean").getResultList();
+		//BulletinBean 要打類別名稱
 		return list;
 	}
 
 	@Override
-	public void saveBullentin(BullentinBean bb)
+	public void saveBulletin(BulletinBean bb)
 	{
 		Session session = factory.getCurrentSession();
 		session.save(bb);
 	}
 
 	@Override
-	public void updateBullentin(BullentinBean bb)
+	public void updateBulletin(BulletinBean bb)
 	{
 		Session session = factory.getCurrentSession();
 		session.update(bb);
 	}
 
 	@Override
-	public void deletecBullentin(Integer bullentin_no)
+	public void deletecBulletin(Integer bullentin_no)
 	{
 		Session session = factory.getCurrentSession();
 		session.delete(bullentin_no);

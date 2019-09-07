@@ -36,7 +36,7 @@
 	<div id="page-wrapper">
 		<div id="header">
 			<!-- Header -->
-			<jsp:include page="header.jsp" />
+<%-- 			<jsp:include page="header.jsp" /> --%>
 		</div>
 		<!-- Main -->
 		<div class="wrapper style1">
@@ -257,7 +257,7 @@
 
 	</div>
 	<!-- Footer -->
-	<jsp:include page="footer.jsp" />
+<%-- 	<jsp:include page="footer.jsp" /> --%>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>

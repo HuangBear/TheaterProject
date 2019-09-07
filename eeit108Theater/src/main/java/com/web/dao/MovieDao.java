@@ -7,12 +7,10 @@ import com.web.entity.MovieBean;
 public interface MovieDao {
 	// new
 	int saveMovie(MovieBean movie);
-
 	// disable
 	int deleteMovieByNo(Integer movieNo);
 
 	int deleteAll();
-
 	// update
 	int updateMovie(MovieBean movie);
 
@@ -25,11 +23,8 @@ public interface MovieDao {
 
 	// by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
-
 	List<MovieBean> getReleasedMovies();
-
 	List<MovieBean> getComingMovies();
-
 	List<MovieBean> getAllMovies();
 
 	List<MovieBean> getAllAvailable();
