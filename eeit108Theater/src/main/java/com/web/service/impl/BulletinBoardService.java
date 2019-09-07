@@ -7,17 +7,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.dao.BullentinDao;
-import com.web.entity.BullentinBean;
+import com.web.dao.BulletinDao;
+import com.web.entity.BulletinBean;
 
 @Service
 public class BulletinBoardService {
 	@Autowired
-	BullentinDao dao;
+	BulletinDao dao;
 
 	@Transactional
-	public List<BullentinBean> getAllBullentin() {
-		return dao.getAllBullentin();
+	public List<BulletinBean> getAllBulletin() {
+		return dao.getAllBulletin();
 	}
 	
 	

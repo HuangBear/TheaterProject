@@ -48,16 +48,16 @@ public class EmployeeBean {
 	
 	
 	@OneToMany(mappedBy = "employee")
-	private Set<BullentinBean> bullenit=new LinkedHashSet<BullentinBean>();
+	private Set<BulletinBean> bulletins=new LinkedHashSet<BulletinBean>();
 	
 	
-	public Set<BullentinBean> getBullenit()
+	public Set<BulletinBean> getBulletin()
 	{
-		return bullenit;
+		return bulletins;
 	}
-	public void setBullenit(Set<BullentinBean> bullenit)
+	public void setBulletin(Set<BulletinBean> bulletins)
 	{
-		this.bullenit = bullenit;
+		this.bulletins = bulletins;
 	}
 	
 	

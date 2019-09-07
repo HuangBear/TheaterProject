@@ -16,11 +16,11 @@ import javax.persistence.Table;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name = "Bullentin")
-public class BullentinBean {
+@Table(name = "Bulletin")
+public class BulletinBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "bullentin_no")
+	@Column(name = "bulletin_no")
 	private Integer no;
 	private Boolean available;
 	private String tittle;
