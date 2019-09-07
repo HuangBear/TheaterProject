@@ -30,7 +30,7 @@ public class EmployeeBean {
 	private Integer no;
 	private Boolean available;
 	private String name;
-	@NotNull	
+	@NotNull
 	private String employeeId;
 	@NotNull	
 	private String email; //as account
