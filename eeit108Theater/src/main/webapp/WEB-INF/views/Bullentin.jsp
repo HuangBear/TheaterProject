@@ -125,42 +125,44 @@
 						</h2>
 
 
-						<form class="was-validated">
+						<form class="was-validated ">
 							<div class="mb-3">
-								<label for="validationTextarea">title</label> <input type="text"
+								<label for="validationTextarea">title</label> <input
+									style="border-radius: 3px" type="text"
 									class="form-control is-invalid" id="title" placeholder="輸入標題"
 									required>
 								<!-- 						<div class="invalid-feedback">輸入標題</div> -->
 							</div>
 
-							<div class="row mb-3">
+							<div class="row pr-2 mb-3">
 								<div class="col">
 									<label for="validationTextarea">StartDate</label><input
 										type="date" class="form-control is-invalid" id="startDate"
 										placeholder="輸入標題" required>
 									<!-- <div class="invalid-feedback">輸入標題</div> -->
 								</div>
-
-								<div class="col">
+								<div class="col pr-2 ">
 									<label for="validationTextarea">EndDate</label><input
 										type="date" class="form-control is-invalid" id="endDate"
 										placeholder="輸入標題" required>
 									<!-- <div class="invalid-feedback">輸入標題</div> -->
-
 								</div>
 							</div>
+
 							<div class="mb-3">
 								<label for="validationTextarea">Context</label>
-								<textarea class="form-control is-invalid" id="context"
+								<textarea style="border-radius: 3px"
+									class="form-control is-invalid" id="context"
 									placeholder="輸入公告內容，字數請勿大於300字" required></textarea>
 								<!-- 						<div class="invalid-feedback"></div> -->
 							</div>
 
 							<div class="custom-control custom-checkbox mb-3">
-								<input type="checkbox" class="custom-control-input"
-									id="customControlValidation1" required> <label
-									class="custom-control-label" for="customControlValidation1">Check
-									this custom checkbox</label>
+								<input style="border-radius: 3px" type="checkbox"
+									class="custom-control-input" id="customControlValidation1"
+									required> <label class="custom-control-label"
+									for="customControlValidation1">Check this custom
+									checkbox</label>
 								<div class="invalid-feedback">Example invalid feedback
 									text</div>
 							</div>
@@ -171,6 +173,7 @@
 								<label class="custom-control-label"
 									for="customControlValidation2">Toggle this custom radio</label>
 							</div>
+
 							<div class="custom-control custom-radio mb-3">
 								<input type="radio" class="custom-control-input"
 									id="customControlValidation3" name="radio-stacked" required>
@@ -200,11 +203,41 @@
 								<!-- 								<div class="invalid-feedback">Example invalid custom file -->
 								<!-- 									feedback</div> -->
 							</div>
-
-
-
-
 						</form>
+						<table
+							class="table table-striped  table-hover table-sm  table-responsive">
+							<!-- 							style="word-break: break-all; word-wrap: break-all;"> -->
+							<thead>
+								<tr>
+									<th scope="col" class="col-1">##</th>
+									<th scope="col" class="col-3">標題</th>
+									<th scope="col" class="col-1">方案</th>
+									<th scope="col" class="col-8" >公告內容</th>
+									<th scope="col" class="col-1">刪</th>
+									<th scope="col" class="col-1">改</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>慶開幕</td>
+									<td>買一送一</td>
+									<td>@mdo</td>
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>Jacob</td>
+									<td>Thornton</td>
+									<td>@fat</td>
+								</tr>
+								<tr>
+									<th scope="row">3</th>
+									<td>Larry</td>
+									<td>the Bird</td>
+									<td>一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<!-- 				<hr /> -->
