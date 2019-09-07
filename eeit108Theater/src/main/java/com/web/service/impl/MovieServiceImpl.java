@@ -40,7 +40,7 @@ public class MovieServiceImpl implements MovieService {
 	@Transactional
 	@Override
 	public MovieBean getMovieById(Integer no) {
-		return dao.getMovieById(no);
+		return dao.getMovieByNo(no);
 	}
 
 	@Override
