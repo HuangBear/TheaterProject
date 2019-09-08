@@ -31,8 +31,7 @@
 				<td style = 'font-size: 16px;'>${movie.duration} 分 </td>
 			</tr>
 			<tr>
-				<td><iframe src="${movie.trailerLink}" width="500px" height="500px"></iframe>
-				</td>
+				<td>${movie.trailerLink}</td>
 			</tr>
 <%-- 		<span>演員</span><b style = 'font-size:16px;'>${movie.casts}</b><br> --%>
 <%-- 		<span>導演</span><b style = 'font-size:16px;'>${movie.directors}</b><br> --%>
