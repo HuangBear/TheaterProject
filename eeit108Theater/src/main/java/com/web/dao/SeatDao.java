@@ -29,5 +29,5 @@ public interface SeatDao {
 
 	List<SeatBean> getAllAvailable();
 
-	List<SeatBean> getSeatsByTimeTable(Integer timeTableId);
+	List<SeatBean> getSeatsByTimeTable(Integer timeTableNo);
 }
