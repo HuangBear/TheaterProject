@@ -33,7 +33,7 @@ public class MovieBean {
 	@Column(columnDefinition = "VARCHAR(max)")
 	private String introduction;
 	private String company;
-	private String[] trailerLink;
+	private String trailerLink;
 	private Integer duration;
 	private Date openingDate;
 	private Date endingDate;
@@ -105,11 +105,11 @@ public class MovieBean {
 		this.company = company;
 	}
 
-	public String[] getTrailerLink() {
+	public String getTrailerLink() {
 		return trailerLink;
 	}
 
-	public void setTrailerLink(String[] trailerLink) {
+	public void setTrailerLink(String trailerLink) {
 		this.trailerLink = trailerLink;
 	}
 

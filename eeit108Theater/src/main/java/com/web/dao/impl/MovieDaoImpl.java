@@ -21,12 +21,6 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
 	@Override
-	public int deleteMovie(String movieId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int deleteAll() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -39,11 +33,10 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
 	@Override
-	public MovieBean getMovieById(Integer no) {
+	public MovieBean getMovieByNo(Integer no) {
 		Session session = factory.getCurrentSession();
 		MovieBean mb = session.get(MovieBean.class, no);
-		return mb;
-				
+		return mb;		
 	}
 
 	@Override
@@ -73,6 +66,31 @@ public class MovieDaoImpl implements MovieDao{
 		session = factory.getCurrentSession();
 		list = session.createQuery(hql).getResultList();
 		return list;
+	}
+
+	@Override
+	public int deleteMovieByNo(Integer movieNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int discontinueAll() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int continueAll() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public List<MovieBean> getAllAvailable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

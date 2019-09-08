@@ -59,7 +59,7 @@ public class EDMTableResetHibernate {
 					movie.setCastsAsArray(token[2].split(","));
 					movie.setIntroduction(token[3]);
 					movie.setCompany(token[4]);
-					movie.setTrailerLink(token[5].trim().split(","));
+					movie.setTrailerLink(token[5]);
 					movie.setDuration(Integer.parseInt(token[6]));
 					movie.setOpeningDate(sdf.parse(token[7]));
 					movie.setEndingDate(sdf.parse(token[8]));

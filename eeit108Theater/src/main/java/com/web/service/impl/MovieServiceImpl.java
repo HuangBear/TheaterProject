@@ -13,34 +13,35 @@ import com.web.service.MovieService;
 public class MovieServiceImpl implements MovieService {
 	@Autowired
 	MovieDao dao;
-	
+	@Transactional
 	@Override
 	public int saveMovie(MovieBean movie) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Transactional
 	@Override
 	public int deleteMovie(String movieId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Transactional
 	@Override
 	public int deleteAll() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Transactional
 	@Override
 	public int updateMovie(MovieBean movie) {
-		// TODO Auto-generated method stub
+		int count = 0;
+		
 		return 0;
 	}
 	@Transactional
 	@Override
 	public MovieBean getMovieById(Integer no) {
-		return dao.getMovieById(no);
+		return dao.getMovieByNo(no);
 	}
 
 	@Override
@@ -48,17 +49,15 @@ public class MovieServiceImpl implements MovieService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Transactional
 	@Override
 	public List<MovieBean> getReleasedMovies() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getReleasedMovies();
 	}
-
+	@Transactional
 	@Override
 	public List<MovieBean> getComingMovies() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getComingMovies();
 	}
 	@Transactional
 	@Override

@@ -43,9 +43,15 @@ public class movieController {
 	public String home() {
 		return "index";
 	}
+	@RequestMapping("/movieTimes_{no}")
+	public String movieTimes(Model model, @PathVariable Integer no) {
+		MovieBean movie = service.getMovieById(no);
+		model.addAttribute("movie", movie);
+		return "movieTimes";
+	}
 	
 	@RequestMapping(value = "/getPicture/{no}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer no) {
+	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer no) throws SQLException {
 	    String filePath = "data/images/movie001.jpeg";
 	    byte[] media = null;
 	    HttpHeaders headers = new HttpHeaders();
@@ -79,6 +85,7 @@ public class movieController {
 	                new ResponseEntity<>(media, headers, HttpStatus.OK);
 	    return responseEntity;
 	}
+	
 	private byte[] toByteArray(String filepath) {
 	    byte[] b = null;
 	    String realPath = context.getRealPath(filepath);
