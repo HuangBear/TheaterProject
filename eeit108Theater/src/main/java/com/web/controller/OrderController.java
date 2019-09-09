@@ -19,5 +19,12 @@ public class OrderController {
 		model.addAttribute("products", service.getAll());
 		return "allProducts";
 	}
+	@RequestMapping("/showProducts")
+	public String showProductByType(Model model) {
+		model.addAttribute("foods", service.getProductsByType("food"));
+		model.addAttribute("drinks", service.getProductsByType("drink"));
+		model.addAttribute("tickets", service.getProductsByType("ticket"));
+		return "productsByType";
+	}
 	
 }
