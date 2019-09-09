@@ -29,6 +29,7 @@ public class MemberBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_no")
 	private Integer no;
+	private Boolean available;
 	private String name;
 	@NotNull	
 	private String memberId;
@@ -137,5 +138,11 @@ public class MemberBean {
 	}
 	public void setBanCounter(Integer banCounter) {
 		this.banCounter = banCounter;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }

@@ -9,19 +9,25 @@ public interface OrderItemDao {
 	int saveOrderItem(OrderItemBean orderItem);
 
 	// disable
-	int deleteOrderItem(String orderItemId);
+	int deleteOrderItemByNo(Integer orderItemNo);
 
-	int deleteOrderItemsByOrder(String orderId);
+	int deleteOrderItemsByOrderId(String orderId);
 
 	int deleteAll();
 
 	// update
 	int updateOrderItem(OrderItemBean orderItem);
 
+	int discontinueAll(); // 全部下架
+
+	int continueAll(); // 全部上架
+
 	// query
-	OrderItemBean getOrderItem(String orderItemId);
+	OrderItemBean getOrderItemByNo(Integer orderItemNo);
 
 	List<OrderItemBean> getAllOrderItems();
 
-	List<OrderItemBean> getOrderItemsByOrder(String orderId);
+	List<OrderItemBean> getAllAvailable();
+
+	List<OrderItemBean> getOrderItemsByOrderId(String orderId);
 }

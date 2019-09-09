@@ -2,12 +2,15 @@ package com.web.entity;
 
 import java.sql.Blob;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -25,8 +28,9 @@ public class EmployeeBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "employee_no")
 	private Integer no;
+	private Boolean available;
 	private String name;
-	@NotNull	
+	@NotNull
 	private String employeeId;
 	@NotNull	
 	private String email; //as account
@@ -41,6 +45,22 @@ public class EmployeeBean {
 	private Date resignTime;
 	private Integer permission;
 	private Integer salary;
+	
+	
+	@OneToMany(mappedBy = "employee")
+	private Set<BulletinBean> bulletins=new LinkedHashSet<BulletinBean>();
+	
+	
+	public Set<BulletinBean> getBulletin()
+	{
+		return bulletins;
+	}
+	public void setBulletin(Set<BulletinBean> bulletins)
+	{
+		this.bulletins = bulletins;
+	}
+	
+	
 	public Integer getNo() {
 		return no;
 	}
@@ -118,5 +138,11 @@ public class EmployeeBean {
 	}
 	public void setSalary(Integer salary) {
 		this.salary = salary;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }

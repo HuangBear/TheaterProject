@@ -21,6 +21,7 @@ public class OrderItemBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderItem_no")
 	private Integer no;
+	private Boolean available;
 	@NotNull
 	private String itemName;
 	@NotNull
@@ -57,5 +58,23 @@ public class OrderItemBean {
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 }

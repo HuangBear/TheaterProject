@@ -1,6 +1,7 @@
 package com.web.entity;
 
 import java.sql.Blob;
+//import java.sql.Date;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "Movie")
@@ -20,10 +25,12 @@ public class MovieBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_no")
 	private Integer no;
+	private Boolean available;
 	@NotNull
 	private String movieName;
 	private String directors;
 	private String casts;
+	@Column(columnDefinition = "VARCHAR(max)")
 	private String introduction;
 	private String company;
 	private String[] trailerLink;
@@ -211,5 +218,11 @@ public class MovieBean {
 
 	public void setGenres(String genres) {
 		this.genres = genres;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }

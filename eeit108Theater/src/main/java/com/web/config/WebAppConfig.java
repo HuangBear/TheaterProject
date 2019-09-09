@@ -1,7 +1,5 @@
 package com.web.config;
 
-
-
 import java.util.ArrayList;
 
 import org.springframework.context.MessageSource;
@@ -21,10 +19,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.web.store")
+@ComponentScan("com.web")
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver internalResourceViewResolver() {
@@ -44,8 +41,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/css/**").addResourceLocations("WEB-INF/views/css/");
-		registry.addResourceHandler("/image/**").addResourceLocations("/WEB-INF/views/images/");
+		registry.addResourceHandler("/assets/css/**").addResourceLocations("/WEB-INF/views/assets/css/");
+		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
 	}
 	
 	@Bean
