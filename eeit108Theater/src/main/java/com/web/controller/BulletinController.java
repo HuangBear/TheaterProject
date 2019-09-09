@@ -24,9 +24,9 @@ public class BulletinController {
 		return "Bulletin";
 	}
 	
-	@RequestMapping("/")
-	public String index(Model model)
-	{
-		return "index";
-	}
+//	@RequestMapping("/")
+//	public String index(Model model)
+//	{
+//		return "index";
+//	}
 }
