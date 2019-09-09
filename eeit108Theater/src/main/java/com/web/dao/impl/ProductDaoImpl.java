@@ -103,7 +103,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<ProductBean> getAll() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ProductBean";
+		String hql = "FROM ProductBean p ORDER BY p.type";
 		List<ProductBean> pb = session.createQuery(hql).getResultList();
 		return pb;
 	}
@@ -112,7 +112,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<ProductBean> getAllAvailableProducts() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ProductBean p  WHERE p.available = :true";
+		String hql = "FROM ProductBean p  WHERE p.available = :true ORDER BY p.type";
 		List<ProductBean> pb = session.createQuery(hql).setParameter("true", Boolean.TRUE).getResultList();
 		return pb;
 	}
