@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Arrays;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,7 +60,9 @@ public class EDMTableResetHibernate {
 					movie.setCastsAsArray(token[2].split(","));
 					movie.setIntroduction(token[3]);
 					movie.setCompany(token[4]);
-					movie.setTrailerLink(token[5]);
+					System.out.println(token[5]);
+					String[] links = token[5].split(",");
+					movie.setTrailerLink(links);
 					movie.setDuration(Integer.parseInt(token[6]));
 					movie.setOpeningDate(sdf.parse(token[7]));
 					movie.setEndingDate(sdf.parse(token[8]));
