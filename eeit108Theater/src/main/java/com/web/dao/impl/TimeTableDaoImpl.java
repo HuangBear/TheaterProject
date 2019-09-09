@@ -103,5 +103,12 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("true", Boolean.TRUE).list();
 		return list;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TimeTableBean> getMovieVersion(String movieName) {
+		String hql = "SELECT DISTINCT t.version FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).list();
+		return list;
+	}
 
 }
