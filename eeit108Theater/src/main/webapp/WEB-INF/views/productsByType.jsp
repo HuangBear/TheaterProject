@@ -20,7 +20,7 @@
 		$("#tabs").tabs();
 	});
 	$(function() {
-		$("input[name='value']").spinner({
+		$("td>input").spinner({
 			spin : function(event, ui) {
 				if (ui.value > 10) {
 					$(this).spinner("value", 0);
@@ -35,76 +35,75 @@
 </script>
 </head>
 <body>
-<form>
-	<div id="tabs">
-		<ul>
-			<li><a href="#tabs-1">票種</a></li>
-			<li><a href="#tabs-2">食物</a></li>
-			<li><a href="#tabs-3">飲料</a></li>
-		</ul>
-		<div id="tabs-1">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">票種</th>
-						<th scope="col">價格</th>
-						<th scope="col">數量</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="ticket" items="${tickets}">
+	<form action="<c:url value='/order'/>" method="POST">
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">票種</a></li>
+				<li><a href="#tabs-2">食物</a></li>
+				<li><a href="#tabs-3">飲料</a></li>
+			</ul>
+			<div id="tabs-1">
+				<table class="table">
+					<thead>
 						<tr>
-							<td>${ticket.name}</td>
-							<td>$ ${ticket.price}</td>
-							<td><label for="spinner">數量 </label> <input name="value"></td>
+							<th scope="col">票種</th>
+							<th scope="col">價格</th>
+							<th scope="col">數量</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<div id="tabs-2">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">品項</th>
-						<th scope="col">價格</th>
-						<th scope="col">數量</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="food" items="${foods}">
+					</thead>
+					<tbody>
+						<c:forEach var="ticket" items="${tickets}">
+							<tr>
+								<td>${ticket.name}</td>
+								<td>$ ${ticket.price}</td>
+								<td><input name="${ticket.name}"></td>					
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<div id="tabs-2">
+				<table class="table">
+					<thead>
 						<tr>
-							<td>${food.name}</td>
-							<td>$ ${food.price}</td>
-							<td><label for="spinner">數量 </label> <input name="value"></td>
+							<th scope="col">品項</th>
+							<th scope="col">價格</th>
+							<th scope="col">數量</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<div id="tabs-3">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">品項</th>
-						<th scope="col">價格</th>
-						<th scope="col">數量</th>
-					</tr>
-				</thead>
-				<tbody>
-
-					<c:forEach var="drink" items="${drinks}">
+					</thead>
+					<tbody>
+						<c:forEach var="food" items="${foods}">
+							<tr>
+								<td>${food.name}</td>
+								<td>$ ${food.price}</td>
+								<td><input name="${food.name}"></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<div id="tabs-3">
+				<table class="table">
+					<thead>
 						<tr>
-							<td>${drink.name}</td>
-							<td>$ ${drink.price}</td>
-							<td><label for="spinner">數量 </label> <input name="value"></td>
+							<th scope="col">品項</th>
+							<th scope="col">價格</th>
+							<th scope="col">數量</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach var="drink" items="${drinks}">
+							<tr>
+								<td>${drink.name}</td>
+								<td>$ ${drink.price}</td>
+								<td><input name="${drink.name}"></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
-</form>
-
+		<input type="submit" value="確認">
+	</form>
 </body>
 </html>
