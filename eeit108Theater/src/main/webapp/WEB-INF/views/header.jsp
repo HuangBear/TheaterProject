@@ -6,7 +6,8 @@
 	<ul>
 
 		<li><a class="nav_logo" href="index"><img
-				src="images\logo.png" style="width: 80px;"> </a></li>
+				src="images\logo.png" style="width: 80px;">
+		</a></li>
 		<li style="display: none;"><a href="index" class="hide">716影城</a>
 		<li><a href="no-sidebar">影片介紹</a></li>
 		<li><a href="no-sidebar">時刻查詢</a></li>
@@ -18,11 +19,9 @@
 			<ul>
 				<li><a href="left-sidebar">會員專區</a></li>
 				<li><a href="left-sidebar">會員設定</a></li>
-				<!-- 這個不要刪掉，平衡用 -->
-			</ul></li>
-		<!-- 這個不要刪掉，平衡用 -->
+			<!-- 這個不要刪掉，平衡用 --></ul></li><!-- 這個不要刪掉，平衡用 -->
 
-		<li></li>
+<li></li>
 	</ul>
 
 </nav>
