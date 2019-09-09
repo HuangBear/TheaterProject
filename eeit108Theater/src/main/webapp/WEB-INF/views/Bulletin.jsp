@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-
 <html>
 <head>
 <link rel="stylesheet"
@@ -36,7 +35,7 @@
 	<div id="page-wrapper">
 		<div id="header">
 			<!-- Header -->
-<%-- 			<jsp:include page="header.jsp" /> --%>
+			<jsp:include page="header.jsp" />
 		</div>
 		<!-- Main -->
 		<div class="wrapper style1">
@@ -125,42 +124,44 @@
 						</h2>
 
 
-						<form class="was-validated">
+						<form class="was-validated mb-5">
 							<div class="mb-3">
-								<label for="validationTextarea">title</label> <input type="text"
+								<label for="validationTextarea">title</label> <input
+									style="border-radius: 3px" type="text"
 									class="form-control is-invalid" id="title" placeholder="輸入標題"
 									required>
 								<!-- 						<div class="invalid-feedback">輸入標題</div> -->
 							</div>
 
-							<div class="row mb-3">
+							<div class="row pr-2 mb-3">
 								<div class="col">
 									<label for="validationTextarea">StartDate</label><input
 										type="date" class="form-control is-invalid" id="startDate"
 										placeholder="輸入標題" required>
 									<!-- <div class="invalid-feedback">輸入標題</div> -->
 								</div>
-
-								<div class="col">
+								<div class="col pr-2 ">
 									<label for="validationTextarea">EndDate</label><input
 										type="date" class="form-control is-invalid" id="endDate"
 										placeholder="輸入標題" required>
 									<!-- <div class="invalid-feedback">輸入標題</div> -->
-
 								</div>
 							</div>
+
 							<div class="mb-3">
 								<label for="validationTextarea">Context</label>
-								<textarea class="form-control is-invalid" id="context"
+								<textarea style="border-radius: 3px"
+									class="form-control is-invalid" id="context"
 									placeholder="輸入公告內容，字數請勿大於300字" required></textarea>
 								<!-- 						<div class="invalid-feedback"></div> -->
 							</div>
 
 							<div class="custom-control custom-checkbox mb-3">
-								<input type="checkbox" class="custom-control-input"
-									id="customControlValidation1" required> <label
-									class="custom-control-label" for="customControlValidation1">Check
-									this custom checkbox</label>
+								<input style="border-radius: 3px" type="checkbox"
+									class="custom-control-input" id="customControlValidation1"
+									required> <label class="custom-control-label"
+									for="customControlValidation1">Check this custom
+									checkbox</label>
 								<div class="invalid-feedback">Example invalid feedback
 									text</div>
 							</div>
@@ -171,6 +172,7 @@
 								<label class="custom-control-label"
 									for="customControlValidation2">Toggle this custom radio</label>
 							</div>
+
 							<div class="custom-control custom-radio mb-3">
 								<input type="radio" class="custom-control-input"
 									id="customControlValidation3" name="radio-stacked" required>
@@ -200,11 +202,66 @@
 								<!-- 								<div class="invalid-feedback">Example invalid custom file -->
 								<!-- 									feedback</div> -->
 							</div>
-
-
-
-
 						</form>
+
+
+						<table
+							class="table table-striped  table-hover table-sm  table-responsive">
+							<!-- 							style="word-break: break-all; word-wrap: break-all;"> -->
+							<thead>
+								<tr>
+									<th scope="col" class="col-1">##</th>
+									<th scope="col" class="col-4">標題</th>
+									<th scope="col" colspan="2" class="col-2">優惠方案</th>
+									<th scope="col" class="col-1">詳情</th>
+									<th scope="col" class="col-1">修改</th>
+									<th scope="col" class="col-1">刪除</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>慶開幕</td>
+									<td>img</td>
+									<td>買一送一</td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></a>
+									</td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-edit-50.png"></a></td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-trash-50.png"></a></td>
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>慶開幕2</td>
+
+									<td>img</td>
+									<td>買百送百</td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></a>
+									</td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-edit-50.png"></a></td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-trash-50.png"></a></td>
+								</tr>
+								<tr>
+
+									<th scope="row">3
+									<td>慶開幕3</td>
+									<td>img</td>
+									<td>買百送百</td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></a>
+									</td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-edit-50.png"></a></td>
+									<td><a><img width="20px"
+											src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-trash-50.png"></a></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<!-- 				<hr /> -->
@@ -257,7 +314,7 @@
 
 	</div>
 	<!-- Footer -->
-<%-- 	<jsp:include page="footer.jsp" /> --%>
+	<jsp:include page="footer.jsp" />
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
@@ -268,5 +325,6 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+
 </body>
 </html>
