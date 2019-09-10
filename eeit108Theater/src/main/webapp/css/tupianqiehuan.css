@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+*{margin:0;padding:0;}  
+body{font-size:12px;color:#222;font-family:Verdana,Arial,Helvetica,sans-serif;background:#f0f0f0;}  
+.clearfix:after{content: ".";display: block;height: 0;clear: both;visibility: hidden;}  
+.clearfix{zoom:1;}  
+ul,li{list-style:none;}  
+img{border:0;}  
+.wrapper{width:450px;margin:0 auto;padding-bottom:50px;}  
+h1{height:50px;line-height:50px;font-size:22px;font-weight:normal;font-family:"Microsoft YaHei",SimHei;margin-bottom:20px;}  
+/* focus */  
+#focus{width:450px;height:450px;overflow:hidden;position:relative;}  
+#focus ul{height:450px;position:absolute;}  
+#focus ul li{float:left;width:450px;height:450px;overflow:hidden;position:relative;background:#000;}  
+#focus ul li div{position:absolute;overflow:hidden;}  
+#focus .btnBg{position:absolute;width:450px;height:20px;left:0;bottom:0;background:#000;}  
+#focus .btn{position:absolute;width:780px;height:10px;padding:5px 10px;right:0;bottom:0;text-align:right;}  
+#focus .btn span{display:inline-block;_display:inline;_zoom:1;width:25px;height:10px;_font-size:0;margin-left:5px;cursor:pointer;background:#fff;}  
+#focus .btn span.on{background:#fff;}  
+#focus .preNext{width:45px;height:100px;position:absolute;top:90px;background:url(http://sandbox.runjs.cn/uploads/rs/475/xaqlrnnr/sprite.png) no-repeat 0 0;cursor:pointer;}  
+#focus .pre{left:0;}  
+#focus .next{right:0;background-position:right top;}  
