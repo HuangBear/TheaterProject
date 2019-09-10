@@ -17,7 +17,7 @@ public class BulletinBoardService {
 	BulletinDao dao;
 
 	@Transactional
-	public List<BulletinBean> getAllbulletin() {
+	public List<BulletinBean> getAllBulletin() {
 		return dao.getAllBulletin();
 	}
 	
