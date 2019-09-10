@@ -35,9 +35,5 @@ public class bulletinController {
 		return "newBulletin";
 	}
 
-//	@RequestMapping("/")
-//	public String index(Model model)
-//	{
-//		return "index";
-//	}
+
 }
