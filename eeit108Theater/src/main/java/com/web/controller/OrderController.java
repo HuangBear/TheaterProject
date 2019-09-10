@@ -40,21 +40,26 @@ public class OrderController {
 		System.out.println("======showOrder");
 		List<OrderItemBean> list = new ArrayList<>();
 		Map<String, String[]> readOnly = req.getParameterMap();
-		System.out.println("=====beginFor");
-		for (String key : req.getParameterMap().keySet()) {
-			if (readOnly.get(key)[0].equals("") || readOnly.get(key)[0].equals("0"))
-				;
-			else {
-				OrderItemBean ob = new OrderItemBean();
-				ob.setAvailable(true);
-				ob.setItemName(key);
-				Integer unit = Integer.valueOf(readOnly.get(key)[0]);
-				ob.setQuantity(unit == null ? 0 : unit);
-				ob.setSumPrice(ob.getQuantity() * ob.getUnitPrice());
-				list.add(ob);
+		if (readOnly == null)
+			System.out.println("=======Map is null");
+		else {
+			System.out.println("=====beginFor");
+			for (String key : req.getParameterMap().keySet()) {
+				if (readOnly.get(key)[0] == null || readOnly.get(key)[0].equals("") || readOnly.get(key)[0].equals("0"))
+					System.out.println("====key" + key + " is NULL");
+				else {
+					OrderItemBean ob = new OrderItemBean();
+					ob.setAvailable(true);
+					ob.setItemName(key);
+					Integer unit = Integer.valueOf(readOnly.get(key)[0]);
+					ob.setQuantity(unit == null ? 0 : unit);
+					ob.setUnitPrice(200.2);
+					ob.setSumPrice(ob.getQuantity() * ob.getUnitPrice());					
+					list.add(ob);
+				}
 			}
+			System.out.println("=====endFor");
 		}
-		System.out.println("=====endFor");
 		model.addAttribute("orderItems", list);
 		System.out.println("======RETURN showOrder");
 		return "orderItems";
