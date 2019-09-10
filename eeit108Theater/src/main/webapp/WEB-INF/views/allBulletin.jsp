@@ -225,17 +225,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var='allBulletin' items='${allBulletin}'>
-											<tr>
-												<th scope="row">${allBulletin.no}</th>
-												<th scope="row">${allBulletin.tittle}</th>
-												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-low-price-50.png"></td>
-												<th scope="row">${allBulletin.context}</th>
-												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></td>
-												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-edit-50.png"></td>
-												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-trash-50.png"></td>
-											</tr>
-										</c:forEach>
+									
+<%-- 										<c:forEach var='allBulletin' items='${allBulletin}'> --%>
+<!-- 											<tr> -->
+<%-- 												<th scope="row">${allBulletin.no}</th> --%>
+<%-- 												<th scope="row">${allBulletin.tittle}</th> --%>
+<%-- 												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-low-price-50.png"></td> --%>
+<%-- 												<th scope="row">${allBulletin.context}</th> --%>
+<%-- 												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></td> --%>
+<%-- 												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-edit-50.png"></td> --%>
+<%-- 												<td><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-trash-50.png"></td> --%>
+<!-- 											</tr> -->
+<%-- 										</c:forEach> --%>
 
 
 
