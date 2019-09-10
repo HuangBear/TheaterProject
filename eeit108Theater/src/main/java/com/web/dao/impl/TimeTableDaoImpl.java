@@ -110,5 +110,5 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).list();
 		return list;
 	}
-
 }
+

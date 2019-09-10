@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Arrays;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,10 +37,11 @@ public class EDMTableResetHibernate {
 		try
 		{
 			tx = session.beginTransaction();
-			File file = new File("data/movie_list.dat");
-			try (FileInputStream fis = new FileInputStream(file);
-					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-					BufferedReader br = new BufferedReader(isr);
+			File file = new File("data/movie/movie_list.dat");
+			try (
+				FileInputStream fis = new FileInputStream(file);
+				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+				BufferedReader br = new BufferedReader(isr);
 //				FileReader fr = new FileReader(file); 
 //				BufferedReader br = new BufferedReader(fr);
 			)
@@ -59,7 +62,9 @@ public class EDMTableResetHibernate {
 					movie.setCastsAsArray(token[2].split(","));
 					movie.setIntroduction(token[3]);
 					movie.setCompany(token[4]);
-					movie.setTrailerLink(token[5].trim().split(","));
+					System.out.println(token[5]);
+					String[] links = token[5].split(",");
+					movie.setTrailerLink(links);
 					movie.setDuration(Integer.parseInt(token[6]));
 					movie.setOpeningDate(sdf.parse(token[7]));
 					movie.setEndingDate(sdf.parse(token[8]));
