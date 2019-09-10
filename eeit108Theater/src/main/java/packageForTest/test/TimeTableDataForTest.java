@@ -49,7 +49,8 @@ public class TimeTableDataForTest {
 			System.out.println("========新增timeTable失敗============");
 			e.printStackTrace();
 		}
-
+		session.close();
+		factory.close();
 	}
 
 }
