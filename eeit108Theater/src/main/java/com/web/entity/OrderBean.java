@@ -32,7 +32,7 @@ public class OrderBean {
 	private String orderId;
 	private Timestamp orderTime;
 	private Double totalPrice;
-	@NotNull
+
 	@Column(name = "fk_owner_id")
 	private String ownerId;//not owner, cannot find owner object directly
 	private String ownerName;

@@ -33,7 +33,6 @@ public class OrderItemBean {
 	@NotNull
 	private String type;//ticket, drink, or food etc.
 	
-	@NotNull
 	@Column(name = "fk_order_id")
 	private String orderId;//not owner, cannot find Order object directly
 	

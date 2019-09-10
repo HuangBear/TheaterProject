@@ -26,12 +26,11 @@ public class ArticleBean {
 	private Date postTime;
 	private Integer likeCount;
 	private Integer dislikeCount;
-	@NotNull
+
 	@ManyToOne
 	@JoinColumn(name = "fk_author_id")
 	private MemberBean author;//B, M2O
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O

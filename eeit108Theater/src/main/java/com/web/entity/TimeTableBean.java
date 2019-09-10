@@ -42,12 +42,10 @@ public class TimeTableBean {
 	@NotNull
 	private String theater; //1廳, A廳, B廳
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O
 	
-	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_timeTable_id", referencedColumnName = "timeTable_no")
 	private Set<SeatBean> seats; //U, O2M

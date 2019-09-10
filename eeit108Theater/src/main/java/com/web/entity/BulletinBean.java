@@ -31,7 +31,6 @@ public class BulletinBean {
 	private Boolean discontPrice;
 	private Boolean status;//是否刪除
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;

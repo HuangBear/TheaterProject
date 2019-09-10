@@ -29,7 +29,6 @@ public class SeatBean {
 	@Column(name = "fk_order_id")
 	private String orderId; //not owner, cannot find order object directly
 	
-	@NotNull
 	@Column(name = "fk_timeTable_id")
 	private Integer timeTableId; //not owner, cannot find timetable object directly
 	
