@@ -51,7 +51,7 @@ public class movieController {
 
 	@RequestMapping(value = "/getPicture/{no}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer no) throws SQLException {
-		String filePath = "data/images/404.png";
+		String filePath = "data/movie/images/404.png";
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
 		String filename = "";

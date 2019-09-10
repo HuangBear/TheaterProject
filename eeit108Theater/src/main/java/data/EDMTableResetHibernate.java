@@ -38,7 +38,7 @@ public class EDMTableResetHibernate {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			File file = new File("data/movie_list.dat");
+			File file = new File("data/movie/movie_list.dat");
 			try (
 				FileInputStream fis = new FileInputStream(file);
 				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
