@@ -10,10 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.sql.Blob;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,31 +22,33 @@ import com.web.entity.MovieBean;
 import data.util.HibernateUtils;
 import data.util.SystemUtils2018;
 
-
-
 public class EDMTableResetHibernate {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
-	public static void main(String args[]) {
+	public static void main(String args[])
+	{
 
 		String line = "";
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
-		try {
+		try
+		{
 			tx = session.beginTransaction();
 			File file = new File("data/movie_list.dat");
-			try (
-				FileInputStream fis = new FileInputStream(file);
-				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-				BufferedReader br = new BufferedReader(isr);
+			try (FileInputStream fis = new FileInputStream(file);
+					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+					BufferedReader br = new BufferedReader(isr);
 //				FileReader fr = new FileReader(file); 
 //				BufferedReader br = new BufferedReader(fr);
-			) {
-				while ((line = br.readLine()) != null) {
+			)
+			{
+				while ((line = br.readLine()) != null)
+				{
 					System.out.println("line=" + line);
 					// 去除 UTF8_BOM: \uFEFF
-					if (line.startsWith(UTF8_BOM)) {
+					if (line.startsWith(UTF8_BOM))
+					{
 						line = line.substring(1);
 					}
 					String[] token = line.split("\\|");
@@ -70,19 +70,27 @@ public class EDMTableResetHibernate {
 					session.save(movie);
 					System.out.println("新增一筆movie紀錄成功");
 				}
+				
+				
+				
+				
+
 				// 印出資料新增成功的訊息
-				//session.flush();
+				// session.flush();
 				System.out.println("movie資料新增成功");
 				tx.commit();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				e.printStackTrace();
 				tx.rollback();
 			}
-			
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		factory.close();
-	
-}
+
+	}
+
 }

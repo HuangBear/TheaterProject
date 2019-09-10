@@ -42,6 +42,9 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/assets/css/**").addResourceLocations("/WEB-INF/views/assets/css/");
+		registry.addResourceHandler("/assets/js/**").addResourceLocations("/WEB-INF/views/assets/js/");
+		registry.addResourceHandler("/assets/sass/**").addResourceLocations("/WEB-INF/views/assets/sass/");
+		registry.addResourceHandler("/assets/webfonts/**").addResourceLocations("/WEB-INF/views/assets/webfonts/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
 	}
 	

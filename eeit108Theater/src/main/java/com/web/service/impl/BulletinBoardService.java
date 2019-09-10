@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.dao.BulletinDao;
 import com.web.entity.BulletinBean;
 
+
 @Service
 public class BulletinBoardService {
 	@Autowired
