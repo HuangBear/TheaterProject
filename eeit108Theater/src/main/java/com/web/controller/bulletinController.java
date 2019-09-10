@@ -21,7 +21,7 @@ public class bulletinController {
 	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET)
 	public String allBulletinList(Model model)
 	{
-		List<BulletinBean> list = service.getAllbulletin();
+		List<BulletinBean> list = service.getAllBulletin();
 		model.addAttribute("allBulletin", list);
 		return "allBulletin";
 	}
