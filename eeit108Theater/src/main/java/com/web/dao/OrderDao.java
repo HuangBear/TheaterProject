@@ -23,7 +23,7 @@ public interface OrderDao {
 	// query
 	OrderBean getOrderByNo(Integer orderNo);
 
-	List<OrderBean> getOrdersByOwner(Integer memberNo);
+	List<OrderBean> getOrdersByOwnerId(Integer memberId);
 
 	List<OrderBean> getAllOrders();
 

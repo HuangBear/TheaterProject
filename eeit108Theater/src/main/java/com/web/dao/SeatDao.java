@@ -24,10 +24,12 @@ public interface SeatDao {
 
 	// query
 	SeatBean getSeatByNo(Integer seatNo);
+	
+	SeatBean getSeat(Integer timeTableId, String row, String column);
 
 	List<SeatBean> getAllSeats();
 
 	List<SeatBean> getAllAvailable();
 
-	List<SeatBean> getSeatsByTimeTable(Integer timeTableId);
+	List<SeatBean> getSeatsByTimeTable(Integer timeTableNo);
 }

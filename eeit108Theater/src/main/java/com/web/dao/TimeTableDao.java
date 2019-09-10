@@ -25,6 +25,8 @@ public interface TimeTableDao {
 
 	List<TimeTableBean> getTimeTablesByMovie(String movieName);
 
+	List<TimeTableBean> getTimeTablesByMovieVersion(String movieName, String version);
+
 	List<TimeTableBean> getAllTimeTables();
 
 	List<TimeTableBean> getAllAvailable();

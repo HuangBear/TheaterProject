@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,8 @@ public class OrderBean {
 	private Integer no;
 	private Boolean available;
 	private String orderId;
-	private Double totalPrice;	
+	private Timestamp orderTime;
+	private Double totalPrice;
 	@NotNull
 	@Column(name = "fk_owner_id")
 	private String ownerId;//not owner, cannot find owner object directly
@@ -111,10 +113,10 @@ public class OrderBean {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
-//	public String getStatus() {
-//		return status;
-//	}
-//	public void setStatus(String status) {
-//		this.status = status;
-//	}
+	public Timestamp getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(Timestamp orderTime) {
+		this.orderTime = orderTime;
+	}
 }

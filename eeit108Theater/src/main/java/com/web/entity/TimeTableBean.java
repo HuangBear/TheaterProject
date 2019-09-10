@@ -37,6 +37,10 @@ public class TimeTableBean {
 	private Integer duration;
 	@NotNull
 	private Date endTime;
+	@NotNull
+	private String version;//2D, 3D, or IMAX
+	@NotNull
+	private String theater; //1廳, A廳, B廳
 	
 	@NotNull
 	@ManyToOne
@@ -95,5 +99,17 @@ public class TimeTableBean {
 	}
 	public void setDuration(Integer duration) {
 		this.duration = duration;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getTheater() {
+		return theater;
+	}
+	public void setTheater(String theater) {
+		this.theater = theater;
 	}
 }
