@@ -39,9 +39,14 @@ public class movieController {
 		model.addAttribute("movies", list);
 		return "movie";
 	}
-	@RequestMapping("/")
-	public String home() {
-		return "index";
+	
+	@RequestMapping("/movieTimes_{no}")
+	public String movieTimes(Model model, @PathVariable Integer no) {
+		MovieBean movie = service.getMovieById(no);
+		String[] string = movie.getTrailerLink();
+		model.addAttribute("link", string[0]);
+		model.addAttribute("movie", movie);
+		return "movieTimes";
 	}
 	
 	@RequestMapping(value = "/getPicture/{no}", method = RequestMethod.GET)
