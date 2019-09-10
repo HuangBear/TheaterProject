@@ -28,6 +28,8 @@ public class OrderItemBean {
 	private Double unitPrice;
 	@NotNull
 	private Integer quantity;
+	
+	private Double sumPrice;
 	@NotNull
 	private String type;//ticket, drink, or food etc.
 	
@@ -76,5 +78,11 @@ public class OrderItemBean {
 	}
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+	public Double getSumPrice() {
+		return sumPrice;
+	}
+	public void setSumPrice(Double sumPrice) {
+		this.sumPrice = sumPrice;
 	}
 }
