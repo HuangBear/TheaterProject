@@ -12,6 +12,7 @@ import com.web.dao.BulletinDao;
 import com.web.entity.BulletinBean;
 
 
+
 @Repository
 public class BulletinDaoImpl implements BulletinDao {
 
@@ -48,5 +49,9 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		session.delete(bullentin_no);
 	}
+
+
+
+
 
 }
