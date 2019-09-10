@@ -42,57 +42,79 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	}
 
 	@Override
-	public int deleteOrderItemsByOrderNo(Integer orderNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteOrderItemsByOrderId(String orderId) {
+		Session session = factory.getCurrentSession();
+		String hql = "DELETE OrderItemBean oi WHERE oi.orderId = :oid";
+		Integer cnt = session.createQuery(hql).setParameter("oid", orderId).executeUpdate();	
+		return cnt;
 	}
 
 	@Override
 	public int deleteAll() {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = factory.getCurrentSession();
+		String hql = "DELETE OrderItemBean";
+		Integer cnt = session.createQuery(hql).executeUpdate();
+		
+		return cnt;
 	}
 
 	@Override
 	public int updateOrderItem(OrderItemBean orderItem) {
-		// TODO Auto-generated method stub
+		Session session = factory.getCurrentSession();
+		if(isExist(orderItem.getNo())) {
+			session.update(orderItem);
+			return 1;
+		}
+		//沒得更新，回傳0
 		return 0;
 	}
 
 	@Override
 	public int discontinueAll() {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "UPDATE OrderItem oi SET oi.available = :false";
+		Session session = factory.getCurrentSession();
+		Integer cnt = session.createQuery(hql).setParameter("false", Boolean.FALSE).executeUpdate();
+		return cnt;
 	}
 
 	@Override
 	public int continueAll() {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "UPDATE OrderItem oi SET oi.available = :true";
+		Session session = factory.getCurrentSession();
+		Integer cnt = session.createQuery(hql).setParameter("true", Boolean.TRUE).executeUpdate();
+		return cnt;
 	}
 
 	@Override
 	public OrderItemBean getOrderItemByNo(Integer orderItemNo) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM OrderItem oi WHERE oi.no = :oino";
+		Session session = factory.getCurrentSession();
+		OrderItemBean oi = (OrderItemBean) session.createQuery(hql).setParameter("oino", orderItemNo).uniqueResult();
+		return oi;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderItemBean> getAllOrderItems() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM OrderItemBean";
+		List<OrderItemBean> list = factory.getCurrentSession().createQuery(hql).list();
+		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderItemBean> getAllAvailable() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM OrderItemBean oi WHERE oi.available = TRUE";
+		List<OrderItemBean> list = factory.getCurrentSession().createQuery(hql).list();
+		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderItemBean> getOrderItemsByOrderNo(Integer orderNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderItemBean> getOrderItemsByOrderId(String orderId) {
+		String hql = "FROM OrderItemBean oi WHERE oi.orderId = :oid";
+		List<OrderItemBean> list = factory.getCurrentSession().createQuery(hql).list();
+		return list;
 	}
 
 }

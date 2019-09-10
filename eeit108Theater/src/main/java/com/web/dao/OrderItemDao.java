@@ -11,7 +11,7 @@ public interface OrderItemDao {
 	// disable
 	int deleteOrderItemByNo(Integer orderItemNo);
 
-	int deleteOrderItemsByOrderNo(Integer orderNo);
+	int deleteOrderItemsByOrderId(String orderId);
 
 	int deleteAll();
 
@@ -29,5 +29,5 @@ public interface OrderItemDao {
 
 	List<OrderItemBean> getAllAvailable();
 
-	List<OrderItemBean> getOrderItemsByOrderNo(Integer orderNo);
+	List<OrderItemBean> getOrderItemsByOrderId(String orderId);
 }

@@ -7,18 +7,19 @@
 <link rel="stylesheet"
     href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>Products</title>
-<link rel='stylesheet' href='${pageContext.request.contextPath}/css/styles.css'  type="text/css" />
 </head>
 <body>
+	<div style = 'width: 80%; margin: auto;'>
     <c:forEach var='movie' items='${movies}'>
-        <div class="caption">
-			<div style = 'width: 700px; height: 700px;'>
-            	<img src = "<c:url value = '/getPicture/${movie.no}'/>" >
-            	<b style='font-size: 16px;'>${movie.movieName}</b>
-            	<b style = 'font-size: 16px;'>${movie.trailerLink}</b>
-            	<b style = 'font-size: 16px;'>${movie.casts}</b>  	
-            </div>         
-        </div>    
+        <div style = 'background-color: pink;'>
+			<div style = 'width: 130px; height: 310px; margin: 15px 8px 15px 8px; float: left; display: inline-block; text-align: center; border: 1px solid black; padding-top: 40px;'>
+            	<img src = "<c:url value = '/getPicture/${movie.no}'/>" style = 'width: 100px; height: 120px;'><br>
+            	<b style='font-size: 16px;'>${movie.movieName}</b><br>
+            	<b style = 'font-size: 16px'>${movie.openingDate}上映</b><br>
+            	<a href = "<c:url value = '/movieTimes_${movie.no}' />" >立即訂票</a>
+            </div>       
+        </div>
     </c:forEach>
+    </div>
 </body>
 </html>
