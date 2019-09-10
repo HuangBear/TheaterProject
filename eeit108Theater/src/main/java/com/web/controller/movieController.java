@@ -40,11 +40,6 @@ public class movieController {
 		return "movie";
 	}
 
-	@RequestMapping("/")
-	public String home() {
-		return "index";
-	}
-
 	@RequestMapping("/movieTimes_{no}")
 	public String movieTimes(Model model, @PathVariable Integer no) {
 		MovieBean movie = service.getMovieById(no);

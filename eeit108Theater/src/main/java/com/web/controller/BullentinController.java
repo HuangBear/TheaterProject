@@ -24,9 +24,9 @@ public class BullentinController {
 		return "Bullentin";
 	}
 	
-//	@RequestMapping("/")
-//	public String index(Model model)
-//	{
-//		return "index";
-//	}
+	@RequestMapping("/")
+	public String index(Model model)
+	{
+		return "index";
+	}
 }
