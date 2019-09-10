@@ -53,7 +53,7 @@ public class OrderController {
 					ob.setItemName(key);
 					Integer unit = Integer.valueOf(readOnly.get(key)[0]);
 					ob.setQuantity(unit == null ? 0 : unit);
-					ob.setUnitPrice(200.2);
+					ob.setUnitPrice(service.getProductByName(key).getPrice());
 					ob.setSumPrice(ob.getQuantity() * ob.getUnitPrice());					
 					list.add(ob);
 				}
