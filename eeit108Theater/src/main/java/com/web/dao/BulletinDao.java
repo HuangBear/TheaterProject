@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.web.entity.BulletinBean;
 
+
+
 public interface BulletinDao {
 
 	void saveBulletin(BulletinBean bb);

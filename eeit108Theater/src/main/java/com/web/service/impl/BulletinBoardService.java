@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 import com.web.dao.BulletinDao;
 import com.web.entity.BulletinBean;
 
+
 @Service
 public class BulletinBoardService {
 	@Autowired
 	BulletinDao dao;
 
 	@Transactional
-	public List<BulletinBean> getAllBulletin() {
+	public List<BulletinBean> getAllbulletin() {
 		return dao.getAllBulletin();
 	}
 	

@@ -20,7 +20,7 @@ import com.sun.istack.NotNull;
 public class BulletinBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "bulletin_no")
+	@Column(name = "Bulletin_no")
 	private Integer no;
 	private Boolean available;
 	private String tittle;
