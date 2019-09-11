@@ -30,7 +30,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>${loginMember.memberName}</td>
+						<td>${loginMember.name}</td>
 						<td>${loginMember.email}</td>
 						<td>${loginMember.memberId}</td>
 
@@ -79,8 +79,15 @@
 							<td>${items.sumPrice}</td>
 						</tr>
 					</c:forEach>
+					<tr>
+						<th scope="col">總計</th>
+						<td>${order.totalPrice}</td>
+					<tr>
 				</tbody>
 			</table>
+			<a class="btn" href="<c:url value='/order/seat'/>">確認</a>
+			<a class="btn" href="<c:url value='/order/showProducts'/>">返回</a>
+			
 		</div>
 	</div>
 

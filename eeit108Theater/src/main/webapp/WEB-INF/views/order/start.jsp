@@ -7,12 +7,12 @@
 <title>START</title>
 </head>
 <body>
-	<p/>Hi! {loginMember.name} 
+	<p/>Hi! ${loginMember.name} 
 	<p/>Let's start! 
-	<p/>Movie Name = {timeTable.movie.movieName} 
-	<p/>Start at = {timeTable.startTime} 
-	<p/>Duration ={timeTable.duration}
+	<p/>Movie Name = ${timeTable.movie.movieName} 
+	<p/>Start at = ${timeTable.startTime} 
+	<p/>Duration = ${timeTable.duration}
 
-	<a href="<c:url value='/showProducts'/>">START</a>
+	<a href="<c:url value='/order/showProducts'/>">START</a>
 </body>
 </html>

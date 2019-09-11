@@ -39,12 +39,15 @@ public class OrderController {
 
 	@RequestMapping({"","/"})
 	public String orderBegin(Model model, HttpSession session) {
+		
+		
+	
 		System.out.println("====orderBegin Start");
 		TimeTableBean tb = pServ.getTimeTableByNo(1);
 		System.out.println("====TimeTableBean Got");
 		MemberBean mb = pServ.getMemberByNo(1);
 		System.out.println("====MemberBean Got");
-
+		
 		session.setAttribute("timeTable", tb);
 		session.setAttribute("loginMember", mb);
 		return pac + "start";
@@ -52,6 +55,17 @@ public class OrderController {
 
 	@RequestMapping("/showProducts")
 	public String showProductByType(Model model, HttpSession session) {		
+		OrderBean ob = new OrderBean();
+		ob.setAvailable(true);
+		ob.setTimeTable((TimeTableBean) session.getAttribute("timeTable"));
+		MemberBean mb = (MemberBean) session.getAttribute("loginMember");
+		if (mb != null) {
+			ob.setOwnerEmail(mb.getEmail());
+			ob.setOwnerId(mb.getMemberId());
+			ob.setOwnerName(mb.getName());
+		}
+		session.setAttribute("order", ob);
+		
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getProductsByType("ticket"));
@@ -61,18 +75,11 @@ public class OrderController {
 	@RequestMapping("/makeOrder")
 	public String showOrder(Model model, HttpServletRequest req, HttpSession session) {
 		
-		OrderBean ob = new OrderBean();
-		ob.setAvailable(true);
-		ob.setTimeTable(pServ.getTimeTableByNo(1));
-		MemberBean mb = (MemberBean) session.getAttribute("loginMember");
-		if (mb != null) {
-			ob.setOwnerEmail(mb.getEmail());
-			ob.setOwnerId(mb.getMemberId());
-			ob.setOwnerName(mb.getName());
-		}
-		session.setAttribute("order", ob);
+		OrderBean ob = (OrderBean) session.getAttribute("order");
+		
 		Set<OrderItemBean> set = new HashSet<>();
 		ob.setOrderItems(set);
+		ob.setTotalPrice(0.0);
 		
 		
 		System.out.println("======showOrder");
@@ -93,6 +100,7 @@ public class OrderController {
 					oib.setQuantity(unit == null ? 0 : unit);
 					oib.setUnitPrice(pServ.getProductByName(key).getPrice());
 					oib.setSumPrice(oib.getQuantity() * oib.getUnitPrice());
+					ob.setTotalPrice(ob.getTotalPrice() + oib.getSumPrice());
 					list.add(oib);
 					set.add(oib);
 				}
@@ -100,7 +108,7 @@ public class OrderController {
 			System.out.println("=====endFor");
 		}
 		model.addAttribute("orderItems", list);
-		model.addAttribute("order", ob);
+		//model.addAttribute("order", ob);
 		System.out.println("======RETURN showOrder");
 		return pac + "orderItems";
 	}

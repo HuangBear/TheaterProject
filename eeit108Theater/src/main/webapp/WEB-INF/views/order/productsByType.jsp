@@ -48,7 +48,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>${loginMember.memberName}</td>
+						<td>${loginMember.name}</td>
 						<td>${loginMember.email}</td>
 						<td>${loginMember.memberId}</td>
 
