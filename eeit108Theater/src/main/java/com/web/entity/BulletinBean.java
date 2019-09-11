@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 
 @Entity
 @Table(name = "Bulletin")
@@ -22,7 +24,7 @@ public class BulletinBean implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
 	private Integer no;
-	private Boolean available;//是否過期
+	private Boolean available;// 是否過期
 	private String tittle;
 	private String context;
 	private Date startDate;
@@ -30,14 +32,16 @@ public class BulletinBean implements Serializable{
 	private Date postTime;
 	private Boolean discontTick;
 	private Boolean discontPrice;
-	private Boolean status;//是否刪除
+	private Boolean status;// 是否刪除
+	@Transient
+	private String imgUrlString;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
-	
+
 	private Blob bulletinImage;
-	
+
 	public Blob getBulletinImage()
 	{
 		return bulletinImage;
@@ -156,6 +160,16 @@ public class BulletinBean implements Serializable{
 	public void setAvailable(Boolean available)
 	{
 		this.available = available;
+	}
+
+	public String getImgUrlString()
+	{
+		return imgUrlString;
+	}
+
+	public void setImgUrlString(String imgUrlString)
+	{
+		this.imgUrlString = imgUrlString;
 	}
 
 }

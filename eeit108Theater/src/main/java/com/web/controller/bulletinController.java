@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.web.entity.BulletinBean;
 import com.web.service.impl.BulletinBoardService;
 
-
 @Controller
 public class bulletinController {
 
@@ -25,15 +24,13 @@ public class bulletinController {
 		model.addAttribute("allBulletin", list);
 		return "allBulletin";
 	}
-	
-	
+
 	@RequestMapping(value = "/newBulletin", method = RequestMethod.GET)
 	public String newBulletinList(Model model)
 	{
-		BulletinBean bb=new BulletinBean();
-		model.addAttribute("newBulletin",bb);
+		BulletinBean bb = new BulletinBean();
+		model.addAttribute("newBulletin", bb);
 		return "newBulletin";
 	}
-
 
 }
