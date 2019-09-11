@@ -1,0 +1,128 @@
+.st-actionContainer {
+	z-index: 9999;
+	position: fixed;
+	display: inline-block;
+}
+
+.right-bottom {
+	bottom: 2em;
+	right: 2em;
+	float: right !important;
+}
+
+.left-bottom {
+	bottom: 2em;
+	left: 2em;
+	float: left !important;
+}
+
+div.st-actionContainer li{
+	list-style: none;
+}
+
+.st-panel{
+	width: auto;
+	margin-bottom: 10%;
+	background-color: #757575;
+	color: white;
+	border: 2px solid #eee;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	border-radius: 5px;
+	display: none;
+}
+
+div.st-panel{
+	font-family: Roboto;
+	font-size: 15px;
+	
+}
+
+.st-panel-header{
+	background-color: white;
+	color: black;
+	padding: 3px;
+}
+
+.st-panel-contents{
+	padding: 15px;
+}
+
+.st-button-main{
+	padding-top:12px;
+	color:#ffffff;
+	font-size:24px;
+	text-align:center;
+	line-height:60px;
+	cursor:pointer;
+}
+
+.st-btn-container{
+	background:#D15D36;
+	width:60px;
+	height:60px;
+	border-radius:100%;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.rotateForward{
+    animation-name:             rotateF; 
+    animation-duration:         0.65s; 
+    animation-iteration-count:  1;
+
+}
+
+@keyframes rotateF {
+  from {
+            transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+  }
+  to { 
+            transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+  }
+}
+
+.rotateBackward{
+    animation-name:             rotateB; 
+    animation-duration:         0.65s; 
+    animation-iteration-count:  1;
+
+}
+
+@keyframes rotateB {
+  from {
+            transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+  }
+  to { 
+            transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+  }
+}
+
+/*option grid in panel*/
+
+.grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.gridChild {
+	flex: 0 0 33.33%;
+	height: 50px;
+	background-color: #999;
+	text-align:center;
+	text-decoration: none;
+	color: white;
+	line-height:50px;
+}
+
+.gridChild:hover {
+	background-color: #eee;
+	color: black;
+}

@@ -1,5 +1,7 @@
 package com.web.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,9 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "itemName" }) 
 				}
 		)
-public class OrderItemBean {
+public class OrderItemBean implements Serializable{
+	private static final long serialVersionUID = 123492023222156442L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderItem_no")
@@ -33,7 +37,6 @@ public class OrderItemBean {
 	@NotNull
 	private String type;//ticket, drink, or food etc.
 	
-	@NotNull
 	@Column(name = "fk_order_id")
 	private String orderId;//not owner, cannot find Order object directly
 	

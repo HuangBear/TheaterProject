@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -12,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "Bulletin")
-public class BulletinBean {
+public class BulletinBean implements Serializable{
+	private static final long serialVersionUID = 8705745439713457086L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
@@ -33,7 +36,6 @@ public class BulletinBean {
 	@Transient
 	private String imgUrlString;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
