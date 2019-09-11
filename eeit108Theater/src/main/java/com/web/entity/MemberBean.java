@@ -41,7 +41,7 @@ public class MemberBean {
 	private String phoneNum;
 	private Date birthday;
 	private Blob memberImage;
-	private boolean commentPermission;
+	private Boolean commentPermission;
 	private Integer banCounter;	
 	@NotNull
 	private Date registerTime;
