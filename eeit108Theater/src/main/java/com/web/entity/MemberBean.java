@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 import java.util.Set;
@@ -24,7 +25,9 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "email" })
 				}
 		)
-public class MemberBean {
+public class MemberBean implements Serializable{
+	private static final long serialVersionUID = -9005818506738054187L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_no")
@@ -127,10 +130,10 @@ public class MemberBean {
 	public void setArticles(Set<ArticleBean> articles) {
 		this.articles = articles;
 	}
-	public boolean isCommentPermission() {
+	public Boolean getCommentPermission() {
 		return commentPermission;
 	}
-	public void setCommentPermission(boolean commentPermission) {
+	public void setCommentPermission(Boolean commentPermission) {
 		this.commentPermission = commentPermission;
 	}
 	public Integer getBanCounter() {

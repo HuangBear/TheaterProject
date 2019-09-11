@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -16,7 +17,9 @@ import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "Bulletin")
-public class BulletinBean {
+public class BulletinBean implements Serializable{
+	private static final long serialVersionUID = 8705745439713457086L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
