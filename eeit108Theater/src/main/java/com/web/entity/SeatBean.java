@@ -1,5 +1,7 @@
 package com.web.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,9 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "row_X", "column_Y", "fk_timeTable_id" }) 
 				}
 		)
-public class SeatBean {
+public class SeatBean implements Serializable{
+	private static final long serialVersionUID = 1446341868256342450L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "seat_no")
