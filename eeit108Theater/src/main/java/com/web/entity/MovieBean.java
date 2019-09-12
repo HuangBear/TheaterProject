@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 //import java.sql.Date;
 import java.util.Date;
@@ -12,15 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "Movie")
-public class MovieBean {
+public class MovieBean implements Serializable{
+	private static final long serialVersionUID = 8108696626426463640L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_no")

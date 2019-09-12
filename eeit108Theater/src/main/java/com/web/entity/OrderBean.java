@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -14,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
@@ -23,7 +23,9 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "orderId" }) 
 				}
 		)
-public class OrderBean {
+public class OrderBean implements Serializable{
+	private static final long serialVersionUID = -2065809342946682382L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_no")
@@ -32,7 +34,7 @@ public class OrderBean {
 	private String orderId;
 	private Timestamp orderTime;
 	private Double totalPrice;
-	@NotNull
+
 	@Column(name = "fk_owner_id")
 	private String ownerId;//not owner, cannot find owner object directly
 	private String ownerName;

@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -24,7 +25,9 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "email" })
 				}
 		)
-public class EmployeeBean {
+public class EmployeeBean implements Serializable{
+	private static final long serialVersionUID = 6857008039894849063L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "employee_no")

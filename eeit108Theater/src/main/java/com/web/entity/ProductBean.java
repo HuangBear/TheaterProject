@@ -1,5 +1,7 @@
 package com.web.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,9 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "name" }) 
 				}
 		)
-public class ProductBean {
+public class ProductBean implements Serializable{
+	private static final long serialVersionUID = 4418348283179409378L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "product_no")
