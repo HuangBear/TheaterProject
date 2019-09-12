@@ -1,5 +1,6 @@
 package com.web.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -27,13 +28,51 @@ public class EmpController {
 	ServletContext context;
 	@Autowired
 	EmployeeService service;
+	
 
 	@RequestMapping("/index2")
 	public String backstageindex(Model model) {
 
 		return "index2";
 	}
+	
+	@RequestMapping("/EmpLogin")
+	public String backstageLogin(Model model) {
 
+		return "EmpLogin";
+	}
+	
+	@RequestMapping(value = "/EmpLogin", method = RequestMethod.GET)
+	public String EmpLogin(Model model) {
+		EmployeeBean employeeBean = new EmployeeBean();
+		model.addAttribute("employeeBean", employeeBean);
+		return "EmpLogin";
+	}
+	
+	@RequestMapping(value = "/EmpLogin", method = RequestMethod.POST)
+	public String EmpLoginProcess(@ModelAttribute("employeeBean")EmployeeBean employeeBean , HttpServletRequest request,
+			RedirectAttributes redirectAttributes,Model model, 
+			HttpSession session)  {
+		
+		session = request.getSession();
+//		model.addAttribute("employeeBean", employeeBean);
+		EmployeeBean LoginEB=null;
+		LoginEB=service.checkEmailPassword(employeeBean.getEmail(), employeeBean.getPassword());
+		if(LoginEB!=null) {
+			session.setAttribute("memberName", LoginEB.getName());
+			session.setAttribute("memberId", LoginEB.getEmployeeId());
+			session.setAttribute("logout", "登出");
+			return "redirect:/index2";
+		}
+		else
+		return "EmpLogin";
+	}
+	@RequestMapping("EmpLogout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:/EmpLogin";
+	}
 	@RequestMapping("/empIndex_include2")
 	public String list1(Model model) {
 		List<EmployeeBean> list = service.getAllEmployees();
@@ -47,14 +86,14 @@ public class EmpController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/empInsert_include")
-	public String method0(Model model) {
+	public String AddEmpGet(Model model) {
 		EmployeeBean employeeBean = new EmployeeBean();
 		model.addAttribute("employeeBean", employeeBean);
 		return "/empInsert_include";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/empInsert_include")
-	public String method1(@ModelAttribute("employeeBean") EmployeeBean employeeBean,
+	public String AddEmpPost(@ModelAttribute("employeeBean") EmployeeBean employeeBean,
 			Model model,RedirectAttributes redirectAttributes,BindingResult result, 
 			HttpServletRequest request, HttpSession session) {
 		String[] suppressedFields = result.getSuppressedFields();
@@ -81,7 +120,7 @@ public class EmpController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/EmpUpdate")
-	public String method2(@RequestParam(value = "pk",required = false)Integer pk,Model model) {
+	public String editEmpGet(@RequestParam(value = "pk",required = false)Integer pk,Model model) {
 		System.out.println(pk);
 		
 		EmployeeBean eb = service.findByPrimaryKey(pk);
@@ -97,7 +136,7 @@ public class EmpController {
 		return "EmpUpdate";
 	}
 	@RequestMapping(method = RequestMethod.POST, value = "/EmpUpdate")
-	public String method3(@RequestParam(value = "pk",required = false)Integer pk,
+	public String editEmpPost(@RequestParam(value = "pk",required = false)Integer pk,
 			@ModelAttribute("employeeBean") EmployeeBean employeeBean, Model model,BindingResult result,
 			RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
 		String[] suppressedFields = result.getSuppressedFields();
@@ -106,10 +145,11 @@ public class EmpController {
 		    StringUtils.arrayToCommaDelimitedString(suppressedFields));
 		}
 		if (true) {
-			employeeBean=service.findByPrimaryKey(pk);
+			//employeeBean=service.findByPrimaryKey(pk);
 			redirectAttributes.addFlashAttribute("name", employeeBean.getName());
 			redirectAttributes.addFlashAttribute("welcome", " 更新成功");
 			session.setAttribute("AAA", employeeBean.getEmail());
+			employeeBean.setNo(pk);
 			service.updateEmp(employeeBean);
 			return "redirect:/empIndex_include2";
 		} 

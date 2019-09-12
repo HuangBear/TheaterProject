@@ -28,7 +28,14 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public void updateEmp(EmployeeBean empBean) {
 		
-		employeeDao.updateEmployee(empBean);
+		EmployeeBean oldEmpBean=employeeDao.getEmployeeByNo(empBean.getNo());
+		oldEmpBean.setName(empBean.getName());
+		oldEmpBean.setEmployeeId(empBean.getEmployeeId());
+		oldEmpBean.setEmail(empBean.getEmail());
+		oldEmpBean.setPhoneNum(empBean.getPhoneNum());
+		oldEmpBean.setPassword(empBean.getPassword());
+		oldEmpBean.setGender(empBean.getGender());
+		employeeDao.updateEmployee(oldEmpBean);
 		
 	}
 
@@ -91,6 +98,20 @@ public class EmployeeServiceImpl implements EmployeeService{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public EmployeeBean checkEmailPassword(String email, String password) {
+		EmployeeBean empBean=new EmployeeBean();
+		empBean=null;
+		List<EmployeeBean> list=employeeDao.getAllEmployees();
+		for(EmployeeBean eb:list) {
+			if(eb.getEmail().equals(email)&& eb.getPassword().equals(password)){
+				empBean=eb;
+			}
+		}
+		
+		return empBean;
 	}
 
 	

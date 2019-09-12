@@ -92,7 +92,7 @@ tr {
 				</td>
 			</tr>
 			<c:if test ='${vs.last }'>
-				<c:out value="</table>" escapeXml='false'/>
+				<c:out value="</table><hr>" escapeXml='false'/>
 			</c:if>
 		</c:forEach>
 	</c:if>
@@ -100,8 +100,22 @@ tr {
 <!-- 	EmpServlet -->
 		<input type="hidden" name="action" value="getOneEmp">
 		<input type="hidden" id="empNO" name="empNO" >
+		
 	</form>
+	<hr>
 </div>
+<footer class="w3-bottom w3-black container-fluid text-center">
+	<div>
+		<ul class="nav nav-pills w3-centered " style="display: flex;font-size:13px;justify-content: center; position: static">
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">關於我們</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">免責聲明</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">服務條款</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">隱私權聲明</a></li>
+		</ul>
+	</div>
+    <span class="text-center"><p style="font-size:10px">7-1 MOVIE 後台管理系統</p></span>
+	</div>
+</footer>
 <!-- <script type="text/javascript"> -->
 <!--  	function setFontSize(){ -->
 <!--  		document.getElementById("p1").style.fontSize="larger"; -->

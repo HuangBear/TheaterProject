@@ -15,4 +15,5 @@ public interface EmployeeService {
 	 public EmployeeBean addEmp(String name,String email,String password,String phoneNum);
 	 public Boolean checkEmpEmail(String email);
 	 public Integer save(EmployeeBean empBean);
+	 public EmployeeBean checkEmailPassword(String email, String password);
 }

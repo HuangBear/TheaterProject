@@ -112,7 +112,7 @@ float:right;
 
 				<button type="submit" class="btn btn-primary">送出</button>
 				<button type="reset" class="btn btn-primary">重填</button>
-
+				<hr>
 			</form:form>
 			<button type="button" id="oneSet" class="btn btn-success">一鍵填入</button>
 		</div>
@@ -147,7 +147,18 @@ float:right;
 <!-- 			<option value="1">停用</option> -->
 <!-- 		</select><br><br><br> -->
 	
-
+<footer class="w3-bottom w3-black container-fluid text-center">
+	<div>
+		<ul class="nav nav-pills w3-centered " style="display: flex;font-size:13px;justify-content: center; position: static">
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">關於我們</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">免責聲明</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">服務條款</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">隱私權聲明</a></li>
+		</ul>
+	</div>
+    <span class="text-center"><p style="font-size:10px">7-1 MOVIE 後台管理系統</p></span>
+	</div>
+</footer>
 
 <script src="<%=request.getContextPath()%>/js/jquery-3.2.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
