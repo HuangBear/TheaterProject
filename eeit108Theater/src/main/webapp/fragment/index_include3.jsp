@@ -333,7 +333,7 @@ nav.main-nav:hover {
 	<section class="breadBox">
 		<div class="breadNav clearfix">
 			<div class="breadList" id="breadList">
-				<a href="<%=request.getContextPath()%>/index2.jsp"
+				<a href="<%=request.getContextPath()%>/index2"
 					style="color: black; padding: 0;">HOME</a> <i
 					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i>&nbsp;&nbsp;
 			</div>

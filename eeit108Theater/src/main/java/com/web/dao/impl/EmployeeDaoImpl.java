@@ -18,8 +18,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     SessionFactory factory;
 	@Override
 	public int saveEmployee(EmployeeBean Employee) {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = factory.getCurrentSession();
+		return (int)session.save(Employee);
 	}
 
 	@Override
@@ -42,7 +42,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int updateEmployee(EmployeeBean Employee) {
-		// TODO Auto-generated method stub
+		Session session = factory.getCurrentSession();
+		session.update(Employee);
 		return 0;
 	}
 
@@ -59,9 +60,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public EmployeeBean getEmployeeByNo(Integer EmployeeNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public EmployeeBean getEmployeeByNo(Integer no) {
+		EmployeeBean eb= null;
+		//EmployeeBean eb1= null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM EmployeeBean e WHERE e.no = :pk";
+		
+		eb=(EmployeeBean)session.createQuery(hql).setParameter("pk", no).uniqueResult();
+	
+		//eb1 = session.get(EmployeeBean.class, no);
+		return eb;
 	}
 
 	@Override
@@ -91,6 +99,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List<EmployeeBean> getAllAvailable() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public EmployeeBean checkEmpEmail(String email) {
+		EmployeeBean eb= null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM EmployeeBean e WHERE e.email = :email";
+		
+		eb=(EmployeeBean)session.createQuery(hql)
+				.setParameter("email", email).uniqueResult();
+		return eb;
 	}
 
 }

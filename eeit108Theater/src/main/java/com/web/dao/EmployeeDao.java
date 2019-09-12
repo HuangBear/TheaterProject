@@ -23,6 +23,7 @@ public interface EmployeeDao {
 	int continueAll(); // 全部上架
 
 	// query
+	EmployeeBean checkEmpEmail(String email);
 
 	EmployeeBean getEmployeeByNo(Integer EmployeeNo);
 

@@ -62,50 +62,34 @@ tr {
 <body>
 <h1 style="text-align: center;margin-bottom:50px;margin-left:70px;margin-top:0px;">員工資料管理</h1>
 <div class="container" >
-<button class="btn info" onclick="javascrtpt:window.location.href='empInsert_include.jsp'">新增員工資料</button><p>
+<h4>${name}</h4>
+<h4>${welcome}</h4>
+<h6>${error}</h6>
+<button class="btn info" onclick="javascrtpt:window.location.href='empInsert_include'">新增員工資料</button><p>
 	<hr>
-<!-- 	<table id="myTable"style="width:1130px;height:600px;" border="1"> -->
-<!-- 		<thead> -->
-<!-- 			<tr> -->
-<!-- 				<th>員工編號</th> -->
-<!-- 				<th>員工姓名</th> -->
-<!--  				<th>員工密碼</th>  -->
-<!-- 				<th>員工電話</th> -->
-<!-- 				<th>員工email/帳號</th> -->
-<!-- 				<th>職等</th> -->
-<!-- 				<th>員工薪資</th> -->
-<!-- 				<th>編輯</th> -->
-<!-- 			</tr> -->
-<!-- 		</thead> -->
-<!-- 		<tbody></tbody> -->
-<!-- 		<tfoot> -->
-<!-- 			<tr> -->
-<!-- 				<th>員工編號</th> -->
-<!-- 				<th>員工姓名</th> -->
-<!--  				<th>員工密碼</th>  -->
-<!-- 				<th>員工電話</th> -->
-<!-- 				<th>員工email/帳號</th> -->
-<!-- 				<th>職等</th> -->
-<!-- 				<th>員工薪資</th> -->
-<!-- 				<th>編輯</th> -->
-<!-- 			</tr> -->
-<!-- 		</tfoot> -->
-<!-- 	</table> -->
+
 <c:if test='${empty employees}'>
 		查無會員資料<br>
 	</c:if>
 <c:if test='${not empty employees}'>
-<c:forEach var='member' varStatus='vs' items='${employees}'>
+<c:forEach var='emp' varStatus='vs' items='${employees}'>
 			<c:if test ='${vs.first }'>
 				<c:out value="<table border='1'>" escapeXml='false'/>
-				<c:out value="<tr><td>員工編號</td><td>員工email</td><td>姓名</td><td>password</td></tr>" escapeXml='false'/>
+				<c:out value="<tr><td>員工編號</td><td>姓名</td><td>員工ID</td><td>員工email</td><td>員工電話</td><td>password</td><td>EDIT</td></tr>" escapeXml='false'/>
 			</c:if>
 			
 			<tr>
-				<td>${member.no}</td>
-				<td>${member.email}</td>
-				<td>${member.name}</td>
-				<td>${member.password}</td>
+				<td>${emp.no}</td>
+				<td>${emp.name}</td>
+				<td>${emp.employeeId}</td>
+				<td>${emp.email}</td>
+				<td>${emp.phoneNum}</td>
+				<td>${emp.password}</td>
+				<td>
+				<button class="btn info"  onclick="javascrtpt:window.location.href='EmpUpdate?pk=${emp.no}'">
+				編輯員工資料
+				</button><p>
+				</td>
 			</tr>
 			<c:if test ='${vs.last }'>
 				<c:out value="</table>" escapeXml='false'/>

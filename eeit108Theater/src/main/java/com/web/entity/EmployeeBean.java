@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -46,11 +47,42 @@ public class EmployeeBean {
 	private Integer permission;
 	private Integer salary;
 	
+	@Transient
+	private String birthdayString;
 	
+	public EmployeeBean() {
+		
+	}
+	public EmployeeBean(Integer no, Boolean available, String name, @NotNull String employeeId, @NotNull String email,
+			@NotNull String password, Integer gender, String phoneNum, Date birthday, Blob employeeImage,
+			@NotNull Date registerTime, Date resignTime, Integer permission, Integer salary,
+			Set<BulletinBean> bulletins) {
+		super();
+		this.no = no;
+		this.available = available;
+		this.name = name;
+		this.employeeId = employeeId;
+		this.email = email;
+		this.password = password;
+		this.gender = gender;
+		this.phoneNum = phoneNum;
+		this.birthday = birthday;
+		this.employeeImage = employeeImage;
+		this.registerTime = registerTime;
+		this.resignTime = resignTime;
+		this.permission = permission;
+		this.salary = salary;
+		this.bulletins = bulletins;
+	}
 	@OneToMany(mappedBy = "employee")
 	private Set<BulletinBean> bulletins=new LinkedHashSet<BulletinBean>();
 	
-	
+	public EmployeeBean(String name,String email,String password,String phoneNum) {
+		this.name=name;
+		this.email=email;
+		this.password=password;
+		this.phoneNum=phoneNum;
+	}
 	public Set<BulletinBean> getBulletin()
 	{
 		return bulletins;
@@ -144,5 +176,17 @@ public class EmployeeBean {
 	}
 	public void setAvailable(Boolean available) {
 		this.available = available;
+	}
+	public String getBirthdayString() {
+		return birthdayString;
+	}
+	public void setBirthdayString(String birthdayString) {
+		this.birthdayString = birthdayString;
+	}
+	public Set<BulletinBean> getBulletins() {
+		return bulletins;
+	}
+	public void setBulletins(Set<BulletinBean> bulletins) {
+		this.bulletins = bulletins;
 	}
 }
