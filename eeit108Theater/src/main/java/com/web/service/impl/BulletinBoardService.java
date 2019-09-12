@@ -16,15 +16,27 @@ public class BulletinBoardService {
 	BulletinDao dao;
 
 	@Transactional
-	public List<BulletinBean> getAllBulletin() {
-		return dao.getAllBulletin();
+	public List<BulletinBean> getAllBulletin()
+	{
+		List<BulletinBean> list = dao.getAllBulletin();
+//		System.out.println(list.get(0).getImgUrlString());
+		for (BulletinBean bb : list)
+		{
+
+			Boolean dp = bb.getDiscontPrice();
+			Boolean dt = bb.getDiscontTick();
+			if (dp == true && dt == false)
+			{
+				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-low-price-50.png");
+			} else if (dp == false && dt == true)
+			{
+				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-pricing-50.png");
+			} else 
+			{
+				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-delete-50.png");
+			}
+		}
+		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

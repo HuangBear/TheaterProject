@@ -19,13 +19,12 @@ public interface MovieDao {
 	int continueAll(); // 全部上架
 
 	// query
-	MovieBean getMovieByNo(Integer movieNo);
+	MovieBean getMovieByNo(Integer no);
 
 	// by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
 	List<MovieBean> getReleasedMovies();
 	List<MovieBean> getComingMovies();
 	List<MovieBean> getAllMovies();
-
 	List<MovieBean> getAllAvailable();
 }

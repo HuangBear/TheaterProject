@@ -83,6 +83,12 @@ public class SeatDaoImpl implements SeatDao {
 	public SeatBean getSeatByNo(Integer seatNo) {
 		return factory.getCurrentSession().get(SeatBean.class, seatNo);
 	}
+	
+	@Override
+	public SeatBean getSeat(Integer timeTableId, String row, String column) {
+		String hql = "FROM SeatBean s WHERE s.timeTableId = :tid AND s.row = :row and s.column = :col";
+		return (SeatBean) factory.getCurrentSession().createQuery(hql).setParameter("tid", timeTableId).setParameter("row", row).setParameter("col", column).uniqueResult();
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -110,5 +116,6 @@ public class SeatDaoImpl implements SeatDao {
 		List<SeatBean> list = session.createQuery(hql).setParameter("tid", timeTableNo).list();
 		return list;
 	}
+
 
 }

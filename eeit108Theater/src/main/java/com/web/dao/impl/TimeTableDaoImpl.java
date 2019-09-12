@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.web.dao.TimeTableDao;
 import com.web.entity.TimeTableBean;
 
+@Repository
 public class TimeTableDaoImpl implements TimeTableDao{
 
 	@Autowired
@@ -110,5 +112,5 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).list();
 		return list;
 	}
-
 }
+

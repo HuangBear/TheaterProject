@@ -2,6 +2,7 @@ package packageForTest.test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,20 +25,28 @@ public class EDMTableResetHibernate {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			MemberBean mb = new MemberBean();
-			mb.setAvailable(true);
-			mb.setEmail("try@ggmail.com");
-			mb.setMemberId("a123456789");
-			mb.setPassword("Do!ng123");
 			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 
-			mb.setRegisterTime(d.parse("1999-05-12 16-52-33"));
-			session.save(mb);
+			for (int i = 0; i < 5; i++) {
+				MemberBean mb = new MemberBean();
+				mb.setAvailable(true);
+				mb.setEmail("try" + i + "@ggmail.com");
+				mb.setMemberId("a12345678" + i);
+				mb.setPassword("Do!ng123");
+				mb.setName("TESTER");
+				mb.setCommentPermission(true);
+				mb.setBanCounter(0);
+				mb.setBirthday(d.parse("1999-05-1" + i + " 16-52-03"));
+				mb.setPhoneNum("0912345678");
+				mb.setRegisterTime(new Date());
+				session.save(mb);
+			}
 			tx.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 			tx.rollback();
 		}
+		factory.close();
 	}
 
 }

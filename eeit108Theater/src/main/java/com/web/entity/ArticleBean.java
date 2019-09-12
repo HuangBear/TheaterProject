@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Article")
-public class ArticleBean {
+public class ArticleBean implements Serializable {	
+	private static final long serialVersionUID = -5704948765359503235L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "article_no")
@@ -26,12 +29,11 @@ public class ArticleBean {
 	private Date postTime;
 	private Integer likeCount;
 	private Integer dislikeCount;
-	@NotNull
+
 	@ManyToOne
 	@JoinColumn(name = "fk_author_id")
 	private MemberBean author;//B, M2O
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O
