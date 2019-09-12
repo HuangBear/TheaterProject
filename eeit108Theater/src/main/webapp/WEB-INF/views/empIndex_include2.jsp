@@ -75,7 +75,11 @@ tr {
 <c:forEach var='emp' varStatus='vs' items='${employees}'>
 			<c:if test ='${vs.first }'>
 				<c:out value="<table border='1'>" escapeXml='false'/>
-				<c:out value="<tr><td>員工編號</td><td>姓名</td><td>員工ID</td><td>員工email</td><td>員工電話</td><td>password</td><td>EDIT</td></tr>" escapeXml='false'/>
+				<c:out value="<tr><td>員工編號</td><td>姓名</td>
+				<td>員工ID</td><td>員工email</td><td>員工電話</td>
+				<td>password</td><td>工作狀態</td><td>更新資料</td>
+				<td>員工離職</td>
+				</tr>" escapeXml='false'/>
 			</c:if>
 			
 			<tr>
@@ -85,9 +89,22 @@ tr {
 				<td>${emp.email}</td>
 				<td>${emp.phoneNum}</td>
 				<td>${emp.password}</td>
+				<c:choose> 
+				<c:when test="${emp.available == true}">
+				<c:out value="<td>在職</td>" escapeXml='false'/>
+				</c:when>
+				<c:otherwise>
+                 <c:out value="<td>停權</td>" escapeXml='false'/>
+            	</c:otherwise>
+				 </c:choose>
 				<td>
 				<button class="btn info"  onclick="javascrtpt:window.location.href='EmpUpdate?pk=${emp.no}'">
 				編輯員工資料
+				</button><p>
+				</td>
+				<td>
+				<button class="btn btn-danger"  onclick="javascrtpt:window.location.href='EmpResign?pk=${emp.no}'">
+				設定離職
 				</button><p>
 				</td>
 			</tr>
@@ -122,11 +139,26 @@ tr {
 <!--  	} -->
 <!-- </script> -->
 <script> 
+
+function resignConfirm(pk1){
+	
+	if(confirm("確定要將該員工設定離職嗎?"))
+	{
+		window.location.href='';
+		}
+		else
+		{
+		
+		}
+}
+
 	$(document).ready(function(){
 		var dataJson;
 		
 		var table = $("#myTable");
 		var tbody = $("#myTable>tbody");
+		
+		
 		
 		function ajaxPost(){
 			$.post("../emp/EmpServlet",{"action":"getAllEmployees"},function(data){

@@ -44,6 +44,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int updateEmployee(EmployeeBean Employee) {
 		Session session = factory.getCurrentSession();
 		session.update(Employee);
+		
 		return 0;
 	}
 

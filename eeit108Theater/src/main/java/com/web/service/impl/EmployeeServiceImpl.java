@@ -35,10 +35,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 		oldEmpBean.setPhoneNum(empBean.getPhoneNum());
 		oldEmpBean.setPassword(empBean.getPassword());
 		oldEmpBean.setGender(empBean.getGender());
+		oldEmpBean.setAvailable(empBean.getAvailable());
 		employeeDao.updateEmployee(oldEmpBean);
 		
 	}
-
+	@Override
+	public void resignEmp(EmployeeBean empBean) {
+		EmployeeBean oldEmpBean=employeeDao.getEmployeeByNo(empBean.getNo());
+		oldEmpBean.setAvailable(false);
+		oldEmpBean.setResignTime(new Date());;
+		employeeDao.updateEmployee(oldEmpBean);
+	}
 	@Override
 	public void deleteEmp(Integer no) {
 		// TODO Auto-generated method stub
@@ -87,8 +94,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 				e.printStackTrace();
 			}
 			empBean.setRegisterTime(new Date()); //set 員工註冊時間 (熊設計的表格是設定not null 一定要填)
-			empBean.setAvailable(true); //set 員工Available 預設true
+			empBean.setAvailable(true); //set 員工Available 預設true:在職 false:停權
 			empBean.setPermission(1); //set 員工Permission 預設1
+			//empBean.setSalary(0);; //set 員工Salary 預設0
 			//save 員工時 如果想要依照需求額外儲存內容 可加在下面
 			
 			employeeDao.saveEmployee(empBean);
@@ -113,6 +121,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 		
 		return empBean;
 	}
+
+	
 
 	
 

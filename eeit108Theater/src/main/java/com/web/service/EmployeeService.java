@@ -9,6 +9,7 @@ public interface EmployeeService {
 
 	 void insertEmp(EmployeeBean empBean);
 	 void updateEmp(EmployeeBean empBean);
+	 void resignEmp(EmployeeBean empBean);
 	 void deleteEmp(Integer no);
 	 EmployeeBean findByPrimaryKey(Integer no);
 	 List<EmployeeBean> getAllEmployees();

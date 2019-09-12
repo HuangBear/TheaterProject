@@ -66,10 +66,11 @@ body {
 		<div class="container" style="overflow: hidden">
 			<span class="w3-jumbo glfont">7-1 後台管理系統</span>
 		</div>
+		<br>
 	<div style="text-align: center;color: red;">
 	<h4>${name}</h4>
 	<h4>${welcome}</h4>
-	<h6>${error}</h6>
+	<h4  class="text-white">${error}</h4>
 	<h6>${reason}</h6>
 	</div>
 	<br>

@@ -65,7 +65,8 @@ public class EmpController {
 			return "redirect:/index2";
 		}
 		else
-		return "EmpLogin";
+			redirectAttributes.addFlashAttribute("error", "登錄失敗，帳號或密碼錯誤");
+			return "redirect:/EmpLogin";
 	}
 	@RequestMapping("EmpLogout")
 	public String logout(HttpServletRequest request) {
@@ -74,17 +75,17 @@ public class EmpController {
 		return "redirect:/EmpLogin";
 	}
 	@RequestMapping("/empIndex_include2")
-	public String list1(Model model) {
+	public String EmpList(Model model) {
 		List<EmployeeBean> list = service.getAllEmployees();
 		model.addAttribute("employees", list);
 		return "empIndex_include2";
 	}
 
 	@RequestMapping("/empInsert_include")
-	public String list(Model model) {
+	public String AddEmpList(Model model) {
 		return "empInsert_include";
 	}
-
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/empInsert_include")
 	public String AddEmpGet(Model model) {
 		EmployeeBean employeeBean = new EmployeeBean();
@@ -132,9 +133,12 @@ public class EmpController {
 		model.addAttribute("ePhone", eb.getPhoneNum());
 		model.addAttribute("eId", eb.getEmployeeId());
 		model.addAttribute("ePwd", eb.getPassword());
+		model.addAttribute("eSalary", eb.getSalary());
+		model.addAttribute("eResign", eb.getResignTime());
 		System.out.println(eb.getName());
 		return "EmpUpdate";
 	}
+	@SuppressWarnings("unused")
 	@RequestMapping(method = RequestMethod.POST, value = "/EmpUpdate")
 	public String editEmpPost(@RequestParam(value = "pk",required = false)Integer pk,
 			@ModelAttribute("employeeBean") EmployeeBean employeeBean, Model model,BindingResult result,
@@ -158,6 +162,13 @@ public class EmpController {
 			return "redirect:/empIndex_include2";
 		}
 	}
-	
+	@RequestMapping(method = RequestMethod.GET, value = "EmpResign")
+	public String ResignEmp(@RequestParam(value = "pk",required = false)Integer pk,
+			Model model,EmployeeBean employeeBean) {
+		
+		employeeBean= service.findByPrimaryKey(pk);
+		service.resignEmp(employeeBean);
+		return "redirect:/empIndex_include2";
+	}
 
 }

@@ -365,8 +365,7 @@ nav.main-nav:hover {
 			
 
 			var leftMenu = $("#leftMenu");
-			var path = "<%=request.getContextPath()%>
-		";
+			var path = "<%=request.getContextPath()%>";
 	</script>
 
 </body>

@@ -71,6 +71,11 @@ float:right;
 					<form:input type="password" class="form-control" id="password"
  						value="${ePwd}" path="password" style="max-width:400px;" /> 
 				</div>
+				<div class="form-group">
+					<label for="salary">薪水</label>
+					<form:input type="salary" class="form-control" id="salary"
+ 						value="${eSalary}" path="salary" style="max-width:400px;" /> 
+				</div>
 
 				<div class="form-group">
 					<label for="gender">員工性別</label><br>
@@ -79,6 +84,15 @@ float:right;
 					</label> 
 					<label> <form:radiobutton name="gender" value="2"
  							path="gender" /> 女 
+					</label>
+				</div>
+				<div class="form-group">
+					<label for="gender">工作狀態</label><br>
+					 <label> <form:radiobutton name="available"
+ 							value="true" path="available" checked="true" /> 在職
+					</label> 
+					<label> <form:radiobutton name="available" value="false"
+ 							path="available" /> 停權 
 					</label>
 				</div>
 
