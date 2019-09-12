@@ -1,6 +1,5 @@
 package com.web.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -24,9 +23,7 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "movieName", "startTime" })
 				}
 		)
-public class TimeTableBean implements Serializable{
-	private static final long serialVersionUID = 373961212942660939L;
-	
+public class TimeTableBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeTable_no")
@@ -45,6 +42,7 @@ public class TimeTableBean implements Serializable{
 	@NotNull
 	private String theater; //1廳, A廳, B廳
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O

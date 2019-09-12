@@ -1,5 +1,6 @@
 package com.web.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.web.dao.TimeTableDao;
 import com.web.entity.TimeTableBean;
-
 @Repository
 public class TimeTableDaoImpl implements TimeTableDao{
 
@@ -110,6 +110,14 @@ public class TimeTableDaoImpl implements TimeTableDao{
 	public List<TimeTableBean> getMovieVersion(String movieName) {
 		String hql = "SELECT DISTINCT t.version FROM TimeTableBean t WHERE t.movieName = :mname";
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getStartTimeByMovie(String movieName) {
+		String hql = "SELECT DISTINCT t.startTime FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
 		return list;
 	}
 }
