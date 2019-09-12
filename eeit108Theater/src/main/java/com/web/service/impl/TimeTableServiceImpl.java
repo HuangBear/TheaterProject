@@ -1,13 +1,11 @@
 package com.web.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.dao.MovieDao;
 import com.web.dao.TimeTableDao;
 import com.web.entity.TimeTableBean;
 import com.web.service.TimeTableService;
@@ -56,7 +54,7 @@ public class TimeTableServiceImpl implements TimeTableService{
 
 	@Override
 	public TimeTableBean getTimeTableByNo(Integer timeTableNo) {
-		return null;
+		return dao.getTimeTableByNo(timeTableNo);
 		
 	}
 
@@ -86,6 +84,11 @@ public class TimeTableServiceImpl implements TimeTableService{
 	@Override
 	public List<TimeTableBean> getStartTimeByMovie(String movieName) {
 		return dao.getStartTimeByMovie(movieName);
+	}
+
+	@Override
+	public List<TimeTableBean> getTheaterByMovieName(String movieName) {
+		return dao.getTheaterByMovieName(movieName);
 	}
 	
 }

@@ -24,18 +24,13 @@ public class EDMTableResetHibernate_TimeTable {
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
-//		int endTime = 1440;
 		try
 		{
-//			tx = session.beginTransaction();
 			tx = session.beginTransaction();
 			File file = new File("data/time/timetable.dat");
 			try (
 				FileReader fr = new FileReader(file); 
 				BufferedReader br = new BufferedReader(fr);
-//				FileInputStream fis = new FileInputStream(file);
-//				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-//				BufferedReader br = new BufferedReader(isr);
 			)
 			{
 				while ((line = br.readLine()) != null)
@@ -48,12 +43,13 @@ public class EDMTableResetHibernate_TimeTable {
 					}
 						String[] token = line.split("\\|");
 						
-						DateFormat sdf = new SimpleDateFormat("HH:mm");
-						String[] values = token[2].split(":");
-						int hour = Integer.parseInt(values[0]);
-						int minute = Integer.parseInt(values[1]);
+						DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+						String[] splitBlank = token[2].split(" ");
+						String[] splitColon = splitBlank[1].split(":");
+						int hour = Integer.parseInt(splitColon[0]);
+						int minute = Integer.parseInt(splitColon[1]);
 						int sum = hour * 60 + minute;
-						int breakTime = 30;
+						int breakTime = Integer.parseInt(token[6]);
 						
 					do {
 						TimeTableBean time = new TimeTableBean();
@@ -63,20 +59,21 @@ public class EDMTableResetHibernate_TimeTable {
 						
 						time.setStartTime(sdf.parse(token[2]));
 						int duration = Integer.parseInt(token[3]);
+						if (duration % 10 != 0) {                      // 使每場電影的間隔尾數不是0以外的數字
+							duration += 10 - (duration % 10);
+						}
 						sum += duration + breakTime;
 						String HH = String.valueOf(sum / 60);
 						String mm = String.valueOf(sum % 60);
 						
-						token[2] = HH + ":" + mm;
-					
-//						time.setStartTime(sdf.parse(token[2]));
+						token[2] = splitBlank[0] + " " + HH + ":" + mm;
+
 						time.setDuration(Integer.parseInt(token[3]));
-						time.setEndTime(sdf.parse(token[4]));
-						time.setVersion(token[5]);
-						time.setTheater(token[6]);
+						time.setVersion(token[4]);
+						time.setTheater(token[5]);
 						time.setMovie(session.get(MovieBean.class, 1));
+						time.setBreakTime(breakTime);
 						session.save(time);
-//						session.flush();
 	
 						System.out.println("新增一筆time紀錄成功");
 					} while(sum < 1440);

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -28,7 +29,6 @@ import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
 import com.web.service.TimeTableService;
 
-
 @Controller
 public class movieController {
 	@Autowired
@@ -40,13 +40,10 @@ public class movieController {
 
 	@RequestMapping("/movie")
 	public String movieIntroduction(Model model) {
-//		List<MovieBean> list = service.getAllMovies();
-//		model.addAttribute("movies", list);
-//		return "movie";
 		List<MovieBean> comingMovie = service.getComingMovies();
 		List<MovieBean> releasedMovie = service.getReleasedMovies();
- 		model.addAttribute("comingMovies", comingMovie);
- 		model.addAttribute("releasedMovies", releasedMovie);
+		model.addAttribute("comingMovies", comingMovie);
+		model.addAttribute("releasedMovies", releasedMovie);
 		return "movie";
 	}
 
@@ -54,12 +51,23 @@ public class movieController {
 	public String movieTimes(Model model, @PathVariable Integer no) {
 		MovieBean movie = service.getMovieById(no);
 		String[] string = movie.getTrailerLink();
-		List<TimeTableBean> time = time_service.getTimeTablesByMovie(movie.getMovieName());
-		List<TimeTableBean> date = time_service.getStartTimeByMovie(movie.getMovieName());
+//		List<TimeTableBean> times = time_service.getStartTimeByMovie(movie.getMovieName());
+		List<TimeTableBean> theatersB = time_service.getTheaterByMovieName(movie.getMovieName());
+		List<TimeTableBean> theatersA = new ArrayList<>();
+		for (int i = 0; i <= theatersB.size(); i++) {
+
+			if (theatersB.get(0).getTheater().equals("A廳")) {
+				theatersA.add(theatersB.get(0));
+				theatersB.remove(0);
+			}
+		}
 		model.addAttribute("link", string[0]);
 		model.addAttribute("movie", movie);
-		model.addAttribute("times", time);
-		model.addAttribute("hi", date);
+//		model.addAttribute("times", times);
+		model.addAttribute("theatersA", theatersA);
+		model.addAttribute("theatersB", theatersB);
+
+		System.out.println(theatersA);
 		return "movieTimes";
 	}
 

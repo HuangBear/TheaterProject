@@ -1,6 +1,5 @@
 package com.web.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -120,5 +119,15 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getTheaterByMovieName(String movieName) {
+		String hql = "FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
+		return list;
+	}
+
+	
 }
 

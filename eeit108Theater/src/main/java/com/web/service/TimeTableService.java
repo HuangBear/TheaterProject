@@ -23,6 +23,8 @@ public interface TimeTableService {
 
 	// query
 	TimeTableBean getTimeTableByNo(Integer timeTableNo);
+	
+	List<TimeTableBean> getTheaterByMovieName(String movieName);
 
 	List<TimeTableBean> getTimeTablesByMovie(String movieName);
 
