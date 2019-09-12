@@ -44,7 +44,6 @@ public class TimeTableBean implements Serializable{
 	@NotNull
 	private String theater; //1廳, A廳, B廳
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O
