@@ -1,5 +1,6 @@
 package com.web.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.web.entity.TimeTableBean;
@@ -30,4 +31,6 @@ public interface TimeTableDao {
 	List<TimeTableBean> getAllTimeTables();
 
 	List<TimeTableBean> getAllAvailable();
+	
+	List<TimeTableBean> getStartTimeByMovie(String movieName);
 }
