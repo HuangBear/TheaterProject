@@ -1,6 +1,7 @@
 package com.web.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.entity.MemberBean;
 import com.web.entity.OrderBean;
 import com.web.entity.OrderItemBean;
+import com.web.entity.SeatBean;
 import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
 import com.web.service.ProductService;
@@ -37,24 +40,22 @@ public class OrderController {
 		return pac + "allProducts";
 	}
 
-	@RequestMapping({"","/"})
+	@RequestMapping({ "", "/" })
 	public String orderBegin(Model model, HttpSession session) {
-		
-		
-	
+
 		System.out.println("====orderBegin Start");
 		TimeTableBean tb = pServ.getTimeTableByNo(1);
 		System.out.println("====TimeTableBean Got");
 		MemberBean mb = pServ.getMemberByNo(1);
 		System.out.println("====MemberBean Got");
-		
+
 		session.setAttribute("timeTable", tb);
 		session.setAttribute("loginMember", mb);
 		return pac + "start";
 	}
 
 	@RequestMapping("/showProducts")
-	public String showProductByType(Model model, HttpSession session) {		
+	public String showProductByType(Model model, HttpSession session) {
 		OrderBean ob = new OrderBean();
 		ob.setAvailable(true);
 		ob.setTimeTable((TimeTableBean) session.getAttribute("timeTable"));
@@ -65,7 +66,7 @@ public class OrderController {
 			ob.setOwnerName(mb.getName());
 		}
 		session.setAttribute("order", ob);
-		
+
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getProductsByType("ticket"));
@@ -74,14 +75,13 @@ public class OrderController {
 
 	@RequestMapping("/makeOrder")
 	public String showOrder(Model model, HttpServletRequest req, HttpSession session) {
-		
+
 		OrderBean ob = (OrderBean) session.getAttribute("order");
-		
+
 		Set<OrderItemBean> set = new HashSet<>();
 		ob.setOrderItems(set);
 		ob.setTotalPrice(0.0);
-		
-		
+
 		System.out.println("======showOrder");
 		List<OrderItemBean> list = new ArrayList<>();
 		Map<String, String[]> readOnly = req.getParameterMap();
@@ -108,9 +108,24 @@ public class OrderController {
 			System.out.println("=====endFor");
 		}
 		model.addAttribute("orderItems", list);
-		//model.addAttribute("order", ob);
+		// model.addAttribute("order", ob);
 		System.out.println("======RETURN showOrder");
 		return pac + "orderItems";
 	}
 
+	@RequestMapping("/seat")
+	public String showSeatPage(Model model, HttpSession session) {
+		OrderBean ob = (OrderBean) session.getAttribute("ob");
+		Set<SeatBean> seatSet = ob.getSeats();
+		Map<String, Boolean> seatStatus = new HashMap<>();
+		for (SeatBean seat : seatSet) {
+			String seatNum = seat.getRow() + seat.getColumn();
+			seatStatus.put(seatNum, seat.getOrderId() == null ? true : false);
+		}
+		return "seat";
+	}
+	@RequestMapping("/seatTable/{tid}")
+	public String seatTable(HttpSession session) {
+		return "seatTable";
+	}
 }
