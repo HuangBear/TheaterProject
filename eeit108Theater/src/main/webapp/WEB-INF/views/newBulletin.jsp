@@ -87,61 +87,90 @@
 						<form:form method='POST' modelAttribute="getNewBulletin" enctype="multipart/form-data">
 							<div>
 								<label>title</label>
-								<form:input path="title" type="text" />
+								<form:input path="title" type="text" placeholder="輸入標題,請勿超過30字" maxlength="35" value="${param.title}" />
+								<div>
+									<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
+								</div>
+
 							</div>
 							<div>
 								<label>context</label>
-								<form:textarea path="context" />
+								<form:textarea path="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="350" value="${param.context}" />
+								<div>
+									<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
+								</div>
 							</div>
 							<div>
-								<label for="from">From</label>
-								<form:input type="text" id="from" name="from" path="startDate" />
-								<label for="to">to</label>
-								<form:input type="text" id="to" name="to" path="endDate" />
+								<label for="from">startDate</label>
+								<form:input type="text" id="from" path="startDate" />
+								<label for="to">endDate</label>
+								<form:input type="text" id="to" path="endDate" />
+								<div>
+									<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
+								</div>
+							</div>
+							<div>
+								<a style="color: red;">${ErrMsg.radio}</a>
 							</div>
 							<div>
 								<table>
+
+
+
 									<tr>
 
 										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="單純公告，無任何優惠" value="0" /></td>
 										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="現金折扣" value="1" /></td>
 										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="票券折扣" value="2" /></td>
-
 									</tr>
 								</table>
 							</div>
+
 							<div class="form-row pr-3 pl-5">
-								<div class=" col-md-1 pr-1 discountT hid" id="discountT_1">
-									<label for="validationTextarea" class="blockquote text-center">買</label>
+								<div class="col-md-1 pr-1 discountP hid">
+									<label for="validationTextarea">滿</label>
 								</div>
-								<div class=" col-md-3 pr-1 discountT hid" id="discountT_2">
-									<input style="border-radius: 5px" type="text" class="form-control is-invalid " id="title" placeholder="輸入金額" required>
+								<div class="col-md-3 pr-1 discountP hid">
+									<form:input style="border-radius: 5px" type="text" path="discountPriceBuy" placeholder="消費金額" maxlength="4" value="${param.discountPriceBuy}" />
 								</div>
-								<div class=" col-md-1 pr-1 discountT hid" id="discountT_3">
-									<label for="validationTextarea" class="blockquote text-center">送</label>
+								<div class="col-md-1 pr-1 discountP hid">
+									<label for="validationTextarea">送</label>
 								</div>
-								<div class=" col-md-3 pr-1 discountT hid" id="discountT_4">
-									<input style="border-radius: 5px" type="text" class="form-control is-invalid " id="title" placeholder="輸入金額" required>
+								<div class="col-md-3 pr-1 discountP hid">
+									<form:input style="border-radius: 5px" type="text" path="discountPriceFree" placeholder="折扣金額" maxlength="4" value="${param.discountPriceFree}" />
 								</div>
 							</div>
 
 							<div class="form-row pr-3 pl-5">
-								<div class="col-md-1 pr-1 discountP hid" id="discountP_1">
-									<label for="validationTextarea" class="blockquote text-center">滿</label>
+								<div class=" col-md-1 pr-1 discountT hid">
+									<label>買</label>
 								</div>
-								<div class="col-md-3 pr-1 discountP hid" id="discountP_2">
-									<input style="border-radius: 5px" type="text" class="form-control is-invalid " id="title" placeholder="輸入金額" required>
+
+								<div class=" col-md-3 pr-1 discountT hid">
+									<form:select class="custom-select " path="discountTickBuy" value="${param.discountTickBuy}">
+										<form:option value="0">購買票數</form:option>
+										<c:forEach begin="1" end="10" var="inputTB">
+											<form:option value="${inputTB}">${inputTB}</form:option>
+										</c:forEach>
+									</form:select>
 								</div>
-								<div class="col-md-1 pr-1 discountP hid" id="discountP_3">
-									<label for="validationTextarea" class="blockquote text-center">送</label>
+
+								<div class=" col-md-1 pr-1 discountT hid">
+									<label>送</label>
 								</div>
-								<div class="col-md-3 pr-1 discountP hid" id="discountP_4">
-									<input style="border-radius: 5px" type="text" class="form-control is-invalid " id="title" placeholder="輸入金額" required>
+								<div class=" col-md-3 pr-1 discountT hid">
+									<form:select class="custom-select " path="discountTickFree" value="${param.discountTickFree}">
+										<form:option value="0">贈送票數</form:option>
+										<c:forEach begin="1" end="5" var="inputTF">
+											<form:option value="${inputTF}">${inputTF}</form:option>
+										</c:forEach>
+									</form:select>
 								</div>
 							</div>
+
 
 							<div>
-								<form:input style="border-radius: 5px" type="file" id="imgUrlString" path="imgUrlString" />
+								<form:input style="border-radius: 5px" type="file" path="imgUrlString" />
 								<label for="validatedCustomFile">文宣上傳</label>
 
 							</div>
@@ -172,34 +201,37 @@
 	<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" -->
+	<!-- 		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
+	<!-- 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" -->
+	<!-- 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		//    Datepicker
 		$(function() {
-			var set = {
-				monthNames : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月",
-						"九月", "十月", "十一月", "十二月"],
-				monthNamesShort : ["一", "二", "三", "四", "五", "六", "七", "八", "九",
-						"十", "十一", "十二"],
-				dayNames : ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-				dayNamesShort : ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-				dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
-				defaultDate : "+1w",
-				changeMonth : true,
-				numberOfMonths : 1,
-				dateFormat : "yy-mm-dd"
-			}
-
-			var dateFormat = "yy-mm-dd", from = $("#from").datepicker(set).on(
-					"change", function() {
-						to.datepicker("option", "minDate", getDate(this));
-						console.log(this)
-					}), to = $("#to").datepicker(set).on("change", function() {
+			var dateFormat = "yy-mm-dd", from = $("#from").datepicker(
+					{
+						monthNamesShort : ["一", "二", "三", "四", "五", "六", "七",
+								"八", "九", "十", "十一", "十二"],
+						dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
+						defaultDate : "+1d",
+						changeMonth : true,
+						numberOfMonths : 1,
+						dateFormat : "yy-mm-dd"
+					}).on("change", function() {
+				to.datepicker("option", "minDate", getDate(this));
+				console.log(this)
+			}), to = $("#to").datepicker(
+					{
+						monthNamesShort : ["一", "二", "三", "四", "五", "六", "七",
+								"八", "九", "十", "十一", "十二"],
+						dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
+						defaultDate : "+1M",
+						changeMonth : true,
+						numberOfMonths : 1,
+						dateFormat : "yy-mm-dd"
+					}).on("change", function() {
 				from.datepicker("option", "maxDate", getDate(this));
 			});
 
