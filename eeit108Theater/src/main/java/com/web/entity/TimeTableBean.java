@@ -26,7 +26,6 @@ import javax.validation.constraints.NotNull;
 		)
 public class TimeTableBean implements Serializable{
 	private static final long serialVersionUID = 373961212942660939L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeTable_no")
