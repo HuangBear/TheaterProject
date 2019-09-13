@@ -14,24 +14,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
 @Entity
 @Table(name = "Bulletin")
-public class BulletinBean implements Serializable{
+public class BulletinBean implements Serializable {
 	private static final long serialVersionUID = 8705745439713457086L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
 	private Integer no;
 	private Boolean available;// 是否過期
-	private String tittle;
+	private String title;
 	private String context;
 	private Date startDate;
-	private Date endtDate;
+	private Date endDate;
 	private Date postTime;
-	private Boolean discontTick;
-	private Boolean discontPrice;
+	private Integer discount;
+	private Integer discountTickBuy;
+	private Integer discountTickFree;
+	private Integer discountPriceBuy;
+	private Integer discountPriceFree;
 	private Boolean status;// 是否刪除
 	@Transient
 	private String imgUrlString;
@@ -42,15 +44,6 @@ public class BulletinBean implements Serializable{
 
 	private Blob bulletinImage;
 
-	public Blob getBulletinImage()
-	{
-		return bulletinImage;
-	}
-
-	public void setBulletinImage(Blob bulletinImage)
-	{
-		this.bulletinImage = bulletinImage;
-	}
 
 	public Integer getNo()
 	{
@@ -62,14 +55,24 @@ public class BulletinBean implements Serializable{
 		this.no = no;
 	}
 
-	public String getTittle()
+	public Boolean getAvailable()
 	{
-		return tittle;
+		return available;
 	}
 
-	public void setTittle(String tittle)
+	public void setAvailable(Boolean available)
 	{
-		this.tittle = tittle;
+		this.available = available;
+	}
+
+	public String getTitle()
+	{
+		return title;
+	}
+
+	public void setTitle(String title)
+	{
+		this.title = title;
 	}
 
 	public String getContext()
@@ -92,14 +95,14 @@ public class BulletinBean implements Serializable{
 		this.startDate = startDate;
 	}
 
-	public Date getEndtDate()
+	public Date getEndDate()
 	{
-		return endtDate;
+		return endDate;
 	}
 
-	public void setEndtDate(Date endtDate)
+	public void setEndDate(Date endtDate)
 	{
-		this.endtDate = endtDate;
+		this.endDate = endtDate;
 	}
 
 	public Date getPostTime()
@@ -112,24 +115,48 @@ public class BulletinBean implements Serializable{
 		this.postTime = postTime;
 	}
 
-	public Boolean getDiscontTick()
+
+
+	public Integer getDiscountTickBuy()
 	{
-		return discontTick;
+		return discountTickBuy;
 	}
 
-	public void setDiscontTick(Boolean discontTick)
+	public void setDiscountTickBuy(Integer discountTickBuy)
 	{
-		this.discontTick = discontTick;
+		this.discountTickBuy = discountTickBuy;
 	}
 
-	public Boolean getDiscontPrice()
+	public Integer getDiscountTickFree()
 	{
-		return discontPrice;
+		return discountTickFree;
 	}
 
-	public void setDiscontPrice(Boolean discontPrice)
+	public void setDiscountTickFree(Integer discountTickFree)
 	{
-		this.discontPrice = discontPrice;
+		this.discountTickFree = discountTickFree;
+	}
+
+
+
+	public Integer getDiscountPriceBuy()
+	{
+		return discountPriceBuy;
+	}
+
+	public void setDiscountPriceBuy(Integer discountPriceBuy)
+	{
+		this.discountPriceBuy = discountPriceBuy;
+	}
+
+	public Integer getDiscountPriceFree()
+	{
+		return discountPriceFree;
+	}
+
+	public void setDiscountPriceFree(Integer discountPriceFree)
+	{
+		this.discountPriceFree = discountPriceFree;
 	}
 
 	public Boolean getStatus()
@@ -142,6 +169,16 @@ public class BulletinBean implements Serializable{
 		this.status = status;
 	}
 
+	public String getImgUrlString()
+	{
+		return imgUrlString;
+	}
+
+	public void setImgUrlString(String imgUrlString)
+	{
+		this.imgUrlString = imgUrlString;
+	}
+
 	public EmployeeBean getEmployee()
 	{
 		return employee;
@@ -152,24 +189,29 @@ public class BulletinBean implements Serializable{
 		this.employee = employee;
 	}
 
-	public Boolean getAvailable()
+	public Blob getBulletinImage()
 	{
-		return available;
+		return bulletinImage;
 	}
 
-	public void setAvailable(Boolean available)
+	public void setBulletinImage(Blob bulletinImage)
 	{
-		this.available = available;
+		this.bulletinImage = bulletinImage;
 	}
 
-	public String getImgUrlString()
+	public static long getSerialversionuid()
 	{
-		return imgUrlString;
+		return serialVersionUID;
 	}
 
-	public void setImgUrlString(String imgUrlString)
+	public Integer getDiscount()
 	{
-		this.imgUrlString = imgUrlString;
+		return discount;
+	}
+
+	public void setDiscount(Integer discount)
+	{
+		this.discount = discount;
 	}
 
 }
