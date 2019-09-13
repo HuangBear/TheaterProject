@@ -23,8 +23,8 @@ public class BulletinBoardService {
 		for (BulletinBean bb : list)
 		{
 
-			Boolean dp = bb.getDiscontPrice();
-			Boolean dt = bb.getDiscontTick();
+			Boolean dp = bb.getDiscountPrice();
+			Boolean dt = bb.getDiscountTick();
 			if (dp == true && dt == false)
 			{
 				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-low-price-50.png");
