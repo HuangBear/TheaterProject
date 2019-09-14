@@ -35,7 +35,7 @@ public class ArticleBean implements Serializable {
 	private Integer likeCount;
 	private Integer dislikeCount;
 	
-	@OneToMany(mappedBy = "ForumBean",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "articleBean",fetch = FetchType.EAGER)
 	private Set<ReplyBean> replys;
 	//private String  	companyName;
 
