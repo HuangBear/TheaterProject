@@ -33,7 +33,7 @@ public class EDMTableResetHibernate {
 				mb.setEmail("try" + i + "@ggmail.com");
 				mb.setMemberId("a12345678" + i);
 				mb.setPassword("Do!ng123");
-				mb.setName("TESTER");
+				mb.setName("TESTER" + i);
 				mb.setCommentPermission(true);
 				mb.setBanCounter(0);
 				mb.setBirthday(d.parse("1999-05-1" + i + " 16-52-03"));
