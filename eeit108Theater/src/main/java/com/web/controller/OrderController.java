@@ -44,7 +44,7 @@ public class OrderController {
 	public String orderBegin(Model model, HttpSession session) {
 
 		System.out.println("====orderBegin Start");
-		TimeTableBean tb = pServ.getTimeTableByNo(1);
+		TimeTableBean tb = pServ.getTimeTableByNo(16);
 		System.out.println("====TimeTableBean Got");
 		MemberBean mb = pServ.getMemberByNo(1);
 		System.out.println("====MemberBean Got");
@@ -107,22 +107,26 @@ public class OrderController {
 			}
 			System.out.println("=====endFor");
 		}
+		
 		model.addAttribute("orderItems", list);
 		// model.addAttribute("order", ob);
 		System.out.println("======RETURN showOrder");
+		session.setAttribute("order", ob);
 		return pac + "orderItems";
 	}
 
 	@RequestMapping("/seat")
 	public String showSeatPage(Model model, HttpSession session) {
-		OrderBean ob = (OrderBean) session.getAttribute("ob");
-		Set<SeatBean> seatSet = ob.getSeats();
+		System.out.println("controller method => SEAT");
+		OrderBean ob = (OrderBean) session.getAttribute("order");
+		List<SeatBean> seatList = pServ.getSeatsByTimeTable(ob.getTimeTable().getNo());
 		Map<String, Boolean> seatStatus = new HashMap<>();
-		for (SeatBean seat : seatSet) {
+		for (SeatBean seat : seatList) {
 			String seatNum = seat.getRow() + seat.getColumn();
 			seatStatus.put(seatNum, seat.getOrderId() == null ? true : false);
 		}
-		return "seat";
+		System.out.println("controller method => SEAT  END");
+		return pac + "seat";
 	}
 	@RequestMapping("/seatTable/{tid}")
 	public String seatTable(HttpSession session) {

@@ -5,10 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.web.dao.SeatDao;
 import com.web.entity.SeatBean;
 
+@Repository
 public class SeatDaoImpl implements SeatDao {
 
 	@Autowired

@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.dao.MemberDao;
 import com.web.dao.ProductDao;
+import com.web.dao.SeatDao;
 import com.web.dao.TimeTableDao;
 import com.web.entity.MemberBean;
 import com.web.entity.ProductBean;
+import com.web.entity.SeatBean;
 import com.web.entity.TimeTableBean;
 import com.web.service.ProductService;
 
@@ -23,7 +25,8 @@ public class ProductServiceImpl implements ProductService{
 	TimeTableDao tdao;
 	@Autowired
 	MemberDao mdao;
-	
+	@Autowired
+	SeatDao sdao; 
 	@Override
 	public int saveProduct(ProductBean product) {
 		// TODO Auto-generated method stub
@@ -112,5 +115,9 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public MemberBean getMemberByNo(Integer no) {
 		return mdao.getMemberByNo(no);
+	}
+	
+	public List<SeatBean> getSeatsByTimeTable(Integer timeTableNo){
+		return sdao.getSeatsByTimeTable(timeTableNo);
 	}
 }
