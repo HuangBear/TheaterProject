@@ -55,12 +55,12 @@ public class EDMTableResetHibernate_bulletin {
 					}
 					String[] token = line.split("\\|");
 					BulletinBean bulletin = new BulletinBean();
-					DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					bulletin.setAvailable(Boolean.valueOf(token[0]));
 					bulletin.setTitle(token[1]);
 					bulletin.setContext(token[2]);
-					bulletin.setStartDate(sdf.parse(token[3]));
-					bulletin.setEndDate(sdf.parse(token[4]));
+					bulletin.setStartDate(token[3]);
+					bulletin.setEndDate(token[4]);
 					bulletin.setPostTime(sdf.parse(token[5]));
 					bulletin.setDiscount(Integer.valueOf(token[6]));
 					bulletin.setDiscountTickBuy(token[7].equals("")?0:Integer.valueOf(token[7]));

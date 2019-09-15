@@ -26,8 +26,8 @@ public class BulletinBean implements Serializable {
 	private Boolean available;// 是否過期
 	private String title;
 	private String context;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private Date postTime;
 	private Integer discount;
 	private Integer discountTickBuy;
@@ -85,22 +85,22 @@ public class BulletinBean implements Serializable {
 		this.context = context;
 	}
 
-	public Date getStartDate()
+	public String getStartDate()
 	{
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate)
+	public void setStartDate(String startDate)
 	{
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate()
+	public String getEndDate()
 	{
 		return endDate;
 	}
 
-	public void setEndDate(Date endtDate)
+	public void setEndDate(String endtDate)
 	{
 		this.endDate = endtDate;
 	}
@@ -114,8 +114,6 @@ public class BulletinBean implements Serializable {
 	{
 		this.postTime = postTime;
 	}
-
-
 
 	public Integer getDiscountTickBuy()
 	{
