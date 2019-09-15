@@ -2,16 +2,21 @@ package com.web.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.web.entity.ReplyBean;
 
 @Entity
 @Table(name = "Article")
@@ -29,6 +34,10 @@ public class ArticleBean implements Serializable {
 	private Date postTime;
 	private Integer likeCount;
 	private Integer dislikeCount;
+	
+	@OneToMany(mappedBy = "articleBean",fetch = FetchType.EAGER)
+	private Set<ReplyBean> replys;
+	//private String  	companyName;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_author_id")
@@ -55,6 +64,12 @@ public class ArticleBean implements Serializable {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public MovieBean getMovie() {
+		return movie;
+	}
+	public void setMovie(MovieBean movie) {
+		this.movie = movie;
 	}
 	public MemberBean getAuthor() {
 		return author;
@@ -85,6 +100,20 @@ public class ArticleBean implements Serializable {
 	}
 	public void setAvailable(Boolean available) {
 		this.available = available;
+	}
+	
+	public MemberBean getMemberBean() {
+		return author;
+	}
+	public void setMemberBean(MemberBean memberBean) {
+		this.author = memberBean;
+	}
+	
+	public Set<ReplyBean> getReplys() {
+		return replys;
+	}
+	public void setReplys(Set<ReplyBean> replys) {
+		this.replys = replys;
 	}
 	
 }

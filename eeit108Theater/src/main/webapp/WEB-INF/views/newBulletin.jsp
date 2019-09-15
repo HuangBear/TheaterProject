@@ -7,56 +7,36 @@
 <html>
 
 <head>
-	<title>Left Sidebar - Helios by HTML5 UP</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Left Sidebar - Helios by HTML5 UP</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
-	<noscript>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/noscript.css" />
-	</noscript>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
+<noscript>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/noscript.css" />
+</noscript>
+<style type="text/css">
+.hid {
+	/* 	visibility: hidden; */
+	display: none;
+}
+</style>
 
-	<script>
-		//	    discount
-		document.addEventListener("DOMContentLoaded", function () {
-			document.getElementsByClassName("discountT").addEventListener("change", discountT);
-			document.getElementsByClassName("discountP").addEventListener("change", discountP);
-			// 			document.getElementById("discountT").addEventListener("change",	discountT);
-			// 			document.getElementById("discountP").addEventListener("change", discountP);
-		});
-		//	  discountT
-
-		function discountT() {
-			alert("a");
-			// 			document.getElementById("discountT_1").style.visibility = "visible";
-			// 			document.getElementById("discountT_2").style.visibility = "visible";
-			// 			document.getElementById("discountT_3").style.visibility = "visible";
-			// 			document.getElementById("discountT_4").style.visibility = "visible";
-		}
-
-		//    discountP
-		function discountP() {
-			alert("b");
-			// 			document.getElementById("discountP_1").style.visibility = "visible";
-			// 			document.getElementById("discountP_2").style.visibility = "visible";
-			// 			document.getElementById("discountP_3").style.visibility = "visible";
-			// 			document.getElementById("discountP_4").style.visibility = "visible";
-		}
-	</script>
 </head>
 
 <body class="left-sidebar is-preload">
+
 	<div id="page-wrapper">
 		<div id="header">
-			<!-- Header -->
+			<!--Header-->
 			<jsp:include page="header.jsp" />
 		</div>
-		<!-- Main -->
+		<!-- Main-->
 		<div class="wrapper style1">
 
 			<div class="container">
@@ -64,208 +44,141 @@
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 
-
-						<!-- 						<hr class="first" /> -->
-						<!-- 												<section> <header> -->
-						<!-- 						<h3> -->
-						<!-- 							<a href="#">Accumsan sed penatibus</a> -->
-						<!-- 						</h3> -->
-						<!-- 						</header> -->
-						<!-- 						<p>Dolor sed fringilla nibh nulla convallis tique ante proin -->
-						<!-- 							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus -->
-						<!-- 							cubilia ultrices tempor sagittis tellus ante diam nec penatibus -->
-						<!-- 							dolor cras magna tempus feugiat veroeros.</p> -->
-						<!-- 						<footer> <a href="#" class="button">Learn More</a> </footer> </section> -->
-						<!-- 						<hr /> -->
-						<!-- 						<section> <header> -->
-						<!-- 						<h3> -->
-						<!-- 							<a href="#">Sed lorem etiam consequat</a> -->
-						<!-- 						</h3> -->
-						<!-- 						</header> -->
 						<p>後台測試頁</p>
 
 
 						<div class="row gtr-50">
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic10.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Nibh sed cubilia</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic11.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Proin sed adipiscing</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic12.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>公告</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic13.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Sed tempus fringilla</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic14.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Malesuada fermentum</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
 						</div>
-						<!-- 						<footer> <a href="#" class="button">Magna Adipiscing</a> -->
-						<!-- 						</footer> -->
-						</section>
+
+
 					</div>
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
-						<article id="main">
-							<header>
-								<h2>
-									<a href="#">公告</a>
-								</h2>
-							</header>
-							<form:form method='POST' modelAttribute="bookBean" class="was-validated mb-5"
-								enctype="multipart/form-data">
-								<div class="mb-2">
-									<label for="validationTextarea" class="mb-1">公告標題</label> <input
-										style="border-radius: 5px" type="text" class="form-control is-invalid"
-										id="title" placeholder="輸入標題" required>
+
+						<header>
+							<h2>
+								<a href="#">公告</a>
+							</h2>
+						</header>
+						<form:form method='POST' modelAttribute="getNewBulletin" enctype="multipart/form-data">
+							<div>
+								<label>title</label>
+								<form:input path="title" type="text" placeholder="輸入標題,請勿超過30字" maxlength="35" value="${param.title}" />
+								<div>
+									<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 								</div>
 
-								<div class="mb-3">
-									<label for="validationTextarea" class="mb-1">公告內容</label>
-									<textarea style="border-radius: 5px" class="form-control is-invalid" id="context"
-										placeholder="輸入公告內容，字數請勿大於300字" required></textarea>
-									<!-- 															<div class="invalid-feedback">自數少於300字</div> -->
+							</div>
+							<div>
+								<label>context</label>
+								<form:textarea path="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="350" value="${param.context}" />
+								<div>
+									<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 								</div>
-								<div class="form-row">
-									<div class="form-group col-md-2 pr-1">
-										<label for="from" class="blockquote text-center">起始日期</label>
-									</div>
-									<div class="form-group col-md-4 pr-1">
-										<input type="text" style="border-radius: 5px"
-											class="form-control form-control-sm is-invalid" id="from" name="from"
-											required>
-									</div>
-
-									<div class="form-group col-md-2 pr-1">
-										<label for="to" class="blockquote text-center">結束日期</label>
-									</div>
-									<div class="form-group col-md-4 pr-1">
-										<input type="text" style="border-radius: 5px"
-											class="form-control form-control-sm is-invalid" id="to" name="to" required>
-									</div>
+							</div>
+							<div>
+								<label for="from">startDate</label>
+								<form:input type="text" id="from" path="startDate" />
+								<label for="to">endDate</label>
+								<form:input type="text" id="to" path="endDate" />
+								<div>
+									<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 								</div>
-								<div class="form-row pr-3 pl-5">
-									<div class="form-group col-md-6 pr-1 custom-control  custom-radio">
-										<input type="radio" class="custom-control-input " id="radio_1"
-											name="radio-stacked" required> <label class="custom-control-label"
-											for="radio_1">單純公告，無任何優惠</label>
-									</div>
+							</div>
+							<div>
+								<a style="color: red;">${ErrMsg.radio}</a>
+							</div>
+							<div>
+								<table>
 
+
+
+									<tr>
+
+										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="單純公告，無任何優惠" value="0" /></td>
+										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="現金折扣" value="1" /></td>
+										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="票券折扣" value="2" /></td>
+									</tr>
+								</table>
+							</div>
+
+							<div class="form-row pr-3 pl-5">
+								<div class="col-md-1 pr-1 discountP hid">
+									<label for="validationTextarea">滿</label>
 								</div>
+								<div class="col-md-3 pr-1 discountP hid">
+									<form:input style="border-radius: 5px" type="text" path="discountPriceBuy" placeholder="消費金額" maxlength="4" value="${param.discountPriceBuy}" />
+								</div>
+								<div class="col-md-1 pr-1 discountP hid">
+									<label for="validationTextarea">送</label>
+								</div>
+								<div class="col-md-3 pr-1 discountP hid">
+									<form:input style="border-radius: 5px" type="text" path="discountPriceFree" placeholder="折扣金額" maxlength="4" value="${param.discountPriceFree}" />
+								</div>
+							</div>
 
-								<div class="form-row pr-3 pl-5">
-									<div class="form-group col-md-4 pr-1 custom-control  custom-radio ">
-										<input type="radio" class="custom-control-input discountT" id="radio_2"
-											name="radio-stacked" required> <label class="custom-control-label"
-											for="radio_2">金額折扣</label>
-									</div>
-									<div class="form-group col-md-1 custom-control pr-1" id="discountT_1"
-										style="visibility: hidden;">
-										<label for="validationTextarea" class="blockquote text-center">滿</label>
-									</div>
-									<div class="form-group col-md-3 custom-control pr-1 " id="discountT_2"
-										style="visibility: hidden;">
-										<input style="border-radius: 5px" type="text" class="form-control is-invalid "
-											id="title" placeholder="輸入金額" required>
-									</div>
-									<div class="form-group col-md-1 custom-control pr-1 " id="discountT_3"
-										style="visibility: hidden;">
-										<label for="validationTextarea" class="blockquote text-center">送</label>
-									</div>
-									<div class="form-group col-md-3 custom-control  pr-1 " id="discountT_4"
-										style="visibility: hidden;">
-										<input style="border-radius: 5px" type="text" class="form-control is-invalid "
-											id="title" placeholder="輸入金額" required>
-									</div>
-
+							<div class="form-row pr-3 pl-5">
+								<div class=" col-md-1 pr-1 discountT hid">
+									<label>買</label>
 								</div>
 
-								<div class="form-row  pr-3 pl-5 ">
-									<div class="form-group col-md-4 pr-1 custom-control custom-radio">
-										<input type="radio" class="custom-control-input discountP" id="radio_3"
-											name="radio-stacked" required> <label class="custom-control-label"
-											for="radio_3">票券折扣</label>
-									</div>
-									<div class="form-group col-md-1 custom-control " id="discountP_1"
-										style="visibility: hidden;">
-										<label for="validationTextarea" class="blockquote text-center">買</label>
-									</div>
-									<div class="form-group col-md-3 custom-control " id="discountP_2"
-										style="visibility: hidden;">
-										<select class="custom-select " required>
-
-											<option value="">請選擇</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-										</select>
-									</div>
-									<div class="form-group col-md-1 custom-control " id="discountP_3"
-										style="visibility: hidden;">
-										<label for="validationTextarea" class="blockquote text-center ">送</label>
-									</div>
-									<div class="form-group col-md-3 custom-control1 " id="discountP_4"
-										style="visibility: hidden;">
-										<select class="custom-select  " required>
-											<option value="">請選擇</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>
-									</div>
-
+								<div class=" col-md-3 pr-1 discountT hid">
+									<form:select class="custom-select " path="discountTickBuy" value="${param.discountTickBuy}">
+										<form:option value="0">購買票數</form:option>
+										<c:forEach begin="1" end="10" var="inputTB">
+											<form:option value="${inputTB}">${inputTB}</form:option>
+										</c:forEach>
+									</form:select>
 								</div>
 
-								<div class="custom-file mb-3">
-									<input style="border-radius: 5px" type="file" class="custom-file-input"
-										id="validatedCustomFile" required> <label class="custom-file-label"
-										for="validatedCustomFile">文宣上傳</label>
+								<div class=" col-md-1 pr-1 discountT hid">
+									<label>送</label>
 								</div>
-								<div class="form-row p-1">
-									<button style="border-radius: 5px" type="button"
-										class="btn btn-primary btn-lg btn-block ">送出公告</button>
+								<div class=" col-md-3 pr-1 discountT hid">
+									<form:select class="custom-select " path="discountTickFree" value="${param.discountTickFree}">
+										<form:option value="0">贈送票數</form:option>
+										<c:forEach begin="1" end="5" var="inputTF">
+											<form:option value="${inputTF}">${inputTF}</form:option>
+										</c:forEach>
+									</form:select>
 								</div>
-							</form:form>
+							</div>
+
+
+							<div>
+								<form:input style="border-radius: 5px" type="file" path="imgUrlString" />
+								<label for="validatedCustomFile">文宣上傳</label>
+
+							</div>
+							<div>
+								<input id="btnAdd" type='submit' class='btn btn-primary'>
+							</div>
+
+						</form:form>
 					</div>
 				</div>
 			</div>
@@ -277,9 +190,7 @@
 
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
-
 	<!-- Scripts -->
-
 	<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" -->
 	<!-- 		crossorigin="anonymous"></script> -->
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
@@ -290,46 +201,39 @@
 	<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-
-
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-		crossorigin="anonymous"></script>
-
-
+	<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" -->
+	<!-- 		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
+	<!-- 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" -->
+	<!-- 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-
 	<script>
 		//    Datepicker
-		$(function () {
-			var set = {
-				monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月",
-					"九月", "十月", "十一月", "十二月"],
-				monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九",
-					"十", "十一", "十二"],
-				dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-				dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-				dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
-				defaultDate: "+1w",
-				changeMonth: true,
-				numberOfMonths: 1,
-				dateFormat: "yy-mm-dd"
-			}
-
-			var dateFormat = "yy-mm-dd", from = $("#from").datepicker(set).on(
-				"change", function () {
-					to.datepicker("option", "minDate", getDate(this));
-					console.log(this)
-				}), to = $("#to").datepicker(set).on("change", function () {
-					from.datepicker("option", "maxDate", getDate(this));
-				});
+		$(function() {
+			var dateFormat = "yy-mm-dd", from = $("#from").datepicker(
+					{
+						monthNamesShort : ["一", "二", "三", "四", "五", "六", "七",
+								"八", "九", "十", "十一", "十二"],
+						dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
+						defaultDate : "+1d",
+						changeMonth : true,
+						numberOfMonths : 1,
+						dateFormat : "yy-mm-dd"
+					}).on("change", function() {
+				to.datepicker("option", "minDate", getDate(this));
+				console.log(this)
+			}), to = $("#to").datepicker(
+					{
+						monthNamesShort : ["一", "二", "三", "四", "五", "六", "七",
+								"八", "九", "十", "十一", "十二"],
+						dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
+						defaultDate : "+1M",
+						changeMonth : true,
+						numberOfMonths : 1,
+						dateFormat : "yy-mm-dd"
+					}).on("change", function() {
+				from.datepicker("option", "maxDate", getDate(this));
+			});
 
 			function getDate(element) {
 				var date;
@@ -342,7 +246,31 @@
 				return date;
 			}
 		});
+		//	    discount by jQuery
 
+		$(document).ready(function() {
+			$("input[type='radio']").click(function() {
+				var i = $(this).attr("value");
+				// 				alert(i);
+				switch (i) {
+					case "0" :
+						var o = "discount";
+						break;
+					case "1" :
+						var o = "discountP";
+						break;
+					case "2" :
+						var o = "discountT";
+						break;
+				}
+				// 				alert(o);
+				var targete = $("." + o);
+				// 				$(".hid").not(targete).css("visibility", "hidden");
+				// 				$(targete).css("visibility", "visible");
+				$(".hid").not(targete).hide();
+				$(targete).show();
+			});
+		});
 	</script>
 </body>
 

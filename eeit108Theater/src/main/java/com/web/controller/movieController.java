@@ -24,19 +24,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.web.entity.MovieBean;
+import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
+import com.web.service.TimeTableService;
+
 
 @Controller
 public class movieController {
 	@Autowired
 	MovieService service;
 	@Autowired
+	TimeTableService time_service;
+	@Autowired
 	ServletContext context;
 
 	@RequestMapping("/movie")
 	public String movieIntroduction(Model model) {
-		List<MovieBean> list = service.getAllMovies();
-		model.addAttribute("movies", list);
+//		List<MovieBean> list = service.getAllMovies();
+//		model.addAttribute("movies", list);
+//		return "movie";
+		List<MovieBean> comingMovie = service.getComingMovies();
+		List<MovieBean> releasedMovie = service.getReleasedMovies();
+ 		model.addAttribute("comingMovies", comingMovie);
+ 		model.addAttribute("releasedMovies", releasedMovie);
 		return "movie";
 	}
 
@@ -44,8 +54,12 @@ public class movieController {
 	public String movieTimes(Model model, @PathVariable Integer no) {
 		MovieBean movie = service.getMovieById(no);
 		String[] string = movie.getTrailerLink();
+		List<TimeTableBean> time = time_service.getTimeTablesByMovie(movie.getMovieName());
+		List<TimeTableBean> date = time_service.getStartTimeByMovie(movie.getMovieName());
 		model.addAttribute("link", string[0]);
 		model.addAttribute("movie", movie);
+		model.addAttribute("times", time);
+		model.addAttribute("hi", date);
 		return "movieTimes";
 	}
 	

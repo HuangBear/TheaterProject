@@ -8,6 +8,7 @@ package data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.text.DateFormat;
@@ -20,11 +21,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.web.entity.MovieBean;
+import com.web.entity.TimeTableBean;
 
 import data.util.HibernateUtils;
 import data.util.SystemUtils2018;
 
-public class EDMTableResetHibernate {
+public class EDMTableResetHibernate_Movie {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
 	public static void main(String args[])
@@ -75,14 +77,10 @@ public class EDMTableResetHibernate {
 					session.save(movie);
 					System.out.println("新增一筆movie紀錄成功");
 				}
-				
-				
-				
-				
 
 				// 印出資料新增成功的訊息
-				// session.flush();
 				System.out.println("movie資料新增成功");
+
 				tx.commit();
 			} catch (Exception e)
 			{

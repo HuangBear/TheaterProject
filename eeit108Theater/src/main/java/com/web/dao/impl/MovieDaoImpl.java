@@ -1,6 +1,8 @@
 package com.web.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -16,7 +18,6 @@ public class MovieDaoImpl implements MovieDao{
 	SessionFactory factory;
 	@Override
 	public int saveMovie(MovieBean movie) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -52,16 +53,34 @@ public class MovieDaoImpl implements MovieDao{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getReleasedMovies() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM MovieBean m WHERE m.openingDate <= :mopeningDate";
+		Session session = null;
+		List<MovieBean> list = new ArrayList<>();
+		session = factory.getCurrentSession();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String parameter = sdf.format(date.getTime());
+		java.sql.Date today = java.sql.Date.valueOf(parameter);
+		list = session.createQuery(hql).setParameter("mopeningDate", today).getResultList();
+		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getComingMovies() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM MovieBean m WHERE m.openingDate > :mopeningDate";
+		Session session = null;
+		List<MovieBean> list = new ArrayList<>();
+		session = factory.getCurrentSession();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String parameter = sdf.format(date.getTime());
+		java.sql.Date today = java.sql.Date.valueOf(parameter);
+		list = session.createQuery(hql).setParameter("mopeningDate", today).getResultList();
+		return list;
 	}
 
 	@SuppressWarnings("unchecked")

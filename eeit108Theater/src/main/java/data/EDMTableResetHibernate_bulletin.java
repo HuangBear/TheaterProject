@@ -55,19 +55,23 @@ public class EDMTableResetHibernate_bulletin {
 					}
 					String[] token = line.split("\\|");
 					BulletinBean bulletin = new BulletinBean();
-					DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					bulletin.setAvailable(Boolean.valueOf(token[0]));
-					bulletin.setTittle(token[1]);
+					bulletin.setTitle(token[1]);
 					bulletin.setContext(token[2]);
-					bulletin.setStartDate(sdf.parse(token[3]));
-					bulletin.setEndtDate(sdf.parse(token[4]));
+					bulletin.setStartDate(token[3]);
+					bulletin.setEndDate(token[4]);
 					bulletin.setPostTime(sdf.parse(token[5]));
-					bulletin.setDiscontTick(Boolean.valueOf(token[6]));
-					bulletin.setDiscontPrice(Boolean.valueOf(token[7]));
-					bulletin.setStatus(Boolean.valueOf(token[8]));
+					bulletin.setDiscount(Integer.valueOf(token[6]));
+					bulletin.setDiscountTickBuy(token[7].equals("")?0:Integer.valueOf(token[7]));
+					bulletin.setDiscountTickFree(token[8].equals("")?0:Integer.valueOf(token[8]));
+					bulletin.setDiscountPriceBuy(token[9].equals("")?0:Integer.valueOf(token[9]));
+					bulletin.setDiscountPriceFree(token[10].equals("") ? 0 : Integer.valueOf(token[10]));
+
+					bulletin.setStatus(Boolean.valueOf(token[11]));
 					EmployeeBean employee = session.get(EmployeeBean.class, 2);
 					bulletin.setEmployee(employee);
-					Blob sb = SystemUtils2018.fileToBlob(token[9]);
+					Blob sb = SystemUtils2018.fileToBlob(token[12]);
 					bulletin.setBulletinImage(sb);
 					session.save(bulletin);
 					System.out.println("新增一筆bulletin紀錄成功");

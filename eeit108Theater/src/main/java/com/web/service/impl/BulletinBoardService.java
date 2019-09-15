@@ -19,24 +19,22 @@ public class BulletinBoardService {
 	public List<BulletinBean> getAllBulletin()
 	{
 		List<BulletinBean> list = dao.getAllBulletin();
-//		System.out.println(list.get(0).getImgUrlString());
 		for (BulletinBean bb : list)
 		{
-
-			Boolean dp = bb.getDiscontPrice();
-			Boolean dt = bb.getDiscontTick();
-			if (dp == true && dt == false)
+			Integer discount = bb.getDiscount();
+			switch (discount)
 			{
+			case 1:
 				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-low-price-50.png");
-			} else if (dp == false && dt == true)
-			{
+				break;
+			case 2:
 				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-pricing-50.png");
-			} else 
-			{
+				break;
+			default:
 				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-delete-50.png");
+				break;
 			}
 		}
 		return list;
 	}
-
 }

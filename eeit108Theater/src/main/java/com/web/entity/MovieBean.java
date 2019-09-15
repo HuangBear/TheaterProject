@@ -18,8 +18,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "Movie")
 public class MovieBean implements Serializable{
+
 	private static final long serialVersionUID = 8108696626426463640L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_no")
