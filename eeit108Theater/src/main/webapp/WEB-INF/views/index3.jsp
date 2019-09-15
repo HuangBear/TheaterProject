@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>7-1 MOVIE</title>
+<title>7-1 MOVIE id3</title>
 <jsp:include page="/fragment/index_include3.jsp" />
 <script src="<%=request.getContextPath()%>/js/jquery.scrolling-tabs.min.js"></script>
 <script type="text/javascript" src="js/jquery-equal-height.min.js"></script>
@@ -17,9 +17,17 @@
 </head>
 <body id="body">
 
+
+<h2>${message}</h2>
+	
+	<form action='<spring:url value="/logout"/>' method="post">
+		<input value="Logout" type="submit">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+
 	<div class="container" style="margin-bottom: 150px;">
 		<div >
-<%-- 			<jsp:include page="/admanager/index.jsp" /> --%>
+
 		</div>
 		<hr style="visibility: hidden;">
 		<hr style="visibility: hidden;">

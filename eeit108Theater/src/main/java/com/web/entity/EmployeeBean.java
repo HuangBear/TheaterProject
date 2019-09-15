@@ -192,4 +192,5 @@ public class EmployeeBean implements Serializable{
 	public void setBulletins(Set<BulletinBean> bulletins) {
 		this.bulletins = bulletins;
 	}
+	
 }

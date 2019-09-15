@@ -113,7 +113,7 @@
 				<%-- 				<form:input type="hidden" value="false" name="certificationStatus" --%>
 				<%-- 					id="certificationStatus" path="certificationStatus" /> --%>
 				<%-- 					<form:input type="hidden" value="" nama="certificationHash" id="certificationHash" path="certificationHash"/> --%>
-
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<button type="submit" class="btn btn-primary">送出</button>
 				<button type="reset" class="btn btn-primary">重填</button>
 				<hr>

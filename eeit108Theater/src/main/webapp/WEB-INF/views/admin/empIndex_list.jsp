@@ -65,7 +65,7 @@ tr {
 <h4>${name}</h4>
 <h4>${welcome}</h4>
 <h6>${error}</h6>
-<button class="btn info" onclick="javascrtpt:window.location.href='empInsert_include'">新增員工資料</button><p>
+<button class="btn info" onclick="javascrtpt:window.location.href='emp_add'">新增員工資料</button><p>
 	<hr>
 
 <c:if test='${empty employees}'>
@@ -98,7 +98,7 @@ tr {
             	</c:otherwise>
 				 </c:choose>
 				<td>
-				<button class="btn info"  onclick="javascrtpt:window.location.href='EmpUpdate?pk=${emp.no}'">
+				<button class="btn info"  onclick="javascrtpt:window.location.href='emp_update?pk=${emp.no}'">
 				編輯員工資料
 				</button><p>
 				</td>

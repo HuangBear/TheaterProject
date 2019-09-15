@@ -247,14 +247,14 @@ nav.main-nav:hover {
 			class="w3-bar-item w3-button w3-xlarge w3-left glfont"><span
 			id="hermitHome">7-1 MOVIE</span></a>
 		<!-- 如果有登入就不顯示 -->
-		<c:if test="${empty logout}">
+		<c:if test="${empty empEmail}">
 			<a href="<%=request.getContextPath()%>/EmpLogin"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">Login</span></a>
 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span>
 		</c:if>
 		<!-- 如果有登入就顯示登出 -->
-		<c:if test="${!empty logout}">
+		<c:if test="${!empty empEmail}">
 
 			<a href="<%=request.getContextPath()%>/EmpLogout"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
@@ -278,14 +278,14 @@ nav.main-nav:hover {
 		<!-- 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span> -->
 		<%-- 		</c:if> --%>
 		<!-- 如果有登入就顯示登出 -->
-		<c:if test="${!empty LoginOK}">
+		<c:if test="${!empty empEmail}">
 			<a href=""
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">員工登出</span></a>
 			<a
 				href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">${LoginOK.memName}</span></a>
+				id="hermitHome">${empEmail}</span></a>
 			<span style="margin-top: 8px;"
 				class="w3-xlarge w3-right w3-margin-right" id="hermitHome">您好！</span>
 		</c:if>
@@ -359,7 +359,7 @@ nav.main-nav:hover {
 			
 		$("#emp").click(function(event){
  			event.preventDefault();
-			window.location= "<%=request.getContextPath()%>/empIndex_include2";
+			window.location= "<%=request.getContextPath()%>/admin/empIndex_list";
 		})
 			
 			

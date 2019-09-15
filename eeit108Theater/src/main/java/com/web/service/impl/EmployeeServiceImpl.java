@@ -36,6 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		oldEmpBean.setPassword(empBean.getPassword());
 		oldEmpBean.setGender(empBean.getGender());
 		oldEmpBean.setAvailable(empBean.getAvailable());
+		oldEmpBean.setSalary(empBean.getSalary());
 		employeeDao.updateEmployee(oldEmpBean);
 		
 	}

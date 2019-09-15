@@ -43,20 +43,20 @@ float:right;
 					<label for="email">員工信箱</label>
 					<form:input type="email" class="form-control" id="email"
  						name="email" value="${eEmail}" path="email" 
- 						style="max-width:400px;" /> 
+ 						style="max-width:400px;" required="required"/> 
 				</div>
 				<div class="form-group">
 					<label for="employeeId">員工身分證號碼</label>
 					<form:input type="employeeId" class="form-control" id="employeeId"
  						name="employeeId" value="${eId}" path="employeeId" 
- 						style="max-width:400px;" /> 
+ 						style="max-width:400px;" required="required"/> 
 				</div>
 
 				<div class="form-group">
 					<label for="name">員工姓名</label>
 					<form:input type="text" class="form-control" id="name"
  						name="name" value="${eName}" path="name" 
- 						style="max-width:400px;" /> 
+ 						style="max-width:400px;" required="required"/> 
 				</div>
 
 				<div class="form-group"> 
@@ -69,30 +69,41 @@ float:right;
 				<div class="form-group">
 					<label for="password">員工密碼</label>
 					<form:input type="password" class="form-control" id="password"
- 						value="${ePwd}" path="password" style="max-width:400px;" /> 
+ 						value="${ePwd}" path="password" style="max-width:400px;" required="required"/> 
 				</div>
 				<div class="form-group">
 					<label for="salary">薪水</label>
 					<form:input type="salary" class="form-control" id="salary"
- 						value="${eSalary}" path="salary" style="max-width:400px;" /> 
+ 						value="${eSalary}" path="salary" style="max-width:400px;" required="required"/> 
 				</div>
 
 				<div class="form-group">
 					<label for="gender">員工性別</label><br>
 					 <label> <form:radiobutton name="gender"
- 							value="1" path="gender" checked="true" /> 男 
+ 							value="1" path="gender"  /> 男 
 					</label> 
 					<label> <form:radiobutton name="gender" value="2"
  							path="gender" /> 女 
 					</label>
 				</div>
 				<div class="form-group">
+					<label for="permission">員工權限</label><br>
+					 <label> 
+					 <form:select path='permission' required="required" id="permission">
+					<form:option value="0">無權限(0)</form:option>
+					<form:option value="1" selected="selected">一般員工(1)</form:option>
+					<form:option value="2">電影經理(2)</form:option>
+					<form:option value="3">主管(3)</form:option>
+					</form:select>
+					</label> 
+				</div>
+				<div class="form-group">
 					<label for="gender">工作狀態</label><br>
 					 <label> <form:radiobutton name="available"
- 							value="true" path="available" checked="true" /> 在職
+ 							value="true" path="available"  /> 在職中
 					</label> 
 					<label> <form:radiobutton name="available" value="false"
- 							path="available" /> 停權 
+ 							path="available" /> 停權中
 					</label>
 				</div>
 
@@ -104,6 +115,7 @@ float:right;
 
 
 				<button type="submit" class="btn btn-primary">送出修改</button>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<button type="reset" class="btn btn-primary">重填</button>
 				
 			</form:form>
