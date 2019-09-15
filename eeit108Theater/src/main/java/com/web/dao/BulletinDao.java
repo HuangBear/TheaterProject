@@ -8,7 +8,7 @@ import com.web.entity.BulletinBean;
 
 public interface BulletinDao {
 
-	void saveBulletin(BulletinBean bb);
+	void insertBulletin(BulletinBean bb);
 
 	void deletecBulletin(Integer bullentin_no);
 

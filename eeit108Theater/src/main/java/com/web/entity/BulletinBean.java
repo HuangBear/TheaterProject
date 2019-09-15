@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 @Table(name = "Bulletin")
 public class BulletinBean implements Serializable {
@@ -23,7 +25,7 @@ public class BulletinBean implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
 	private Integer no;
-	private Boolean available;// 是否過期
+	private Boolean available;// true=在期限內
 	private String title;
 	private String context;
 	private String startDate;
@@ -34,16 +36,19 @@ public class BulletinBean implements Serializable {
 	private Integer discountTickFree;
 	private Integer discountPriceBuy;
 	private Integer discountPriceFree;
-	private Boolean status;// 是否刪除
+	private Boolean status;// true=存在 false=
 	@Transient
 	private String imgUrlString;
+	@Transient
+	private Integer employeeId;
+	private String fileName;
+	private Blob coverImage;
+	@Transient
+	private MultipartFile bulletinImage;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
-
-	private Blob bulletinImage;
-
 
 	public Integer getNo()
 	{
@@ -100,9 +105,9 @@ public class BulletinBean implements Serializable {
 		return endDate;
 	}
 
-	public void setEndDate(String endtDate)
+	public void setEndDate(String endDate)
 	{
-		this.endDate = endtDate;
+		this.endDate = endDate;
 	}
 
 	public Date getPostTime()
@@ -113,6 +118,16 @@ public class BulletinBean implements Serializable {
 	public void setPostTime(Date postTime)
 	{
 		this.postTime = postTime;
+	}
+
+	public Integer getDiscount()
+	{
+		return discount;
+	}
+
+	public void setDiscount(Integer discount)
+	{
+		this.discount = discount;
 	}
 
 	public Integer getDiscountTickBuy()
@@ -134,8 +149,6 @@ public class BulletinBean implements Serializable {
 	{
 		this.discountTickFree = discountTickFree;
 	}
-
-
 
 	public Integer getDiscountPriceBuy()
 	{
@@ -177,6 +190,46 @@ public class BulletinBean implements Serializable {
 		this.imgUrlString = imgUrlString;
 	}
 
+	public Integer getEmployeeId()
+	{
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId)
+	{
+		this.employeeId = employeeId;
+	}
+
+	public String getFileName()
+	{
+		return fileName;
+	}
+
+	public void setFileName(String fileName)
+	{
+		this.fileName = fileName;
+	}
+
+	public Blob getCoverImage()
+	{
+		return coverImage;
+	}
+
+	public void setCoverImage(Blob coverImage)
+	{
+		this.coverImage = coverImage;
+	}
+
+	public MultipartFile getBulletinImage()
+	{
+		return bulletinImage;
+	}
+
+	public void setBulletinImage(MultipartFile bulletinImage)
+	{
+		this.bulletinImage = bulletinImage;
+	}
+
 	public EmployeeBean getEmployee()
 	{
 		return employee;
@@ -187,29 +240,10 @@ public class BulletinBean implements Serializable {
 		this.employee = employee;
 	}
 
-	public Blob getBulletinImage()
-	{
-		return bulletinImage;
-	}
-
-	public void setBulletinImage(Blob bulletinImage)
-	{
-		this.bulletinImage = bulletinImage;
-	}
-
 	public static long getSerialversionuid()
 	{
 		return serialVersionUID;
 	}
 
-	public Integer getDiscount()
-	{
-		return discount;
-	}
-
-	public void setDiscount(Integer discount)
-	{
-		this.discount = discount;
-	}
 
 }
