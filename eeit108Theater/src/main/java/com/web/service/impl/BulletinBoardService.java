@@ -1,5 +1,6 @@
 package com.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -36,5 +37,14 @@ public class BulletinBoardService {
 			}
 		}
 		return list;
+	}
+
+	@Transactional
+	public void insertNewBulletin(BulletinBean bb)
+	{
+		bb.setAvailable(true);
+		bb.setPostTime(new Date());
+		bb.setStatus(false);
+		dao.insertBulletin(bb);
 	}
 }
