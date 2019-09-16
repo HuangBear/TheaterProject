@@ -81,7 +81,7 @@
 
 						<header>
 							<h2>
-								<a href="#">公告</a>
+								<a href="#">NewBulletin</a>
 							</h2>
 						</header>
 						<form:form method='POST' modelAttribute="getNewBulletin" enctype="multipart/form-data">
@@ -114,11 +114,7 @@
 							</div>
 							<div>
 								<table>
-
-
-
 									<tr>
-
 										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="單純公告，無任何優惠" value="0" /></td>
 										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="現金折扣" value="1" /></td>
 										<td><form:radiobutton style="-webkit-appearance:radio" path="discount" label="票券折扣" value="2" /></td>
@@ -127,6 +123,9 @@
 							</div>
 
 							<div class="form-row pr-3 pl-5">
+								<div class="col-md-4 pr-1 discountP hid">
+									<a style="color: red;">${ErrMsg.discountP}</a>
+								</div>
 								<div class="col-md-1 pr-1 discountP hid">
 									<label for="validationTextarea">滿</label>
 								</div>
@@ -142,6 +141,9 @@
 							</div>
 
 							<div class="form-row pr-3 pl-5">
+								<div class="col-md-4 pr-1 discountT hid">
+									<a style="color: red;">${ErrMsg.discountT}</a>
+								</div>
 								<div class=" col-md-1 pr-1 discountT hid">
 									<label>買</label>
 								</div>
@@ -167,11 +169,18 @@
 									</form:select>
 								</div>
 							</div>
-
+							<div class="form-row pr-3 pl-5">
+							<div class=" col-md pr-1 ">
+									EmployeeId
+								</div>
+								<div class=" col-md pr-1 ">
+									<form:input path="employeeId" type="text"  value="2" />
+								</div>
+							</div>
 
 							<div>
-								<form:input style="border-radius: 5px" type="file" path="imgUrlString" />
-								<label for="validatedCustomFile">文宣上傳</label>
+								<form:input style="border-radius: 5px" type="file" path="bulletinImage" />
+								<label>文宣上傳</label>
 
 							</div>
 							<div>

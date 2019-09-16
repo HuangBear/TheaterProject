@@ -32,4 +32,6 @@ public interface ProductDao {
 	List<ProductBean> getAllAvailableProducts();	
 
 	List<ProductBean> getProductsByType(String type);
+	
+	List<ProductBean> getTicketsByVersion(String version);
 }

@@ -17,13 +17,15 @@
 </noscript>
 
 </head>
+
 <body class="left-sidebar is-preload">
+
 	<div id="page-wrapper">
 		<div id="header">
-			<!-- Header -->
+			<!--Header-->
 			<jsp:include page="header.jsp" />
 		</div>
-		<!-- Main -->
+		<!-- Main-->
 		<div class="wrapper style1">
 
 			<div class="container">
@@ -31,66 +33,44 @@
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 
-
 						<p>後台測試頁</p>
 
 
 						<div class="row gtr-50">
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic10.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Nibh sed cubilia</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic11.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Proin sed adipiscing</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic12.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>公告</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic13.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Sed tempus fringilla</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
-							<!-- 							<div class="col-4"> -->
-							<!-- 								<a href="#" class="image fit"><img src="images/pic14.jpg" -->
-							<!-- 									alt="" /></a> -->
-							<!-- 							</div> -->
+
 							<div class="col-8">
 								<h4>Malesuada fermentum</h4>
-								<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
-								<!-- 									proin.</p> -->
+
 							</div>
 						</div>
-						<!-- 						<footer> <a href="#" class="button">Magna Adipiscing</a> -->
-						<!-- 						</footer> -->
-						</section>
+
+
 					</div>
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 						<article id="main">
 							<header>
 								<h2>
-									<a href="#">公告</a>
+									<a href="#">AllBulletin</a>
 								</h2>
 							</header>
 						</article>
@@ -110,7 +90,7 @@
 									<c:forEach var='allBulletin' items='${allBulletin}'>
 										<tr>
 											<th scope="row">${allBulletin.no}</th>
-											<th scope="row">${allBulletin.tittle}</th>
+											<th scope="row">${allBulletin.title}</th>
 											<td><img width="20px" src="${pageContext.request.contextPath}${allBulletin.imgUrlString}"></td>
 											<th scope="row">${allBulletin.context}</th>
 											<td><a href=""><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></a></td>

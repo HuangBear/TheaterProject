@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class OrderController {
 		return pac + "allProducts";
 	}
 
-	@RequestMapping({ "", "/" })
+	@RequestMapping({ "", "/" }) // 未來交給時刻表提供相關訊息
 	public String orderBegin(Model model, HttpSession session) {
 
 		System.out.println("====orderBegin Start");
@@ -69,7 +70,7 @@ public class OrderController {
 
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
-		model.addAttribute("tickets", pServ.getProductsByType("ticket"));
+		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
 		return pac + "productsByType";
 	}
 
@@ -107,7 +108,7 @@ public class OrderController {
 			}
 			System.out.println("=====endFor");
 		}
-		
+
 		model.addAttribute("orderItems", list);
 		// model.addAttribute("order", ob);
 		System.out.println("======RETURN showOrder");
@@ -116,20 +117,82 @@ public class OrderController {
 	}
 
 	@RequestMapping("/seat")
-	public String showSeatPage(Model model, HttpSession session) {
+	public String showSeatPage(Model model, HttpSession session, HttpServletRequest req) {
 		System.out.println("controller method => SEAT");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		List<SeatBean> seatList = pServ.getSeatsByTimeTable(ob.getTimeTable().getNo());
-		Map<String, Boolean> seatStatus = new HashMap<>();
+		Map<String, Boolean> seatEmpty = new HashMap<>();
 		for (SeatBean seat : seatList) {
-			String seatNum = seat.getRow() + seat.getColumn();
-			seatStatus.put(seatNum, seat.getOrderId() == null ? true : false);
+			String rowCol = seat.getRow() + seat.getColumn();
+			seatEmpty.put(rowCol, seat.getOrderId() == null ? true : false);
 		}
+		int rowCnt = Integer.valueOf(req.getParameter("rowCnt"));
+		int aZoneCnt = Integer.valueOf(req.getParameter("aZoneCnt"));
+		int bZoneCnt = Integer.valueOf(req.getParameter("bZoneCnt"));
+		int zoneNum = Integer.valueOf(req.getParameter("zoneNum"));
+		model.addAttribute("sideBar", this.getSideBar(rowCnt));
+		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, seatEmpty);
+		model.addAttribute("seatTable", s);
+		System.out.println(s);
 		System.out.println("controller method => SEAT  END");
 		return pac + "seat";
 	}
-	@RequestMapping("/seatTable/{tid}")
-	public String seatTable(HttpSession session) {
-		return "seatTable";
+
+	private String getSideBar(int rowCnt) {
+		StringBuilder s = new StringBuilder(512);
+		char row = 'A';
+		for (int i = 0; i < rowCnt; i++) {
+			s.append("<tr><td>" + (char) (row + i) + "</td></tr>");
+			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
+				s.append(
+						"<tr><td><label class=\"invisible\"for=\"bar-space\"></label><input type=\"checkbox\"name=\"seat\"id=\"bar-space\"value=\"space\"></td></tr>");
+			}
+		}
+		return s.toString();
+	}
+
+	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> seatEmpty) {
+		StringBuilder s = new StringBuilder(65536);
+		char row = 'A';
+		for (int i = 0; i < rowCnt; i++) {
+			s.append("<tr><td></td><td></td><td></td>");
+			int colNow = 1;
+			colNow = generateZone(s, row, colNow, aZoneCnt, seatEmpty);
+			s.append("<td></td>");
+			colNow = generateZone(s, row, colNow, bZoneCnt, seatEmpty);
+			colNow+=aZoneCnt;
+			if (zoneNum == 3) {
+				s.append("<td></td>");
+				colNow = generateZone(s, row, colNow, aZoneCnt, seatEmpty);
+			}
+			s.append("<td></td><td></td><td></td></tr>");
+			s.append("\n");
+			row++;
+			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
+				s.append(
+						"<tr><td><label class=\"invisible\"for=\"space\"></label><input type=\"checkbox\"name=\"seat\"id=\"space\"value=\"space\"></td></tr>");
+			}
+		}
+		System.out.println("builder's length = " + s.length());
+		return s.toString();
+	}
+
+	private int generateZone(StringBuilder s, char row, int colNow, int zoneCnt, Map<String, Boolean> seatEmpty) {
+		for (int col = 0; col < zoneCnt; col++, colNow++) {
+			String rowCol = row + String.valueOf(colNow);
+//			if (seatEmpty.get(rowCol)) {
+//				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
+//						+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\"" + rowCol
+//						+ "\"></td>");
+//			} else {
+//				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
+//						+ "\"class=\"sold\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\"" + rowCol
+//						+ "\"></td>");
+//			}
+			s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
+					+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\"" + rowCol
+					+ "\"></td>");
+		}
+		return colNow;
 	}
 }

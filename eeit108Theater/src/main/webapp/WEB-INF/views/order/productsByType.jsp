@@ -35,98 +35,106 @@
 </script>
 </head>
 <body>
-	<div class="container">
+	<div class="container" style="width: 80%">
 		<div class="row">
-			<table class="table">
-				<caption>會員資料</caption>
-				<thead>
-					<tr>
-						<th scope="col">姓名</th>
-						<th scope="col">Email</th>
-						<th scope="col">生分證字號</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>${loginMember.name}</td>
-						<td>${loginMember.email}</td>
-						<td>${loginMember.memberId}</td>
-
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="row">
-			<form action="<c:url value='/order/makeOrder'/>" method="POST">
-				<div id="tabs">
-					<ul>
-						<li><a href="#tabs-1">票種</a></li>
-						<li><a href="#tabs-2">食物</a></li>
-						<li><a href="#tabs-3">飲料</a></li>
-					</ul>
-					<div id="tabs-1">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">票種</th>
-									<th scope="col">價格</th>
-									<th scope="col">數量</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="ticket" items="${tickets}">
+			<div class="col-md-3 order-md-2 order-sm-1">
+				<table class="table border">
+					<thead>
+						<tr style="text-align: center">
+							<th scope="col">會員資料</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Member Name: ${loginMember.name}</td>
+						</tr>
+						<tr>
+							<td>Member Email: ${loginMember.email}</td>
+						</tr>
+						<tr>
+							<td>Member Id: ${loginMember.memberId}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-9 order-md-1 order-sm-2">
+				<form action="<c:url value='/order/makeOrder'/>" method="POST">
+					<div id="tabs">
+						<ul>
+							<li><a href="#tabs-1">票種</a></li>
+							<li><a href="#tabs-2">食物</a></li>
+							<li><a href="#tabs-3">飲料</a></li>
+						</ul>
+						<div id="tabs-1">
+							<table class="table">
+								<thead>
 									<tr>
-										<td>${ticket.name}</td>
-										<td>$ ${ticket.price}</td>
-										<td><input name="${ticket.name}"></td>
+										<th scope="col">票種</th>
+										<th scope="col">價格</th>
+										<th scope="col">數量</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-					<div id="tabs-2">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">品項</th>
-									<th scope="col">價格</th>
-									<th scope="col">數量</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="food" items="${foods}">
+								</thead>
+								<tbody>
+									<c:forEach var="ticket" items="${tickets}">
+										<tr>
+											<td>${ticket.name}</td>
+											<td>$ ${ticket.price}</td>
+											<td>
+												<input name="${ticket.name}">
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div id="tabs-2">
+							<table class="table">
+								<thead>
 									<tr>
-										<td>${food.name}</td>
-										<td>$ ${food.price}</td>
-										<td><input name="${food.name}"></td>
+										<th scope="col">品項</th>
+										<th scope="col">價格</th>
+										<th scope="col">數量</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-					<div id="tabs-3">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">品項</th>
-									<th scope="col">價格</th>
-									<th scope="col">數量</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="drink" items="${drinks}">
+								</thead>
+								<tbody>
+									<c:forEach var="food" items="${foods}">
+										<tr>
+											<td>${food.name}</td>
+											<td>$ ${food.price}</td>
+											<td>
+												<input name="${food.name}">
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div id="tabs-3">
+							<table class="table">
+								<thead>
 									<tr>
-										<td>${drink.name}</td>
-										<td>$ ${drink.price}</td>
-										<td><input name="${drink.name}"></td>
+										<th scope="col">品項</th>
+										<th scope="col">價格</th>
+										<th scope="col">數量</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach var="drink" items="${drinks}">
+										<tr>
+											<td>${drink.name}</td>
+											<td>$ ${drink.price}</td>
+											<td>
+												<input name="${drink.name}">
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
-				</div>
-				<input type="submit" value="確認">
-			</form>
+					<input type="submit" value="確認">
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
