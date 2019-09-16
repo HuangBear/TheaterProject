@@ -1,6 +1,5 @@
 package com.web.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -118,6 +117,21 @@ public class TimeTableDaoImpl implements TimeTableDao{
 	public List<TimeTableBean> getStartTimeByMovie(String movieName) {
 		String hql = "SELECT DISTINCT t.startTime FROM TimeTableBean t WHERE t.movieName = :mname";
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getTheaterByMovieName(String movieName) {
+		String hql = "FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater) {
+		String hql = "SELECT DISTINCT t.startTime FROM TimeTableBean t WHERE t.movieName = :mname and t.theater = :mtheater";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).setParameter("mtheater", theater).getResultList();
 		return list;
 	}
 }

@@ -23,6 +23,8 @@ public interface TimeTableService {
 
 	// query
 	TimeTableBean getTimeTableByNo(Integer timeTableNo);
+	
+	List<TimeTableBean> getTheaterByMovieName(String movieName);
 
 	List<TimeTableBean> getTimeTablesByMovie(String movieName);
 
@@ -33,4 +35,6 @@ public interface TimeTableService {
 	List<TimeTableBean> getAllAvailable();
 	
 	List<TimeTableBean> getStartTimeByMovie(String movieName);
+	
+	List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater);
 }
