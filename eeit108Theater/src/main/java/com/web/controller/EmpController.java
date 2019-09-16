@@ -40,6 +40,11 @@ public class EmpController {
 		model.addAttribute("message", "登入者Email :" + principal.getName());
 		return "admin/indexTest";
 	}
+//	@RequestMapping("/EmpLogin3")
+//	public String backstageindexA(Model model, Principal principal) {
+//		model.addAttribute("empEmail", principal.getName());
+//		return "redirect:admin/empIndexA";
+//	}
 	
 //	@RequestMapping(value = "/EmpLogin", method = RequestMethod.GET)
 //	public String EmpLogin(Model model) {
@@ -67,11 +72,11 @@ public class EmpController {
 //			redirectAttributes.addFlashAttribute("error", "登錄失敗，帳號或密碼錯誤");
 //			return "redirect:/EmpLogin";
 //	}
-	@RequestMapping("EmpLogout")
+	@RequestMapping("admin/EmpLogout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "redirect:/EmpLogin";
+		return "redirect:/EmpLogin3";
 	}
 	@RequestMapping("/admin/empIndex_list")
 	public String EmpList(Model model) {
@@ -79,11 +84,30 @@ public class EmpController {
 		model.addAttribute("employees", list);
 		return "admin/empIndex_list";
 	}
+	@RequestMapping("admin/empIndexA")
+	public String EmpListA(Model model, Principal principal,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String empEmail=principal.getName();
+		List<EmployeeBean> list = service.getAllEmployees();
+		session.setAttribute("employees", list);
+		model.addAttribute("empEmail", empEmail);
+		EmployeeBean eb1 = service.findByEmail(empEmail);
 
-//	@RequestMapping("/admin/emp_add")
-//	public String AddEmpList(Model model) {
-//		return "admin/emp_add";
-//	}
+		session.setAttribute("employeeBean1",eb1);
+		session.setAttribute("empName", eb1.getName());
+		return "admin/empIndexA";
+	}
+	@RequestMapping("admin/empTable")
+	public String EmpTable(Model model) {
+		List<EmployeeBean> list = service.getAllEmployees();
+		model.addAttribute("employees", list);
+		return "admin/empTable";
+	}
+	@RequestMapping("admin/emp_profile")
+	public String EmpProfile(Model model) {
+		
+		return "admin/emp_profile";
+	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
 	public String AddEmpGet(Model model) {
@@ -120,22 +144,17 @@ public class EmpController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_update")
-	public String editEmpGet(@RequestParam(value = "pk",required = false)Integer pk,Model model) {
+	public String editEmpGet(@RequestParam(value = "pk",required = false)Integer pk,Model model,HttpServletRequest request) {
 		System.out.println(pk);
-		
+		HttpSession session=request.getSession();
 		EmployeeBean eb = service.findByPrimaryKey(pk);
+		session.setAttribute("eb", eb);
 		model.addAttribute("employee", eb);
 		model.addAttribute("employeeBean", new EmployeeBean());
 		
-		model.addAttribute("eName", eb.getName());
-		model.addAttribute("eEmail", eb.getEmail());
-		model.addAttribute("ePhone", eb.getPhoneNum());
-		model.addAttribute("eId", eb.getEmployeeId());
-		model.addAttribute("ePwd", eb.getPassword());
-		model.addAttribute("eSalary", eb.getSalary());
-		model.addAttribute("eResign", eb.getResignTime());
+		
 		System.out.println(eb.getName());
-		return "admin/emp_update";
+		return "/admin/emp_update";
 	}
 	@SuppressWarnings("unused")
 	@RequestMapping(method = RequestMethod.POST, value = "/admin/emp_update")
@@ -154,11 +173,11 @@ public class EmpController {
 			session.setAttribute("AAA", employeeBean.getEmail());
 			employeeBean.setNo(pk);
 			service.updateEmp(employeeBean);
-			return "redirect:/admin/empIndex_list";
+			return "redirect:/admin/empTable";
 		} 
 		else {
 			redirectAttributes.addFlashAttribute("error", "失敗,資料缺失");
-			return "redirect:/admin/empIndex_list";
+			return "redirect:/admin/empTable";
 		}
 	}
 	@RequestMapping(method = RequestMethod.GET, value = "/admin/EmpResign")
@@ -167,7 +186,7 @@ public class EmpController {
 		
 		employeeBean= service.findByPrimaryKey(pk);
 		service.resignEmp(employeeBean);
-		return "redirect:/admin/empIndex_list";
+		return "redirect:/admin/empTable";
 	}
 
 }
