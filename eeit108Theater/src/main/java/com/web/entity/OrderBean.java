@@ -2,6 +2,8 @@ package com.web.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -43,7 +46,8 @@ public class OrderBean implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
-	private Set<OrderItemBean> orderItems; //U, O2M
+	@OrderBy("type")
+	private List<OrderItemBean> orderItems = new ArrayList<OrderItemBean>(); //U, O2M
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -54,7 +58,13 @@ public class OrderBean implements Serializable{
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
 	private Set<SeatBean> seats;//U, O2M
 	
-	
+	public OrderBean() {
+		super();
+	}
+	public OrderBean(Boolean available) {
+		this.setAvailable(available);
+		this.setOrderItems(new ArrayList<OrderItemBean>());
+	}
 	public Integer getNo() {
 		return no;
 	}
@@ -73,12 +83,7 @@ public class OrderBean implements Serializable{
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public Set<OrderItemBean> getOrderItems() {
-		return orderItems;
-	}
-	public void setOrderItems(Set<OrderItemBean> orderItems) {
-		this.orderItems = orderItems;
-	}
+	
 	public TimeTableBean getTimeTable() {
 		return timeTable;
 	}
@@ -120,5 +125,11 @@ public class OrderBean implements Serializable{
 	}
 	public void setOrderTime(Timestamp orderTime) {
 		this.orderTime = orderTime;
+	}
+	public List<OrderItemBean> getOrderItems() {
+		return orderItems;
+	}
+	public void setOrderItems(List<OrderItemBean> orderItems) {
+		this.orderItems = orderItems;
 	}
 }

@@ -18,7 +18,11 @@ public class MovieDaoImpl implements MovieDao{
 	SessionFactory factory;
 	@Override
 	public int saveMovie(MovieBean movie) {
-		return 0;
+		int count = 0;
+		Session session = factory.getCurrentSession();
+		session.save(movie);
+		count++;
+		return count;
 	}
 
 	@Override

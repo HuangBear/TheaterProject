@@ -12,7 +12,10 @@
 	<p/>Movie Name = ${timeTable.movie.movieName} 
 	<p/>Start at = ${timeTable.startTime} 
 	<p/>Duration = ${timeTable.duration}
-
-	<a href="<c:url value='/order/showProducts'/>">START</a>
+	<form action="<c:url value='/order/showProducts'/>" method="GET">
+		<label for="timeTableId">Time Table Id: </label>
+		<input id="timeTableId" name="timeTableId" type="text">
+		<input type="submit" value="START">
+	</form>
 </body>
 </html>

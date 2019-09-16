@@ -42,7 +42,7 @@
 
 <script>
 	var SelectedSeat = [];
-	var MAX = 3;
+	var MAX = ${ticketCnt};
 	var labelChecked = "ui-checkboxradio-checked ";
 	var labelActive = "ui-state-active ";
 	var labelDisabled = "ui-checkboxradio-disabled "
@@ -81,7 +81,7 @@
 		<form action="order/confirmOrder" method="POST">
 			<div class="row">
 				<div class="col-md-3 order-md-2 order-sm-1">
-					<div class="border-1">
+					<div>
 						<table class="table border">
 							<thead>
 								<tr style="text-align: center">

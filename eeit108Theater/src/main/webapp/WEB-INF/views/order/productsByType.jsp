@@ -16,10 +16,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+	//var ticketCnt = parseInt("0");
+	const maxTicket = parseInt("10");
 	$(function() {
 		$("#tabs").tabs();
-	});
-	$(function() {
 		$("td>input").spinner({
 			spin : function(event, ui) {
 				if (ui.value > 10) {
@@ -31,6 +31,59 @@
 				}
 			}
 		});
+
+		$(".item").change(function() {
+			//console.log($(this).attr("id"));
+			//console.log($(this).val());
+			var pname = $(this).attr("id");
+			var pquantity = $(this).val();
+			$.ajax({
+				url : "<c:url value='/order/orderList'/>",
+				data : {
+					name : pname,
+					quantity : pquantity
+				},
+				type : "POST",
+				success : function(data) {
+					$("#orderItems").html(data);
+				}
+			});
+		});
+		$(".ticket").change(function() {
+			var id = "#" + $(this).attr("id");
+			var newCnt = parseInt($(this).val());
+			var ticketCnt = 0;
+			$.each($(".ticket"), function() {
+				ticketCnt += parseInt($(this).val());
+			});
+			console.log("ticketCnt = " + ticketCnt);
+			console.log("this id = " + id);
+			console.log("this value = " + $(id).val());
+			console.log(newCnt);
+			if (ticketCnt > maxTicket) {
+				alert("上限10");
+				newCnt = maxTicket - (ticketCnt - newCnt);
+				console.log("from " + $(id).val());
+				$(id).val(newCnt);
+				console.log("change to " + $(id).val());
+				var pname = $(this).attr("id");
+				var pquantity = $(this).val();
+				$.ajax({
+					url : "<c:url value='/order/orderList'/>",
+					data : {
+						name : pname,
+						quantity : pquantity
+					},
+					type : "POST",
+					success : function(data) {
+						$("#orderItems").html(data);
+					}
+				});
+				$("#ticketCnt").val(maxTicket);
+			} else {
+				$("#ticketCnt").val(ticketCnt);
+			}
+		});
 	});
 </script>
 </head>
@@ -38,24 +91,53 @@
 	<div class="container" style="width: 80%">
 		<div class="row">
 			<div class="col-md-3 order-md-2 order-sm-1">
-				<table class="table border">
-					<thead>
-						<tr style="text-align: center">
-							<th scope="col">會員資料</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Member Name: ${loginMember.name}</td>
-						</tr>
-						<tr>
-							<td>Member Email: ${loginMember.email}</td>
-						</tr>
-						<tr>
-							<td>Member Id: ${loginMember.memberId}</td>
-						</tr>
-					</tbody>
-				</table>
+				<div>
+					<table class="table border">
+						<thead>
+							<tr style="text-align: center">
+								<th scope="col">會員資料</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Member Name: ${loginMember.name}</td>
+							</tr>
+							<tr>
+								<td>Member Email: ${loginMember.email}</td>
+							</tr>
+							<tr>
+								<td>Member Id: ${loginMember.memberId}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="mt-5">
+					<table class="table border" id="orderList">
+						<thead>
+							<tr style="text-align: center">
+								<th>Order List(primary)</th>
+							</tr>
+						</thead>
+						<tbody id="orderItems">
+							<c:forEach var='item' items="${order.orderItems}">
+								<tr>
+									<td>
+										<div>${item.itemName}</div>
+										<div class="float-right">${item.unitPrice} x ${item.quantity} = ${item.unitPrice * item.quantity}</div>
+									</td>
+								</tr>
+							</c:forEach>
+							<tr>
+								<td>
+									<div>
+										<b>Total</b>
+									</div>
+									<div class="float-right">${order.totalPrice == null ? 0:order.totalPrice}</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="col-md-9 order-md-1 order-sm-2">
 				<form action="<c:url value='/order/makeOrder'/>" method="POST">
@@ -80,12 +162,18 @@
 											<td>${ticket.name}</td>
 											<td>$ ${ticket.price}</td>
 											<td>
-												<input name="${ticket.name}">
+												<select class="item ticket custom-select" id="${ticket.name}" name="${ticket.name}">
+													<option value="0" selected>0</option>
+													<c:forEach var="index" begin="1" end="10">
+														<option value="${index}">${index}</option>
+													</c:forEach>
+												</select>
 											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
+							<input type="text" class="" id="ticketCnt" name="ticketCnt" />
 						</div>
 						<div id="tabs-2">
 							<table class="table">
@@ -102,7 +190,13 @@
 											<td>${food.name}</td>
 											<td>$ ${food.price}</td>
 											<td>
-												<input name="${food.name}">
+												<%-- 												<input class="item" id="${food.name}" name="${food.name}"> --%>
+												<select class="item custom-select" id="${food.name}" name="${food.name}">
+													<option value="0" selected>0</option>
+													<c:forEach var="index" begin="1" end="10">
+														<option value="${index}">${index}</option>
+													</c:forEach>
+												</select>
 											</td>
 										</tr>
 									</c:forEach>
@@ -124,7 +218,13 @@
 											<td>${drink.name}</td>
 											<td>$ ${drink.price}</td>
 											<td>
-												<input name="${drink.name}">
+												<%-- 												<input class="item" id="${drink.name}" name="${drink.name}"> --%>
+												<select class="item custom-select" id="${drink.name}" name="${drink.name}">
+													<option value="0" selected>0</option>
+													<c:forEach var="index" begin="1" end="10">
+														<option value="${index}">${index}</option>
+													</c:forEach>
+												</select>
 											</td>
 										</tr>
 									</c:forEach>
