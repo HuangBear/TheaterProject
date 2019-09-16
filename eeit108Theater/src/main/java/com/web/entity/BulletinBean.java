@@ -25,7 +25,7 @@ public class BulletinBean implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
 	private Integer no;
-	private Boolean available;// true=在期限內
+	private Boolean available;//是否存在 true=存在 false=刪除
 	private String title;
 	private String context;
 	private String startDate;
@@ -36,7 +36,7 @@ public class BulletinBean implements Serializable {
 	private Integer discountTickFree;
 	private Integer discountPriceBuy;
 	private Integer discountPriceFree;
-	private Boolean status;// true=存在 false=
+	private Boolean status;// 是否在期限內 true=在 false=過期
 	@Transient
 	private String imgUrlString;
 	@Transient
@@ -45,10 +45,34 @@ public class BulletinBean implements Serializable {
 	private Blob coverImage;
 	@Transient
 	private MultipartFile bulletinImage;
+	@Transient
+	private String pay;
+	@Transient
+	private String free;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
+
+	public String getPay()
+	{
+		return pay;
+	}
+
+	public void setPay(String pay)
+	{
+		this.pay = pay;
+	}
+
+	public String getFree()
+	{
+		return free;
+	}
+
+	public void setFree(String free)
+	{
+		this.free = free;
+	}
 
 	public Integer getNo()
 	{

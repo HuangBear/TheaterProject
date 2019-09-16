@@ -1,6 +1,5 @@
 package com.web.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,22 +16,26 @@ public class BulletinBoardService {
 	BulletinDao dao;
 
 	@Transactional
-	public List<BulletinBean> getAllBulletin()
-	{
-		List<BulletinBean> list = dao.getAllBulletin();
-		for (BulletinBean bb : list)
-		{
+	public List<BulletinBean> getStatusBulletin() {
+		List<BulletinBean> list = dao.getStatusBulletin();
+		for (BulletinBean bb : list) {
 			Integer discount = bb.getDiscount();
 			switch (discount)
 			{
 			case 1:
-				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-low-price-50.png");
+				bb.setImgUrlString("/images/icons/backstage/bulletin/discountP.png");
+				bb.setPay("滿");
+				bb.setFree("送");
 				break;
 			case 2:
-				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-pricing-50.png");
+				bb.setImgUrlString("/images/icons/backstage/bulletin/discountT.png");
+				bb.setPay("買");
+				bb.setFree("送");
 				break;
 			default:
-				bb.setImgUrlString("/images/icons/backstage/bulletin/icons8-delete-50.png");
+				bb.setImgUrlString("/images/icons/backstage/bulletin/discountN.png");
+				bb.setPay(null);
+				bb.setFree(null);
 				break;
 			}
 		}
@@ -40,11 +43,14 @@ public class BulletinBoardService {
 	}
 
 	@Transactional
-	public void insertNewBulletin(BulletinBean bb)
-	{
-		bb.setAvailable(true);
-		bb.setPostTime(new Date());
-		bb.setStatus(false);
+	public void insertNewBulletin(BulletinBean bb) {
 		dao.insertBulletin(bb);
+	}
+
+	@Transactional
+	public BulletinBean getBulletinBeanById(Integer no) {
+		BulletinBean bb = dao.getBulletinById(no);
+		return bb;
+
 	}
 }

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
 <title>Left Sidebar - Helios by HTML5 UP</title>
 <meta charset="utf-8" />
@@ -15,6 +16,35 @@
 <noscript>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
+
+<style>
+.hide {
+	display: none;
+}
+
+.shade {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background: black;
+	opacity: 0.6;
+	z-index: 100;
+}
+
+.add-model {
+	position: fixed;
+	height: 300px;
+	width: 400px;
+	top: 100px;
+	left: 50%;
+	z-index: 101;
+	border: 1px solid red;
+	background: white;
+	margin-left: -200px;
+}
+</style>
 
 </head>
 
@@ -74,61 +104,237 @@
 								</h2>
 							</header>
 						</article>
-						<div>
-							<table class="table table-striped  table-hover table-sm  table-responsive">
-								<thead>
-									<tr>
-										<th scope="col" class="col-1">#</th>
-										<th scope="col" class="col-4">標題</th>
-										<th scope="col" colspan="2" class="col-4">優惠方案</th>
-										<th scope="col" class="col-1">詳情</th>
-										<th scope="col" class="col-1">修改</th>
-										<th scope="col" class="col-1">刪除</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var='allBulletin' items='${allBulletin}'>
+
+						<!-- 內文準備區 -->
+						<c:forEach var='sb' items='${statusBulletin}'>
+							<c:if test="${sb.status}">
+								<div class="stat_avai_cont_${sb.no} add-model hide">
+									<div>${sb.context}</div>
+									<div>
+										<input type="button" value="返回" name="back" class="stat_avai_cont_${sb.no}">
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${!sb.status}">
+								<div class="unstat_avai_cont_${sb.no} add-model hide">
+									<div>${sb.context}</div>
+									<div>
+										<input type="button" value="返回" name="back" class="unstat_avai_cont_${sb.no}">
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${!sb.available}">
+								<div class="unstat_unavai_cont_${sb.no} add-model hide">
+									<div>${sb.context}</div>
+									<div>
+										<input type="button" value="返回" name="back" class="unstat_unavai_cont_${sb.no}">
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+
+						<!-- 編輯準備區 -->
+						<c:forEach var='sb' items='${statusBulletin}'>
+							<c:if test="${sb.status}">
+								<div class="stat_avai_edit_${sb.no} add-model hide">
+									<div>${sb.context}</div>
+									<div>
+										<input type="button" value="返回" name="back" class="stat_avai_edit_${sb.no}">
+									</div>
+									<div>
+										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'">
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${!sb.status}">
+								<div class="unstat_avai_edit_${sb.no} add-model hide">
+									<div>${sb.context}</div>
+									<div>
+										<input type="button" value="返回" name="back" class="unstat_avai_edit_${sb.no}">
+									</div>
+									<div>
+										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'">
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${!sb.available}">
+								<div class="unstat_unavai_edit_${sb.no} add-model hide">
+									<div>${sb.context}</div>
+									<div>
+										<input type="button" value="返回" name="back" class="unstat_unavai_edit_${sb.no}">
+									</div>
+									<div>
+										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'">
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+
+						<!-- 刪除準備區 -->
+
+						<div id="accordion">
+							<h3>進行中</h3>
+							<div>
+								<table>
+									<thead>
 										<tr>
-											<th scope="row">${allBulletin.no}</th>
-											<th scope="row">${allBulletin.title}</th>
-											<td><img width="20px" src="${pageContext.request.contextPath}${allBulletin.imgUrlString}"></td>
-											<th scope="row">${allBulletin.context}</th>
-											<td><a href=""><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-document-50.png"></a></td>
-											<td><a href=""><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-edit-50.png"></a></td>
-											<td><a href=""><img width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/icons8-trash-50.png"></a></td>
+											<th>#</th>
+											<th>標題</th>
+											<th colspan="2">優惠方案</th>
+											<th>詳情</th>
+											<th>修改</th>
+											<th>刪除</th>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach var='sb' items='${statusBulletin}'>
+											<tr>
+												<c:if test="${sb.status}">
+													<td>${sb.no}</td>
+													<td>${sb.title}</td>
+													<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+													<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+													<td><img name="add_host" id="stat_avai_cont_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
+													<td><img name="add_host" id="stat_avai_edit_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+													<td><img name="add_host" id="stat_avai_dele_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+												</c:if>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<h3>已過期</h3>
+							<div>
+								<table>
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>標題</th>
+											<th colspan="2">優惠方案</th>
+											<th>詳情</th>
+											<th>修改</th>
+											<th>刪除</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var='sb' items='${statusBulletin}'>
+											<tr>
+												<c:if test="${!sb.status}">
+													<td>${sb.no}</td>
+													<td>${sb.title}</td>
+													<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+													<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+													<td><img name="add_host" id="unstat_avai_cont_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
+													<td><img name="add_host" id="unstat_avai_edit_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+													<td><img name="add_host" id="unstat_avai_dele_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+												</c:if>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+
+							</div>
+							<h3>已刪除</h3>
+							<div>
+
+								<table>
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>標題</th>
+											<th colspan="2">優惠方案</th>
+											<th>詳情</th>
+											<th>修改</th>
+											<th>復原</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var='sb' items='${statusBulletin}'>
+											<tr>
+												<c:if test="${!sb.available}">
+													<td>${sb.no}</td>
+													<td>${sb.title}</td>
+													<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+													<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+													<td><img name="add_host" id="unstat_unavai_cont_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
+													<td><img name="add_host" id="unstat_unavai_edit_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+													<td><img name="add_host" id="unstat_unavai_dele_${sb.no}" width="20px"
+														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
+												</c:if>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+
+							</div>
 						</div>
+
 					</div>
 
 				</div>
+
 			</div>
+
+
+
+
 		</div>
+		<!-- Footer -->
+		<jsp:include page="footer.jsp" />
+
+		<!-- Scripts -->
 
 
-	</div>
-	<!-- Footer -->
-	<jsp:include page="footer.jsp" />
+		<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery.dropotron.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery.scrolly.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery.scrollex.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/browser.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
-	<!-- Scripts -->
 
+		<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+		<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="jqueryui/style.css">
+		<script>
+			$(function() {
+				$("#accordion").accordion();
+			});
 
-	<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery.dropotron.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrolly.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrollex.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/browser.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+			$(function() {
+				$("[name='add_host']").click(function() {
+					var str = $(this).attr("id");
+					var targete = $("." + str);
+					$(targete).removeClass('hide');
+				});
+			});
 
+			$(function() {
+				$("[name|=back]").click(function() {
+					var str = $(this).attr("class");
+					var targete = $("." + str);
+					$(targete).addClass('hide');
+				});
+			});
+
+			$(function() {
+				$("img[name=add_host]").mouseover
+				{
+
+				}
+			})
+		</script>
 </body>
+
 </html>

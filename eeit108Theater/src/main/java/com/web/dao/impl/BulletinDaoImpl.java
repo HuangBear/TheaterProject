@@ -20,7 +20,7 @@ public class BulletinDaoImpl implements BulletinDao {
 	SessionFactory factory;
 
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getAllBulletin()
+	public List<BulletinBean> getStatusBulletin()
 	{
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
@@ -38,12 +38,20 @@ public class BulletinDaoImpl implements BulletinDao {
 		session.save(bb);
 	}
 
-	public EmployeeBean getEmployeeById(int employeeId)
+	public EmployeeBean getEmployeeById(Integer employeeId)
 	{
 		EmployeeBean eb = null;
 		Session session = factory.getCurrentSession();
 		eb = session.get(EmployeeBean.class, employeeId);
 		return eb;
+	}
+	
+	public BulletinBean getBulletinById(Integer bulletin_no)
+	{
+		BulletinBean bb = null;
+		Session session = factory.getCurrentSession();
+		bb = session.get(BulletinBean.class, bulletin_no);
+		return bb;
 	}
 
 	@Override
