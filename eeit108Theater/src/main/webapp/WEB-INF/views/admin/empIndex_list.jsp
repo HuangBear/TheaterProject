@@ -62,73 +62,103 @@ tr {
 <body>
 <h1 style="text-align: center;margin-bottom:50px;margin-left:70px;margin-top:0px;">員工資料管理</h1>
 <div class="container" >
-<button class="btn info" onclick="javascrtpt:window.location.href='empInsert_include.jsp'">新增員工資料</button><p>
+<h4>${name}</h4>
+<h4>${welcome}</h4>
+<h6>${error}</h6>
+<button class="btn info" onclick="javascrtpt:window.location.href='emp_add'">新增員工資料</button><p>
 	<hr>
-<!-- 	<table id="myTable"style="width:1130px;height:600px;" border="1"> -->
-<!-- 		<thead> -->
-<!-- 			<tr> -->
-<!-- 				<th>員工編號</th> -->
-<!-- 				<th>員工姓名</th> -->
-<!--  				<th>員工密碼</th>  -->
-<!-- 				<th>員工電話</th> -->
-<!-- 				<th>員工email/帳號</th> -->
-<!-- 				<th>職等</th> -->
-<!-- 				<th>員工薪資</th> -->
-<!-- 				<th>編輯</th> -->
-<!-- 			</tr> -->
-<!-- 		</thead> -->
-<!-- 		<tbody></tbody> -->
-<!-- 		<tfoot> -->
-<!-- 			<tr> -->
-<!-- 				<th>員工編號</th> -->
-<!-- 				<th>員工姓名</th> -->
-<!--  				<th>員工密碼</th>  -->
-<!-- 				<th>員工電話</th> -->
-<!-- 				<th>員工email/帳號</th> -->
-<!-- 				<th>職等</th> -->
-<!-- 				<th>員工薪資</th> -->
-<!-- 				<th>編輯</th> -->
-<!-- 			</tr> -->
-<!-- 		</tfoot> -->
-<!-- 	</table> -->
-<c:if test='${!empty employees}'>
+
+<c:if test='${empty employees}'>
 		查無會員資料<br>
 	</c:if>
-	查無會員資料<br>
-<%-- <c:if test='${not empty employees}'> --%>
-<%-- <c:forEach var='member' varStatus='vs' items='${employees}'> --%>
-<%-- 			<c:if test ='${vs.first }'> --%>
-<%-- 				<c:out value="<table border='1'>" escapeXml='false'/> --%>
-<%-- 				<c:out value="<tr><td>帳號</td><td>會員名稱</td><td>password</td></tr>" escapeXml='false'/> --%>
-<%-- 			</c:if> --%>
+<c:if test='${not empty employees}'>
+<c:forEach var='emp' varStatus='vs' items='${employees}'>
+			<c:if test ='${vs.first }'>
+				<c:out value="<table border='1'>" escapeXml='false'/>
+				<c:out value="<tr><td>員工編號</td><td>姓名</td>
+				<td>員工ID</td><td>員工email</td><td>員工電話</td>
+				<td>password</td><td>工作狀態</td><td>更新資料</td>
+				<td>員工離職</td>
+				</tr>" escapeXml='false'/>
+			</c:if>
 			
-<!-- 			<tr> -->
-<%-- 				<td>${member.employeeId}</td> --%>
-<%-- 				<td>${member.name}</td> --%>
-<%-- 				<td>${member.pswd}</td> --%>
-<!-- 			</tr> -->
-<%-- 			<c:if test ='${vs.last }'> --%>
-<%-- 				<c:out value="</table>" escapeXml='false'/> --%>
-<%-- 			</c:if> --%>
-<%-- 		</c:forEach> --%>
-<%-- 	</c:if> --%>
+			<tr>
+				<td>${emp.no}</td>
+				<td>${emp.name}</td>
+				<td>${emp.employeeId}</td>
+				<td>${emp.email}</td>
+				<td>${emp.phoneNum}</td>
+				<td>${emp.password}</td>
+				<c:choose> 
+				<c:when test="${emp.available == true}">
+				<c:out value="<td>在職</td>" escapeXml='false'/>
+				</c:when>
+				<c:otherwise>
+                 <c:out value="<td>停權</td>" escapeXml='false'/>
+            	</c:otherwise>
+				 </c:choose>
+				<td>
+				<button class="btn info"  onclick="javascrtpt:window.location.href='emp_update?pk=${emp.no}'">
+				編輯員工資料
+				</button><p>
+				</td>
+				<td>
+				<button class="btn btn-danger"  onclick="javascrtpt:window.location.href='EmpResign?pk=${emp.no}'">
+				設定離職
+				</button><p>
+				</td>
+			</tr>
+			<c:if test ='${vs.last }'>
+				<c:out value="</table><hr>" escapeXml='false'/>
+			</c:if>
+		</c:forEach>
+	</c:if>
 	<form id="modify" method="post" action="">	
 <!-- 	EmpServlet -->
 		<input type="hidden" name="action" value="getOneEmp">
 		<input type="hidden" id="empNO" name="empNO" >
+		
 	</form>
+	<hr>
 </div>
+<footer class="w3-bottom w3-black container-fluid text-center">
+	<div>
+		<ul class="nav nav-pills w3-centered " style="display: flex;font-size:13px;justify-content: center; position: static">
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">關於我們</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">免責聲明</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">服務條款</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">隱私權聲明</a></li>
+		</ul>
+	</div>
+    <span class="text-center"><p style="font-size:10px">7-1 MOVIE 後台管理系統</p></span>
+	</div>
+</footer>
 <!-- <script type="text/javascript"> -->
 <!--  	function setFontSize(){ -->
 <!--  		document.getElementById("p1").style.fontSize="larger"; -->
 <!--  	} -->
 <!-- </script> -->
 <script> 
+
+function resignConfirm(pk1){
+	
+	if(confirm("確定要將該員工設定離職嗎?"))
+	{
+		window.location.href='';
+		}
+		else
+		{
+		
+		}
+}
+
 	$(document).ready(function(){
 		var dataJson;
 		
 		var table = $("#myTable");
 		var tbody = $("#myTable>tbody");
+		
+		
 		
 		function ajaxPost(){
 			$.post("../emp/EmpServlet",{"action":"getAllEmployees"},function(data){

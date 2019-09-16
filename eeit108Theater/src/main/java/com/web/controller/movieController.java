@@ -62,7 +62,7 @@ public class movieController {
 		model.addAttribute("hi", date);
 		return "movieTimes";
 	}
-
+	
 	@RequestMapping(value = "/getPicture/{no}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer no) throws SQLException {
 		String filePath = "data/movie/images/404.png";

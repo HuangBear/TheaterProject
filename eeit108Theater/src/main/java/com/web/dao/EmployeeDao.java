@@ -23,14 +23,21 @@ public interface EmployeeDao {
 	int continueAll(); // 全部上架
 
 	// query
+	EmployeeBean checkEmpEmail(String email);
 
 	EmployeeBean getEmployeeByNo(Integer EmployeeNo);
 
 	EmployeeBean getEmployeeByEmail(String email);
 
+	EmployeeBean getEmployeeByEmailPassword(String email,String password);
+	
 	EmployeeBean getEmployeeById(String EmployeeId);
 
 	List<EmployeeBean> getAllEmployees();
 
 	List<EmployeeBean> getAllAvailable();
+	
+//	List<EmployeeBean> getPermissionByEmpEmail(String email);
+	
+	Object getPermissionByEmpEmail(String email);
 }
