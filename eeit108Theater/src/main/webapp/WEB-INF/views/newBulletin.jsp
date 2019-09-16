@@ -170,11 +170,9 @@
 								</div>
 							</div>
 							<div class="form-row pr-3 pl-5">
-							<div class=" col-md pr-1 ">
-									EmployeeId
-								</div>
+								<div class=" col-md pr-1 ">EmployeeId</div>
 								<div class=" col-md pr-1 ">
-									<form:input path="employeeId" type="text"  value="2" />
+									<form:input path="employeeId" type="text" value="2" />
 								</div>
 							</div>
 
@@ -183,9 +181,21 @@
 								<label>文宣上傳</label>
 
 							</div>
-							<div>
-								<input id="btnAdd" type='submit' class='btn btn-primary'>
-							</div>
+							<c:choose>
+								<c:when test="${empty statusBulletin.no}">
+									<div>
+										<input id="btnAdd" type='submit' class='btn btn-primary'>
+									</div>
+								</c:when>
+								<c:when test="${!empty statusBulletin.no}">
+									<div>
+										<input id="btnEdit" type='submit' class='btn btn-primary' value="送出編輯">
+										<input id="btnReset" type='reset' class='btn btn-primary' value="取消編輯">
+									</div>
+								</c:when>
+							</c:choose>
+
+
 
 						</form:form>
 					</div>
