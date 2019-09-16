@@ -9,17 +9,23 @@ public interface OrderDao {
 	int saveOrder(OrderBean order);
 
 	// disable
-	int deleteOrder(String orderId);
-	
+	int deleteOrderByNo(Integer orderNo);
+
 	int deleteAll();
 
 	// update
 	int updateOrder(OrderBean order);
 
-	// query
-	OrderBean getOrderById(String orderId);
+	int discontinueAll(); // 全部下架
 
-	List<OrderBean> getOrdersByOwner(String memberId);
+	int continueAll(); // 全部上架
+
+	// query
+	OrderBean getOrderByNo(Integer orderNo);
+
+	List<OrderBean> getOrdersByOwnerId(Integer memberId);
 
 	List<OrderBean> getAllOrders();
+
+	List<OrderBean> getAllAvailable();
 }

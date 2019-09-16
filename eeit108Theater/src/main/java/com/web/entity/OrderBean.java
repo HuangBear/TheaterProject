@@ -1,5 +1,7 @@
 package com.web.entity;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
@@ -22,19 +23,23 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "orderId" }) 
 				}
 		)
-public class OrderBean {
+public class OrderBean implements Serializable{
+	private static final long serialVersionUID = -2065809342946682382L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_no")
 	private Integer no;
+	private Boolean available;
 	private String orderId;
-	private Double totalPrice;	
-	@NotNull
+	private Timestamp orderTime;
+	private Double totalPrice;
+
 	@Column(name = "fk_owner_id")
 	private String ownerId;//not owner, cannot find owner object directly
 	private String ownerName;
 	private String ownerEmail;
-	private String status; //paid/unpaid, checked/unchecked
+	//private String status; //paid/unpaid, checked/unchecked
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
@@ -104,10 +109,16 @@ public class OrderBean {
 	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
-	public String getStatus() {
-		return status;
+	public Boolean getAvailable() {
+		return available;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+	public Timestamp getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(Timestamp orderTime) {
+		this.orderTime = orderTime;
 	}
 }

@@ -1,6 +1,8 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
+//import java.sql.Date;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,15 +17,19 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Movie")
-public class MovieBean {
+public class MovieBean implements Serializable{
+
+	private static final long serialVersionUID = 8108696626426463640L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_no")
 	private Integer no;
+	private Boolean available;
 	@NotNull
 	private String movieName;
 	private String directors;
 	private String casts;
+	@Column(columnDefinition = "VARCHAR(max)")
 	private String introduction;
 	private String company;
 	private String[] trailerLink;
@@ -211,5 +217,11 @@ public class MovieBean {
 
 	public void setGenres(String genres) {
 		this.genres = genres;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
 }

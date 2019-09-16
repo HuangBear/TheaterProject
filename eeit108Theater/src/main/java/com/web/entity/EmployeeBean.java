@@ -1,14 +1,19 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -20,13 +25,16 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "email" })
 				}
 		)
-public class EmployeeBean {
+public class EmployeeBean implements Serializable{
+	private static final long serialVersionUID = 6857008039894849063L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "employee_no")
 	private Integer no;
+	private Boolean available;
 	private String name;
-	@NotNull	
+	@NotNull
 	private String employeeId;
 	@NotNull	
 	private String email; //as account
@@ -41,6 +49,53 @@ public class EmployeeBean {
 	private Date resignTime;
 	private Integer permission;
 	private Integer salary;
+	
+	@Transient
+	private String birthdayString;
+	
+	public EmployeeBean() {
+		
+	}
+	public EmployeeBean(Integer no, Boolean available, String name, @NotNull String employeeId, @NotNull String email,
+			@NotNull String password, Integer gender, String phoneNum, Date birthday, Blob employeeImage,
+			@NotNull Date registerTime, Date resignTime, Integer permission, Integer salary,
+			Set<BulletinBean> bulletins) {
+		super();
+		this.no = no;
+		this.available = available;
+		this.name = name;
+		this.employeeId = employeeId;
+		this.email = email;
+		this.password = password;
+		this.gender = gender;
+		this.phoneNum = phoneNum;
+		this.birthday = birthday;
+		this.employeeImage = employeeImage;
+		this.registerTime = registerTime;
+		this.resignTime = resignTime;
+		this.permission = permission;
+		this.salary = salary;
+		this.bulletins = bulletins;
+	}
+	@OneToMany(mappedBy = "employee")
+	private Set<BulletinBean> bulletins=new LinkedHashSet<BulletinBean>();
+	
+	public EmployeeBean(String name,String email,String password,String phoneNum) {
+		this.name=name;
+		this.email=email;
+		this.password=password;
+		this.phoneNum=phoneNum;
+	}
+	public Set<BulletinBean> getBulletin()
+	{
+		return bulletins;
+	}
+	public void setBulletin(Set<BulletinBean> bulletins)
+	{
+		this.bulletins = bulletins;
+	}
+	
+	
 	public Integer getNo() {
 		return no;
 	}
@@ -119,4 +174,23 @@ public class EmployeeBean {
 	public void setSalary(Integer salary) {
 		this.salary = salary;
 	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+	public String getBirthdayString() {
+		return birthdayString;
+	}
+	public void setBirthdayString(String birthdayString) {
+		this.birthdayString = birthdayString;
+	}
+	public Set<BulletinBean> getBulletins() {
+		return bulletins;
+	}
+	public void setBulletins(Set<BulletinBean> bulletins) {
+		this.bulletins = bulletins;
+	}
+	
 }

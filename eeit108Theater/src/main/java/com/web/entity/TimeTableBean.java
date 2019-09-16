@@ -1,5 +1,6 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,11 +24,13 @@ import javax.validation.constraints.NotNull;
 				@UniqueConstraint(columnNames = { "movieName", "startTime" })
 				}
 		)
-public class TimeTableBean {
+public class TimeTableBean implements Serializable{
+	private static final long serialVersionUID = 373961212942660939L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeTable_no")
 	private Integer no;
+	private Boolean available;
 	@NotNull
 	private String movieName;
 	@NotNull
@@ -36,13 +39,15 @@ public class TimeTableBean {
 	private Integer duration;
 	@NotNull
 	private Date endTime;
-	
 	@NotNull
+	private String version;//2D, 3D, or IMAX
+	@NotNull
+	private String theater; //1廳, A廳, B廳
+	
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O
 	
-	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_timeTable_id", referencedColumnName = "timeTable_no")
 	private Set<SeatBean> seats; //U, O2M
@@ -76,5 +81,35 @@ public class TimeTableBean {
 	}
 	public void setSeats(Set<SeatBean> seats) {
 		this.seats = seats;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+	public String getMovieName() {
+		return movieName;
+	}
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+	public Integer getDuration() {
+		return duration;
+	}
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getTheater() {
+		return theater;
+	}
+	public void setTheater(String theater) {
+		this.theater = theater;
 	}
 }

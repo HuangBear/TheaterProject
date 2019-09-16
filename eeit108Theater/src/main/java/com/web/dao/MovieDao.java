@@ -7,24 +7,24 @@ import com.web.entity.MovieBean;
 public interface MovieDao {
 	// new
 	int saveMovie(MovieBean movie);
-
 	// disable
-	int deleteMovie(String movieId);
+	int deleteMovieByNo(Integer movieNo);
 
 	int deleteAll();
-
 	// update
 	int updateMovie(MovieBean movie);
 
+	int discontinueAll(); // 全部下架
+
+	int continueAll(); // 全部上架
+
 	// query
-	MovieBean getMovieById(String movieId);
+	MovieBean getMovieByNo(Integer no);
 
-	//by director, by cast, by genre, or by something else
+	// by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
-
 	List<MovieBean> getReleasedMovies();
-
 	List<MovieBean> getComingMovies();
-
 	List<MovieBean> getAllMovies();
+	List<MovieBean> getAllAvailable();
 }
