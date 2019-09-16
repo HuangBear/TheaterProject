@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.web.entity.MemberBean;
 import com.web.entity.ProductBean;
+import com.web.entity.SeatBean;
 import com.web.entity.TimeTableBean;
 
 public interface ProductService {
@@ -35,5 +36,7 @@ public interface ProductService {
 	List<ProductBean> getAllAvailableProducts();
 
 	List<ProductBean> getProductsByType(String type);
+	List<ProductBean> getTicketsByVersion(String version);
+	List<SeatBean> getSeatsByTimeTable(Integer timeTableNo);
 
 }

@@ -7,12 +7,15 @@
 <title>START</title>
 </head>
 <body>
-	<p/>Hi! {loginMember.name} 
+	<p/>Hi! ${loginMember.name} 
 	<p/>Let's start! 
-	<p/>Movie Name = {timeTable.movie.movieName} 
-	<p/>Start at = {timeTable.startTime} 
-	<p/>Duration ={timeTable.duration}
-
-	<a href="<c:url value='/showProducts'/>">START</a>
+	<p/>Movie Name = ${timeTable.movie.movieName} 
+	<p/>Start at = ${timeTable.startTime} 
+	<p/>Duration = ${timeTable.duration}
+	<form action="<c:url value='/order/showProducts'/>" method="GET">
+		<label for="timeTableId">Time Table Id: </label>
+		<input id="timeTableId" name="timeTableId" type="text">
+		<input type="submit" value="START">
+	</form>
 </body>
 </html>

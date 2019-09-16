@@ -12,40 +12,66 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "Bulletin")
-public class BulletinBean implements Serializable{
+public class BulletinBean implements Serializable {
 	private static final long serialVersionUID = 8705745439713457086L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bulletin_no")
 	private Integer no;
-	private Boolean available;//是否過期
-	private String tittle;
+	private Boolean available;//是否存在 true=存在 false=刪除
+	private String title;
 	private String context;
-	private Date startDate;
-	private Date endtDate;
+	private String startDate;
+	private String endDate;
 	private Date postTime;
-	private Boolean discontTick;
-	private Boolean discontPrice;
-	private Boolean status;//是否刪除
+	private Integer discount;
+	private Integer discountTickBuy;
+	private Integer discountTickFree;
+	private Integer discountPriceBuy;
+	private Integer discountPriceFree;
+	private Boolean status;// 是否在期限內 true=在 false=過期
+	@Transient
+	private String imgUrlString;
+	@Transient
+	private Integer employeeId;
+	private String fileName;
+	private Blob coverImage;
+	@Transient
+	private MultipartFile bulletinImage;
+	@Transient
+	private String pay;
+	@Transient
+	private String free;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_employee_id")
 	private EmployeeBean employee;
-	
-	private Blob bulletinImage;
-	
-	public Blob getBulletinImage()
+
+	public String getPay()
 	{
-		return bulletinImage;
+		return pay;
 	}
 
-	public void setBulletinImage(Blob bulletinImage)
+	public void setPay(String pay)
 	{
-		this.bulletinImage = bulletinImage;
+		this.pay = pay;
+	}
+
+	public String getFree()
+	{
+		return free;
+	}
+
+	public void setFree(String free)
+	{
+		this.free = free;
 	}
 
 	public Integer getNo()
@@ -58,14 +84,24 @@ public class BulletinBean implements Serializable{
 		this.no = no;
 	}
 
-	public String getTittle()
+	public Boolean getAvailable()
 	{
-		return tittle;
+		return available;
 	}
 
-	public void setTittle(String tittle)
+	public void setAvailable(Boolean available)
 	{
-		this.tittle = tittle;
+		this.available = available;
+	}
+
+	public String getTitle()
+	{
+		return title;
+	}
+
+	public void setTitle(String title)
+	{
+		this.title = title;
 	}
 
 	public String getContext()
@@ -78,24 +114,24 @@ public class BulletinBean implements Serializable{
 		this.context = context;
 	}
 
-	public Date getStartDate()
+	public String getStartDate()
 	{
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate)
+	public void setStartDate(String startDate)
 	{
 		this.startDate = startDate;
 	}
 
-	public Date getEndtDate()
+	public String getEndDate()
 	{
-		return endtDate;
+		return endDate;
 	}
 
-	public void setEndtDate(Date endtDate)
+	public void setEndDate(String endDate)
 	{
-		this.endtDate = endtDate;
+		this.endDate = endDate;
 	}
 
 	public Date getPostTime()
@@ -108,24 +144,54 @@ public class BulletinBean implements Serializable{
 		this.postTime = postTime;
 	}
 
-	public Boolean getDiscontTick()
+	public Integer getDiscount()
 	{
-		return discontTick;
+		return discount;
 	}
 
-	public void setDiscontTick(Boolean discontTick)
+	public void setDiscount(Integer discount)
 	{
-		this.discontTick = discontTick;
+		this.discount = discount;
 	}
 
-	public Boolean getDiscontPrice()
+	public Integer getDiscountTickBuy()
 	{
-		return discontPrice;
+		return discountTickBuy;
 	}
 
-	public void setDiscontPrice(Boolean discontPrice)
+	public void setDiscountTickBuy(Integer discountTickBuy)
 	{
-		this.discontPrice = discontPrice;
+		this.discountTickBuy = discountTickBuy;
+	}
+
+	public Integer getDiscountTickFree()
+	{
+		return discountTickFree;
+	}
+
+	public void setDiscountTickFree(Integer discountTickFree)
+	{
+		this.discountTickFree = discountTickFree;
+	}
+
+	public Integer getDiscountPriceBuy()
+	{
+		return discountPriceBuy;
+	}
+
+	public void setDiscountPriceBuy(Integer discountPriceBuy)
+	{
+		this.discountPriceBuy = discountPriceBuy;
+	}
+
+	public Integer getDiscountPriceFree()
+	{
+		return discountPriceFree;
+	}
+
+	public void setDiscountPriceFree(Integer discountPriceFree)
+	{
+		this.discountPriceFree = discountPriceFree;
 	}
 
 	public Boolean getStatus()
@@ -138,6 +204,56 @@ public class BulletinBean implements Serializable{
 		this.status = status;
 	}
 
+	public String getImgUrlString()
+	{
+		return imgUrlString;
+	}
+
+	public void setImgUrlString(String imgUrlString)
+	{
+		this.imgUrlString = imgUrlString;
+	}
+
+	public Integer getEmployeeId()
+	{
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId)
+	{
+		this.employeeId = employeeId;
+	}
+
+	public String getFileName()
+	{
+		return fileName;
+	}
+
+	public void setFileName(String fileName)
+	{
+		this.fileName = fileName;
+	}
+
+	public Blob getCoverImage()
+	{
+		return coverImage;
+	}
+
+	public void setCoverImage(Blob coverImage)
+	{
+		this.coverImage = coverImage;
+	}
+
+	public MultipartFile getBulletinImage()
+	{
+		return bulletinImage;
+	}
+
+	public void setBulletinImage(MultipartFile bulletinImage)
+	{
+		this.bulletinImage = bulletinImage;
+	}
+
 	public EmployeeBean getEmployee()
 	{
 		return employee;
@@ -148,14 +264,10 @@ public class BulletinBean implements Serializable{
 		this.employee = employee;
 	}
 
-	public Boolean getAvailable()
+	public static long getSerialversionuid()
 	{
-		return available;
+		return serialVersionUID;
 	}
 
-	public void setAvailable(Boolean available)
-	{
-		this.available = available;
-	}
 
 }

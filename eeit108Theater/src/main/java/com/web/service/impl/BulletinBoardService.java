@@ -10,22 +10,47 @@ import org.springframework.stereotype.Service;
 import com.web.dao.BulletinDao;
 import com.web.entity.BulletinBean;
 
-
 @Service
 public class BulletinBoardService {
 	@Autowired
 	BulletinDao dao;
 
 	@Transactional
-	public List<BulletinBean> getAllBulletin() {
-		return dao.getAllBulletin();
+	public List<BulletinBean> getStatusBulletin() {
+		List<BulletinBean> list = dao.getStatusBulletin();
+		for (BulletinBean bb : list) {
+			Integer discount = bb.getDiscount();
+			switch (discount)
+			{
+			case 1:
+				bb.setImgUrlString("/images/icons/backstage/bulletin/discountP.png");
+				bb.setPay("滿");
+				bb.setFree("送");
+				break;
+			case 2:
+				bb.setImgUrlString("/images/icons/backstage/bulletin/discountT.png");
+				bb.setPay("買");
+				bb.setFree("送");
+				break;
+			default:
+				bb.setImgUrlString("/images/icons/backstage/bulletin/discountN.png");
+				bb.setPay(null);
+				bb.setFree(null);
+				break;
+			}
+		}
+		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Transactional
+	public void insertNewBulletin(BulletinBean bb) {
+		dao.insertBulletin(bb);
+	}
+
+	@Transactional
+	public BulletinBean getBulletinBeanById(Integer no) {
+		BulletinBean bb = dao.getBulletinById(no);
+		return bb;
+
+	}
 }

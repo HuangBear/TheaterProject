@@ -121,8 +121,17 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<ProductBean> getProductsByType(String type) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ProductBean p  WHERE p.type = :type";
+		String hql = "FROM ProductBean p WHERE p.type = :type";
 		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type).getResultList();
+		return pb;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductBean> getTicketsByVersion(String version) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p WHERE p.name like :version and p.type = 'ticket'";
+		List<ProductBean> pb = session.createQuery(hql).setParameter("version", "%" + version + "%").getResultList();
 		return pb;
 	}
 

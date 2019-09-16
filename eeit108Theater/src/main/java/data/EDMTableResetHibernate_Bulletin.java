@@ -23,7 +23,7 @@ import com.web.entity.EmployeeBean;
 import data.util.HibernateUtils;
 import data.util.SystemUtils2018;
 
-public class EDMTableResetHibernate_bulletin {
+public class EDMTableResetHibernate_Bulletin {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
 	public static void main(String args[])
@@ -55,21 +55,28 @@ public class EDMTableResetHibernate_bulletin {
 					}
 					String[] token = line.split("\\|");
 					BulletinBean bulletin = new BulletinBean();
-					DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-					bulletin.setAvailable(Boolean.valueOf(token[1]));
-					bulletin.setTittle(token[2]);
-					bulletin.setContext(token[3]);
-					bulletin.setStartDate(sdf.parse(token[4]));
-					bulletin.setEndtDate(sdf.parse(token[5]));
-					bulletin.setPostTime(sdf.parse(token[6]));
-					bulletin.setDiscontTick(Boolean.valueOf(token[7]));
-					bulletin.setDiscontPrice(Boolean.valueOf(token[8]));
-					bulletin.setStatus(Boolean.valueOf(token[9]));
-					EmployeeBean employee=new EmployeeBean();
-					
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					bulletin.setAvailable(Boolean.valueOf(token[0]));
+					bulletin.setTitle(token[1]);
+					bulletin.setContext(token[2]);
+					bulletin.setStartDate(token[3]);
+					bulletin.setEndDate(token[4]);
+					bulletin.setPostTime(sdf.parse(token[5]));
+					bulletin.setDiscount(Integer.valueOf(token[6]));
+					bulletin.setDiscountTickBuy(token[7].equals("") ? null : Integer.valueOf(token[7]));
+					bulletin.setDiscountTickFree(token[8].equals("") ? null : Integer.valueOf(token[8]));
+					bulletin.setDiscountPriceBuy(token[9].equals("") ? null : Integer.valueOf(token[9]));
+					bulletin.setDiscountPriceFree(token[10].equals("") ? null : Integer.valueOf(token[10]));
+//					bulletin.setDiscountTickBuy(Integer.valueOf(token[7]));
+//					bulletin.setDiscountTickFree(Integer.valueOf(token[8]));
+//					bulletin.setDiscountPriceBuy(Integer.valueOf(token[9]));
+//					bulletin.setDiscountPriceFree(Integer.valueOf(token[10]));
+					bulletin.setStatus(Boolean.valueOf(token[11]));
+					EmployeeBean employee = session.get(EmployeeBean.class, 2);
 					bulletin.setEmployee(employee);
-					Blob sb = SystemUtils2018.fileToBlob(token[11]);
-					bulletin.setBulletinImage(sb);
+					Blob sb = SystemUtils2018.fileToBlob(token[12]);
+					bulletin.setCoverImage(sb);
+					bulletin.setFileName(SystemUtils2018.extractFileName(token[12].trim()));
 					session.save(bulletin);
 					System.out.println("新增一筆bulletin紀錄成功");
 				}

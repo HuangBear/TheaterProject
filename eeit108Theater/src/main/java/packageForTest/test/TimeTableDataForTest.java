@@ -22,24 +22,26 @@ public class TimeTableDataForTest {
 			tx = session.beginTransaction();
 			TimeTableBean tb = new TimeTableBean();
 			tb.setAvailable(true);
-			tb.setDuration(120);
-			tb.setStartTime(new Date(1999, 09, 10, 12, 20));
-			tb.setTheater("A");
+			tb.setStartTime(new Date(29, 9, 10, 12, 20));
+			tb.setEndTime(new Date(29, 9, 10, 14, 20));
+			tb.setTheater("B");
 			tb.setVersion("3D");
 			tb.setMovie(session.get(MovieBean.class, 1));
+			tb.setDuration(tb.getMovie().getDuration());
 			tb.setMovieName(tb.getMovie().getMovieName());
 			Set<SeatBean> seats = new HashSet<>();
-			SeatBean sb = new SeatBean();
-			sb.setAvailable(true);
-			sb.setRow("A");
-			sb.setColumn("8");
-			seats.add(sb);
-			sb = new SeatBean();
-			sb.setAvailable(true);
-			sb.setRow("A");
-			sb.setColumn("9");
-			seats.add(sb);
 			tb.setSeats(seats);
+			char row = 'A';
+			for (int i = 0; i < 15; i++) {
+				SeatBean sb = null;
+				for (int col = 1; col <= 20; col++) {
+					sb = new SeatBean();
+					sb.setAvailable(true);
+					sb.setRow(String.valueOf((char)(row + i)));
+					sb.setColumn(String.valueOf(col));
+					seats.add(sb);
+				}
+			}
 			session.save(tb);
 			tx.commit();
 			System.out.println("========新增timeTable成功============");

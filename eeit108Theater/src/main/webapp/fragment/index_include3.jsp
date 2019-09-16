@@ -247,22 +247,23 @@ nav.main-nav:hover {
 			class="w3-bar-item w3-button w3-xlarge w3-left glfont"><span
 			id="hermitHome">7-1 MOVIE</span></a>
 		<!-- 如果有登入就不顯示 -->
-		<c:if test="${empty LoginOK}">
-			<a
-				href="<%=request.getContextPath()%>/register/register_select_page.jsp"
+		<c:if test="${empty empEmail}">
+			<a href="<%=request.getContextPath()%>/EmpLogin"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">註冊</span></a>
+				id="hermitHome">Login</span></a>
 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span>
 		</c:if>
 		<!-- 如果有登入就顯示登出 -->
-		<c:if test="${!empty LoginOK}">
-			<a href="<%=request.getContextPath()%>/MemberLogin/Logout.jsp"
+		<c:if test="${!empty empEmail}">
+
+			<a href="<%=request.getContextPath()%>/EmpLogout"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">登出</span></a>
+			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span>
 			<a
 				href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">${LoginOK.memName}</span></a>
+				id="hermitHome">${memberName}</span></a>
 			<span style="margin-top: 8px;"
 				class="w3-xlarge w3-right w3-margin-right" id="hermitHome">您好！</span>
 		</c:if>
@@ -277,14 +278,14 @@ nav.main-nav:hover {
 		<!-- 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span> -->
 		<%-- 		</c:if> --%>
 		<!-- 如果有登入就顯示登出 -->
-		<c:if test="${!empty LoginOK}">
+		<c:if test="${!empty empEmail}">
 			<a href=""
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">員工登出</span></a>
 			<a
 				href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">${LoginOK.memName}</span></a>
+				id="hermitHome">${empEmail}</span></a>
 			<span style="margin-top: 8px;"
 				class="w3-xlarge w3-right w3-margin-right" id="hermitHome">您好！</span>
 		</c:if>
@@ -300,22 +301,24 @@ nav.main-nav:hover {
 		<!-- 			</nav> -->
 		<%-- 		</c:if> --%>
 
-		<div
-			class="w3-sidebar w3-bar-block w3-animate-left navbar-fixed-top w3-dark-gray"
-			style="color: white; display: none; font-size: 20px; font-family: Microsoft JhengHei;"
-			id="leftMenu">
-			<button onclick='closeLeftMenu()'
-				class="w3-bar-item w3-button w3-large">
-				<span>Close &times</span>
-			</button>
-			<a href="<%=request.getContextPath()%>/index2"
-				class="w3-bar-item w3-button"><span>首頁</span></a> <a href=""
-				class="w3-bar-item w3-button" id=""><span>員工資料</span></a> <a href=""
-				class="w3-bar-item w3-button" id="emp"><span>員工管理</span></a> <a
-				href="" class="w3-bar-item w3-button" id=""><span>電影管理</span></a> <a
-				href="" class="w3-bar-item w3-button" id=""><span>公告管理</span></a> <a
-				href="" class="w3-bar-item w3-button" id=""><span>報表管理</span></a>
-		</div>
+
+		
+			<div
+				class="w3-sidebar w3-bar-block w3-animate-left navbar-fixed-top w3-dark-gray"
+				style="color: white; display: none; font-size: 20px; font-family: Microsoft JhengHei;"
+				id="leftMenu">
+				<button onclick='closeLeftMenu()'
+					class="w3-bar-item w3-button w3-large">
+					<span>Close &times</span>
+				</button>
+				<a href="<%=request.getContextPath()%>/index2"
+					class="w3-bar-item w3-button"><span>首頁</span></a> <a href=""
+					class="w3-bar-item w3-button" id=""><span>員工資料</span></a> <a
+					href="" class="w3-bar-item w3-button" id="emp"><span>員工管理</span></a>
+				<a href="" class="w3-bar-item w3-button" id=""><span>電影管理</span></a>
+				<a href="" class="w3-bar-item w3-button" id=""><span>公告管理</span></a>
+				<a href="" class="w3-bar-item w3-button" id=""><span>報表管理</span></a>
+			</div>
 	</div>
 
 	<div id="top" class="masthead2" role="main"
@@ -333,7 +336,7 @@ nav.main-nav:hover {
 	<section class="breadBox">
 		<div class="breadNav clearfix">
 			<div class="breadList" id="breadList">
-				<a href="<%=request.getContextPath()%>/index2.jsp"
+				<a href="<%=request.getContextPath()%>/index2"
 					style="color: black; padding: 0;">HOME</a> <i
 					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i>&nbsp;&nbsp;
 			</div>
@@ -341,6 +344,8 @@ nav.main-nav:hover {
 		</div>
 	</section>
 
+
+	
 
 	<script>
 		function openLeftMenu() {
@@ -354,14 +359,13 @@ nav.main-nav:hover {
 			
 		$("#emp").click(function(event){
  			event.preventDefault();
-			window.location= "<%=request.getContextPath()%>/empIndex_include2";
+			window.location= "<%=request.getContextPath()%>/admin/empIndex_list";
 		})
 			
 			
 
 			var leftMenu = $("#leftMenu");
 			var path = "<%=request.getContextPath()%>";
-
 	</script>
 
 </body>
