@@ -40,6 +40,22 @@ public class OrderItemBean implements Serializable{
 	@Column(name = "fk_order_id")
 	private String orderId;//not owner, cannot find Order object directly
 	
+	@Override
+	public String toString() {
+		return "name = " + this.getItemName()+ " quantity = " + this.getQuantity()+ " sumPrice = " + this.getSumPrice();
+	}
+	
+	public OrderItemBean() {
+		super();
+	}
+	
+	public OrderItemBean(ProductBean p) {
+		this.available = true;
+		this.itemName = p.getName();
+		this.unitPrice = p.getPrice();
+		this.type = p.getType();
+	}
+	
 	public Integer getNo() {
 		return no;
 	}
