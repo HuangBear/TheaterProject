@@ -117,7 +117,14 @@ public class ProductServiceImpl implements ProductService{
 		return mdao.getMemberByNo(no);
 	}
 	
+	@Override
 	public List<SeatBean> getSeatsByTimeTable(Integer timeTableNo){
 		return sdao.getSeatsByTimeTable(timeTableNo);
+	}
+
+
+	@Override
+	public List<ProductBean> getTicketsByVersion(String version) {
+		return pdao.getTicketsByVersion(version);
 	}
 }

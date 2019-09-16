@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>7-1 MOVIE</title>
+<title>7-1 MOVIE id3</title>
 <jsp:include page="/fragment/index_include3.jsp" />
 <script src="<%=request.getContextPath()%>/js/jquery.scrolling-tabs.min.js"></script>
 <script type="text/javascript" src="js/jquery-equal-height.min.js"></script>
@@ -17,9 +17,17 @@
 </head>
 <body id="body">
 
+
+<h2>${message}</h2>
+	
+	<form action='<spring:url value="/logout"/>' method="post">
+		<input value="Logout" type="submit">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+
 	<div class="container" style="margin-bottom: 150px;">
 		<div >
-<%-- 			<jsp:include page="/admanager/index.jsp" /> --%>
+
 		</div>
 		<hr style="visibility: hidden;">
 		<hr style="visibility: hidden;">
@@ -59,10 +67,10 @@
 	<footer class="w3-bottom w3-black container-fluid text-center">
 	<div>
 		<ul class="nav nav-pills w3-centered " style="display: flex;font-size:13px;justify-content: center; position: static">
-		  <li role="presentation"><a href="<%=request.getContextPath()%>/index.jsp">關於我們</a></li>
-		  <li role="presentation"><a href="<%=request.getContextPath()%>/index.jsp">免責聲明</a></li>
-		  <li role="presentation"><a href="<%=request.getContextPath()%>/index.jsp">服務條款</a></li>
-		  <li role="presentation"><a href="<%=request.getContextPath()%>/index.jsp">隱私權聲明</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">關於我們</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">免責聲明</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">服務條款</a></li>
+		  <li role="presentation"><a href="<%=request.getContextPath()%>/index2.jsp">隱私權聲明</a></li>
 		</ul>
 	</div>
     <span class="text-center"><p style="font-size:10px">7-1 MOVIE 後台管理系統</p></span>

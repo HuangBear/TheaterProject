@@ -13,6 +13,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -45,9 +46,17 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
 		registry.addResourceHandler("/assets/css/**").addResourceLocations("/WEB-INF/views/assets/css/");
-		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
+		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
+		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
+		registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/resources/fonts/");
+		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
+		registry.addResourceHandler("/admin/**").addResourceLocations("/WEB-INF/views/admin/");
+	
 	}
-
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/EmpLogin").setViewName("EmpLogin");
+	}
 	@Bean
 	public CommonsMultipartResolver multipartResolver()
 	{

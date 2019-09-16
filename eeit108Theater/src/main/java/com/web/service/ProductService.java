@@ -36,6 +36,7 @@ public interface ProductService {
 	List<ProductBean> getAllAvailableProducts();
 
 	List<ProductBean> getProductsByType(String type);
+	List<ProductBean> getTicketsByVersion(String version);
 	List<SeatBean> getSeatsByTimeTable(Integer timeTableNo);
 
 }
