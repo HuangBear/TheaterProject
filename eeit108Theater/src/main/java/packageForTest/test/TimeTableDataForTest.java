@@ -23,7 +23,7 @@ public class TimeTableDataForTest {
 			TimeTableBean tb = new TimeTableBean();
 			tb.setAvailable(true);
 			tb.setDuration(120);
-			tb.setStartTime(new Date(1999, 9, 10, 12, 20));
+			tb.setStartTime(new Date(1999, 09, 10, 12, 20));
 			tb.setTheater("A");
 			tb.setVersion("3D");
 			tb.setMovie(session.get(MovieBean.class, 1));
