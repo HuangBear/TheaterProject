@@ -247,84 +247,46 @@ nav.main-nav:hover {
 			class="w3-bar-item w3-button w3-xlarge w3-left glfont"><span
 			id="hermitHome">7-1 MOVIE</span></a>
 		<!-- 如果有登入就不顯示 -->
-		<c:if test="${empty empEmail}">
-			<a href="<%=request.getContextPath()%>/EmpLogin"
+		<c:if test="${empty LoginOK}">
+			<a
+				href="<%=request.getContextPath()%>/register/register_select_page.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">Login</span></a>
+				id="hermitHome">註冊</span></a>
 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span>
 		</c:if>
 		<!-- 如果有登入就顯示登出 -->
-		<c:if test="${!empty empEmail}">
-
-			<a href="<%=request.getContextPath()%>/EmpLogout"
+		<c:if test="${!empty LoginOK}">
+			<a href="<%=request.getContextPath()%>/MemberLogin/Logout.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">登出</span></a>
-			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span>
 			<a
 				href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">${memberName}</span></a>
+				id="hermitHome">${LoginOK.memName}</span></a>
 			<span style="margin-top: 8px;"
 				class="w3-xlarge w3-right w3-margin-right" id="hermitHome">您好！</span>
 		</c:if>
 
-		<!-- inser more links here -->
-		<!-- 如果有登入就不顯示 -->
-		<%-- 	<c:if test="${empty LoginOK}"> --%>
-		<!-- 			<a -->
-		<!-- 				href="" -->
-		<!-- 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span -->
-		<!-- 				id="hermitHome">員工註冊</span></a> -->
-		<!-- 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span> -->
-		<%-- 		</c:if> --%>
-		<!-- 如果有登入就顯示登出 -->
-		<c:if test="${!empty empEmail}">
+		
+		<c:if test="${!empty LoginOK}">
 			<a href=""
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">員工登出</span></a>
 			<a
 				href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">${empEmail}</span></a>
+				id="hermitHome">${LoginOK.memName}</span></a>
 			<span style="margin-top: 8px;"
 				class="w3-xlarge w3-right w3-margin-right" id="hermitHome">您好！</span>
 		</c:if>
 
-		<!-- inser more links here -->
-		<!-- 如果有登入就不顯示 -->
-		<%-- 		<c:if test="${empty LoginOK}"> --%>
-		<!-- 			<nav class="main-nav"> -->
-		<!-- 				<ul> -->
-		<!-- 					<li><a class="cd-signin" href="#0" -->
-		<!-- 						style="font-size: 24px; margin-top: 8px; border: none;">登入</a></li> -->
-		<!-- 				</ul> -->
-		<!-- 			</nav> -->
-		<%-- 		</c:if> --%>
-
-
-		
-			<div
-				class="w3-sidebar w3-bar-block w3-animate-left navbar-fixed-top w3-dark-gray"
-				style="color: white; display: none; font-size: 20px; font-family: Microsoft JhengHei;"
-				id="leftMenu">
-				<button onclick='closeLeftMenu()'
-					class="w3-bar-item w3-button w3-large">
-					<span>Close &times</span>
-				</button>
-				<a href="<%=request.getContextPath()%>/index2"
-					class="w3-bar-item w3-button"><span>首頁</span></a> <a href=""
-					class="w3-bar-item w3-button" id=""><span>員工資料</span></a> <a
-					href="" class="w3-bar-item w3-button" id="emp"><span>員工管理</span></a>
-				<a href="" class="w3-bar-item w3-button" id=""><span>電影管理</span></a>
-				<a href="" class="w3-bar-item w3-button" id=""><span>公告管理</span></a>
-				<a href="" class="w3-bar-item w3-button" id=""><span>報表管理</span></a>
-			</div>
+	
 	</div>
 
 	<div id="top" class="masthead2" role="main"
-		style="height: auto; padding-top: 80px; padding-bottom: 0">
+		style="height:auto ; padding-top: 80px; padding-bottom: 0">
 		<div class="container" style="overflow: hidden">
-			<span class="w3-jumbo glfont">7-1 後台管理系統<span>
+			<span class="w3-jumbo glfont">7-1 後台管理系統</span>
 		</div>
 		<div class="row" style="height: 200px"></div>
 	</div>
@@ -333,40 +295,8 @@ nav.main-nav:hover {
 		style="height: 3vh; border-bottom-left-radius: 15px; border-bottom-right-radius: 3px;"></div>
 
 
-	<section class="breadBox">
-		<div class="breadNav clearfix">
-			<div class="breadList" id="breadList">
-				<a href="<%=request.getContextPath()%>/index2"
-					style="color: black; padding: 0;">HOME</a> <i
-					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i>&nbsp;&nbsp;
-			</div>
-			<div id="showSearch" class="conditionShow clearfix"></div>
-		</div>
-	</section>
 
 
-	
-
-	<script>
-		function openLeftMenu() {
-		    document.getElementById("leftMenu").style.display = "block";
-		    
-		}
-		function closeLeftMenu() {
-		    document.getElementById("leftMenu").style.display = "none";
-		}
-
-			
-		$("#emp").click(function(event){
- 			event.preventDefault();
-			window.location= "<%=request.getContextPath()%>/admin/empIndex_list";
-		})
-			
-			
-
-			var leftMenu = $("#leftMenu");
-			var path = "<%=request.getContextPath()%>";
-	</script>
 
 </body>
 </html>

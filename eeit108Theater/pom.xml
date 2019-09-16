@@ -10,7 +10,9 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring.version>4.3.20.RELEASE</spring.version>
+		<security.version>3.2.5.RELEASE</security.version>
 	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -126,5 +128,45 @@
 			<artifactId>hibernate-validator-cdi</artifactId>
 			<version>6.0.17.Final</version>
 		</dependency>
+
+		<!-- spring-security 以下 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${security.version}</version>
+			<!-- <scope>runtime</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${security.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${security.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${security.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- spring-security 以上 -->
+
 	</dependencies>
 </project>
