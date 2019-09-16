@@ -18,8 +18,10 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public int saveMovie(MovieBean movie) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		dao.saveMovie(movie);
+		count++;
+		return count;
 	}
 
 	@Override
@@ -36,8 +38,6 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public int updateMovie(MovieBean movie) {
-		int count = 0;
-		
 		return 0;
 	}
 

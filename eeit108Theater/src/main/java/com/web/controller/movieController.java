@@ -22,8 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +33,6 @@ import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
 import com.web.service.TimeTableService;
-import com.web.store.model.BookBean;
 
 @Controller
 public class movieController {
@@ -85,7 +82,7 @@ public class movieController {
 			if (startTime.isEmpty()) {
 				continue;
 			} else {
-				model.addAttribute("startTime" + i, startTime);
+				model.addAttribute("startTime[" + i + "]", startTime);
 				model.addAttribute("theater" + i, movieTheater[i]);
 				System.out.println(startTime);
 			}
@@ -146,10 +143,43 @@ public class movieController {
 		}
 		return b;
 	}
-	@RequestMapping(value = "/movies_add", method = RequestMethod.GET)
+	@RequestMapping(value = "/addMovie", method = RequestMethod.GET)
 	public String getAddNewMovie(Model model) {
 		MovieBean mb = new MovieBean();
 		model.addAttribute("movieBean", mb);
-		return "movies_add";
+		String rootDirectory = context.getRealPath("/");
+		System.out.println(rootDirectory);
+		return "addMovie";
+	}
+	@RequestMapping(value = "/addMovie", method = RequestMethod.POST)
+	public String processAddNewMovieForm(@ModelAttribute("movieBean") MovieBean mb, HttpServletRequest request) {
+		MultipartFile uploadImage = mb.getUploadImage();
+		String originalFilename = uploadImage.getOriginalFilename();
+		String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+		String rootDirectory = context.getRealPath("/");
+		if (uploadImage != null && !uploadImage.isEmpty()) {
+			try {
+				byte[] b = uploadImage.getBytes();
+				Blob blob = new SerialBlob(b);
+				mb.setMovieImage(blob);
+				System.out.println("hello");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		service.saveMovie(mb);
+		
+		try {
+			File imageFolder = new File(rootDirectory, "images");
+			if (!imageFolder.exists()) {
+				imageFolder.mkdirs();
+			}
+			File file = new File(imageFolder, mb.getNo() + ext);
+			uploadImage.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/movie";
 	}
 }

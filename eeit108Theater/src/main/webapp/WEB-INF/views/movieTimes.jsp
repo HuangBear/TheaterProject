@@ -73,9 +73,9 @@ b {
 <!-- 			<br> -->
 <%-- 		</c:forEach> --%>
 			<c:choose>
-				<c:when test = '${!empty startTime0}'>
-					<b>${movie.movieName}</b><b>${theater0}</b>
-					<c:forEach var = 'startTime' items = '${startTime0}'>
+				<c:when test = '${!empty startTime}'>
+					<b>${movie.movieName}</b><b>${theater[i]}</b>
+					<c:forEach var = 'startTime' items = '${startTime[i]}'>
 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
 					</c:forEach>
 					<br>
@@ -85,122 +85,122 @@ b {
 				</c:otherwise>
 			</c:choose>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime1}'>
-					<b>${movie.movieName}</b><b>${theater1}</b>
-					<c:forEach var = 'startTime' items = '${startTime1}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime1}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater1}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime1}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime2}'>
-					<b>${movie.movieName}</b><b>${theater2}</b>
-					<c:forEach var = 'startTime' items = '${startTime2}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime2}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater2}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime2}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime3}'>
-					<b>${movie.movieName}</b><b>${theater3}</b>
-					<c:forEach var = 'startTime' items = '${startTime3}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime3}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater3}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime3}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime4}'>
-					<b>${movie.movieName}</b><b>${theater4}</b>
-					<c:forEach var = 'startTime' items = '${startTime4}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime4}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater4}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime4}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime5}'>
-					<b>${movie.movieName}</b><b>${theater5}</b>
-					<c:forEach var = 'startTime' items = '${startTime5}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime5}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater5}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime5}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime6}'>
-					<b>${movie.movieName}</b><b>${theater6}</b>
-					<c:forEach var = 'startTime' items = '${startTime6}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime6}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater6}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime6}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime7}'>
-					<b>${movie.movieName}</b><b>${theater7}</b>
-					<c:forEach var = 'startTime' items = '${startTime7}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime7}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater7}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime7}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime8}'>
-					<b>${movie.movieName}</b><b>${theater8}</b>
-					<c:forEach var = 'startTime' items = '${startTime8}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime8}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater8}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime8}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:choose>
-				<c:when test = '${!empty startTime9}'>
-					<b>${movie.movieName}</b><b>${theater9}</b>
-					<c:forEach var = 'startTime' items = '${startTime9}'>
-					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button>
-					</c:forEach>
-					<br>
-				</c:when>
-				<c:otherwise>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test = '${!empty startTime9}'> --%>
+<%-- 					<b>${movie.movieName}</b><b>${theater9}</b> --%>
+<%-- 					<c:forEach var = 'startTime' items = '${startTime9}'> --%>
+<%-- 					<button type = 'button'><fmt:formatDate value="${startTime}" pattern='HH:mm' /></button> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
 					
-				</c:otherwise>
-			</c:choose>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
 <%-- 			<c:if test = '${!empty startTime0}'> --%>
 			
