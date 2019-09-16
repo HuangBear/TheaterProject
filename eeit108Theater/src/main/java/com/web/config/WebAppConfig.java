@@ -25,23 +25,26 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 @ComponentScan("com.web")
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Bean
-	public ViewResolver internalResourceViewResolver() {
+	public ViewResolver internalResourceViewResolver()
+	{
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-	
+
 	@Bean
-	public MessageSource messageSource() {
+	public MessageSource messageSource()
+	{
 		ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
 		resource.setBasename("messages");
 		return resource;
 	}
-	
+
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(ResourceHandlerRegistry registry)
+	{
 		registry.addResourceHandler("/assets/css/**").addResourceLocations("/WEB-INF/views/assets/css/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
@@ -55,27 +58,31 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		registry.addViewController("/EmpLogin").setViewName("EmpLogin");
 	}
 	@Bean
-	public CommonsMultipartResolver multipartResolver() {
+	public CommonsMultipartResolver multipartResolver()
+	{
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setDefaultEncoding("UTF-8");
 		resolver.setMaxUploadSize(81920000);
 		return resolver;
 	}
+
 	@Bean
-	public MappingJackson2JsonView jsonView() {
+	public MappingJackson2JsonView jsonView()
+	{
 		MappingJackson2JsonView view = new MappingJackson2JsonView();
 		view.setPrettyPrint(true);
 		return view;
 	}
-	
+
 	@Bean
-	public ViewResolver contextNegotiatingViewResolver(ContentNegotiationManager manager) {
+	public ViewResolver contextNegotiatingViewResolver(ContentNegotiationManager manager)
+	{
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setContentNegotiationManager(manager);
 		ArrayList<View> views = new ArrayList<>();
 		views.add(jsonView());
 		resolver.setDefaultViews(views);
-		
+
 		return resolver;
 	}
 }
