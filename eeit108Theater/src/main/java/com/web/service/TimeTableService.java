@@ -35,4 +35,6 @@ public interface TimeTableService {
 	List<TimeTableBean> getAllAvailable();
 	
 	List<TimeTableBean> getStartTimeByMovie(String movieName);
+	
+	List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater);
 }
