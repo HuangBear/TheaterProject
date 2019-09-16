@@ -47,7 +47,7 @@ public class OrderBean implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
 	@OrderBy("type")
-	private List<OrderItemBean> orderItems; //U, O2M
+	private List<OrderItemBean> orderItems = new ArrayList<OrderItemBean>(); //U, O2M
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
