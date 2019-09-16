@@ -23,7 +23,7 @@ import com.web.entity.EmployeeBean;
 import data.util.HibernateUtils;
 import data.util.SystemUtils2018;
 
-public class EDMTableResetHibernate_bulletin {
+public class EDMTableResetHibernate_Bulletin {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
 	public static void main(String args[])
@@ -63,15 +63,14 @@ public class EDMTableResetHibernate_bulletin {
 					bulletin.setEndDate(token[4]);
 					bulletin.setPostTime(sdf.parse(token[5]));
 					bulletin.setDiscount(Integer.valueOf(token[6]));
-					bulletin.setDiscountTickBuy(
-							token[7].equals("") ? 0 : Integer.valueOf(token[7]));
-					bulletin.setDiscountTickFree(
-							token[8].equals("") ? 0 : Integer.valueOf(token[8]));
-					bulletin.setDiscountPriceBuy(
-							token[9].equals("") ? 0 : Integer.valueOf(token[9]));
-					bulletin.setDiscountPriceFree(
-							token[10].equals("") ? 0 : Integer.valueOf(token[10]));
-
+					bulletin.setDiscountTickBuy(token[7].equals("") ? null : Integer.valueOf(token[7]));
+					bulletin.setDiscountTickFree(token[8].equals("") ? null : Integer.valueOf(token[8]));
+					bulletin.setDiscountPriceBuy(token[9].equals("") ? null : Integer.valueOf(token[9]));
+					bulletin.setDiscountPriceFree(token[10].equals("") ? null : Integer.valueOf(token[10]));
+//					bulletin.setDiscountTickBuy(Integer.valueOf(token[7]));
+//					bulletin.setDiscountTickFree(Integer.valueOf(token[8]));
+//					bulletin.setDiscountPriceBuy(Integer.valueOf(token[9]));
+//					bulletin.setDiscountPriceFree(Integer.valueOf(token[10]));
 					bulletin.setStatus(Boolean.valueOf(token[11]));
 					EmployeeBean employee = session.get(EmployeeBean.class, 2);
 					bulletin.setEmployee(employee);

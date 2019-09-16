@@ -1,6 +1,5 @@
 package com.web.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import com.web.entity.TimeTableBean;
@@ -23,6 +22,8 @@ public interface TimeTableDao {
 
 	// query
 	TimeTableBean getTimeTableByNo(Integer timeTableNo);
+	
+	List<TimeTableBean> getTheaterByMovieName(String movieName);
 
 	List<TimeTableBean> getTimeTablesByMovie(String movieName);
 
@@ -33,4 +34,6 @@ public interface TimeTableDao {
 	List<TimeTableBean> getAllAvailable();
 	
 	List<TimeTableBean> getStartTimeByMovie(String movieName);
+	
+	List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater);
 }
