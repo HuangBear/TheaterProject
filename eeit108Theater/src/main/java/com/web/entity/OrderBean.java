@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,15 +33,16 @@ public class OrderBean implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_no")
 	private Integer no;
-	private Boolean available;
+	private Boolean available = true;
 	private String orderId;
 	private Timestamp orderTime;
-	private Double totalPrice;
+	private Double totalPrice = 0.0;
 
 	@Column(name = "fk_owner_id")
 	private String ownerId;//not owner, cannot find owner object directly
 	private String ownerName;
 	private String ownerEmail;
+	private String ownerPhone;
 	//private String status; //paid/unpaid, checked/unchecked
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -56,7 +57,8 @@ public class OrderBean implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
-	private Set<SeatBean> seats;//U, O2M
+	@OrderBy("row_X, column_Y")
+	private List<SeatBean> seats = new ArrayList<SeatBean>();//U, O2M
 	
 	public OrderBean() {
 		super();
@@ -90,10 +92,10 @@ public class OrderBean implements Serializable{
 	public void setTimeTable(TimeTableBean timeTable) {
 		this.timeTable = timeTable;
 	}
-	public Set<SeatBean> getSeats() {
+	public List<SeatBean> getSeats() {
 		return seats;
 	}
-	public void setSeats(Set<SeatBean> seats) {
+	public void setSeats(List<SeatBean> seats) {
 		this.seats = seats;
 	}
 	public String getOwnerName() {
@@ -132,4 +134,41 @@ public class OrderBean implements Serializable{
 	public void setOrderItems(List<OrderItemBean> orderItems) {
 		this.orderItems = orderItems;
 	}
+	public String getOwnerPhone() {
+		return ownerPhone;
+	}
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
+	}
+	public void calTotalPrice() {
+		if(this.orderItems == null || this.orderItems.size()==0) {
+			this.totalPrice = 0.0;
+			return;
+		}	
+		for(OrderItemBean oib : this.orderItems) {
+			this.totalPrice += oib.getSumPrice();
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(available, no, orderId, orderItems, orderTime, ownerEmail, ownerId, ownerName, ownerPhone,
+				seats, timeTable, totalPrice);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof OrderBean))
+			return false;
+		OrderBean other = (OrderBean) obj;
+		return Objects.equals(available, other.available) && Objects.equals(no, other.no)
+				&& Objects.equals(orderId, other.orderId) && Objects.equals(orderItems, other.orderItems)
+				&& Objects.equals(orderTime, other.orderTime) && Objects.equals(ownerEmail, other.ownerEmail)
+				&& Objects.equals(ownerId, other.ownerId) && Objects.equals(ownerName, other.ownerName)
+				&& Objects.equals(ownerPhone, other.ownerPhone) && Objects.equals(seats, other.seats)
+				&& Objects.equals(timeTable, other.timeTable) && Objects.equals(totalPrice, other.totalPrice);
+	}
+	
 }

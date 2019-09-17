@@ -30,7 +30,7 @@ public class TimeTableBean implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeTable_no")
 	private Integer no;
-	private Boolean available;
+	private Boolean available = true;
 	@NotNull
 	private String movieName;
 	
