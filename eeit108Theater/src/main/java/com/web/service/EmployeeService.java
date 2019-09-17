@@ -12,6 +12,7 @@ public interface EmployeeService {
 	 void resignEmp(EmployeeBean empBean);
 	 void deleteEmp(Integer no);
 	 EmployeeBean findByPrimaryKey(Integer no);
+	 EmployeeBean findByEmail(String email);
 	 List<EmployeeBean> getAllEmployees();
 	 public EmployeeBean addEmp(String name,String email,String password,String phoneNum);
 	 public Boolean checkEmpEmail(String email);

@@ -25,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/").permitAll()
 		.and().authorizeRequests().antMatchers("/resources/**").permitAll()
 		.and().authorizeRequests().antMatchers("/admin/**").hasAuthority("1")
-		.and().formLogin().loginPage("/EmpLogin").loginProcessingUrl("/EmpLogin").permitAll()
-		.and().logout().logoutSuccessUrl("/EmpLogin").permitAll();
+		.and().formLogin().loginPage("/EmpLogin3").loginProcessingUrl("/EmpLogin3").permitAll()
+		.and().logout().logoutSuccessUrl("/EmpLogin3").permitAll();
 		
 		http.csrf().disable();
 	}

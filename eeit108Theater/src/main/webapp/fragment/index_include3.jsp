@@ -256,7 +256,7 @@ nav.main-nav:hover {
 		<!-- 如果有登入就顯示登出 -->
 		<c:if test="${!empty empEmail}">
 
-			<a href="<%=request.getContextPath()%>/EmpLogout"
+			<a href="<%=request.getContextPath()%>/EmpLogout3"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">登出</span></a>
 			<span class="w3-bar-item  w3-xlarge w3-right" id="hermitHome">|</span>
@@ -279,11 +279,8 @@ nav.main-nav:hover {
 		<%-- 		</c:if> --%>
 		<!-- 如果有登入就顯示登出 -->
 		<c:if test="${!empty empEmail}">
-			<a href=""
-				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
-				id="hermitHome">員工登出</span></a>
-			<a
-				href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
+			
+			<a href="<%=request.getContextPath()%>/memberbackstage/mem_back_index.jsp"
 				class="w3-bar-item w3-button w3-xlarge w3-right w3-margin-right"><span
 				id="hermitHome">${empEmail}</span></a>
 			<span style="margin-top: 8px;"
