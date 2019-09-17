@@ -79,8 +79,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public EmployeeBean getEmployeeByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		EmployeeBean eb= null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM EmployeeBean e WHERE e.email = :email";
+		eb=(EmployeeBean)session.createQuery(hql).setParameter("email", email).uniqueResult();
+		
+		return eb;
 	}
 	
 	@SuppressWarnings("rawtypes")
