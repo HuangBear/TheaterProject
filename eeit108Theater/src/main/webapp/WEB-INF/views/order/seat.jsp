@@ -78,7 +78,7 @@
 
 <body>
 	<div class="container">
-		<form action="order/confirmOrder" method="POST">
+		<form action="<c:url value='/order/makeOrder'/>" method="POST">
 			<div class="row">
 				<div class="col-md-3 order-md-2 order-sm-1">
 					<div>
@@ -166,7 +166,7 @@
 				</div>
 			</div>
 			<div class="row mt-5">
-				<div class="col-md-12">
+				<div class="col-md-2">
 					<input class="btn btn-secondary float-right" type="submit" value="Submit">
 				</div>
 			</div>

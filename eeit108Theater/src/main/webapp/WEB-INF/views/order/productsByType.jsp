@@ -89,58 +89,73 @@
 </head>
 <body>
 	<div class="container" style="width: 80%">
-		<div class="row">
-			<div class="col-md-3 order-md-2 order-sm-1">
-				<div>
-					<table class="table border">
-						<thead>
-							<tr style="text-align: center">
-								<th scope="col">會員資料</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Member Name: ${loginMember.name}</td>
-							</tr>
-							<tr>
-								<td>Member Email: ${loginMember.email}</td>
-							</tr>
-							<tr>
-								<td>Member Id: ${loginMember.memberId}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="mt-5">
-					<table class="table border" id="orderList">
-						<thead>
-							<tr style="text-align: center">
-								<th>Order List(primary)</th>
-							</tr>
-						</thead>
-						<tbody id="orderItems">
-							<c:forEach var='item' items="${order.orderItems}">
+		<form action="<c:url value='/order/seat'/>" method="POST">
+			<div class="row">
+				<div class="col-md-3 order-md-2 order-sm-1">
+					<div>
+						<table class="table border">
+							<thead>
+								<tr style="text-align: center">
+									<th scope="col">會員資料</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Member Name: ${loginMember.name}</td>
+								</tr>
+								<tr>
+									<td>Member Email: ${loginMember.email}</td>
+								</tr>
+								<tr>
+									<td>Member Id: ${loginMember.memberId}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="mt-5">
+						<table class="table border" id="orderList">
+							<thead>
+								<tr style="text-align: center">
+									<th>Order List</th>
+								</tr>
+							</thead>
+							<tbody id="orderItems">
+								<tr>
+									<td>primary</td>
+								</tr>
+								<c:forEach var='item' items="${order.orderItems}">
+									<tr>
+										<td>
+											<div>${item.itemName}</div>
+											<div class="float-right">${item.unitPrice}x${item.quantity}=${item.unitPrice * item.quantity}</div>
+										</td>
+									</tr>
+								</c:forEach>
 								<tr>
 									<td>
-										<div>${item.itemName}</div>
-										<div class="float-right">${item.unitPrice} x ${item.quantity} = ${item.unitPrice * item.quantity}</div>
+										<div>
+											<b>Total</b>
+										</div>
+										<div class="float-right">${order.totalPrice == null ? 0:order.totalPrice}</div>
 									</td>
 								</tr>
-							</c:forEach>
-							<tr>
-								<td>
-									<div>
-										<b>Total</b>
-									</div>
-									<div class="float-right">${order.totalPrice == null ? 0:order.totalPrice}</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-9 order-md-1 order-sm-2">
-				<form action="<c:url value='/order/makeOrder'/>" method="POST">
+				<div class="col-md-9 order-md-1 order-sm-2">
+					<div id="movie-info" class="row mb-3">
+						<div class="col-md-2">
+							<span>電影分級</span>
+						</div>
+						<div class="col-md-6">
+							<h3>電影名稱 ${order.timeTable.movieName}</h3>
+						</div>
+						<div class="col-md-4">
+							<div>時間 ${order.timeTable.startTime}</div>
+							<div>影廳 ${order.timeTable.theater}</div>
+						</div>
+					</div>
 					<div id="tabs">
 						<ul>
 							<li><a href="#tabs-1">票種</a></li>
@@ -190,7 +205,6 @@
 											<td>${food.name}</td>
 											<td>$ ${food.price}</td>
 											<td>
-												<%-- 												<input class="item" id="${food.name}" name="${food.name}"> --%>
 												<select class="item custom-select" id="${food.name}" name="${food.name}">
 													<option value="0" selected>0</option>
 													<c:forEach var="index" begin="1" end="10">
@@ -232,10 +246,36 @@
 							</table>
 						</div>
 					</div>
-					<input type="submit" value="確認">
-				</form>
+				</div>
 			</div>
-		</div>
+			<div class="row">
+				<div>
+					<label for="rowCnt"></label>
+					<input type="text" id="rowCnt" name="rowCnt" value="15">
+				</div>
+				<div>
+					<label for="aZoneCnt"></label>
+					<input type="text" id="aZoneCnt" name="aZoneCnt" value="5">
+				</div>
+				<div>
+					<label for="bZoneCnt"></label>
+					<input type="text" id="bZoneCnt" name="bZoneCnt" value="15">
+				</div>
+				<div>
+					<label for="zoneNum"></label>
+					<select id="zoneNum" name="zoneNum">
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+				</div>
+
+			</div>
+			<div class="row mt-5">
+				<div class="col-md-12">
+					<input class="btn btn-secondary float-right" type="submit" value="Submit">
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 </html>
