@@ -14,6 +14,7 @@
 		<li><a href="no-sidebar">票價說明</a></li>
 		<li><a href="left-sidebar">活動與公告</a></li>
 		<li><a href="left-sidebar">團體包廳 </a></li>
+		<li><a href='Articles'>討論版</a></li>
 		<li class="login"><img src="/tttry/images/coustom.png"> <a
 			href="no-sidebar"> 會員登入</a>
 			<ul>
