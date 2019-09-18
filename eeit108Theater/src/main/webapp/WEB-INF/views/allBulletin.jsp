@@ -105,11 +105,20 @@
 							</header>
 						</article>
 
+						<!-- load視窗 -->
+						<div class="${change} add-model hide">
+							<div>${change}</div>
+							<div>
+								<input type="button" value="返回" name="back" class="change">
+							</div>
+						</div>
 						<!-- 內文準備區 -->
 						<c:forEach var='sb' items='${statusBulletin}'>
 							<c:if test="${sb.status}">
 								<div class="stat_avai_cont_${sb.no} add-model hide">
-									<div>${sb.context}</div>
+									<div>${sb.context}
+										<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
+									</div>
 									<div>
 										<input type="button" value="返回" name="back" class="stat_avai_cont_${sb.no}">
 									</div>
@@ -117,7 +126,9 @@
 							</c:if>
 							<c:if test="${!sb.status}">
 								<div class="unstat_avai_cont_${sb.no} add-model hide">
-									<div>${sb.context}</div>
+									<div>${sb.context}
+										<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
+									</div>
 									<div>
 										<input type="button" value="返回" name="back" class="unstat_avai_cont_${sb.no}">
 									</div>
@@ -125,7 +136,9 @@
 							</c:if>
 							<c:if test="${!sb.available}">
 								<div class="unstat_unavai_cont_${sb.no} add-model hide">
-									<div>${sb.context}</div>
+									<div>${sb.context}
+										<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
+									</div>
 									<div>
 										<input type="button" value="返回" name="back" class="unstat_unavai_cont_${sb.no}">
 									</div>
@@ -164,7 +177,7 @@
 										<input type="button" value="返回" name="back" class="unstat_unavai_edit_${sb.no}">
 									</div>
 									<div>
-										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'">
+										<%-- 										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'"> --%>
 									</div>
 								</div>
 							</c:if>
@@ -215,7 +228,7 @@
 											<th>標題</th>
 											<th colspan="2">優惠方案</th>
 											<th>詳情</th>
-											<th>修改</th>
+											<th>加期</th>
 											<th>刪除</th>
 										</tr>
 									</thead>
@@ -250,7 +263,7 @@
 											<th>標題</th>
 											<th colspan="2">優惠方案</th>
 											<th>詳情</th>
-											<th>修改</th>
+
 											<th>復原</th>
 										</tr>
 									</thead>
@@ -264,8 +277,6 @@
 													<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
 													<td><img name="add_host" id="unstat_unavai_cont_${sb.no}" width="20px"
 														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-													<td><img name="add_host" id="unstat_unavai_edit_${sb.no}" width="20px"
-														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
 													<td><img name="add_host" id="unstat_unavai_dele_${sb.no}" width="20px"
 														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
 												</c:if>
@@ -310,30 +321,27 @@
 		<script>
 			$(function() {
 				$("#accordion").accordion();
-			});
-
-			$(function() {
+				
 				$("[name='add_host']").click(function() {
 					var str = $(this).attr("id");
 					var targete = $("." + str);
 					$(targete).removeClass('hide');
 				});
-			});
-
-			$(function() {
+				
 				$("[name|=back]").click(function() {
 					var str = $(this).attr("class");
 					var targete = $("." + str);
 					$(targete).addClass('hide');
 				});
+				
+// 				$("img[name=add_host]").mouseover
+// 				{
+
+// 				}
+
+				
+				
 			});
-
-			$(function() {
-				$("img[name=add_host]").mouseover
-				{
-
-				}
-			})
 		</script>
 </body>
 
