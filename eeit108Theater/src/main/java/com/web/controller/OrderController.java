@@ -41,18 +41,20 @@ public class OrderController {
 	@RequestMapping({ "", "/" }) // 未來交給時刻表提供相關訊息
 	public String orderBegin(Model model, HttpSession session, HttpServletRequest req) {
 
-		System.out.println("====orderBegin Start");
+		System.err.println("====orderBegin Start====");
 
 		System.out.println("====TimeTableBean Got");
 		MemberBean mb = pServ.getMemberByNo(1);
 		System.out.println("====MemberBean Got");
-
+		session.removeAttribute("order");
 		session.setAttribute("loginMember", mb);
+		System.err.println("====orderBegin END====");
 		return pac + "start";
 	}
 
 	@RequestMapping("/showProducts")
 	public String showProductByType(Model model, HttpSession session, HttpServletRequest req) {
+		System.err.println("====showProductByType Start====");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		if(ob == null) {			
 			ob = new OrderBean(true);
@@ -68,13 +70,15 @@ public class OrderController {
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
+		System.err.println("====showProductByType END====");
 		return pac + "productsByType";
 	}
 
 	@RequestMapping("/orderList")
 	public String orderList(Model model, HttpServletRequest req, HttpSession session) {
-		System.out.println("====orderList begin");
-		List<OrderItemBean> orderList = ((OrderBean) session.getAttribute("order")).getOrderItems();
+		System.err.println("====orderList begin====");
+		OrderBean ob = (OrderBean) session.getAttribute("order");
+		List<OrderItemBean> orderList = ob.getOrderItems();
 		System.out.println("orderList size = " + orderList.size());
 		String name = req.getParameter("name");
 		Integer quantity = Integer.valueOf(req.getParameter("quantity"));
@@ -90,66 +94,25 @@ public class OrderController {
 		if (exist) {
 			if (quantity == 0)
 				orderList.remove(index);
-			else
+			else {
 				orderList.get(index).setQuantity(quantity);
+				orderList.get(index).calSumPrice();
+			}
 		} else {
 			OrderItemBean oib = new OrderItemBean(pServ.getProductByName(name));
 			oib.setQuantity(quantity);
-			oib.setSumPrice(oib.getUnitPrice() * oib.getQuantity());
+			oib.calSumPrice();
 			orderList.add(oib);
 		}
+		ob.calTotalPrice();
 		System.out.println(orderList);
-		System.out.println("====orderList end");
+		System.err.println("====orderList END====");
 		return pac + "orderList";
-	}
-
-	@RequestMapping("/makeOrder")
-	public String showOrder(Model model, HttpServletRequest req, HttpSession session) {
-		OrderBean ob = (OrderBean) session.getAttribute("order");
-		Set<OrderItemBean> set = new HashSet<>();
-		// ob.setOrderItems(set);
-		ob.setTotalPrice(0.0);
-
-		System.out.println("======showOrder");
-		List<OrderItemBean> list = new ArrayList<>();
-		Map<String, String[]> readOnly = req.getParameterMap();
-		if (readOnly == null)
-			System.out.println("=======Map is null");
-		else {
-			System.out.println("=====beginFor");
-			for (String key : req.getParameterMap().keySet()) {
-				if(key.equals("ticketCnt")) continue;
-				if (readOnly.get(key)[0] == null || readOnly.get(key)[0].equals("") || readOnly.get(key)[0].equals("0"))
-					System.out.println("====key" + key + " is NULL");
-				else {
-					System.err.println("====key" + key + " is NOT NULL");
-					
-					OrderItemBean oib = new OrderItemBean();
-					oib.setAvailable(true);
-					oib.setItemName(key);
-					Integer unit = Integer.valueOf(readOnly.get(key)[0]);
-					oib.setQuantity(unit == null ? 0 : unit);
-					oib.setUnitPrice(pServ.getProductByName(key).getPrice());
-					oib.setSumPrice(oib.getQuantity() * oib.getUnitPrice());
-					ob.setTotalPrice(ob.getTotalPrice() + oib.getSumPrice());
-					list.add(oib);
-					set.add(oib);
-				}
-			}
-			System.out.println("=====endFor");
-		}
-		
-		model.addAttribute("orderItems", list);
-		// model.addAttribute("order", ob);
-		System.out.println("======RETURN showOrder");
-		//session.setAttribute("order", ob);
-		session.setAttribute("ticketCnt", req.getParameter("ticketCnt"));
-		return pac + "orderItems";
 	}
 
 	@RequestMapping("/seat")
 	public String showSeatPage(Model model, HttpSession session, HttpServletRequest req) {
-		System.out.println("controller method => SEAT");
+		System.err.println("====seat Start====");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		List<SeatBean> seatList = pServ.getSeatsByTimeTable(ob.getTimeTable().getNo());
 		Map<String, Boolean> seatEmpty = new HashMap<>();
@@ -164,10 +127,61 @@ public class OrderController {
 		model.addAttribute("sideBar", this.getSideBar(rowCnt));
 		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, seatEmpty);
 		model.addAttribute("seatTable", s);
-		System.out.println(s);
-		System.out.println("controller method => SEAT  END");
+		model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));
+		System.out.println(s);		
+		System.err.println("====seat END====");
 		return pac + "seat";
 	}
+	
+	@RequestMapping("/makeOrder")
+	public String showOrder(Model model, HttpServletRequest req, HttpSession session) {
+		System.err.println("====showOrder Start====");
+		String[] seats = req.getParameterValues("seat");
+		OrderBean ob = (OrderBean) session.getAttribute("order");
+		//Set<OrderItemBean> set = new HashSet<>();
+		// ob.setOrderItems(set);
+		//ob.setTotalPrice(0.0);
+
+//		System.out.println("======showOrder");
+//		List<OrderItemBean> list = new ArrayList<>();
+//		Map<String, String[]> readOnly = req.getParameterMap();
+//		if (readOnly == null)
+//			System.out.println("=======Map is null");
+//		else {
+//			System.out.println("=====beginFor");
+//			for (String key : req.getParameterMap().keySet()) {
+//				if(key.equals("ticketCnt")) continue;
+//				if (readOnly.get(key)[0] == null || readOnly.get(key)[0].equals("") || readOnly.get(key)[0].equals("0"))
+//					System.out.println("====key" + key + " is NULL");
+//				else {
+//					System.err.println("====key" + key + " is NOT NULL");
+//					
+//					OrderItemBean oib = new OrderItemBean();
+//					oib.setAvailable(true);
+//					oib.setItemName(key);
+//					Integer unit = Integer.valueOf(readOnly.get(key)[0]);
+//					oib.setQuantity(unit == null ? 0 : unit);
+//					oib.setUnitPrice(pServ.getProductByName(key).getPrice());
+//					oib.setSumPrice(oib.getQuantity() * oib.getUnitPrice());
+//					ob.setTotalPrice(ob.getTotalPrice() + oib.getSumPrice());
+//					list.add(oib);
+//					set.add(oib);
+//				}
+//			}
+//			System.out.println("=====endFor");
+//		}
+		ob.calTotalPrice();
+		model.addAttribute("orderItems", ob.getOrderItems());
+		// model.addAttribute("order", ob);
+		model.addAttribute("seats", seats);
+		//session.setAttribute("order", ob);
+		session.setAttribute("ticketCnt", req.getParameter("ticketCnt"));
+		
+		System.err.println("====showOrder END====");
+		return pac + "orderItems";
+	}
+
+	
 
 	private String getSideBar(int rowCnt) {
 		StringBuilder s = new StringBuilder(512);
@@ -210,14 +224,13 @@ public class OrderController {
 	private int generateZone(StringBuilder s, char row, int colNow, int zoneCnt, Map<String, Boolean> seatEmpty) {
 		for (int col = 0; col < zoneCnt; col++, colNow++) {
 			String rowCol = row + String.valueOf(colNow);
-			System.out.println("======row-col = " + rowCol);
 			if (seatEmpty.get(rowCol)) {
 				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
 						+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\"" + rowCol
 						+ "\"></td>");
 			} else {
 				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
-						+ "\"class=\"sold\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol
+						+ "\"class=\"sold-label\"></label><input class=\"sold\"type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol
 						+ "\"value=\"" + rowCol + "\"></td>");
 			}
 		}

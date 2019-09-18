@@ -127,7 +127,7 @@
 									<tr>
 										<td>
 											<div>${item.itemName}</div>
-											<div class="float-right">${item.unitPrice}x${item.quantity}=${item.unitPrice * item.quantity}</div>
+											<div class="float-right">${item.unitPrice}x${item.quantity}=${item.sumPrice}</div>
 										</td>
 									</tr>
 								</c:forEach>

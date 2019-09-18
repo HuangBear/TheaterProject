@@ -12,9 +12,12 @@
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-.sold {
-	background-color: red;
-	color: white;
+.sold {}
+
+.sold-label {
+    background-color: rgb(255, 78, 78);
+    border-color: rgb(255, 0, 0);
+    opacity: 1;
 }
 
 .table-seat tr {
@@ -47,30 +50,45 @@
 	var labelActive = "ui-state-active ";
 	var labelDisabled = "ui-checkboxradio-disabled "
 	$(function() {
-
 		$("input[name='seat']").checkboxradio({
 			icon : false
 		});
-		$("input").prop("checked", false);
-		$("label").removeClass("ui-checkboxradio-checked ui-state-active");
+		$("input.sold").checkboxradio({
+			icon : false,
+			disabled : true
+		});
 
-		$("label.sold").addClass(labelDisabled);
-		$('label[for^=seat]').filter("[class!='sold']").click(
+		$("input[name='seat']").filter("input[class != 'sold']").click(
 				function() {
-					$(this).addClass(labelDisabled);
-					if (SelectedSeat.length < MAX) {
-						SelectedSeat.push($(this).attr("for"));
+					//console.log("=============================")
+					//console.log($(this));
+					var id = $(this).attr("id");
+					//console.log(id);
+					//$(this).prop("checked", false);
+					//console.log(SelectedSeat.indexOf(id));
+					if (SelectedSeat.indexOf(id) != -1) { //if this is in the selectedSeat, means that user don't want to select it now
+						SelectedSeat.splice(SelectedSeat.indexOf(id), 1);
 					} else {
-						$("label[for='" + SelectedSeat[0] + "']").removeClass(
-								labelActive + labelChecked + labelDisabled);
-						$("#" + SelectedSeat[0]).prop('checked', false);
-						SelectedSeat.splice(0, 1);
-						SelectedSeat.push($(this).attr("for"));
+						SelectedSeat.push($(this).attr("id"));
+
+						//console.log("before " + SelectedSeat);
+						if (SelectedSeat.length > MAX) {
+							//$("#" + SelectedSeat[0]).checkboxradio("option","checked", false);
+							//console.log("====to unchecked input");
+							//console.log($("#" + SelectedSeat[0]));
+							//console.log("====to unchecked label");
+							//console.log($("[for='" + SelectedSeat[0] + "']"));
+							//console.log($("[for='"+SelectedSeat[0]+"']"));
+							$("#" + SelectedSeat[0]).prop("checked", false);
+							$("[for='" + SelectedSeat[0] + "']").removeClass(labelChecked + labelActive);
+							SelectedSeat.splice(0, 1);
+						}
+						//console.log("after " + SelectedSeat);
+// 						$("input:checked").each(function() {
+// 							console.log($(this).attr("id"));
+// 						});
 					}
-					console.log(SelectedSeat);
-					$("input[type='checkbox']:checked").each(function() {
-						console.log($(this).val());
-					});
+					//$(this).checkboxradio("option","disabled",true);
 				});
 	});
 </script>

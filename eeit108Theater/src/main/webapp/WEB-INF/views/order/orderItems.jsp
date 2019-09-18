@@ -41,6 +41,21 @@
 					</table>
 				</div>
 				<div class="col-md-9 order-md-1 order-sm-2">
+					<div id="movie-info" class="row mb-3">
+						<div class="col-md-2">
+							<span>電影分級</span>
+						</div>
+						<div class="col-md-6">
+							<h3>電影名稱 ${order.timeTable.movieName}</h3>
+						</div>
+						<div class="col-md-4">
+							<div>時間 ${order.timeTable.startTime}</div>
+							<div>影廳 ${order.timeTable.theater}</div>
+							<div>座位
+								<c:forEach var="seat" items="${seats}"> ${seat}</c:forEach>
+							</div>
+						</div>
+					</div>
 					<table class="table border">
 						<thead>
 							<tr style="text-align: center">
@@ -52,7 +67,7 @@
 								<tr>
 									<td>
 										<div>${item.itemName}</div>
-										<div class="float-right">${item.unitPrice}X${item.quantity}=${item.unitPrice * item.quantity}</div>
+										<div class="float-right">${item.unitPrice}X${item.quantity}=${item.sumPrice}</div>
 									</td>
 								</tr>
 							</c:forEach>
@@ -69,25 +84,6 @@
 				</div>
 			</div>
 			<div class="row">
-				<div>
-					<label for="rowCnt"></label>
-					<input type="text" id="rowCnt" name="rowCnt" value="15">
-				</div>
-				<div>
-					<label for="aZoneCnt"></label>
-					<input type="text" id="aZoneCnt" name="aZoneCnt" value="5">
-				</div>
-				<div>
-					<label for="bZoneCnt"></label>
-					<input type="text" id="bZoneCnt" name="bZoneCnt" value="15">
-				</div>
-				<div>
-					<label for="zoneNum"></label>
-					<select id="zoneNum" name="zoneNum">
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select>
-				</div>
 				<div class="col-md-auto float-right">
 					<button class="btn btn-secondary" type="submit">確認</button>
 					<a class="btn" href="<c:url value='/order/showProducts'/>">返回</a>

@@ -141,13 +141,15 @@ public class OrderBean implements Serializable{
 		this.ownerPhone = ownerPhone;
 	}
 	public void calTotalPrice() {
+		double sum = 0;
 		if(this.orderItems == null || this.orderItems.size()==0) {
 			this.totalPrice = 0.0;
 			return;
 		}	
 		for(OrderItemBean oib : this.orderItems) {
-			this.totalPrice += oib.getSumPrice();
+			sum += oib.getSumPrice();
 		}
+		this.totalPrice = sum;
 	}
 	
 	@Override
