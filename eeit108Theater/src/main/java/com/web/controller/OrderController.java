@@ -165,7 +165,7 @@ public class OrderController {
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		ob.setOrderId("");
 		ob.setOrderTime(ts);
-		int obHash = ob.hashCode();
+		int obHash = ob.hashCode();		
 		char fst = (char)('A' + (ts.getTime()%26));
 		char sec = (char)('A' + (-obHash % 13));
 		if(obHash > 0) {
@@ -185,7 +185,7 @@ public class OrderController {
 		//obj.setClientBackURL("http://localhost:8080/eeit108Theater/order/result");
 		obj.setOrderResultURL("http://localhost:8080/eeit108Theater/order/result");
 		obj.setNeedExtraPaidInfo("N");
-		obj.setRedeem("Y");
+		obj.setRedeem("N");
 		
 		String form = all.aioCheckOut(obj, null);
 		System.out.println("form =\n" + form);
@@ -205,7 +205,7 @@ public class OrderController {
 		for(String key : keySet) {
 			System.out.println(map.get(key));
 		}
-		System.err.println("=====END=====");
+		System.err.println("=====Receive END=====");
 		return pac+"receive";
 	}
 	
@@ -224,7 +224,7 @@ public class OrderController {
 				System.out.println(s);
 			}
 		}
-		System.err.println("=====END=====");
+		System.err.println("=====Result END=====");
 		return pac+"result";
 	}
 
