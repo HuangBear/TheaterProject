@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,8 +21,7 @@ public class BulletinDaoImpl implements BulletinDao {
 	SessionFactory factory;
 
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getStatusBulletin()
-	{
+	public List<BulletinBean> getStatusBulletin() {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery("FROM BulletinBean").getResultList();
@@ -30,24 +30,21 @@ public class BulletinDaoImpl implements BulletinDao {
 	}
 
 	@Override
-	public void insertBulletin(BulletinBean bb)
-	{
+	public void insertBulletin(BulletinBean bb) {
 		Session session = factory.getCurrentSession();
 		EmployeeBean eb = getEmployeeById(bb.getEmployeeId());
 		bb.setEmployee(eb);
 		session.save(bb);
 	}
 
-	public EmployeeBean getEmployeeById(Integer employeeId)
-	{
+	public EmployeeBean getEmployeeById(Integer employeeId) {
 		EmployeeBean eb = null;
 		Session session = factory.getCurrentSession();
 		eb = session.get(EmployeeBean.class, employeeId);
 		return eb;
 	}
-	
-	public BulletinBean getBulletinById(Integer bulletin_no)
-	{
+
+	public BulletinBean getBulletinById(Integer bulletin_no) {
 		BulletinBean bb = null;
 		Session session = factory.getCurrentSession();
 		bb = session.get(BulletinBean.class, bulletin_no);
@@ -55,17 +52,16 @@ public class BulletinDaoImpl implements BulletinDao {
 	}
 
 	@Override
-	public void updateBulletin(BulletinBean bb)
-	{
+	public void updateBulletin(BulletinBean bb) {
 		Session session = factory.getCurrentSession();
 		session.update(bb);
 	}
 
 	@Override
-	public void deletecBulletin(Integer bullentin_no)
-	{
+	public void deletecBulletin(Integer bullentin_no) {
 		Session session = factory.getCurrentSession();
 		session.delete(bullentin_no);
 	}
+
 
 }

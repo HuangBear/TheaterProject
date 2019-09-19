@@ -43,20 +43,13 @@
 
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
-
 						<p>後台測試頁</p>
-
-
 						<div class="row gtr-50">
-
 							<div class="col-8">
 								<h4>Nibh sed cubilia</h4>
-
 							</div>
-
 							<div class="col-8">
 								<h4>Proin sed adipiscing</h4>
-
 							</div>
 
 							<div class="col-8">
@@ -74,8 +67,6 @@
 
 							</div>
 						</div>
-
-
 					</div>
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 
@@ -84,10 +75,10 @@
 								<a href="#">NewBulletin</a>
 							</h2>
 						</header>
-						<form:form method='POST' modelAttribute="getNewBulletin" enctype="multipart/form-data">
+						<form:form method='POST' modelAttribute="bulletinBean" enctype="multipart/form-data">
 							<div>
 								<label>title</label>
-								<form:input path="title" type="text" placeholder="輸入標題,請勿超過30字" maxlength="35" value="${param.title}" />
+								<form:input path="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${param.title}" />
 								<div>
 									<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 								</div>
@@ -95,7 +86,7 @@
 							</div>
 							<div>
 								<label>context</label>
-								<form:textarea path="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="350" value="${param.context}" />
+								<form:textarea path="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" value="${param.context}" />
 								<div>
 									<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 								</div>
@@ -177,26 +168,25 @@
 							</div>
 
 							<div>
-								<form:input style="border-radius: 5px" type="file" path="bulletinImage" />
+								<form:input id="file" style="border-radius: 5px" type="file" path="bulletinImage" />
 								<label>文宣上傳</label>
-
+							</div>
+							<div>
+								<img id="showPhoto" src="<c:url value='/getBulletinPicture/${bulletinBean.no}' />" />
 							</div>
 							<c:choose>
-								<c:when test="${empty statusBulletin.no}">
+								<c:when test="${empty bulletinBean.no}">
 									<div>
 										<input id="btnAdd" type='submit' class='btn btn-primary'>
 									</div>
 								</c:when>
-								<c:when test="${!empty statusBulletin.no}">
+								<c:when test="${!empty bulletinBean.no}">
 									<div>
-										<input id="btnEdit" type='submit' class='btn btn-primary' value="送出編輯">
-										<input id="btnReset" type='reset' class='btn btn-primary' value="取消編輯">
+										<input id="btnEdit" type='submit' class='btn btn-primary'> <input id="btnReset" type="button" onclick="history.back()" class='btn btn-primary'
+											value="取消編輯">
 									</div>
 								</c:when>
 							</c:choose>
-
-
-
 						</form:form>
 					</div>
 				</div>
@@ -290,6 +280,18 @@
 				$(targete).show();
 			});
 		});
+
+		//file image demo
+		$('#file').change(function() {
+			var file = $(this)[0].files[0];
+			var reader = new FileReader;
+			reader.onload = function(e) {
+				$('#showPhoto').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		})
+		
+
 	</script>
 </body>
 
