@@ -42,7 +42,7 @@ public class OrderItemBean implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "name = " + this.getItemName()+ " quantity = " + this.getQuantity()+ " sumPrice = " + this.getSumPrice();
+		return "name = " + this.getItemName()+ ", quantity = " + this.getQuantity()+ ", sumPrice = " + this.getSumPrice()+"||";
 	}
 	
 	public OrderItemBean() {

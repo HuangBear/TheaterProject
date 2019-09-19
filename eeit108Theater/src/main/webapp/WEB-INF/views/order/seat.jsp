@@ -33,6 +33,10 @@
 	top: 0;
 	height: 100%;
 }
+
+#btn-submit{
+            transition: 0.5s ease;
+        }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
 	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
@@ -60,36 +64,28 @@
 
 		$("input[name='seat']").filter("input[class != 'sold']").click(
 				function() {
-					//console.log("=============================")
-					//console.log($(this));
 					var id = $(this).attr("id");
-					//console.log(id);
-					//$(this).prop("checked", false);
-					//console.log(SelectedSeat.indexOf(id));
 					if (SelectedSeat.indexOf(id) != -1) { //if this is in the selectedSeat, means that user don't want to select it now
 						SelectedSeat.splice(SelectedSeat.indexOf(id), 1);
 					} else {
 						SelectedSeat.push($(this).attr("id"));
-
-						//console.log("before " + SelectedSeat);
 						if (SelectedSeat.length > MAX) {
-							//$("#" + SelectedSeat[0]).checkboxradio("option","checked", false);
-							//console.log("====to unchecked input");
-							//console.log($("#" + SelectedSeat[0]));
-							//console.log("====to unchecked label");
-							//console.log($("[for='" + SelectedSeat[0] + "']"));
-							//console.log($("[for='"+SelectedSeat[0]+"']"));
 							$("#" + SelectedSeat[0]).prop("checked", false);
 							$("[for='" + SelectedSeat[0] + "']").removeClass(labelChecked + labelActive);
 							SelectedSeat.splice(0, 1);
 						}
-						//console.log("after " + SelectedSeat);
-// 						$("input:checked").each(function() {
-// 							console.log($(this).attr("id"));
-// 						});
 					}
-					//$(this).checkboxradio("option","disabled",true);
+					if(SelectedSeat.length > MAX){
+			            console.log("Something WRONG!!!");
+			        } else if(SelectedSeat.length == MAX){
+			            $("#btn-submit").removeClass("disabled");
+			            $("#btn-submit").prop("disabled", false);
+			        } else{
+			            $("#btn-submit").addClass("disabled");
+			            $("#btn-submit").prop("disabled", true);
+			        }
 				});
+		
 	});
 </script>
 </head>
@@ -183,9 +179,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mt-5">
-				<div class="col-md-2">
-					<input class="btn btn-secondary float-right" type="submit" value="Submit">
+			<div class="row mt-5  float-right">
+				<div class="col-md-2 ">
+					<input id="btn-submit" class="btn btn-secondary disabled" type="submit" value="Submit" disabled>
 				</div>
 			</div>
 		</form>
