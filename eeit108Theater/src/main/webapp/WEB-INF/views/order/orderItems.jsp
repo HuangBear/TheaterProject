@@ -116,19 +116,19 @@
 						<form method="POST" action="<spring:url value='/order/pay?idType=0'/>">
 							<div id="member">
 								<div class="form-group">
-									<label for="ownerName">Name</label>
-									<input type="text" class="form-control" id="ownerName" name="ownerName" aria-describedby="m-nameHelp" value="${loginMember.name}" readonly>
+									<label for="memberName">Name</label>
+									<input type="text" class="form-control" id="memberName" name="memberName" aria-describedby="m-nameHelp" value="${loginMember.name}" readonly>
 									<small id="m-nameHelp" class="form-text text-muted">會員姓名</small>
 								</div>
 								<div class="form-group">
-									<label for="ownerEmail">Email address</label>
-									<input type="email" class="form-control" id="ownerEmail" name="ownerEmail" aria-describedby="m-emailHelp" value="${loginMember.email}"
+									<label for="memberEmail">Email address</label>
+									<input type="email" class="form-control" id="memberEmail" name="memberEmail" aria-describedby="m-emailHelp" value="${loginMember.email}"
 										readonly>
 									<small id="m-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
 								</div>
 								<div class="form-group">
-									<label for="ownerPhone">Phone number</label>
-									<input type="text" class="form-control" id="ownerPhone" name="ownerPhone" aria-describedby="m-phoneHelp" value="${loginMember.phoneNum}"
+									<label for="memberPhone">Phone number</label>
+									<input type="text" class="form-control" id="memberPhone" name="memberPhone" aria-describedby="m-phoneHelp" value="${loginMember.phoneNum}"
 										readonly>
 									<small id="m-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
 								</div>

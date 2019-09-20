@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
-import org.apache.tomcat.util.security.Escape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -30,8 +29,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.BulletinBean;
+import com.web.equator.BulletinEquator;
 import com.web.service.impl.BulletinServiceImpl;
 
 import data.util.SystemUtils2018;
@@ -44,11 +45,27 @@ public class BulletinController {
 	@Autowired
 	ServletContext context;
 
+	// other2allBulletin
+	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET)
+	public String other2allBulletin(Model model) {
+		List<List<BulletinBean>> list = service.getStatsBulletin();
+		model.addAttribute("statusBulletin", list);
+		return "allBulletin";
+	}
+
+	// other2newBulletin
+	@RequestMapping(value = "/newBulletin", method = RequestMethod.GET)
+	public String other2newBulletin(Model model) {
+		BulletinBean bb = new BulletinBean();
+		model.addAttribute("bulletinBean", bb);
+		return "newBulletin";
+	}
+
+//????
 	@RequestMapping(value = "/allBulletin/{bulletin_no}", method = RequestMethod.GET)
-	public String edit_allBulletin2newBulletin(@PathVariable("bulletin_no") Integer no, Model model,
-			HttpSession httSsession) {
-		BulletinBean bb = service.getBulletinBeanById(no);
-		httSsession.setAttribute("oldBulletinBean", bb);
+	public String edit_allBulletin2newBulletin(@PathVariable("bulletin_no") Integer no,
+			Model model) {
+		List<BulletinBean> bb = service.getSameBulletinByBortingId(no);
 		model.addAttribute("bulletinBean", bb);
 		return "newBulletin";
 	}
@@ -57,7 +74,6 @@ public class BulletinController {
 	@RequestMapping(value = "/getBulletinPicture/{bulletin_no}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletRequest resp,
 			@PathVariable Integer bulletin_no) {
-
 		HttpHeaders headers = new HttpHeaders();
 		BulletinBean bb = service.getBulletinBeanById(bulletin_no);
 		String fileName = bb.getFileName();
@@ -79,27 +95,11 @@ public class BulletinController {
 		return responseEntity;
 	}
 
-	// other2allBulletin
-	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET)
-	public String other2allBulletin(Model model) {
-		List<BulletinBean> list = service.getStatusBulletin();
-		model.addAttribute("statusBulletin", list);
-		return "allBulletin";
-	}
-
-	// other2newBulletin
-	@RequestMapping(value = "/newBulletin", method = RequestMethod.GET)
-	public String other2newBulletin(Model model) {
-		BulletinBean bb = new BulletinBean();
-		model.addAttribute("bulletinBean", bb);
-		return "newBulletin";
-	}
-
 	// post_newBulletin2allBulletin
 	@RequestMapping(value = "/newBulletin", method = RequestMethod.POST)
 	public String post_newBulletin2allBulletin(@ModelAttribute("bulletinBean") BulletinBean bb,
-			BindingResult result, HttpServletRequest request) throws IOException, SQLException {
-
+			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
+			throws IOException, SQLException {
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
 		try {
@@ -115,7 +115,6 @@ public class BulletinController {
 		testDate(bb, errorMessage);
 		// 折扣
 		testDiscount(bb, errorMessage);
-
 		// 圖片存資料庫
 		MultipartFile bulletinImage = bb.getBulletinImage();
 		String originalFilename = bulletinImage.getOriginalFilename();
@@ -129,6 +128,7 @@ public class BulletinController {
 				b = bulletinImage.getBytes();
 				Blob blob = new SerialBlob(b);
 				bb.setCoverImage(blob);
+				System.out.println("insertBlob=" + blob);
 			} catch (IOException | SQLException e) {
 				e.printStackTrace();
 				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
@@ -140,14 +140,14 @@ public class BulletinController {
 			bb.setCoverImage(blob);
 			System.out.println("insertBlob=" + blob);
 		}
-
 		System.out.println("ErrMsg=" + request.getAttribute("ErrMsg"));
-
 		if (!errorMessage.isEmpty()) {
 			return "newBulletin";
 		} else {
 			Date now = new Date();
-			bb.setBortingId(bb.getEmployeeId() + now.toString());
+			redirectAttributes.addFlashAttribute("changeMsg", "新增成功");
+			System.out.println("新增成功");
+			bb.setBortingId(bb.getEmployeeId() + "_" + now.toString());
 			bb.setPostTime(now);
 			service.insertNewBulletin(bb);
 			return "redirect:/allBulletin";
@@ -157,9 +157,8 @@ public class BulletinController {
 	// edit_newBulletin2allBulletin
 	@RequestMapping(value = "/allBulletin/{bulletin_no}", method = RequestMethod.POST)
 	public String edit_newBulletin2allBulletin(@ModelAttribute("bulletinBean") BulletinBean bb,
-			BindingResult result, HttpServletRequest request, HttpSession httSsession)
-			throws IOException, SQLException {
-
+			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
+			throws IOException, SQLException, ParseException {
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
 		try {
@@ -175,46 +174,82 @@ public class BulletinController {
 		testDate(bb, errorMessage);
 		// 折扣
 		testDiscount(bb, errorMessage);
-
 		// 圖片存資料庫
 		MultipartFile bulletinImage = bb.getBulletinImage();
 		String originalFilename = bulletinImage.getOriginalFilename();
 		byte[] b = bulletinImage.getBytes();
-		if (bulletinImage != null && !bulletinImage.isEmpty()) {
+		System.out.println("byte[] b =" + b);
+		System.out.println("getBulletinImage=" + bb.getBulletinImage());
+		System.out.println("originalFilename=" + originalFilename);
+		System.out.println("bb.getNo()=" + bb.getNo());
+		BulletinBean obb = service.getBulletinBeanById((bb.getNo()));
+		Integer flag = null;
+		if (originalFilename != null && !originalFilename.isEmpty()) {
 			bb.setFileName(originalFilename);
-			try {
-				b = bulletinImage.getBytes();
-				Blob blob = new SerialBlob(b);
-				bb.setCoverImage(blob);
-				System.out.println("editBlob=" + blob);
-			} catch (IOException | SQLException e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
-			}
+			b = bulletinImage.getBytes();
+			Blob blob = new SerialBlob(b);
+			bb.setCoverImage(blob);
+			flag = 1;
+			System.out.println(flag);
+			System.out.println("editBlob=" + blob);
+		} else {
+			bb.setCoverImage(obb.getCoverImage());
+			bb.setFileName(obb.getFileName());
+			System.out.println("Bean加入原始圖片");
 		}
+		// 補齊資料
+		bb.setBortingId(obb.getBortingId());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		bb.setPostTime(sdf.parse(sdf.format(new Date())));
+		bb.setCountNum(obb.getCountNum() + 1);
+		bb.setEmployee(obb.getEmployee());
+		// 判断属性是否完全相等
 
+		System.out.println("bb.getCoverImage()=" + bb.getCoverImage());
+		System.out.println("obb.getCoverImage()=" + obb.getCoverImage());
+		System.out.println("判断属性是否完全相等");
+		System.out.println("(obb.getCoverImage() != bb.getCoverImage())="
+				+ (obb.getCoverImage() != bb.getCoverImage()));
+		BulletinEquator et = new BulletinEquator();
+		boolean bet = et.BEquator(bb, obb);
+		System.out.println("BEquator(bb, obb)=" + bet);
 		System.out.println("ErrMsg=" + request.getAttribute("ErrMsg"));
-
+		// 存入
 		if (!errorMessage.isEmpty()) {
 			System.out.println("資料輸入有錯誤，網頁跳回");
 			return "newBulletin";
 		} else {
-			BulletinBean obb = (BulletinBean) httSsession.getAttribute("oldBulletinBean");
-			if (bb.equals(obb)) {
-				httSsession.removeAttribute("oldBulletinBean");
-				httSsession.setAttribute("change", "未修改任何資料，如不修改請點選'取消編輯'");
+			if (bet) {
+				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
 				System.out.println("資料未修改，網頁跳回");
 				return "newBulletin";
 			} else {
-				bb.setBortingId(obb.getBortingId());
-				bb.setPostTime(new Date());
+				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
 				service.insertNewBulletin(bb);
-				httSsession.removeAttribute("oldBulletinBean");
-				httSsession.setAttribute("change", "修改成功");
 				System.out.println("資料已修改");
 				return "redirect:/allBulletin";
 			}
 		}
+	}
+
+	// deleteSstatus
+	@RequestMapping(value = "/allBulletin/deleteSstatus/{sb.no}")
+	public String deleteSstatus(@PathVariable("sb.no") Integer no,
+			RedirectAttributes redirectAttributes) {
+		int deleteReturn = service.updateBulletinBeanById(no, false);
+		redirectAttributes.addFlashAttribute("changeMsg", "資料刪除");
+		System.out.println("資料已刪除，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
+		return "redirect:/allBulletin";
+	}
+
+	// restoreSstatus
+	@RequestMapping(value = "/allBulletin/restore/{sb.no}")
+	public String restoreSstatus(@PathVariable("sb.no") Integer no,
+			RedirectAttributes redirectAttributes) {
+		int deleteReturn = service.updateBulletinBeanById(no, true);
+		redirectAttributes.addFlashAttribute("changeMsg", "資料復原");
+		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
+		return "redirect:/allBulletin";
 	}
 
 //準備方法
@@ -247,7 +282,7 @@ public class BulletinController {
 		if (bb.getStartDate().length() == 0 || bb.getEndDate().length() == 0) {
 			errorMessage.put("dateChoice", "選擇開始與結束日期");
 		} else {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = new Date();
 			try {
 				if (sdf.parse(bb.getStartDate()).before(today)) {
@@ -265,7 +300,7 @@ public class BulletinController {
 		}
 		System.out.println("getStartDate=" + bb.getStartDate());
 		System.out.println("getEndDate=" + bb.getEndDate());
-		System.out.println("bb.getDiscount()=" + bb.getDiscount());
+		System.out.println("getDiscount()=" + bb.getDiscount());
 	}
 
 	// 折扣
