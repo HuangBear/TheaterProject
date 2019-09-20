@@ -11,7 +11,7 @@ import com.web.dao.BulletinDao;
 import com.web.entity.BulletinBean;
 
 @Service
-public class BulletinBoardService {
+public class BulletinServiceImpl {
 	@Autowired
 	BulletinDao dao;
 
@@ -44,6 +44,7 @@ public class BulletinBoardService {
 
 	@Transactional
 	public void insertNewBulletin(BulletinBean bb) {
+		bb.setCount(bb.getCount()+1);
 		dao.insertBulletin(bb);
 	}
 
@@ -51,6 +52,12 @@ public class BulletinBoardService {
 	public BulletinBean getBulletinBeanById(Integer no) {
 		BulletinBean bb = dao.getBulletinById(no);
 		return bb;
-
 	}
+	
+	@Transactional
+	public BulletinBean updateBulletinBeanById(BulletinBean bb) {
+		 dao.updateBulletin(bb);
+		return bb;
+	}
+
 }

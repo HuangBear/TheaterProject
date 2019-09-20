@@ -50,7 +50,7 @@ public class RootAppConfig {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setDataSource(dataSource());
-		factory.setPackagesToScan(new String[] { "com.web" });
+		factory.setPackagesToScan(new String[] { "com.web" , "ecpay"});
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
