@@ -91,6 +91,11 @@ p {
   margin-bottom: 1rem;
 }
 
+.img-circle {
+  border-radius: 50%;
+}
+
+
 abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;

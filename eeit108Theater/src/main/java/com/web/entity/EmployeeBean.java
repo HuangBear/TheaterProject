@@ -17,6 +17,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(
 		name = "Employee",
@@ -43,7 +47,9 @@ public class EmployeeBean implements Serializable{
 	private Integer gender;
 	private String phoneNum;
 	private Date birthday;
+	@JsonIgnore
 	private Blob employeeImage;
+	private String imageFileName;
 	@NotNull
 	private Date registerTime;
 	private Date resignTime;
@@ -52,6 +58,18 @@ public class EmployeeBean implements Serializable{
 	
 	@Transient
 	private String birthdayString;
+	@JsonIgnore
+	@Transient
+	private MultipartFile uploadImage;
+	
+	public MultipartFile getUploadImage() {
+		return uploadImage;
+	}
+	
+	public void setUploadImage(MultipartFile uploadImage) {
+		this.uploadImage = uploadImage;
+	}
+	
 	
 	public EmployeeBean() {
 		
@@ -191,6 +209,14 @@ public class EmployeeBean implements Serializable{
 	}
 	public void setBulletins(Set<BulletinBean> bulletins) {
 		this.bulletins = bulletins;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 	
 }

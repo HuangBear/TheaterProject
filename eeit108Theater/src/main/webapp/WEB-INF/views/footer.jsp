@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+ 	pageEncoding="UTF-8"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -140,32 +139,42 @@
 
 					<!-- Contact -->
 					<section class="contact">
-						<header>
+						<!--  <header>
 							<h3>Nisl turpis nascetur interdum?</h3>
-						</header>
-						<p>Urna nisl non quis interdum mus ornare ridiculus egestas
-							ridiculus lobortis vivamus tempor aliquet.</p>
+						</header>-->
+						<p> 716影城 &nbsp;&nbsp;&nbsp; (02)6631 6666<br>
+							106台北市大安區復興南路一段390號 2樓<br>
+							2F., No. 390, Sec. 1, Fuxing S. Rd.,<br> 
+							Da’an Dist., Taipei City 106, Taiwan (R.O.C.)
+						</p>
 						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span
-									class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span
-									class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span
-									class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-pinterest"><span
-									class="label">Pinterest</span></a></li>
-							<li><a href="#" class="icon brands fa-dribbble"><span
-									class="label">Dribbble</span></a></li>
-							<li><a href="#" class="icon brands fa-linkedin-in"><span
-									class="label">Linkedin</span></a></li>
+							<li><a href="#" class="icon brands fa-twitter">
+								<span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f">
+								<span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram">
+								<span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon brands fa-pinterest">
+								<span class="label">Pinterest</span></a></li>
+							<li><a href="#" class="icon brands fa-dribbble">
+								<span class="label">Dribbble</span></a></li>
+							<li><a href="#" class="icon brands fa-linkedin-in">
+								<span class="label">Linkedin</span></a></li>
 						</ul>
 					</section>
 
 					<!-- Copyright -->
 					<div class="copyright">
 						<ul class="menu">
-							<li>&copy; Untitled. All rights reserved.</li>
-							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							<li> Copyright &copy; 2019 &nbsp; 716影城 &nbsp;&nbsp; 716Cinema. All Rights Reserved.</li>
+							<li> 
+								<a href="#" class=""><span class="label">關於716</span></a>&nbsp;&nbsp;&nbsp;
+								<a href="#" class=""><span class="label">人才招募</span></a>&nbsp;&nbsp;&nbsp;
+								<a href="#" class=""><span class="label">電子發票</span></a>&nbsp;&nbsp;&nbsp;
+								<a href="#" class=""><span class="label">隱私權政策</span></a>&nbsp;&nbsp;&nbsp;
+								<a href="#" class=""><span class="label">網站地圖</span></a>           
+							</li>
+							<!--  <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>-->
 						</ul>
 					</div>
 
