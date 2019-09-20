@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>FAIL</title>
 </head>
 <body>
-	<p>即將跳轉至綠界支付頁面</p>
-	${ecpayForm}
+	<p>付款失敗！！！</p>
 </body>
 </html>
