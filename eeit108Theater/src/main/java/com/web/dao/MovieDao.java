@@ -12,7 +12,7 @@ public interface MovieDao {
 
 	int deleteAll();
 	// update
-	int updateMovie(MovieBean movie);
+	MovieBean updateMovie(MovieBean movie);
 
 	int discontinueAll(); // 全部下架
 

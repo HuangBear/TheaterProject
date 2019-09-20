@@ -286,6 +286,7 @@
   <script src="js/admin/demo/chart-area-demo.js"></script>
 
 </body>
+
 </html>
 
 

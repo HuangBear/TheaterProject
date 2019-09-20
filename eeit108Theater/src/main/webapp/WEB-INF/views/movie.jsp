@@ -45,6 +45,7 @@ div {
 				<b style='font-size: 16px'><fmt:formatDate pattern="yyyy-MM-dd"
 						value="${releasedMovie.openingDate}" />上映</b><br> 
 				<b style = 'font-size: 16px'>${releasedMovie.duration}</b>
+				<button type = 'button' onclick="window.location.href='${pageContext.request.contextPath}/editMovie?no=${releasedMovie.no}'">修改</button>
 			</div>
 		</c:forEach>
 	</div>
