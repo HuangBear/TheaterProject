@@ -72,26 +72,30 @@
 
 					<div class="sv3" id="loginview">
 						
-						<form method='POST' modelAttribute="managerBean" enctype="multipart/form-data">
+						<form:form method='POST' modelAttribute="memberBean" action="memberLogin" enctype="multipart/form-data">
 							<h3>會員登入</h3>
+							${error}
+							${name}${welcome}
 							<dl>
 							<dd>
-								<label for="account" style="text-align:left">會員帳號(手機號碼/e-mail)：</label>
-								<input id="account" path="account" class="text" type="text"
-									placeholder="請輸入會員帳號" tabindex="1" autocomplete="off"
+								<label for="email" style="text-align:left">會員email：</label>
+								<form:input id="email" path="email" class="text" type="text"
+									placeholder="請輸入會員email" tabindex="1" autocomplete="off"
 									maxlength="50"  />     <!-- autofocus="autofocus" -->
 							</dl>
 							<dl>
 							<dd>
 								<label for="pwd" style="text-align:left">密碼：</label>
-								<input id="password" path="password" class="text"
+								<form:input id="password" path="password" class="text"
 									type="password" placeholder="請輸入密碼 ( 英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
 							<dl>
 							<dd>
-								<a><input id="submit" type="submit" value="登入"
-									style="font-size: 20px; width: 450px; height: 60px;"></a><br>
+								<form:button  type="submit" style="font-size: 20px;width: 450px; height: 60px;">
+									 登入</form:button><br>
+								<form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
+									 重填</form:button><br>	
 								<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 								<a href="#" class="image fit" ><img src="images/facebooklogin.jpg"
 									alt="" style="width:450px; display:block; margin:auto;"/></a></fb:login-button><br>
@@ -103,32 +107,35 @@
 							</dd>
 							</dl>
 								<input id="type" name="form" type='hidden' value='true' />
-						</form>
+						</form:form>
 											
 					</div>
 
 				
 					<div class="sv3" id="signinview" style="display:none">
-						<form method='POST' modelAttribute="managerBean" enctype="multipart/form-data">
-							<h1 class="h11">訪客註冊</h1>
+						<form:form method='POST' modelAttribute="memberBean" action="memberAdd" acenctype="multipart/form-data">
+							<h3>訪客註冊</h3>
+							${error}
+							${name}${welcome}
+							
 							<dl>
 							<dd>
 								<label for="name" style="text-align:left">*您的姓名：</label>
-								<input id="name" path="name" class="text" type="text"
+								<form:input id="name" path="name" class="text" type="text"
 									placeholder="請輸入姓名" tabindex="1" autocomplete="off"
-									maxlength="50"  />     <!-- autofocus="autofocus" -->
+									maxlength="50"  />     
 							</dl>
 							<dl>
 							<dd>
 								<label for="email" style="text-align:left">*電子信箱：</label>
-								<input id="email" path="email" class="text"
+								<form:input id="email" path="email" class="text"
 									type="text" placeholder="請輸入e-mail" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
 							<dl>
 							<dd>
 								<label for="phoneNum" style="text-align:left">*行動電話：</label>
-								<input id="phoneNum" path="phoneNum" class="text"
+								<form:input id="phoneNum" path="phoneNum" class="text"
 									type="text" placeholder="請輸入行動電話號碼" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
@@ -136,35 +143,41 @@
 							<dl>
 							<dd>
 								<label for="account" style="text-align:left">*密碼：</label>
-								<input id="password" path="password" class="text"
+								<form:input id="password" path="password" class="text"
 									type="password" placeholder="請輸入密碼 (英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
-							<dd>
-								<label for="account" style="text-align:left">*請再輸入密碼一次：</label>
-								<input id="password" path="password" class="text"
-									type="password" placeholder="請重複上面所輸入之密碼 (英文大小寫有差別 )" tabindex="2"
-									autocomplete="off" maxlength="50" />
-							</dl>
-							<d1>
+<!-- 							<dl> -->
+<!-- 							<dd> -->
+<!-- 								<label for="account" style="text-align:left">*請再輸入密碼一次：</label> -->
+<%-- 								<form:input id="password" path="password" class="text" --%>
+<%-- 									type="password" placeholder="請重複上面所輸入之密碼 (英文大小寫有差別 )" tabindex="2" --%>
+<%-- 									autocomplete="off" maxlength="50" /> --%>
+<!-- 							</dl> -->
+							<dl>
 							<dd>
 								<label for="memberId" style="text-align:left">*身分證字號：</label>
-								<input id="memberId" path="memberId" class="text"
+								<form:input id="memberId" path="memberId" class="text"
 									type="text" placeholder="請輸入身分證字號" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
+							<dl>
 							<dd>
 								<label for="birthday" style="text-align:left">*生日：</label>
-								<input id="birthday" path="birthday" class="text"
-									type="text" placeholder="請輸入出生年月日" tabindex="2"
+								<form:input id="birthdayString" path="birthdayString" class="text"
+									type="date" placeholder="請輸入出生年月日" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
+							<dl>
 							<dd>
-								<label>男</label><input type="radio" name="gender" value="male">
-								<label>女</label><input type="radio" name="gender" value="female">
+<%-- 								<form:input type="radio" name="gender" value="male" path="gender" checked/><label>男</label> --%>
+<%-- 								<form:input type="radio" name="gender" value="female" path="gender"/><label>女</label> --%>
+							<label for="gender" style="text-align:left">*性別：</label>
+							<form:select  id="gender"   required="required" path="gender">
+                            <form:option value="1" selected="selected">男</form:option>
+				            <form:option value="2" >女</form:option>
+                            </form:select>
+							
 							</dl>
 
 							<dl>
@@ -174,7 +187,7 @@
 							</dd>
 							</dl>
 								<input id="type" name="form" type='hidden' value='true' />
-						</form>
+						</form:form>
 					
 					</div>
 				</div>

@@ -186,6 +186,7 @@ public class EmpController {
 //		System.out.println(eb.getName());
 //		return "/admin/emp_update2";
 //	}
+	
 	@SuppressWarnings("unused")
 	@RequestMapping(method = RequestMethod.POST, value = "/admin/emp_update")
 	public String editEmpPost(@RequestParam(value = "pk",required = false)Integer pk,
