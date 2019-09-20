@@ -74,10 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 	
-	@Bean
-	public SaltSource saltSource() {
-	    return new CustomSaltSource();
-	}
+//	@Bean
+//	public SaltSource saltSource() {
+//	    return new CustomSaltSource();
+//	}
 
 //	@Bean
 //	public AuthenticationProvider authenticationProvider(){

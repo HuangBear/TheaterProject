@@ -17,6 +17,7 @@
 		<li><a href="forums">電影討論</a></li>		
 		<li class="login"><img src="images/frontend/coustom.png"> <a href="memberservice">會員中心</a>
 			<ul>
+				<li>${memberName}</li>
 				<li><a href="showticket">訂票記錄</a></li>
 				<li><a href="memberinfo">會員設定</a></li>
 			<!-- 這個不要刪掉，平衡用--></ul></li><!--這個不要刪掉，平衡用 -->

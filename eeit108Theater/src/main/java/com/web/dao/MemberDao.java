@@ -2,6 +2,7 @@ package com.web.dao;
 
 import java.util.List;
 
+import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 
 public interface MemberDao {
@@ -23,14 +24,19 @@ public interface MemberDao {
 	int continueAll(); // 全部上架
 	
 	// query
+	MemberBean checkMemberEmail(String email);
 
 	MemberBean getMemberByNo(Integer memberNo);
 
 	MemberBean getMemberByEmail(String email);
 
 	MemberBean getMemberById(String memberId);
+	
+	MemberBean getMemberBeanByEmailPassword(String email,String password);
 
 	List<MemberBean> getAllMembers();
 
 	List<MemberBean> getAllAvailable();
+	
+	Object getPermissionByMemberEmail(String email);
 }
