@@ -1,95 +1,91 @@
 package com.web.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.web.service.AuthenticationService;
+import com.web.service.CustomSaltSource;
 
 @EnableWebSecurity
-
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationService authenticationService;
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private DataSource dataSource;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationService);
+ 
+//		auth.jdbcAuthentication()
+//         .passwordEncoder(passwordEncoder)
+//         .dataSource(dataSource)
+//         .usersByUsernameQuery("select email, password ,available from Employee where email=?")
+//         .authoritiesByUsernameQuery("select email, permission from Employee where email=?")
+//         .passwordEncoder(new BCryptPasswordEncoder());
+		 
+//		auth.authenticationProvider(authenticationProvider());
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll()
+		http.authorizeRequests()
+		.antMatchers("/").permitAll()
 		.and().authorizeRequests().antMatchers("/resources/**").permitAll()
 		.and().authorizeRequests().antMatchers("/admin/**").hasAuthority("1")
-		.and().formLogin().loginPage("/EmpLogin3").loginProcessingUrl("/EmpLogin3").permitAll()
-		.and().logout().logoutSuccessUrl("/EmpLogin3").permitAll();
+		
+		.and()
+        .rememberMe()
+		
+		.and().formLogin()
+		.loginPage("/EmpLogin").loginProcessingUrl("/EmpLoginAction")
+		.successHandler((request, response, auth) -> {
+            request.getSession().setAttribute("loginOK", auth.getName());
+            response.sendRedirect("admin/empIndexA");})
+		.failureHandler((request, response, ex) -> {
+			//request.getSession().setAttribute("error", "登入失敗");
+			
+            response.sendRedirect("EmpLogin?email=" + request.getParameter("username") + "&error");
+        })
+//		.failureUrl("/EmpLogin?error")
+		
+		.and()
+		.logout().logoutUrl("/admin/perform_logout").logoutSuccessUrl("/EmpLogin?logout");
 		
 		http.csrf().disable();
 	}
 	
-//	.authorizeRequests()
-//    .antMatchers("/").permitAll()
-//    .antMatchers("/user/**").hasAuthority("USER")
-//    .and()
-//    .formLogin().loginPage("/login").defaultSuccessUrl("/user")
-//    .and()
-//    .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 	
-	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		// TODO Auto-generated method stub
-//		http.anonymous();
-//	}
-	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		// TODO Auto-generated method stub
-//		http.
-//			authorizeRequests()
-//			.anyRequest() //對象為所有網址
-//			.authenticated() //存取必須通過驗證
-//			.and()
-//			.formLogin() //若未不符合authorize條件，則產生預設login表單
-//			.and()
-//			.httpBasic(); //產生基本表單
-//	}
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		// TODO Auto-generated method stub
-//		http.
-//			authorizeRequests()
-//				.antMatchers("/resources/**").permitAll() //resource資料夾靜態資料可匿名存取
-//				.antMatchers("/index2") //對象為所有網址
-//				.authenticated() //存取必須通過驗證
-//			.and()
-//			.formLogin() 
-//				.loginPage("/EmpLogin") //則產生自訂login表單
-//				.failureUrl("/EmpLogin?error") //如果認證失敗，則導往/login並帶參數error
-//				.defaultSuccessUrl("/index2") //認證通過後導往的Url
-//				.permitAll()
-//			.and()
-//			.logout()
-//				.logoutSuccessUrl("/login?logout") //
-//			    .permitAll();
-//	}
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth)
-//			throws Exception {
-//		// TODO Auto-generated method stub
-//		auth //Builder Design Pattern
-//			.inMemoryAuthentication() //自訂Runtime時的使用者帳號
-//				.withUser("admin") //新增user
-//				.password("admin12345") //指定密碼
-//				.roles("ADMIN", "USER") //指派權限群組
-//				.and() //再新增使用者
-//				.withUser("user")
-//				.password("user12345")
-//				.roles("USER");
+	@Bean
+	public SaltSource saltSource() {
+	    return new CustomSaltSource();
+	}
+
+//	@Bean
+//	public AuthenticationProvider authenticationProvider(){
+//	    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//	    authenticationProvider.setUserDetailsService(userDetailsService());
+//	    authenticationProvider.setPasswordEncoder(passwordEncoder());
+//	    //authenticationProvider.setSaltSource(saltSource());
+//	    return authenticationProvider;
 //	}
 	
 }
