@@ -14,6 +14,7 @@
 		<li><a href="news">活動公告</a></li>
 		<li><a href="biz">業務專區</a></li>
 		<li><a href="theater">影城特色</a></li>
+    <li><a href='Articles'>討論版</a></li>
 		<li><a href="forums">電影討論</a></li>		
 		<li class="login"><img src="images/frontend/coustom.png"> <a href="memberservice">會員中心</a>
 			<ul>
@@ -25,4 +26,3 @@
 	</ul>
 
 </nav>
-
