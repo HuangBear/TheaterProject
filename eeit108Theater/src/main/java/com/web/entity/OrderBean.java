@@ -38,7 +38,8 @@ public class OrderBean implements Serializable {
 	private String ownerName;
 	private String ownerEmail;
 	private String ownerPhone;
-	// private String status; //paid/unpaid, checked/unchecked
+	private Boolean checked = false;
+	private Boolean paid = false;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
@@ -159,6 +160,22 @@ public class OrderBean implements Serializable {
 		this.ownerPhone = ownerPhone;
 	}
 
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
+	}
+
+	public Boolean getPaid() {
+		return paid;
+	}
+
+	public void setPaid(Boolean paid) {
+		this.paid = paid;
+	}
+
 	public void calTotalPrice() {
 		double sum = 0;
 		if (this.orderItems == null || this.orderItems.size() == 0) {
@@ -195,16 +212,18 @@ public class OrderBean implements Serializable {
 	public String getOrderItemString() {
 		int ticketCnt = 0, foodCnt = 0;
 		int ticketSum = 0, foodSum = 0;
-		for(OrderItemBean oi : this.getOrderItems()) {
-			if(oi.getType().equals("ticket")) {
-				ticketCnt++;				
-				ticketSum+=oi.getSumPrice().intValue();
-			}
-			else {
+		for (OrderItemBean oi : this.getOrderItems()) {
+			if (oi.getType().equals("ticket")) {
+				ticketCnt++;
+				ticketSum += oi.getSumPrice().intValue();
+			} else {
 				foodCnt++;
-				foodSum+=oi.getSumPrice().intValue();
+				foodSum += oi.getSumPrice().intValue();
 			}
 		}
+		if (foodCnt == 0)
+			return "電影票 x " + ticketCnt + " = " + ticketSum + " 元";
+
 		return "電影票 x " + ticketCnt + " = " + ticketSum + " 元#餐點 x " + foodCnt + " = " + foodSum + " 元";
 	}
 
@@ -215,7 +234,7 @@ public class OrderBean implements Serializable {
 		while (i < list.size()) {
 			String type = list.get(i).getType();
 			if (type.equals(last)) {
-				if(i == list.size() - 1)
+				if (i == list.size() - 1)
 					break;
 				OrderItemBean temp = list.remove(i);
 				list.add(temp);
@@ -230,4 +249,5 @@ public class OrderBean implements Serializable {
 			}
 		}
 	}
+
 }

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Table(
 		name = "Order_Item",
 		uniqueConstraints = { 
-				@UniqueConstraint(columnNames = { "itemName" }) 
+				@UniqueConstraint(columnNames = { "itemName", "fk_order_id" }) 
 				}
 		)
 public class OrderItemBean implements Serializable{
