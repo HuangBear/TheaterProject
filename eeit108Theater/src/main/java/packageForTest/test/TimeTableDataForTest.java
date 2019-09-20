@@ -22,10 +22,10 @@ public class TimeTableDataForTest {
 			tx = session.beginTransaction();
 			TimeTableBean tb = new TimeTableBean();
 			tb.setAvailable(true);
-			tb.setStartTime(new Date(29, 9, 10, 12, 20));
+			tb.setStartTime(new Date(30, 9, 10, 12, 20));
 			//tb.setEndTime(new Date(29, 9, 10, 14, 20));
 			tb.setBreakTime(30);
-			tb.setTheater("B");
+			tb.setTheater("B廳");
 			tb.setVersion("3D");
 			tb.setMovie(session.get(MovieBean.class, 1));
 			tb.setDuration(tb.getMovie().getDuration());
@@ -39,7 +39,7 @@ public class TimeTableDataForTest {
 					sb = new SeatBean();
 					sb.setAvailable(true);
 					sb.setRow(String.valueOf((char)(row + i)));
-					sb.setColumn(String.valueOf(col));
+					sb.setColumn(col);
 					seats.add(sb);
 				}
 			}

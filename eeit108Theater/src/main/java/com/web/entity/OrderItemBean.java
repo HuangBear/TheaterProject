@@ -25,15 +25,15 @@ public class OrderItemBean implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderItem_no")
 	private Integer no;
-	private Boolean available;
+	private Boolean available = true;
 	@NotNull
 	private String itemName;
 	@NotNull
-	private Double unitPrice;
+	private Double unitPrice = 0.0;
 	@NotNull
-	private Integer quantity;
+	private Integer quantity = 0;
 	
-	private Double sumPrice;
+	private Double sumPrice = 0.0;
 	@NotNull
 	private String type;//ticket, drink, or food etc.
 	
@@ -42,7 +42,7 @@ public class OrderItemBean implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "name = " + this.getItemName()+ " quantity = " + this.getQuantity()+ " sumPrice = " + this.getSumPrice();
+		return "name = " + this.getItemName()+ ", quantity = " + this.getQuantity()+ ", sumPrice = " + this.getSumPrice()+"||";
 	}
 	
 	public OrderItemBean() {
@@ -103,5 +103,13 @@ public class OrderItemBean implements Serializable{
 	}
 	public void setSumPrice(Double sumPrice) {
 		this.sumPrice = sumPrice;
+	}
+	
+	public void calSumPrice() {
+		if(this.itemName == null || this.itemName.equals("")) {
+			this.sumPrice = 0.0;
+			return;
+		}
+		this.sumPrice = this.unitPrice * this.quantity;
 	}
 }

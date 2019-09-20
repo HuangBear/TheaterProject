@@ -26,15 +26,13 @@ import data.util.SystemUtils2018;
 public class EDMTableResetHibernate_Bulletin {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 
 		String line = "";
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
-		try
-		{
+		try {
 			tx = session.beginTransaction();
 
 			File file = new File("data/bulletin/bulletin_list.dat");
@@ -43,14 +41,11 @@ public class EDMTableResetHibernate_Bulletin {
 					BufferedReader br = new BufferedReader(isr);
 //				FileReader fr = new FileReader(file); 
 //				BufferedReader br = new BufferedReader(fr);
-			)
-			{
-				while ((line = br.readLine()) != null)
-				{
+			) {
+				while ((line = br.readLine()) != null) {
 					System.out.println("line=" + line);
 					// 去除 UTF8_BOM: \uFEFF
-					if (line.startsWith(UTF8_BOM))
-					{
+					if (line.startsWith(UTF8_BOM)) {
 						line = line.substring(1);
 					}
 					String[] token = line.split("\\|");
@@ -63,11 +58,15 @@ public class EDMTableResetHibernate_Bulletin {
 					bulletin.setEndDate(token[4]);
 					bulletin.setPostTime(sdf.parse(token[5]));
 					bulletin.setDiscount(Integer.valueOf(token[6]));
-					bulletin.setDiscountTickBuy(token[7].equals("") ? null : Integer.valueOf(token[7]));
-					bulletin.setDiscountTickFree(token[8].equals("") ? null : Integer.valueOf(token[8]));
-					bulletin.setDiscountPriceBuy(token[9].equals("") ? null : Integer.valueOf(token[9]));
-					bulletin.setDiscountPriceFree(token[10].equals("") ? null : Integer.valueOf(token[10]));
-//					bulletin.setDiscountTickBuy(Integer.valueOf(token[7]));
+					bulletin.setDiscountTickBuy(
+							token[7].equals("") ? null : Integer.valueOf(token[7]));
+					bulletin.setDiscountTickFree(
+							token[8].equals("") ? null : Integer.valueOf(token[8]));
+					bulletin.setDiscountPriceBuy(
+							token[9].equals("") ? null : Integer.valueOf(token[9]));
+					bulletin.setDiscountPriceFree(
+							token[10].equals("") ? null : Integer.valueOf(token[10]));
+					// bulletin.setDiscountTickBuy(Integer.valueOf(token[7]));
 //					bulletin.setDiscountTickFree(Integer.valueOf(token[8]));
 //					bulletin.setDiscountPriceBuy(Integer.valueOf(token[9]));
 //					bulletin.setDiscountPriceFree(Integer.valueOf(token[10]));
@@ -77,6 +76,7 @@ public class EDMTableResetHibernate_Bulletin {
 					Blob sb = SystemUtils2018.fileToBlob(token[12]);
 					bulletin.setCoverImage(sb);
 					bulletin.setFileName(SystemUtils2018.extractFileName(token[12].trim()));
+					bulletin.setBortingId(token[13]);
 					session.save(bulletin);
 					System.out.println("新增一筆bulletin紀錄成功");
 				}
@@ -85,14 +85,12 @@ public class EDMTableResetHibernate_Bulletin {
 				// session.flush();
 				System.out.println("bulletin資料新增成功");
 				tx.commit();
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				e.printStackTrace();
 				tx.rollback();
 			}
 
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		factory.close();
