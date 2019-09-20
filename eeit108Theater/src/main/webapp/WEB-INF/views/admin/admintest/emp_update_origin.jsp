@@ -97,111 +97,138 @@
     </ul>
 
     <div id="content-wrapper">
-
+    
+    
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
         
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Home</a>
+            <a href="empIndexA">Home</a>
           </li>
-          <li class="breadcrumb-item active">empTable</li>
+          <li class="breadcrumb-item active">emp Edit</li>
         </ol>
 
-       
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            	7-1 Cinema員工清單</div>
-          <div class="card-body">
-            <div class="table-responsive">
-          
-              
-            <c:if test='${not empty employees}'>
-			<c:forEach var='emp' varStatus='vs' items='${employees}'>
-			<c:if test ='${vs.first }'>
-				<c:out value="<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>" escapeXml='false'/>
-				<c:out value=" <thead><tr><th>員工編號</th><th>姓名</th>
-				<th>員工ID</th><th>員工email</th><th>員工電話</th>
-				<th>password</th><th>薪資</th><th>職等</th><th>工作狀態</th><th>更新</th>
-				<th>離職</th>
-				</tr> </thead>
-				<tfoot><tr><th>員工編號</th><th>姓名</th>
-				<th>員工ID</th><th>員工email</th><th>員工電話</th>
-				<th>password</th><th>薪資</th><th>職等</th><th>工作狀態</th><th>更新</th>
-				<th>離職</th>
-				</tr> </tfoot><tbody>
-				" escapeXml='false'/>
-			</c:if>
-			
-			<tr>
-				<td>${emp.no}</td>
-				<td>${emp.name}</td>
-				<td>${emp.employeeId}</td>
-				<td>${emp.email}</td>
-				<td>${emp.phoneNum}</td>
-				<td>${emp.password}</td>
-				<td>${emp.salary}</td>
-				<c:choose> 
-				<c:when test="${emp.permission == 1}">
-				<c:out value="<td>一般員工</td>" escapeXml='false'/>
-				</c:when>
-				<c:when test="${emp.permission == 2}">
-				<c:out value="<td>影城經理</td>" escapeXml='false'/>
-				</c:when>
-				<c:when test="${emp.permission == 3}">
-				<c:out value="<td>影城主管</td>" escapeXml='false'/>
-				</c:when>
-				<c:otherwise>
-                 <c:out value="<td>無職位</td>" escapeXml='false'/>
-            	</c:otherwise>
-				 </c:choose>
-				 
-				<c:choose> 
-				<c:when test="${emp.available == true}">
-				<c:out value="<td>受雇中</td>" escapeXml='false'/>
-				</c:when>
-				<c:otherwise>
-                 <c:out value="<td>已離職</td>" escapeXml='false'/>
-            	</c:otherwise>
-				 </c:choose>
-				<td>
-				<button class="btn btn-info"  onclick="javascrtpt:window.location.href='emp_update?pk=${emp.no}'">
-				編輯
-				</button><p>
-				</td>
-				
-				<td><button class='btn btn-danger'
- 				onclick='javascrtpt:window.location.href="EmpResign?pk=${emp.no}"'>離職</button></td> 
-				
-<%-- 				<c:choose> --%>
-				
-<%-- 				<c:when test="${emp.available == true}"> --%>
-<%-- 				<c:out value="<td><button class='btn btn-danger'   --%>
-<%-- 				onclick='javascrtpt:window.location.href="EmpResign?pk=${emp.no}"'>離職 --%>
-<%-- 				</button></td>" escapeXml='false'/> --%>
-<%-- 				</c:when> --%>
-				
-<%-- 				<c:when test="${emp.available == false}"> --%>
-<%-- 				<c:out value="<td><button class='btn btn-success'   --%>
-<%-- 				onclick='javascrtpt:window.location.href="EmpResign?pk=${emp.no}"'>復工 --%>
-<%-- 				</button></td>" escapeXml='false'/> --%>
-<%-- 				</c:when> --%>
-				
-<%-- 				 </c:choose> --%>
-			</tr>
-			<c:if test ='${vs.last }'>
-				<c:out value="</tbody></table><hr>" escapeXml='false'/>
-			</c:if>
-		</c:forEach>
-	</c:if>
-                            
+ <!-- DataTables Example -->
+        <div class="container">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">7-1 Cinema 員工編輯</div>
+      <div class="card-body">
+        <form:form method="POST" modelAttribute="employeeBean" enctype="multipart/form-data">
+        
+          <div class="form-group">    
+                <div class="form-label-group">
+                  <form:input type="email" id="email" class="form-control" 
+                  value="${eb.email}" required="required" autofocus="autofocus" path="email" readonly="value"/>
+                  <label for="email">員工信箱</label>
+                </div>
+         </div>
+           
+           <div class="form-group">
+            <div class="form-label-group">
+              <form:input type="text" id="employeeId" class="form-control" 
+              value="${eb.employeeId}" required="required" path="employeeId"/>
+              <label for="employeeId">員工身分證號碼</label>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated  at 00:00 PM</div>
-        </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <form:input type="text" id="name" class="form-control" 
+              value="${eb.name}" required="required" path="name"/>
+              <label for="name">員工姓名</label>
+            </div>
+          </div>
+      	<div class="form-group">
+            <div class="form-label-group">
+              <form:input type="text" id="phoneNum" class="form-control" 
+              value="${eb.phoneNum}" required="required" path="phoneNum"/>
+              <label for="phoneNum">員工電話</label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="form-label-group">
+              <form:input type="password" id="password" class="form-control" 
+             value="${eb.password}" required="required" path="password"/>
+              <label for="password">員工密碼</label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="form-label-group">
+              <form:select  id="gender" class="form-control" 
+               required="required" path="gender">
+               <form:option value="1" selected="selected">男</form:option>
+				<form:option value="2" >女</form:option>
+               </form:select>
+
+            </div>
+          </div>
+          
+<!--           <div class="form-group"> -->
+<!--             <div class="form-label-group"> -->
+<%--               <form:input type="date" id="birthdayString" class="form-control"  --%>
+<%--                required="required" path="birthdayString"/> --%>
+<!--               <label for="birthdayString">員工生日</label> -->
+<!--             </div> -->
+<!--           </div> -->
+          
+          <div class="form-group">
+            <div class="form-label-group">
+              <form:input type="text" id="salary" class="form-control" 
+              value="${eb.salary}" required="required" path="salary"/>
+              <label for="salary">薪水</label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="form-label-group">
+              <form:select  id="permission" class="form-control" 
+               required="required" path="permission">
+              
+               <form:option value="0" >無權限</form:option>
+				<form:option value="1" selected="selected">一般員工</form:option>
+				<form:option value="2" >影城經理</form:option>
+				<form:option value="3" >主管</form:option>
+               </form:select>
+               
+
+            </div>
+          </div>
+           <div class="form-group">
+            <div class="form-label-group">
+              <form:select  id="available" class="form-control" 
+               required="required" path="available">
+             
+               <form:option value="0" >已離職</form:option>
+				<form:option value="1" selected="selected">受雇中</form:option>			
+               </form:select>
+          </div>
+          </div>
+          
+           <div class="form-group">
+            <div class="form-label-group">
+              <form:input type="file" id="uploadImage" class="form-control" 
+              value="" path="uploadImage"/>
+              <label for="uploadImage">上傳照片</label>
+            </div>
+          </div>
+          
+          
+          <button type="submit" class="btn btn-primary">送出</button>
+          <button type="reset" class="btn btn-primary">重填</button><br><hr>
+          <button type="button" id="oneSet"  class="btn btn-success">一鍵填入</button>
+
+       
+				
+        </form:form>
+       </div>
+
+      </div>
+    </div>
+        
+       
 
       </div>
       <!-- /.container-fluid -->
@@ -267,3 +294,5 @@
 </body>
 
 </html>
+
+

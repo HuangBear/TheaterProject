@@ -38,7 +38,7 @@ public class OrderController {
 	MovieService mServ;
 
 	String pac = "order/";
-
+	
 	@RequestMapping("/allProducts")
 	public String showAllProduct(Model model) {
 		model.addAttribute("products", pServ.getAll());
