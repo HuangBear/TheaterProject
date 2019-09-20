@@ -13,10 +13,6 @@
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/main.css" />
-<link rel="stylesheet" 
-	href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" />
-
-
 <noscript>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
@@ -24,18 +20,36 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous">  
+    </script>
+
+<script type="text/javascript">
+	$(document).ready(function() {         
+		$("#notdone").click(function() { 
+		$("#list01").show(); 
+		$("#list02").hide();
+		$("#detail01").hide();
+		$("#detail02").hide();
+		});
+
+		$("#done").click(function() { 
+		$("#list02").show(); 
+		$("#list01").hide();
+		$("#detail01").hide();
+		$("#detail02").hide();
+		});
+      
+		$("#notdoneli01").click(function() { 
+		$("#detail01").show(); 
+		$("#detail02").hide();      
+		});
+
+		$("#doneli01").click(function() { 
+		$("#detail02").show(); 
+		$("#detail01").hide();      
+		});
+	});
+	
 </script>
-
-
-
-<script>
-  		$( function() {
-    	$( "#accordion" ).accordion({
-      		collapsible: true
-   		});
-  		} );
-</script>
-
 
 <style>
 	.tbst{border:0;
@@ -115,26 +129,47 @@
 						<footer> <a href="#" class="button">會員資訊</a>
 						</footer> </section>
 					</div>
-					
-					
-					
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 						<article id="main">
-					<h3><a href="#">訂單清單</a></h3>					
-					
-					<div id="accordion">
-  						<h3><td>01 - </td><td>2019/09/19</td><td>牠 第二章</td></tr></h3>
-  						<div>
-    						<table class="tbst">
+						
+						<div id="list01" style="display:none">
+							<table>
+								<thead>
+									<tr><th>編號</th><th>日期</th><th>電影</th></tr>
+								</thead>
+								<tbody>
+									<a href="#"><tr id="notdoneli01"><td>01</td><td>2019/09/19</td><td>牠 第二章</td></tr></a>					
+								</tbody>
+							</table>					
+						</div>						
+						
+						<div id="list02" style="display:none">
+							<table>
+								<thead>
+									<tr><th>編號</th><th>日期</th><th>電影</th></tr>
+								</thead>
+								<tbody>
+									<a href="#"><tr id="doneli01"><td>01</td><td>2019/09/19</td><td>牠 第二章</td></tr></a>
+									<tr><td>02</td><td>2019/08/31</td><td>航海王：奪寶爭霸戰</td></tr>
+									<tr><td>03</td><td>2019/07/27</td><td>全面攻佔 3：天使救援</td></tr>							
+								</tbody>
+							</table>					
+						</div>
+						
+						
+						<div id="detail01" style="display:none">
+						<section> 
+							<header><h3>詳細內容</h3></header>
+							<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
 									<tr>
 										<th style="width:200px;">訂單狀態：</th>
-										<th style="width:800px;">訂單內容：</th>
+										<th>訂單內容：</th>
 									</tr>
 								</thead>																
 								<tbody style="padding:10px;">
 									<tr>
-										<td style="text-align:center;">											
+										<td style="width:200px; text-align:center;">											
 											<p>未取票</p>
 										</td>
 										<td>
@@ -150,20 +185,23 @@
 									</tr>
 								</tbody>
 							</table>
-  						</div>
-  						<h3><td>02 - </td><td>2019/09/19</td><td>第九分局</td></tr></h3>
-  						<div>
-    						<table class="tbst">
+						</section>
+						</div>
+						
+						<div id="detail02" style="display:none">
+						<section> 
+							<header><h3>詳細內容</h3></header>
+							<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
 									<tr>
 										<th style="width:200px;">訂單狀態：</th>
-										<th style="width:800px;">訂單內容：</th>
+										<th>訂單內容：</th>
 									</tr>
 								</thead>																
 								<tbody style="padding:10px;">
 									<tr>
-										<td style="text-align:center;">											
-											<p>未取票</p>
+										<td style="width:200px; text-align:center;">											
+											<p>已取票</p>
 										</td>
 										<td>
 											<P>取票序號：</P>
@@ -178,64 +216,8 @@
 									</tr>
 								</tbody>
 							</table>
-  						</div>
-  						<h3><tr><td>03 - </td><td>2019/08/31</td><td>航海王：奪寶爭霸戰</td></tr></h3>
- 						<div>
-    						<table class="tbst">
-								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
-									<tr>
-										<th style="width:200px;">訂單狀態：</th>
-										<th style="width:800px;">訂單內容：</th>
-									</tr>
-								</thead>																
-								<tbody style="padding:10px;">
-									<tr>
-										<td style="text-align:center;">											
-											<p>未取票</p>
-										</td>
-										<td>
-											<P>取票序號：</P>
-											<p>訂票時間：</p>
-											<p>影廳：</p>
-											<p>電影：</p>
-											<p>場次：</p>
-											<p>餐點：</p>
-											<p>數量：</p>
-											<p>總計金額：</p>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-  						</div>
-  						<h3><tr><td>04 - </td><td>2019/07/27</td><td>全面攻佔 3：天使救援</td></tr></h3>
-  						<div>
-    						<table class="tbst">
-								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
-									<tr>
-										<th style="width:200px;">訂單狀態：</th>
-										<th style="width:800px;">訂單內容：</th>
-									</tr>
-								</thead>																
-								<tbody style="padding:10px;">
-									<tr>
-										<td style="text-align:center;">											
-											<p>未取票</p>
-										</td>
-										<td>
-											<P>取票序號：</P>
-											<p>訂票時間：</p>
-											<p>影廳：</p>
-											<p>電影：</p>
-											<p>場次：</p>
-											<p>餐點：</p>
-											<p>數量：</p>
-											<p>總計金額：</p>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-  						</div>
-					</div>
+						</section>
+						</div>
 						 
 						<section> 
 						<header><h3>Augue euismod feugiat tempus</h3></header>
@@ -318,7 +300,5 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 </html>

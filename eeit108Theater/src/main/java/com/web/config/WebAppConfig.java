@@ -45,7 +45,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
-		registry.addResourceHandler("/assets/css/**").addResourceLocations("/WEB-INF/resources/assets/css/");
+		registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/resources/assets/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
 		registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/resources/fonts/");
@@ -53,6 +53,17 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/admin/**").addResourceLocations("/WEB-INF/views/admin/");
 	
 	}
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry)
+//	{
+//		registry.addResourceHandler("/assets/css/**").addResourceLocations("/WEB-INF/resources/assets/css/");
+//		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
+//		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
+//		registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/resources/fonts/");
+//		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
+//		registry.addResourceHandler("/admin/**").addResourceLocations("/WEB-INF/views/admin/");
+//	
+//	}
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/EmpLogin").setViewName("EmpLogin");

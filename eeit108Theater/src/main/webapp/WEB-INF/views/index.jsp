@@ -13,11 +13,13 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/main.css" />
+	href="${pageContext.request.contextPath}/assets/css/main.css" />	
+
 <noscript>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
+
 <style>
 	.t1{width:600 ; height:480px ; text-align:center}
 	.tr{width:300 ; height:240px ; text-align:center}
@@ -135,18 +137,6 @@ input::placeholder{
 	
 </style>
 
-	<script>
-		function ShowL(){
-　			document.getElementById("register").style.display = "none";
-			document.getElementById("login").style.display = "block";
-		}
-
-		function ShowR(){
-　			document.getElementById("register").style.display = "block";
-			document.getElementById("login").style.display = "none";
-		}
-
-	</script>
 </head>
 
 <body class="homepage is-preload">
@@ -301,74 +291,6 @@ input::placeholder{
 		</div>
 		</section>
 		
-		<div class="button1">
-			<a href="#"><img src="images/frontend/716ogo.png" alt=""   class="img"/></a>
-				<div class="center">
-					<button class="button" id="blogin" onclick="ShowL()">登入</button>
-					<button class="button2" id="rlogin" onclick="ShowR()">註冊</button>
-				</div>
-			<div class="rigth1">
-				<div id="login">
-					<form method='POST' modelAttribute="managerBean"
-						enctype="multipart/form-data">
-						<h1  class="h11">會員登入</h1>
-						<dl>
-						<dd>
-							<input id="account" path="account" class="text" type="text"
-								placeholder="請輸入管理者帳號" tabindex="1" autocomplete="off"
-								maxlength="50"  />     <!-- autofocus="autofocus" -->
-						</dl>
-						<dl>
-						<dd>
-							<input id="password" path="password" class="text"
-								type="password" placeholder="請輸入密碼 ( 英文大小寫有差別 )" tabindex="2"
-								autocomplete="off" maxlength="50" />
-						</dl>
-						<dl>
-						<dd>
-							<a><input id="submit" type="submit" value="登入"
-								style="font-size: 20px; width: 450px; height: 60px;"></a>
-						</dd>
-						</dl>
-							<input id="type" name="form" type='hidden' value='true' />
-					</form>
-				</div>
-
-<!-- 				<div id="register" style="display: none"> -->
-<%-- 					<form method='POST' modelAttribute="managerBean" --%>
-<%-- 						enctype="multipart/form-data"> --%>
-<!-- 						<h1 class="h11">會員註冊</h1> -->
-<!-- 						<dl> -->
-<!-- 						<dd> -->
-<!-- 							<input id="account" path="account" class="text" type="text" -->
-<!-- 								placeholder="請輸入管理者帳號" tabindex="1" autocomplete="off" -->
-<!-- 								maxlength="50"  />     autofocus="autofocus" -->
-<!-- 						</dl> -->
-<!-- 						<dl> -->
-<!-- 						<dd> -->
-<!-- 							<input id="password" path="password" class="text" -->
-<!-- 								type="password" placeholder="請輸入密碼 ( 英文大小寫有差別 )" tabindex="2" -->
-<!-- 								autocomplete="off" maxlength="50" /> -->
-<!-- 						</dl> -->
-<!-- 						<dl> -->
-<!-- 						<dd> -->
-<!-- 							<input id="name" path="name" class="text" -->
-<!-- 								type="text" placeholder="請輸入名字" tabindex="2" -->
-<!-- 								autocomplete="off" maxlength="50" /> -->
-<!-- 						</dl> -->
-<!-- 						<dl> -->
-<!-- 						<dd> -->
-<!-- 							<a><input id="submit" type="submit" value="登入" -->
-<!-- 								style="font-size: 20px; width: 450px; height: 60px;"></a> -->
-<!-- 						</dd> -->
-<!-- 						</dl> -->
-<!-- 							<input id="type" name="form" type='hidden' value='true' /> -->
-<%-- 					</form> --%>
-<!-- 				</div> -->
-			
-			</div>
-		</div>	
-		
 		<center>
 		<div style="margin:auto ; display:inline-block;">
 			<div style="border:1px solid black; margin:auto ;display:inline-block;">
@@ -403,8 +325,7 @@ input::placeholder{
 				<button class="" id="" onclick="ShowR()">查詢座位</button>
 			
 			</div>
-			
-			
+						
 			<div style="border:1px solid black; margin:auto ; display:inline-block;">
 				<label style="display:inline-block"><h4>最新公告<a href="news">/MORE</a></h4></label>
 				<br>
@@ -436,9 +357,6 @@ input::placeholder{
 		</center>
 
 		<hr>
-
-
-
 
 
 <!-- 		<table class="t1"> -->
