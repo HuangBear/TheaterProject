@@ -1847,28 +1847,28 @@ header .icon.circled {
 
 /* Header */
 
-/* 	首頁header */
+/* 	擐�eader */
 #header {
 	background-image: url("../../images/header.jpg");
 	background-size: 100%;
 	background-position: center center;
 	background-attachment: fixed;
 	/* 		margin-top:-20px; */
-	/* 		微調背景圖 */
+	/* 		敺株矽����� */
 	padding: 7.5em 0 2em 0;
-	/* 		其他頁面的頂端圖高度以及index的起始 */
+	/* 		�隞����垢���漲隞亙�ndex��絲憪� */
 	position: relative;
 	color: #fff;
 	text-align: center;
 	cursor: default;
 }
 
-/* 	非首頁header */
+/* 	����eader */
 #header1 {
 	/* 		margin-top:-20px; */
-	/* 		微調背景圖 */
+	/* 		敺株矽����� */
 	padding: 3em 0 2em 0;
-	/* 		其他頁面的頂端圖高度以及index的起始 */
+	/* 		�隞����垢���漲隞亙�ndex��絲憪� */
 	position: relative;
 	color: #fff;
 	text-align: center;
@@ -1991,18 +1991,18 @@ body.homepage.is-preload #header:after {
 	background: rgba(133, 113, 113, 0.9);
 	/* 		padding: 1.5em 0 1.5em 0; */
 	margin: 0;
-	/* 		導航條高度 */
+	/* 		撠璇�漲 */
 	z-index: 10;
 	overflow: hidden;
 	/* 		border: solid 1px red; */
 }
 
-#nav>ul {   /* header主要功能bar */
+#nav>ul {   /* header銝餉��bar */
 	line-height: 0px;
 	position: relative;
 	display: inline-block;
 	margin-top: 0.5em;
-	/* 			導航條上移  原始無*/
+	/* 			撠璇�宏  ���*/
 	/* 			width:105%; */
 	/* 			height: 15px; */
 	border: 0;
@@ -2015,7 +2015,7 @@ body.homepage.is-preload #header:after {
 }
 
 #nav>ul:before, #nav>ul:after {
-	/* 			ul:before ul:after ---是指左右*/
+	/* 			ul:before ul:after ---���椰�*/
 	content: '';
 	display: block;
 	width: 300%;
@@ -2421,7 +2421,7 @@ body.homepage.is-preload #header:after {
 	#header {
 		background-attachment: scroll;
 		background-size: cover;
-		/* 				調整手機板*/
+		/* 				隤踵���*/
 	}
 	#header .inner {
 		padding-left: 2em;

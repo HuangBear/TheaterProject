@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.dao.MemberDao;
 import com.web.entity.MemberBean;
+
 import com.web.service.MemberService;
 
 @Transactional
@@ -21,19 +22,33 @@ public class MemberServiceImpl implements MemberService{
 	MemberDao memberDao;
 	
 	@Override
-	public void insertMember(MemberBean empBean) {
+	public void insertMember(MemberBean memBean) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateMember(MemberBean empBean) {
-		// TODO Auto-generated method stub
+	public void updateMember(MemberBean memBean) {
+		MemberBean oldMemBean=memberDao.getMemberByNo(memBean.getNo());
+		oldMemBean.setName(memBean.getName());
+		oldMemBean.setMemberId(memBean.getMemberId());
+		oldMemBean.setEmail(memBean.getEmail());
+		oldMemBean.setPhoneNum(memBean.getPhoneNum());
+		oldMemBean.setPassword(memBean.getPassword());
+		oldMemBean.setGender(memBean.getGender());
+	//	oldMemBean.setAvailable(memBean.getAvailable());
+		
+		if(memBean.getMemberImage()!=null) {
+		oldMemBean.setMemberImage(memBean.getMemberImage());
+		oldMemBean.setImageFileName(memBean.getImageFileName());
+		}
+	//	oldMemBean.setPermission(memBean.getPermission());
+		memberDao.updateMember(oldMemBean);
 		
 	}
 
 	@Override
-	public void downGradeMember(MemberBean empBean) {
+	public void downGradeMember(MemberBean memBean) {
 		// TODO Auto-generated method stub
 		
 	}

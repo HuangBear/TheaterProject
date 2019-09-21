@@ -1,19 +1,37 @@
 package com.web.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 import com.web.service.MemberService;
 
@@ -31,6 +49,7 @@ public class MemberController {
 		model.addAttribute("memberBean", memberBean);
 		return "memberservice";
 	}
+	
 
 	@RequestMapping(method = RequestMethod.POST, value = "memberAdd")
 	public String AddMemberPost(@ModelAttribute("memberBean") MemberBean memberBean, Model model,
@@ -58,7 +77,59 @@ public class MemberController {
 			return "redirect:/memberservice";
 		}
 	}
+	@RequestMapping(method = RequestMethod.GET, value = "memberinfo")
+	public String MemberInfoPage(Model model) {
+		MemberBean memberBean = new MemberBean();
+		model.addAttribute("memberBean", memberBean);
+		return "memberinfo";
+	}
+	
+	@SuppressWarnings("unused")
+	@RequestMapping(method = RequestMethod.POST, value = "memberUpdateX")
+	public String editMemPost(@ModelAttribute("memberBean") MemberBean memberBean, Model model,
+			RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session
+			,BindingResult result) {
+		if(result.hasErrors()) {
+            System.out.println("Result Error Occured"+result.getAllErrors());
+         }
+		Integer pk=memberBean.getNo();
+		if (memberBean.getUploadImage() != null) {
+		MultipartFile memImage=memberBean.getUploadImage();
+		String originFileName=memImage.getOriginalFilename();
 
+		
+		if (memImage != null && !memImage.isEmpty() ) {
+			try {
+				String ext = originFileName.substring(originFileName.lastIndexOf("."));
+				String rootDirectory = context.getRealPath("/");
+				byte[] b = memImage.getBytes();
+				Blob blob = new SerialBlob(b);
+				memberBean.setImageFileName(originFileName);
+				memberBean.setMemberImage(blob);
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+			}
+		}}
+		
+		if (true) {
+			//MemberBean=service.findByPrimaryKey(pk);
+			redirectAttributes.addFlashAttribute("name", memberBean.getName());
+			redirectAttributes.addFlashAttribute("welcome", " 更新成功");
+			
+			//MemberBean.setNo(pk);
+			service.updateMember(memberBean);
+			MemberBean MemberBeanNew=service.findMemberByPrimaryKey(pk);
+			session.setAttribute("LoginOK", MemberBeanNew);
+			return "redirect:/memberinfo";
+		} 
+		else {
+			redirectAttributes.addFlashAttribute("error", "失敗,資料缺失");
+			return "redirect:/memberinfo";
+		}
+	}
+	
+//會員登入
 	@RequestMapping(value = "memberLogin", method = RequestMethod.POST)
 	public String MemberLoginProcess(@ModelAttribute("memberBean") MemberBean memberBean, HttpServletRequest request,
 			RedirectAttributes redirectAttributes, Model model, HttpSession session) {
@@ -71,6 +142,7 @@ public class MemberController {
 			session.setAttribute("memberName", LoginMB.getName());
 			session.setAttribute("memberId", LoginMB.getMemberId());
 			session.setAttribute("LoginOK", LoginMB);
+			
 			redirectAttributes.addFlashAttribute("name", memberBean.getName());
 			redirectAttributes.addFlashAttribute("welcome", "登入成功");
 			return "redirect:/";
@@ -79,4 +151,65 @@ public class MemberController {
 		return "redirect:/memberservice";
 	}
 
+	
+	@RequestMapping("memberLogout")
+	public String memLogout(HttpServletRequest request,RedirectAttributes redirectAttributes) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		redirectAttributes.addFlashAttribute("logout", " 登出成功");
+		
+		return "redirect:/memberservice";
+	}
+	
+	@RequestMapping(value = "/getMemberPicture/{pk}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getMemberPicture(HttpServletResponse resp, @PathVariable Integer pk) {
+	    String filePath = "/resources/images/NoImage.jpg";
+	    byte[] media = null;
+	    HttpHeaders headers = new HttpHeaders();
+	    String filename = "";
+	    int len = 0;
+	    MemberBean bean = service.findMemberByPrimaryKey(pk);
+	    if (bean != null) {
+	        Blob blob = bean.getMemberImage();
+	        filename = bean.getImageFileName();
+	        if (blob != null) {
+	            try {
+	                len = (int) blob.length();
+	                media = blob.getBytes(1, len); //  blob.getBytes(1, len): 是 1 開頭。Jdbc相關的類別都是1 開頭。
+	            } catch (SQLException e) {
+	                throw new RuntimeException("ProductController的getPicture()發生SQLException: " + e.getMessage());
+	            }
+	        } else {
+	            media = toByteArray(filePath);    
+	            filename = filePath;            
+	        }
+	    } else {
+	    	media = toByteArray(filePath);    
+	        filename = filePath;            
+	    }
+	       headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+	       String mimeType = context.getMimeType(filename);
+	    MediaType mediaType = MediaType.valueOf(mimeType);
+	    System.out.println("mediaType =" + mediaType);
+	    headers.setContentType(mediaType);
+	    ResponseEntity<byte[]> responseEntity = 
+	                new ResponseEntity<>(media, headers, HttpStatus.OK);
+	    return responseEntity;
+	}
+	private byte[] toByteArray(String filepath) {
+	    byte[] b = null;
+	    String realPath = context.getRealPath(filepath);
+	    try {
+	          File file = new File(realPath);
+	          long size = file.length();
+	          b = new byte[(int)size];
+	          InputStream fis = context.getResourceAsStream(filepath);
+	          fis.read(b);
+	    } catch (FileNotFoundException e) {
+	          e.printStackTrace();
+	    } catch (IOException e) {
+	          e.printStackTrace();
+	    }
+	    return b;
+	}
 }
