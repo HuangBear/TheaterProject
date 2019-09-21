@@ -17,8 +17,8 @@ public class BulletinServiceImpl {
 	BulletinDao dao;
 
 	@Transactional
-	public List <List<BulletinBean>> getStatsBulletin() {
-		
+	public List<List<BulletinBean>> getStatsBulletin() {
+
 		List<BulletinBean> getExistenceBulletin = dao.getExistenceBulletin();
 		switchImg(getExistenceBulletin);
 
@@ -28,15 +28,14 @@ public class BulletinServiceImpl {
 		List<BulletinBean> getDeadBulletin = dao.getDeadBulletin();
 		switchImg(getDeadBulletin);
 
-		List <List<BulletinBean>> statusBulletin = new ArrayList<>();
-		 statusBulletin.add(getExistenceBulletin);
-		 statusBulletin.add(getExpiredBulletin);
-		 statusBulletin.add(getDeadBulletin);
-		 
+		List<List<BulletinBean>> statusBulletin = new ArrayList<>();
+		statusBulletin.add(getExistenceBulletin);
+		statusBulletin.add(getExpiredBulletin);
+		statusBulletin.add(getDeadBulletin);
+
 		return statusBulletin;
 	}
 
-	
 	@Transactional
 	public void insertNewBulletin(BulletinBean bb) {
 		dao.insertBulletin(bb);
@@ -53,13 +52,13 @@ public class BulletinServiceImpl {
 		int deleteReturn = dao.updateBulletindByBortingId(id, bo);
 		return deleteReturn;
 	}
-	
+
 	@Transactional
 	public List<BulletinBean> getSameBulletinByBortingId(Integer no) {
-		 List<BulletinBean> sameBulletinBeans = dao.getSameBulletinByBortingId(no);
+		List<BulletinBean> sameBulletinBeans = dao.getSameBulletinByBortingId(no);
+		switchImg(sameBulletinBeans);
 		return sameBulletinBeans;
 	}
-
 
 // 準備程式
 	public void switchImg(List<BulletinBean> bb) {
@@ -85,8 +84,5 @@ public class BulletinServiceImpl {
 			}
 		}
 	}
-	
-	
-	
-	
+
 }
