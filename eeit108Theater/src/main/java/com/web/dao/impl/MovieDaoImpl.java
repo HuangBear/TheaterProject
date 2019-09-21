@@ -38,15 +38,16 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
 	@Override
-	public int updateMovie(MovieBean movie) {
-		// TODO Auto-generated method stub
-		return 0;
+	public MovieBean updateMovie(MovieBean movieBean) {
+		Session session = factory.getCurrentSession();
+		session.update(movieBean);
+		return movieBean;
 	}
 
 	@Override
-	public MovieBean getMovieByNo(Integer movieNo) {
+	public MovieBean getMovieByNo(Integer no) {
 		Session session = factory.getCurrentSession();
-		MovieBean mb = session.get(MovieBean.class, movieNo);
+		MovieBean mb = session.get(MovieBean.class, no);
 		return mb;
 				
 	}
