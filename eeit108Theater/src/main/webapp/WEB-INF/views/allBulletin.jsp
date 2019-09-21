@@ -192,7 +192,7 @@
 									<input type="button" value="返回" name="back" class="unstat_unavai_cont_${sb.no}">
 								</div>
 							</div>
-						
+
 							<!-- 刪除 復原 -->
 							<div class="unstat_unavai_dele_${sb.no} add-model hide">
 								<h4>對"${sb.title}"復原?</h4>
@@ -316,71 +316,80 @@
 
 			</div>
 
-
-
-
 		</div>
-		<!-- Footer -->
-		<jsp:include page="footer.jsp" />
-
-		<!-- Scripts -->
 
 
-		<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/jquery.dropotron.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/jquery.scrolly.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/jquery.scrollex.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/browser.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+	</div>
+	<!-- Footer -->
+	<jsp:include page="footer.jsp" />
+
+	<!-- Scripts -->
 
 
-		<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
-		<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="jqueryui/style.css">
-		<script>
-			$(function() {
-				$("#accordion").accordion();
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrolly.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrollex.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/browser.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+
+
+	<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+	<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="jqueryui/style.css">
+	<script>
+	$( function() {
+	    $( "#accordion" ).accordion({
+	      heightStyle: "content"
+	    });
+	  } );
+
+		$(function() {
+			$("[name='add_host']").click(function() {
+				var str = $(this).attr("id");
+				var targete = $("." + str);
+				$(targete).removeClass('hide');
 			});
+		});
 
-			$(function() {
-				$("[name='add_host']").click(function() {
-					var str = $(this).attr("id");
-					var targete = $("." + str);
-					$(targete).removeClass('hide');
+		$(function() {
+			$("[name|=back]").click(function() {
+				var str = $(this).attr("class");
+				var targete = $("." + str);
+				$(targete).addClass('hide');
+			});
+		});
+
+		$(function() {
+			$("[name|=change]").click(function() {
+				var str = $(this).attr("name");
+				var targete = $("." + str);
+				$(targete).addClass('hide');
+			});
+		});
+
+		$(function()  {
+			$("img[name=add_host]").mouseover(	function() {
+				var str = $(this).attr("src");
+				var name = str.substring(str.lastIndexOf("/") + 1);
+				var file_name = name.substr(0,name.length - 4);
+				var attachment_name = str.substring(str.lastIndexOf(".") + 1);
+				var new_str = "${pageContext.request.contextPath}/images/icons/backstage/bulletin/"+ file_name+ "_."+ attachment_name;
+				$(this).attr("src", new_str);
+				});
+			$("img[name=add_host]").mouseout(function() {
+				var str = $(this).attr("src");
+				var name = str.substring(str.lastIndexOf("/") + 1);
+				var file_name = name.substr(0,name.length - 5);
+				var attachment_name = str.substring(str.lastIndexOf(".") + 1);
+				var new_str = "${pageContext.request.contextPath}/images/icons/backstage/bulletin/"+ file_name+ "."+ attachment_name;
+				$(this).attr("src", new_str);
 				});
 			});
-
-			$(function() {
-				$("[name|=back]").click(function() {
-					var str = $(this).attr("class");
-					var targete = $("." + str);
-					$(targete).addClass('hide');
-				});
-			});
-
-			$(function() {
-				$("[name|=change]").click(function() {
-					var str = $(this).attr("name");
-					var targete = $("." + str);
-					$(targete).addClass('hide');
-				});
-			});
-
-			// 			$(function () {
-			// 				$("img[name=add_host]").mouseover
-			// 				{
-			// 				}
-			// 			});
-
-			// 			$(function () {
-			// 				$("[name='change_back']").click(function () {
-			// 					$(this).addClass('hide');
-			// 				});
-			// 			});
-		</script>
+	</script>
 </body>
 
 </html>
