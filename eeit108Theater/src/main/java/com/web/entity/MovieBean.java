@@ -65,6 +65,13 @@ public class MovieBean implements Serializable{
 	public void setUploadImage(MultipartFile uploadImage) {
 		this.uploadImage = uploadImage;
 	}
+	public MovieBean() {
+		super();
+	}
+	public MovieBean(Integer no) {
+		super();
+		this.no = no;
+	}
 	
 	@OneToMany(mappedBy = "movie")
 	private Set<TimeTableBean> times;// B, O2M

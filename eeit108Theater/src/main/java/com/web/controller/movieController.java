@@ -55,6 +55,14 @@ public class movieController {
 		model.addAttribute("releasedMovies", releasedMovie);
 		return "movie";
 	}
+	
+	@RequestMapping("/MoviesForum")
+	public String MoviesForumList(Model model) {
+		List<MovieBean> moviesForumList = service.getAllMovies();
+		model.addAttribute("title", "討論版");
+		model.addAttribute("Movies", moviesForumList);
+		return "MoviesForum";
+	}
 
 	@RequestMapping("/movieTimes_{no}")
 	public String movieTimes(Model model, @PathVariable Integer no) {

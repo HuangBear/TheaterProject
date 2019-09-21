@@ -15,14 +15,14 @@ fieldset {
 	margin: auto;
 }
 </style>
-<title>addArticle</title>
+<title>editArticle</title>
 <link rel='stylesheet' href='${pageContext.request.contextPath}/css/styles.css'  type="text/css" />
 </head>
 <body>
 	<section>
 		<div class="container">
 			<h1 style="text-align: center">
-			    <a>Add Article</a>
+			    <a>edit Article</a>
 			</h1>
 		</div>
 	</section>
@@ -32,7 +32,12 @@ fieldset {
 		<form:form method='POST' modelAttribute="ArticleBean" class='form-horizontal'
 		                  		 enctype="multipart/form-data">
 			<fieldset>
-			
+			    <div class="form-group">
+					<div class="col-lg-10">
+						<form:input id="noString" readonly="true" path="noString" value='${Article.noString}' type='hidden' class='form:input-large'/>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-4" for='title'>
 					    <a>Title</a>
@@ -42,14 +47,14 @@ fieldset {
 					</div>
 				</div>
 
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class="control-label col-lg-2 col-lg-4" for='author'> -->
-<!-- 						<a>Author</a> -->
-<!-- 					</label> -->
-<!-- 					<div class="col-lg-10"> -->
-<%-- 						 <form:input id="author" path="author" type='text' class='form:input-large' /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
+				<div class="form-group">
+					<label class="control-label col-lg-2 col-lg-4" for='postTimeString'>
+					    <a>PostTime</a>
+				    </label>
+					<div class="col-lg-10">
+						<form:input id="postTimeString" readonly="true" path="postTimeString" value='${Article.postTimeString}' type='text' class='form:input-large' />
+					</div>
+				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-4' for="tag">
@@ -71,6 +76,30 @@ fieldset {
 					</label>
 					<div class="col-lg-10">
 						<form:textarea id="content" path="content" value='${Article.content}' cols="80" rows="20" class='form:input-large' />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-10">
+						<form:input id="likeCountString" readonly="true" path="likeCountString" value='${Article.likeCountString}' type='hidden' class='form:input-large'/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-10">
+						<form:input id="dislikeCountString" readonly="true" path="dislikeCountString" value='${Article.dislikeCountString}' type='hidden' class='form:input-large'/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-10">
+						<form:input id="authorString" readonly="true" path="authorString" value='${Article.authorString}' type='hidden' class='form:input-large'/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-10">
+						<form:input id="movieString" readonly="true" path="movieString" value='${Article.movieString}' type='hidden' class='form:input-large'/>
 					</div>
 				</div>
 

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.web.entity.ArticleBean;
+import com.web.entity.EmployeeBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.entity.MemberBean;
@@ -59,4 +60,9 @@ public interface ArticleDao {
 	void editArticle(ArticleBean article);
 	void updateGp(int no, int newQuantity);
 	void updateBp(int no, int newQuantity);
+
+	MovieBean getMovieByNo(int movieNo);
+
+	List<ArticleBean> getArticlesByMovieNo(int movieNo);
+	
 }
