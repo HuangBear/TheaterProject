@@ -3,16 +3,24 @@ package com.web.dao;
 import java.util.List;
 
 import com.web.entity.BulletinBean;
+import com.web.entity.EmployeeBean;
 
 public interface BulletinDao {
 
+	List<BulletinBean> getExistenceBulletin();
+
+	List<BulletinBean> getExpiredBulletin();
+
+	List<BulletinBean> getDeadBulletin();
+
+	int updateBulletindByBortingId(Integer no, Boolean bo);
+
 	void insertBulletin(BulletinBean bb);
 
-	void deletecBulletin(Integer bullentin_no);
+	EmployeeBean getEmployeeById(Integer employeeId);
 
-	List<BulletinBean> getStatusBulletin();
+	BulletinBean getBulletinById(Integer bulletin_no);
 
-	void updateBulletin(BulletinBean bb);
+	 List<BulletinBean> getSameBulletinByBortingId(Integer no);
 
-	public BulletinBean getBulletinById(Integer bulletin_no);
 }

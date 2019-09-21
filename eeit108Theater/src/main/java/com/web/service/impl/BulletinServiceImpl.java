@@ -1,5 +1,6 @@
 package com.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,35 +17,28 @@ public class BulletinServiceImpl {
 	BulletinDao dao;
 
 	@Transactional
-	public List<BulletinBean> getStatusBulletin() {
-		List<BulletinBean> list = dao.getStatusBulletin();
-		for (BulletinBean bb : list) {
-			Integer discount = bb.getDiscount();
-			switch (discount)
-			{
-			case 1:
-				bb.setImgUrlString("/images/icons/backstage/bulletin/discountP.png");
-				bb.setPay("滿");
-				bb.setFree("送");
-				break;
-			case 2:
-				bb.setImgUrlString("/images/icons/backstage/bulletin/discountT.png");
-				bb.setPay("買");
-				bb.setFree("送");
-				break;
-			default:
-				bb.setImgUrlString("/images/icons/backstage/bulletin/discountN.png");
-				bb.setPay(null);
-				bb.setFree(null);
-				break;
-			}
-		}
-		return list;
+	public List <List<BulletinBean>> getStatsBulletin() {
+		
+		List<BulletinBean> getExistenceBulletin = dao.getExistenceBulletin();
+		switchImg(getExistenceBulletin);
+
+		List<BulletinBean> getExpiredBulletin = dao.getExpiredBulletin();
+		switchImg(getExpiredBulletin);
+
+		List<BulletinBean> getDeadBulletin = dao.getDeadBulletin();
+		switchImg(getDeadBulletin);
+
+		List <List<BulletinBean>> statusBulletin = new ArrayList<>();
+		 statusBulletin.add(getExistenceBulletin);
+		 statusBulletin.add(getExpiredBulletin);
+		 statusBulletin.add(getDeadBulletin);
+		 
+		return statusBulletin;
 	}
 
+	
 	@Transactional
 	public void insertNewBulletin(BulletinBean bb) {
-		bb.setCount(bb.getCount()+1);
 		dao.insertBulletin(bb);
 	}
 
@@ -53,11 +47,46 @@ public class BulletinServiceImpl {
 		BulletinBean bb = dao.getBulletinById(no);
 		return bb;
 	}
+
+	@Transactional
+	public int updateBulletinBeanById(Integer id, Boolean bo) {
+		int deleteReturn = dao.updateBulletindByBortingId(id, bo);
+		return deleteReturn;
+	}
 	
 	@Transactional
-	public BulletinBean updateBulletinBeanById(BulletinBean bb) {
-		 dao.updateBulletin(bb);
-		return bb;
+	public List<BulletinBean> getSameBulletinByBortingId(Integer no) {
+		 List<BulletinBean> sameBulletinBeans = dao.getSameBulletinByBortingId(no);
+		return sameBulletinBeans;
 	}
 
+
+// 準備程式
+	public void switchImg(List<BulletinBean> bb) {
+		for (BulletinBean eb : bb) {
+			Integer discount = eb.getDiscount();
+			switch (discount)
+			{
+			case 1:
+				eb.setImgUrlString("/images/icons/backstage/bulletin/discountP.png");
+				eb.setPay("滿");
+				eb.setFree("送");
+				break;
+			case 2:
+				eb.setImgUrlString("/images/icons/backstage/bulletin/discountT.png");
+				eb.setPay("買");
+				eb.setFree("送");
+				break;
+			default:
+				eb.setImgUrlString("/images/icons/backstage/bulletin/discountN.png");
+				eb.setPay(null);
+				eb.setFree(null);
+				break;
+			}
+		}
+	}
+	
+	
+	
+	
 }

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,6 +24,7 @@ import com.web.entity.OrderBean;
 import com.web.entity.OrderItemBean;
 import com.web.entity.SeatBean;
 import com.web.service.MovieService;
+import com.web.service.OrderService;
 import com.web.service.ProductService;
 
 import ecpay.payment.integration.AllInOne;
@@ -37,8 +37,10 @@ public class OrderController {
 	ProductService pServ;
 	@Autowired
 	MovieService mServ;
+	@Autowired
+	OrderService oServ;
 
-	String pac = "order/";
+	final String pac = "order/";
 
 	@RequestMapping("/allProducts")
 	public String showAllProduct(Model model) {
@@ -113,8 +115,6 @@ public class OrderController {
 			orderList.add(oib);
 		}
 		ob.calTotalPrice();
-		ob.sortOrderItem("ticket", "drink");
-		System.out.println(ob.getOrderItemString());
 		System.out.println(orderList);
 		System.err.println("====orderList END====");
 		return pac + "orderList";
@@ -148,6 +148,9 @@ public class OrderController {
 		System.err.println("====showOrder Start====");
 		String[] seats = req.getParameterValues("seat");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
+		ob.sortOrderItem("ticket", "drink");
+		System.out.println(ob.getOrderItemString());
+		oServ.setSeatToOrder(ob, seats);
 		ob.calTotalPrice();
 		model.addAttribute("orderItems", ob.getOrderItems());
 		model.addAttribute("seats", seats);
@@ -158,74 +161,112 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/pay")
-	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model) {
+	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model, HttpServletRequest req) {
 		System.out.println("type = " + idType);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		ob.setOrderId("");
+		if (idType == 0) { // pay as member
+			MemberBean mb = (MemberBean) session.getAttribute("loginMember");
+			ob.setOwnerId(mb.getMemberId());
+			ob.setOwnerName(req.getParameter("memberName"));
+			ob.setOwnerEmail(req.getParameter("memberEmail"));
+			ob.setOwnerPhone(req.getParameter("memberPhone"));
+		} else { // pay as guest
+			ob.setOwnerId("GUEST");
+			ob.setOwnerName(req.getParameter("guestName"));
+			ob.setOwnerEmail(req.getParameter("guestEmail"));
+			ob.setOwnerPhone(req.getParameter("guestPhone"));
+		}
 		ob.setOrderTime(ts);
-		int obHash = ob.hashCode();		
-		char fst = (char)('A' + (ts.getTime()%26));
-		char sec = (char)('A' + (-obHash % 13));
-		if(obHash > 0) {
-			sec = (char)('N' + (obHash % 13));
+		int obHash = ob.hashCode();
+		char fst = (char) ('A' + (ts.getTime() % 26));
+		char sec = (char) ('A' + (-obHash % 13));
+		if (obHash > 0) {
+			sec = (char) ('N' + (obHash % 13));
 		}
 		String tradeNo = String.valueOf(fst) + String.valueOf(sec) + Math.abs(obHash);
 		ob.setOrderId(tradeNo);
+		
+		//EcPay begin
 		AllInOne all = new AllInOne("");
 		AioCheckOutOneTime obj = new AioCheckOutOneTime();
-		
+
 		obj.setMerchantTradeNo(tradeNo);
 		obj.setMerchantTradeDate(sdf.format(ts));
 		obj.setTotalAmount(String.valueOf(ob.getTotalPrice().intValue()));
 		obj.setTradeDesc("716 Theater Order");
 		obj.setItemName(ob.getOrderItemString());
 		obj.setReturnURL("http://localhost:8080/eeit108Theater/order/receive");
-		//obj.setClientBackURL("http://localhost:8080/eeit108Theater/order/result");
 		obj.setOrderResultURL("http://localhost:8080/eeit108Theater/order/result");
 		obj.setNeedExtraPaidInfo("N");
 		obj.setRedeem("N");
-		
+
 		String form = all.aioCheckOut(obj, null);
+		//EcPay end
 		System.out.println("form =\n" + form);
 		model.addAttribute("ecpayForm", form);
 		return pac + "ecpay";
 	}
-	
+
 	@RequestMapping("/receive")
 	public String receive(HttpServletRequest req) {
 		System.err.println("=====GOT FROM ECPAY=====");
 		Map<String, String[]> map = req.getParameterMap();
-		if(map == null || map.size() == 0) {
+		if (map == null || map.size() == 0) {
 			System.out.println("receive map is empty");
-			return pac+"receive";
+			return pac + "receive";
 		}
 		Set<String> keySet = map.keySet();
-		for(String key : keySet) {
+		for (String key : keySet) {
 			System.out.println(map.get(key));
 		}
 		System.err.println("=====Receive END=====");
-		return pac+"receive";
+		return pac + "receive";
 	}
-	
+
 	@RequestMapping("/result")
-	public String result(HttpServletRequest req) {
-		System.err.println("=====CLIENT BACK=====");
+	public String result(HttpServletRequest req, Model model, HttpSession session) {
+		System.err.println("=====CLIENT BACK From EcPay=====");
 		Map<String, String[]> map = req.getParameterMap();
-		if(map == null || map.size() == 0) {
+
+		if (map == null || map.size() == 0) { // if the parameter map is null or empty -> Fail to get any information
+												// from EcPay
 			System.out.println("result map is empty");
-			return pac+"receive";
+			model.addAttribute("rtnMsg", new String[] { "Result Map is Empty" });
+			System.err.println("!!=====Result Fail=====!!");
+			return pac + "fail";
 		}
-		Set<String> keySet = map.keySet();
-		for(String key : keySet) {
-			System.out.println("==key = " + key+ "===");
-			for(String s :map.get(key)) {
+		Set<String> keySet = map.keySet(); // to show all of parameter sent by EcPay on console
+		for (String key : keySet) {
+			System.out.println("==key:" + key + "===");
+			for (String s : map.get(key)) {
 				System.out.println(s);
 			}
 		}
+
+		// to accomplish the order
+		OrderBean ob = (OrderBean) session.getAttribute("order");
+		if (ob == null) {
+			model.addAttribute("rtnMsg", new String[] { "OOOOOOOOPS, ORDER IS GONE!!!" });
+			System.err.println("!!=====Result Fail=====!!");
+			return pac + "fail";
+		}
+
+		String returnCode = map.get("RtnCode")[0].trim();
+		if (!returnCode.equals("1")) { // if RtnCode != 1 -> the trade failed.
+			System.out.println("RtnCode =" + returnCode);
+			model.addAttribute("rtnMsg", map.get("RtnMsg"));
+			ob.setSeats(null);
+			oServ.saveOrder(ob);
+			System.err.println("!!=====Result Fail=====!!");
+			return pac + "fail";
+		}
+
+		ob.setPaid(true);
+		oServ.saveOrder(ob);
 		System.err.println("=====Result END=====");
-		return pac+"result";
+		return pac + "result";
 	}
 
 	private String getSideBar(int rowCnt) {

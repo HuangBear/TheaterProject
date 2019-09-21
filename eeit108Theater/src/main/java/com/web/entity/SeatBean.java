@@ -73,4 +73,7 @@ public class SeatBean implements Serializable{
 		this.available = available;
 	}
 
+	public String getSeatString() {
+		return this.row + this.column;
+	}
 }

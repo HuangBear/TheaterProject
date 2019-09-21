@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -49,6 +50,8 @@ public class MemberBean implements Serializable{
 	@NotNull
 	private Date registerTime;
 	
+	@Transient
+	private String birthdayString;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_owner_id", referencedColumnName = "memberId")
@@ -147,5 +150,11 @@ public class MemberBean implements Serializable{
 	}
 	public void setAvailable(Boolean available) {
 		this.available = available;
+	}
+	public String getBirthdayString() {
+		return birthdayString;
+	}
+	public void setBirthdayString(String birthdayString) {
+		this.birthdayString = birthdayString;
 	}
 }

@@ -87,7 +87,7 @@ public class SeatDaoImpl implements SeatDao {
 	}
 	
 	@Override
-	public SeatBean getSeat(Integer timeTableId, String row, String column) {
+	public SeatBean getSeat(Integer timeTableId, String row, Integer column) {
 		String hql = "FROM SeatBean s WHERE s.timeTableId = :tid AND s.row = :row and s.column = :col";
 		return (SeatBean) factory.getCurrentSession().createQuery(hql).setParameter("tid", timeTableId).setParameter("row", row).setParameter("col", column).uniqueResult();
 	}

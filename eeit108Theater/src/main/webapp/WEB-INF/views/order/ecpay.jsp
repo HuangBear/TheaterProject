@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<p>CHECK CONSOLE</p>
+	<p>即將跳轉至綠界支付頁面</p>
 	${ecpayForm}
 </body>
 </html>

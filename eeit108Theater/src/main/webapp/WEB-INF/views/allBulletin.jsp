@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 
 <html>
@@ -106,84 +106,106 @@
 						</article>
 
 						<!-- load視窗 -->
-						<div class="${change} add-model hide">
-							<div>${change}</div>
-							<div>
-								<input type="button" value="返回" name="back" class="change">
+						<c:if test="${changeMsg!=null}">
+							<div class="change shade">
+								<div>${changeMsg}</div>
+								<div>
+									<input type="button" value="返回" name="change">
+								</div>
 							</div>
-						</div>
-						<!-- 內文準備區 -->
-						<c:forEach var='sb' items='${statusBulletin}'>
-							<c:if test="${sb.status}">
-								<div class="stat_avai_cont_${sb.no} add-model hide">
-									<div>${sb.context}
-										<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
-									</div>
-									<div>
-										<input type="button" value="返回" name="back" class="stat_avai_cont_${sb.no}">
-									</div>
+						</c:if>
+						<!--進行中 -->
+						<c:forEach var='sb' items='${statusBulletin[0]}'>
+							<!-- 進行中內文 -->
+							<div class="stat_avai_cont_${sb.no} add-model hide">
+								<div>${sb.context}
+									<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
 								</div>
-							</c:if>
-							<c:if test="${!sb.status}">
-								<div class="unstat_avai_cont_${sb.no} add-model hide">
-									<div>${sb.context}
-										<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
-									</div>
-									<div>
-										<input type="button" value="返回" name="back" class="unstat_avai_cont_${sb.no}">
-									</div>
+								<div>
+									<input type="button" value="返回" name="back" class="stat_avai_cont_${sb.no}">
 								</div>
-							</c:if>
-							<c:if test="${!sb.available}">
-								<div class="unstat_unavai_cont_${sb.no} add-model hide">
-									<div>${sb.context}
-										<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
-									</div>
-									<div>
-										<input type="button" value="返回" name="back" class="unstat_unavai_cont_${sb.no}">
-									</div>
+							</div>
+							<!-- 進行中修改 -->
+							<div class="stat_avai_edit_${sb.no} add-model hide">
+								<h4>對"${sb.title}""編輯?</h4>
+								<div>
+									<input type="button" value="返回" name="back" class="stat_avai_edit_${sb.no}">
 								</div>
-							</c:if>
+								<div>
+									<input type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/allBulletin/${sb.no}'">
+								</div>
+							</div>
+							<!-- 進行中刪除 -->
+							<div class="stat_avai_dele_${sb.no} add-model hide">
+								<h4>對"${sb.title}"刪除?</h4>
+								<div>
+									<input type="button" value="返回" name="back" class="stat_avai_dele_${sb.no}">
+								</div>
+								<div>
+									<input type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/allBulletin/deleteSstatus/${sb.no}'">
+								</div>
+							</div>
 						</c:forEach>
 
-						<!-- 編輯準備區 -->
-						<c:forEach var='sb' items='${statusBulletin}'>
-							<c:if test="${sb.status}">
-								<div class="stat_avai_edit_${sb.no} add-model hide">
-									<div>${sb.context}</div>
-									<div>
-										<input type="button" value="返回" name="back" class="stat_avai_edit_${sb.no}">
-									</div>
-									<div>
-										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'">
-									</div>
+						<!-- 過期區 -->
+						<c:forEach var='sb' items='${statusBulletin[1]}'>
+							<!-- 過期 內文 -->
+							<div class="unstat_avai_cont_${sb.no} add-model hide">
+								<div>${sb.context}
+									<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
 								</div>
-							</c:if>
-							<c:if test="${!sb.status}">
-								<div class="unstat_avai_edit_${sb.no} add-model hide">
-									<div>${sb.context}</div>
-									<div>
-										<input type="button" value="返回" name="back" class="unstat_avai_edit_${sb.no}">
-									</div>
-									<div>
-										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'">
-									</div>
+								<div>
+									<input type="button" value="返回" name="back" class="unstat_avai_cont_${sb.no}">
 								</div>
-							</c:if>
-							<c:if test="${!sb.available}">
-								<div class="unstat_unavai_edit_${sb.no} add-model hide">
-									<div>${sb.context}</div>
-									<div>
-										<input type="button" value="返回" name="back" class="unstat_unavai_edit_${sb.no}">
-									</div>
-									<div>
-										<%-- 										<input type="button" value="確定" onclick="javascript:location.href='allBulletin/${sb.no}'"> --%>
-									</div>
+							</div>
+
+							<!-- 過期 編輯 -->
+							<div class="unstat_avai_edit_${sb.no} add-model hide">
+								<h4>對"${sb.title}""編輯?</h4>
+								<div>
+									<input type="button" value="返回" name="back" class="unstat_avai_edit_${sb.no}">
 								</div>
-							</c:if>
+								<div>
+									<input type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/allBulletin/${sb.no}'">
+								</div>
+							</div>
+
+							<!-- 過期 刪除 -->
+							<div class="unstat_avai_dele_${sb.no} add-model hide">
+								<h4>對"${sb.title}"刪除?</h4>
+								<div>
+									<input type="button" value="返回" name="back" class="unstat_avai_dele_${sb.no}">
+								</div>
+								<div>
+									<input type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/allBulletin/deleteUnSstatus/${sb.no}'">
+								</div>
+							</div>
 						</c:forEach>
 
-						<!-- 刪除準備區 -->
+						<!-- 刪除 -->
+						<c:forEach var='sb' items='${statusBulletin[2]}'>
+							<div class="unstat_unavai_cont_${sb.no} add-model hide">
+								<div>${sb.context}
+									<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
+								</div>
+								<div>
+									<input type="button" value="返回" name="back" class="unstat_unavai_cont_${sb.no}">
+								</div>
+							</div>
+						
+							<!-- 刪除 復原 -->
+							<div class="unstat_unavai_dele_${sb.no} add-model hide">
+								<h4>對"${sb.title}"復原?</h4>
+								<div>
+									<input type="button" value="返回" name="back" class="unstat_unavai_dele_${sb.no}">
+								</div>
+								<div>
+									<input type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/allBulletin/restore/${sb.no}'">
+								</div>
+							</div>
+						</c:forEach>
+
+
 
 						<div id="accordion">
 							<h3>進行中</h3>
@@ -200,9 +222,9 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var='sb' items='${statusBulletin}'>
+										<c:forEach var='sb' items='${statusBulletin[0]}'>
 											<tr>
-												<c:if test="${sb.status}">
+												<c:if test="${ sb.available}">
 													<td>${sb.no}</td>
 													<td>${sb.title}</td>
 													<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
@@ -233,9 +255,9 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var='sb' items='${statusBulletin}'>
+										<c:forEach var='sb' items='${statusBulletin[1]}'>
 											<tr>
-												<c:if test="${!sb.status}">
+												<c:if test="${sb.available}">
 													<td>${sb.no}</td>
 													<td>${sb.title}</td>
 													<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
@@ -268,7 +290,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var='sb' items='${statusBulletin}'>
+										<c:forEach var='sb' items='${statusBulletin[2]}'>
 											<tr>
 												<c:if test="${!sb.available}">
 													<td>${sb.no}</td>
@@ -321,27 +343,43 @@
 		<script>
 			$(function() {
 				$("#accordion").accordion();
-				
+			});
+
+			$(function() {
 				$("[name='add_host']").click(function() {
 					var str = $(this).attr("id");
 					var targete = $("." + str);
 					$(targete).removeClass('hide');
 				});
-				
+			});
+
+			$(function() {
 				$("[name|=back]").click(function() {
 					var str = $(this).attr("class");
 					var targete = $("." + str);
 					$(targete).addClass('hide');
 				});
-				
-// 				$("img[name=add_host]").mouseover
-// 				{
-
-// 				}
-
-				
-				
 			});
+
+			$(function() {
+				$("[name|=change]").click(function() {
+					var str = $(this).attr("name");
+					var targete = $("." + str);
+					$(targete).addClass('hide');
+				});
+			});
+
+			// 			$(function () {
+			// 				$("img[name=add_host]").mouseover
+			// 				{
+			// 				}
+			// 			});
+
+			// 			$(function () {
+			// 				$("[name='change_back']").click(function () {
+			// 					$(this).addClass('hide');
+			// 				});
+			// 			});
 		</script>
 </body>
 

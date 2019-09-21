@@ -37,6 +37,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 		oldEmpBean.setGender(empBean.getGender());
 		oldEmpBean.setAvailable(empBean.getAvailable());
 		oldEmpBean.setSalary(empBean.getSalary());
+		oldEmpBean.setEmployeeImage(empBean.getEmployeeImage());
+		oldEmpBean.setImageFileName(empBean.getImageFileName());
 		oldEmpBean.setPermission(empBean.getPermission());
 		employeeDao.updateEmployee(oldEmpBean);
 		

@@ -25,7 +25,7 @@ public interface SeatDao {
 	// query
 	SeatBean getSeatByNo(Integer seatNo);
 	
-	SeatBean getSeat(Integer timeTableId, String row, String column);
+	SeatBean getSeat(Integer timeTableId, String row, Integer column);
 
 	List<SeatBean> getAllSeats();
 

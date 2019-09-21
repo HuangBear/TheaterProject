@@ -70,13 +70,12 @@ public class EDMTableResetHibernate_Bulletin {
 //					bulletin.setDiscountTickFree(Integer.valueOf(token[8]));
 //					bulletin.setDiscountPriceBuy(Integer.valueOf(token[9]));
 //					bulletin.setDiscountPriceFree(Integer.valueOf(token[10]));
-					bulletin.setStatus(Boolean.valueOf(token[11]));
 					EmployeeBean employee = session.get(EmployeeBean.class, 2);
 					bulletin.setEmployee(employee);
-					Blob sb = SystemUtils2018.fileToBlob(token[12]);
+					Blob sb = SystemUtils2018.fileToBlob(token[11]);
 					bulletin.setCoverImage(sb);
-					bulletin.setFileName(SystemUtils2018.extractFileName(token[12].trim()));
-					bulletin.setBortingId(token[13]);
+					bulletin.setFileName(SystemUtils2018.extractFileName(token[11].trim()));
+					bulletin.setBortingId(token[12]);
 					session.save(bulletin);
 					System.out.println("新增一筆bulletin紀錄成功");
 				}

@@ -30,6 +30,7 @@ public class ArticleBean implements Serializable {
 	private Boolean available;
 	private String title;
 	private String content;
+	private String tag;
 	@NotNull
 	private Date postTime;
 	private Integer likeCount;
@@ -114,6 +115,12 @@ public class ArticleBean implements Serializable {
 	}
 	public void setReplys(Set<ReplyBean> replys) {
 		this.replys = replys;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	
 }
