@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,12 +60,14 @@ public class BulletinController {
 		return "newBulletin";
 	}
 
-//????
+	// ????
 	@RequestMapping(value = "/allBulletin/{bulletin_no}", method = RequestMethod.GET)
 	public String edit_allBulletin2newBulletin(@PathVariable("bulletin_no") Integer no,
 			Model model) {
-		List<BulletinBean> bb = service.getSameBulletinByBortingId(no);
+		BulletinBean bb = service.getBulletinBeanById(no);
+		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 		model.addAttribute("bulletinBean", bb);
+		model.addAttribute("sameBulletinBean", list);
 		return "newBulletin";
 	}
 
@@ -204,7 +205,6 @@ public class BulletinController {
 		bb.setCountNum(obb.getCountNum() + 1);
 		bb.setEmployee(obb.getEmployee());
 		// 判断属性是否完全相等
-
 		System.out.println("bb.getCoverImage()=" + bb.getCoverImage());
 		System.out.println("obb.getCoverImage()=" + obb.getCoverImage());
 		System.out.println("判断属性是否完全相等");
@@ -252,11 +252,9 @@ public class BulletinController {
 		return "redirect:/allBulletin";
 	}
 
-//準備方法
-
+//	準備方法
 	// 標題
 	public void testTitle(BulletinBean bb, HashMap<String, String> errorMessage) {
-
 		if (bb.getTitle() == null || bb.getTitle().trim().length() == 0) {
 			errorMessage.put("titleNull", "請輸入標題");
 		} else if (bb.getTitle().length() > 50) {
@@ -342,13 +340,4 @@ public class BulletinController {
 		System.out.println("bb.getDiscountTickBuy()" + bb.getDiscountTickBuy());
 		System.out.println("bb.getDiscountTickFree()" + bb.getDiscountTickFree());
 	}
-
-	// testBortingId
-	public void testBortingId(BulletinBean bb, HashMap<String, String> errorMessage,
-			HttpSession httpSession) {
-		if (httpSession.getAttribute("oldBulletinBean") != null) {
-
-		}
-	}
-
 }
