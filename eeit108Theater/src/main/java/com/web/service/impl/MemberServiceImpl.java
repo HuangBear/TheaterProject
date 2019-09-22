@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService{
 		oldMemBean.setPhoneNum(memBean.getPhoneNum());
 		oldMemBean.setPassword(memBean.getPassword());
 		oldMemBean.setGender(memBean.getGender());
-	//	oldMemBean.setAvailable(memBean.getAvailable());
+		oldMemBean.setAboutMe(memBean.getAboutMe());
 		
 		if(memBean.getMemberImage()!=null) {
 		oldMemBean.setMemberImage(memBean.getMemberImage());
@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<MemberBean> getAllMembers() {
 		// TODO Auto-generated method stub
-		return null;
+		return memberDao.getAllMembers();
 	}
 
 	@Override
@@ -110,6 +110,7 @@ public class MemberServiceImpl implements MemberService{
 			memberBean.setAvailable(true); //set member Available 預設true:在職 false:停權
 			memberBean.setCommentPermission(true); //set member Permission 預設true
 			memberBean.setBanCounter(0);
+			memberBean.setAboutMe("該會員尚未填寫'關於我'，可於會員資料編輯中填寫，方便大家認識你喔。");;
 			//save member 時 如果想要依照需求額外儲存內容 可加在下面
 			
 			memberDao.saveMember(memberBean);

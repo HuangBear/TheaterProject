@@ -7,8 +7,8 @@
 <nav id="nav">
 	<ul>
 
-		<li><a class="nav_logo" href="<c:url value='/index'/>"><img src="<c:url value='/images/frontend/716logo.png'/>"
-				style="width: 80px;"> </a></li>
+		<li><a class="nav_logo" href="<c:url value='/index'/>"><img src="<c:url value='/images/frontend/716logo.png'/>"style="width: 80px;"> </a>
+		</li>
 		<li style="display: none;"><a href="<c:url value='/index'/>" class="hide">716影城</a>
 		<li><a href="<c:url value='/films'/>">電影介紹</a></li>
 		<li><a href="<c:url value='/ticketing'/>">時刻查詢</a></li>

@@ -109,7 +109,7 @@
 						<header>
 						  <h3>關於我:</h3>
 						</header>
-						    <p>會員個人介紹 來自資料庫 會員可於會員編輯欄位輸入</p>
+						    <p>${LoginOK.aboutMe}</p>
 						
 						</section> 
 						
@@ -185,6 +185,15 @@
                             <form:option value="1" selected="selected">男</form:option>
 				            <form:option value="2" >女</form:option>
                             </form:select>
+							
+							</dl>
+							<dl>
+							<dd>
+
+							<label for="aboutMe" style="text-align:left">關於我：</label>
+							
+                             <form:input type="text" id="aboutMe" class="form-control" 
+                               value="${LoginOK.aboutMe}" path="aboutMe"/> 
 							
 							</dl>
 							

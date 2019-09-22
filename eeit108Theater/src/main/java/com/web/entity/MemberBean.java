@@ -51,6 +51,8 @@ public class MemberBean implements Serializable{
 	@JsonIgnore
 	private Blob memberImage;
 	private String imageFileName;
+	@JsonIgnore
+	private String aboutMe;
 	private Boolean commentPermission;
 	private Integer banCounter;	
 	@NotNull
@@ -178,6 +180,12 @@ public class MemberBean implements Serializable{
 	}
 	public void setUploadImage(MultipartFile uploadImage) {
 		this.uploadImage = uploadImage;
+	}
+	public String getAboutMe() {
+		return aboutMe;
+	}
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
 	}
 	
 	

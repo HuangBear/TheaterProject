@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -35,7 +36,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.EmployeeBean;
+import com.web.entity.MemberBean;
 import com.web.service.EmployeeService;
+import com.web.service.MemberService;
 
 @Controller
 public class EmpController {
@@ -44,6 +47,8 @@ public class EmpController {
 	ServletContext context;
 	@Autowired
 	EmployeeService service;
+	@Autowired
+	MemberService serviceM;
 	@Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -115,9 +120,14 @@ public class EmpController {
 	public String updatePage(Model model, HttpServletRequest req, HttpSession session) {
 		String url = req.getParameter("url");
 		EmployeeBean employeeBean = new EmployeeBean();
-		List<EmployeeBean> list = service.getAllEmployees();
-		model.addAttribute("employees", list);
+		MemberBean memberBean=new MemberBean();
+		List<MemberBean> listMem = serviceM.getAllMembers();
+		List<EmployeeBean> listEmp = service.getAllEmployees();
+		model.addAttribute("employees", listEmp);
+		model.addAttribute("members", listMem);
 		model.addAttribute("employeeBean", employeeBean);
+		model.addAttribute("memberBean", memberBean);
+		model.addAttribute("now", new Date());
 		return "admin/"+url;
 	}
 	
