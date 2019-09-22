@@ -10,7 +10,7 @@ public interface MovieService {
 	int deleteMovie(String movieId);
 	int deleteAll();
 	// update
-	int updateMovie(MovieBean movie);
+	MovieBean updateMovie(MovieBean movie);
 	// query
 	MovieBean getMovieById(Integer no);
 	//by director, by cast, by genre, or by something else

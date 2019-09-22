@@ -16,6 +16,7 @@
 		<li><a href="<c:url value='/news'/>">活動公告</a></li>
 		<li><a href="<c:url value='/biz'/>">業務專區</a></li>
 		<li><a href="<c:url value='/theater'/>">影城特色</a></li>
+
         <li><a href="<c:url value='/MoviesForum'/>">討論版</a></li>
 		<li><a href="<c:url value='/forums'/>">電影討論</a></li>	
 		<li class="login">
@@ -65,7 +66,6 @@
 				
 			<!-- 這個不要刪掉，平衡用--></li><!--這個不要刪掉，平衡用 -->
 
-<!-- 		<li></li> -->
+		<!-- 		<li></li> -->
 	</ul>
-
 </nav>

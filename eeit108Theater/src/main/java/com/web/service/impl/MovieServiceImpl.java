@@ -37,8 +37,9 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public int updateMovie(MovieBean movie) {
-		return 0;
+	public MovieBean updateMovie(MovieBean movieBean) {
+		return dao.updateMovie(movieBean);
+		
 	}
 
 	@Override

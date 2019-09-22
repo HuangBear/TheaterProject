@@ -187,23 +187,30 @@ public class OrderController {
 		}
 		String tradeNo = String.valueOf(fst) + String.valueOf(sec) + Math.abs(obHash);
 		ob.setOrderId(tradeNo);
-		
-		//EcPay begin
+
+		// EcPay Begin
+		// EcPay對各項method都有簡單註解說明，可以將滑鼠移動到方法上查看
 		AllInOne all = new AllInOne("");
-		AioCheckOutOneTime obj = new AioCheckOutOneTime();
+		AioCheckOutOneTime obj = new AioCheckOutOneTime(); // 指定付款方式為信用卡一次付清
 
-		obj.setMerchantTradeNo(tradeNo);
-		obj.setMerchantTradeDate(sdf.format(ts));
-		obj.setTotalAmount(String.valueOf(ob.getTotalPrice().intValue()));
+		obj.setMerchantTradeNo(tradeNo); // 設定訂單編號
+		obj.setMerchantTradeDate(sdf.format(ts)); // 設定交易日期
+		obj.setTotalAmount(String.valueOf(ob.getTotalPrice().intValue())); // 設定總付款金額
 		obj.setTradeDesc("716 Theater Order");
-		obj.setItemName(ob.getOrderItemString());
-		obj.setReturnURL("http://localhost:8080/eeit108Theater/order/receive");
-		obj.setOrderResultURL("http://localhost:8080/eeit108Theater/order/result");
-		obj.setNeedExtraPaidInfo("N");
-		obj.setRedeem("N");
+		obj.setItemName(ob.getOrderItemString()); // 設定顯示在EcPay頁面的購物清單
+		obj.setReturnURL("http://localhost:8080/eeit108Theater/order/receive");// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
+		// 可以在交易結束後觀察底下對應requestMapping的method -- receive
+		// 的system.err.println並不會出現在console中，藉此得知該方法並沒有被呼叫 -> 沒收到請求
+		obj.setOrderResultURL("http://localhost:8080/eeit108Theater/order/result"); // EcPay會在付款結束後，將USER
+																					// redirect至此，並附帶交易結果相關資訊
+		obj.setNeedExtraPaidInfo("N"); // Y/N = True/False
+		obj.setRedeem("N"); // 紅利 Y/N = True/False
 
-		String form = all.aioCheckOut(obj, null);
-		//EcPay end
+		String form = all.aioCheckOut(obj, null); // null for no invoice
+		// all.aioCheckOut會根據前面設定好的參數產生一個html表格的字串，
+		// 裡面的各種input都已經設定好了，並且會自動submit，
+		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
+		// EcPay End
 		System.out.println("form =\n" + form);
 		model.addAttribute("ecpayForm", form);
 		return pac + "ecpay";
