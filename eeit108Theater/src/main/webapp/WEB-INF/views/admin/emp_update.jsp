@@ -110,7 +110,7 @@
            <div class="form-group">
             <div class="form-label-group">
               <form:input type="file" id="uploadImage" class="form-control" 
-              value="" path="uploadImage"/>
+               path="uploadImage"/>
               <label for="uploadImage">上傳照片</label>
             </div>
           </div>

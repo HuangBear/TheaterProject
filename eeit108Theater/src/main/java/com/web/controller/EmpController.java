@@ -193,6 +193,7 @@ public class EmpController {
 			@ModelAttribute("employeeBean") EmployeeBean employeeBean, Model model,
 			RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
 		
+		if (employeeBean.getUploadImage() != null) {
 		MultipartFile empImage=employeeBean.getUploadImage();
 		String originFileName=empImage.getOriginalFilename();
 		employeeBean.setImageFileName(originFileName);
@@ -209,7 +210,7 @@ public class EmpController {
 				e.printStackTrace();
 				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 			}
-		}
+		}}
 		
 		if (true) {
 			//employeeBean=service.findByPrimaryKey(pk);
