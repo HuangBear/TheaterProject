@@ -1,5 +1,8 @@
 package com.web.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.dao.ArticleDao;
 import com.web.entity.ArticleBean;
+import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
+import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.service.ArticleService;
 
@@ -19,6 +24,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
 	@Override
 	public List<ArticleBean> getAllArticles() {
+		return dao.getAllArticles();
+	}
+    
+    @Transactional
+	@Override
+	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
 		return dao.getAllArticles();
 	}
     
@@ -61,13 +72,26 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
 	@Override
 	public void editArticle(ArticleBean article) {
-		dao.editArticle(article);
+    	if( article !=null) {
+			System.out.println("emp insert not null");
+			dao.editArticle(article);
+			
+		}else {
+			System.out.println("insert null");
+		}
+		
 	}
     
     @Transactional
 	@Override
-	public MemberBean getMemberById(int memberId) {
+	public MemberBean getMemberById(int memberId) {	
 		return dao.getMemberById(memberId);
+	}
+    
+    @Transactional
+	@Override
+	public MovieBean  getMovieByNo(int movieNo) {	
+		return dao.getMovieByNo(movieNo);
 	}
     
     @Transactional
@@ -75,4 +99,5 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<MemberBean> getMemberList() {
 		return dao.getMemberList();
 	}
+    
 }

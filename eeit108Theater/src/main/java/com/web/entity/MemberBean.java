@@ -70,6 +70,32 @@ public class MemberBean implements Serializable{
 	@OneToMany(mappedBy = "author")
 	private Set<ArticleBean> articles;//B, O2M
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_member_id", referencedColumnName = "member_no")
+	private Set<LikeOrDislikeBean> likeOrDislikes;//U, O2M
+	
+	public MemberBean(Integer no) {
+		super();
+		this.no = no;
+	}
+	
+	public MemberBean() {};
+	
+//	public MemberBean(Boolean available, String email, String memberId, String password, String name,
+//			Boolean commentPermission, Integer banCounter, Date birthday, String phoneNum, Date registerTime
+//			) {
+//		super();
+//		this.available = available;
+//		this.email = email;
+//		this.memberId = memberId;
+//		this.password = password;
+//		this.name = name;
+//		this.commentPermission = commentPermission;
+//		this.banCounter = banCounter;
+//		this.birthday = birthday;
+//		this.phoneNum = phoneNum;
+//		this.registerTime = registerTime;
+//	}
 	
 	public Integer getNo() {
 		return no;

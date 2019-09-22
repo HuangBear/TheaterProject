@@ -15,14 +15,14 @@ fieldset {
 	margin: auto;
 }
 </style>
-<title>editArticle</title>
+<title>addArticle</title>
 <link rel='stylesheet' href='${pageContext.request.contextPath}/css/styles.css'  type="text/css" />
 </head>
 <body>
 	<section>
 		<div class="container">
 			<h1 style="text-align: center">
-			    <a>edit Article</a>
+			    <a>add Article</a>
 			</h1>
 		</div>
 	</section>
@@ -41,15 +41,6 @@ fieldset {
 						<form:input id="title" path="title" type='text' class='form:input-large' />
 					</div>
 				</div>
-
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class="control-label col-lg-2 col-lg-4" for='author'> -->
-<!-- 						<a>Author</a> -->
-<!-- 					</label> -->
-<!-- 					<div class="col-lg-10"> -->
-<%-- 						 <form:input id="author" path="author" type='text' class='form:input-large' /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-4' for="tag">
