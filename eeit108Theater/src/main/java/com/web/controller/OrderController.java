@@ -2,10 +2,7 @@ package com.web.controller;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,16 +49,17 @@ public class OrderController {
 	public String orderBegin(Model model, HttpSession session, HttpServletRequest req) {
 
 		System.err.println("====orderBegin Start====");
-
-		System.out.println("====TimeTableBean Got");
-		MemberBean mb = pServ.getMemberByNo(1);
+//		MemberBean mb = pServ.getMemberByNo(1);
 		System.out.println("====MemberBean Got");
 		session.removeAttribute("order");
-		session.setAttribute("loginMember", mb);
+//		session.setAttribute("LoginOK", mb);
 		System.err.println("====orderBegin END====");
 		return pac + "start";
 	}
 
+	/*
+	 * 建立一筆order於httpSession，並將所選擇的時刻表塞入order中。 自資料庫取得商品清單，並在前台顯示 ，供使用者選擇
+	 */
 	@RequestMapping("/showProducts")
 	public String showProductByType(Model model, HttpSession session, HttpServletRequest req) {
 		System.err.println("====showProductByType Start====");
@@ -69,12 +67,12 @@ public class OrderController {
 		if (ob == null) {
 			ob = new OrderBean(true);
 			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(req.getParameter("timeTableId"))));
-			MemberBean mb = (MemberBean) session.getAttribute("loginMember");
-			if (mb != null) {
-				ob.setOwnerEmail(mb.getEmail());
-				ob.setOwnerId(mb.getMemberId());
-				ob.setOwnerName(mb.getName());
-			}
+//			MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
+//			if (mb != null) {
+//				ob.setOwnerEmail(mb.getEmail());
+//				ob.setOwnerId(mb.getMemberId());
+//				ob.setOwnerName(mb.getName());
+//			}
 			session.setAttribute("order", ob);
 		}
 		model.addAttribute("foods", pServ.getProductsByType("food"));
@@ -84,6 +82,9 @@ public class OrderController {
 		return pac + "productsByType";
 	}
 
+	/*
+	 * 針對使用者每次選擇的商品種類及數量，做訂單中購物清單的即時更新。 直接更新Order中的OrderItems內容以及totalPrice
+	 */
 	@RequestMapping("/orderList")
 	public String orderList(Model model, HttpServletRequest req, HttpSession session) {
 		System.err.println("====orderList begin====");
@@ -115,43 +116,61 @@ public class OrderController {
 			orderList.add(oib);
 		}
 		ob.calTotalPrice();
+		System.out.println(ob.getOrderItemString());
 		System.out.println(orderList);
 		System.err.println("====orderList END====");
 		return pac + "orderList";
 	}
 
+	/*
+	 * 依據order中的timeTable資訊，去向資料庫取得現在選擇之場次之座位現況。 依據order中的timeTable資訊，產生對應的影廳座位表。
+	 * 
+	 */
 	@RequestMapping("/seat")
-	public String showSeatPage(Model model, HttpSession session, HttpServletRequest req) {
-		System.err.println("====seat Start====");
+	public String showSeat(Model model, HttpSession session, HttpServletRequest req) {
+		System.err.println("====showSeat Start====");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
+
+		System.out.println(ob.getOrderItemString());
 		List<SeatBean> seatList = pServ.getSeatsByTimeTable(ob.getTimeTable().getNo());
-		Map<String, Boolean> seatEmpty = new HashMap<>();
-		for (SeatBean seat : seatList) {
-			String rowCol = seat.getRow() + seat.getColumn();
-			seatEmpty.put(rowCol, seat.getOrderId() == null ? true : false);
+		Map<String, Boolean> soldSeats = new HashMap<>();
+		if (seatList != null && !seatList.isEmpty()) {
+			for (SeatBean seat : seatList) {
+				String rowCol = seat.getSeatString();
+				soldSeats.put(rowCol, true);
+			}
 		}
+
 		int rowCnt = Integer.valueOf(req.getParameter("rowCnt"));
 		int aZoneCnt = Integer.valueOf(req.getParameter("aZoneCnt"));
 		int bZoneCnt = Integer.valueOf(req.getParameter("bZoneCnt"));
 		int zoneNum = Integer.valueOf(req.getParameter("zoneNum"));
-		model.addAttribute("sideBar", this.getSideBar(rowCnt));
-		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, seatEmpty);
+		// model.addAttribute("sideBar", this.getSideBar(rowCnt));
+		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, soldSeats);
 		model.addAttribute("seatTable", s);
-		model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));
+		if(req.getAttribute("seatSoldErr") == null) {
+			model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));			
+		}
 		System.out.println(s);
-		System.err.println("====seat END====");
+		System.err.println("====showSeat END====");
 		return pac + "seat";
 	}
 
 	@RequestMapping("/makeOrder")
 	public String showOrder(Model model, HttpServletRequest req, HttpSession session) {
 		System.err.println("====showOrder Start====");
+
 		String[] seats = req.getParameterValues("seat");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		ob.sortOrderItem("ticket", "drink");
-		System.out.println(ob.getOrderItemString());
-		oServ.setSeatToOrder(ob, seats);
 		ob.calTotalPrice();
+		if(oServ.setSeatToOrder(ob, seats) == -1) {
+			System.err.println("=== Selected seats has been sold already ===");
+			req.setAttribute("ticketCnt", seats.length);
+			req.setAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
+			System.err.println("====showOrder FORWARD TO showSeat====");
+			return "forward: /seat";
+		}
 		model.addAttribute("orderItems", ob.getOrderItems());
 		model.addAttribute("seats", seats);
 		session.setAttribute("ticketCnt", req.getParameter("ticketCnt"));
@@ -167,7 +186,7 @@ public class OrderController {
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		if (idType == 0) { // pay as member
-			MemberBean mb = (MemberBean) session.getAttribute("loginMember");
+			MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 			ob.setOwnerId(mb.getMemberId());
 			ob.setOwnerName(req.getParameter("memberName"));
 			ob.setOwnerEmail(req.getParameter("memberEmail"));
@@ -179,6 +198,7 @@ public class OrderController {
 			ob.setOwnerPhone(req.getParameter("guestPhone"));
 		}
 		ob.setOrderTime(ts);
+		// generate tradeNo a.k.a orderId
 		int obHash = ob.hashCode();
 		char fst = (char) ('A' + (ts.getTime() % 26));
 		char sec = (char) ('A' + (-obHash % 13));
@@ -188,21 +208,22 @@ public class OrderController {
 		String tradeNo = String.valueOf(fst) + String.valueOf(sec) + Math.abs(obHash);
 		ob.setOrderId(tradeNo);
 
+		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath(); // http:localhost:XXXX/eeit108Theater
 		// EcPay Begin
 		// EcPay對各項method都有簡單註解說明，可以將滑鼠移動到方法上查看
 		AllInOne all = new AllInOne("");
 		AioCheckOutOneTime obj = new AioCheckOutOneTime(); // 指定付款方式為信用卡一次付清
-
 		obj.setMerchantTradeNo(tradeNo); // 設定訂單編號
 		obj.setMerchantTradeDate(sdf.format(ts)); // 設定交易日期
 		obj.setTotalAmount(String.valueOf(ob.getTotalPrice().intValue())); // 設定總付款金額
 		obj.setTradeDesc("716 Theater Order");
 		obj.setItemName(ob.getOrderItemString()); // 設定顯示在EcPay頁面的購物清單
-		obj.setReturnURL("http://localhost:8080/eeit108Theater/order/receive");// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
+		obj.setReturnURL(base + "/order/receive");// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
+		// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
 		// 可以在交易結束後觀察底下對應requestMapping的method -- receive
 		// 的system.err.println並不會出現在console中，藉此得知該方法並沒有被呼叫 -> 沒收到請求
-		obj.setOrderResultURL("http://localhost:8080/eeit108Theater/order/result"); // EcPay會在付款結束後，將USER
-																					// redirect至此，並附帶交易結果相關資訊
+		obj.setOrderResultURL(base + "/order/result"); // EcPay會在付款結束後，將USER
+														// redirect至此，並附帶交易結果相關資訊
 		obj.setNeedExtraPaidInfo("N"); // Y/N = True/False
 		obj.setRedeem("N"); // 紅利 Y/N = True/False
 
@@ -216,7 +237,7 @@ public class OrderController {
 		return pac + "ecpay";
 	}
 
-	@RequestMapping("/receive")
+	@RequestMapping("/receive") // this method may not be called, because, so far, the server is localhost
 	public String receive(HttpServletRequest req) {
 		System.err.println("=====GOT FROM ECPAY=====");
 		Map<String, String[]> map = req.getParameterMap();
@@ -276,33 +297,46 @@ public class OrderController {
 		return pac + "result";
 	}
 
-	private String getSideBar(int rowCnt) {
-		StringBuilder s = new StringBuilder(512);
-		char row = 'A';
-		for (int i = 0; i < rowCnt; i++) {
-			s.append("<tr><td>" + (char) (row + i) + "</td></tr>");
-			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
-				s.append(
-						"<tr><td><label class=\"invisible\"for=\"bar-space\"></label><input type=\"checkbox\"name=\"seat\"id=\"bar-space\"value=\"space\"></td></tr>");
-			}
+	@RequestMapping("/search")
+	public String orderDetail(HttpServletRequest req, Model model, HttpSession session) {
+		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
+		if (mb == null) { // 非會員
+			System.out.println("hasn't login");
+			return "index";
 		}
-		return s.toString();
+
+		String memberId = mb.getMemberId();
+
+		return pac + "detail";
 	}
 
-	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> seatEmpty) {
+//	private String getSideBar(int rowCnt) {
+//		StringBuilder s = new StringBuilder(512);
+//		char row = 'A';
+//		for (int i = 0; i < rowCnt; i++) {
+//			s.append("<tr><td>" + (char) (row + i) + "</td></tr>");
+//			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
+//				s.append(
+//						"<tr><td><label class=\"invisible\"for=\"bar-space\"></label><input type=\"checkbox\"name=\"seat\"id=\"bar-space\"value=\"space\"></td></tr>");
+//			}
+//		}
+//		return s.toString();
+//	}
+
+	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> soldSeats) {
 		StringBuilder s = new StringBuilder(65536);
 		char row = 'A';
 		for (int i = 0; i < rowCnt; i++) {
-			s.append("<tr><td></td><td></td><td></td>");
+			s.append("<tr><td>" + row + "</td><td></td><td></td>");
 			int colNow = 1;
-			colNow = generateZone(s, row, colNow, aZoneCnt, seatEmpty);
+			colNow = generateZone(s, row, colNow, aZoneCnt, soldSeats);
 			s.append("<td></td>");
-			colNow = generateZone(s, row, colNow, bZoneCnt, seatEmpty);
+			colNow = generateZone(s, row, colNow, bZoneCnt, soldSeats);
 			if (zoneNum == 3) {
 				s.append("<td></td>");
-				colNow = generateZone(s, row, colNow, aZoneCnt, seatEmpty);
+				colNow = generateZone(s, row, colNow, aZoneCnt, soldSeats);
 			}
-			s.append("<td></td><td></td><td></td></tr>");
+			s.append("<td></td><td></td><td>" + row + "</td></tr>");
 			s.append("\n");
 			row++;
 			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
@@ -314,19 +348,29 @@ public class OrderController {
 		return s.toString();
 	}
 
-	private int generateZone(StringBuilder s, char row, int colNow, int zoneCnt, Map<String, Boolean> seatEmpty) {
-		for (int col = 0; col < zoneCnt; col++, colNow++) {
-			String rowCol = row + String.valueOf(colNow);
-			if (seatEmpty.get(rowCol)) {
+	private int generateZone(StringBuilder s, char row, int colNow, int zoneCnt, Map<String, Boolean> soldSeats) {
+		if (soldSeats.isEmpty()) {
+			for (int col = 0; col < zoneCnt; col++, colNow++) {
+				String rowCol = row + String.valueOf(colNow);
 				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
 						+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\"" + rowCol
 						+ "\"></td>");
-			} else {
-				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
-						+ "\"class=\"sold-label\"></label><input class=\"sold\"type=\"checkbox\"name=\"seat\"id=\"seat"
-						+ rowCol + "\"value=\"" + rowCol + "\"></td>");
+			}
+		} else {
+			for (int col = 0; col < zoneCnt; col++, colNow++) {
+				String rowCol = row + String.valueOf(colNow);
+				if (!soldSeats.containsKey(rowCol)) {
+					s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
+							+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\""
+							+ rowCol + "\"></td>");
+				} else {
+					s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
+							+ "\"class=\"sold-label\"></label><input class=\"sold\"type=\"checkbox\"name=\"seat\"id=\"seat"
+							+ rowCol + "\"value=\"" + rowCol + "\"></td>");
+				}
 			}
 		}
+
 		return colNow;
 	}
 }
