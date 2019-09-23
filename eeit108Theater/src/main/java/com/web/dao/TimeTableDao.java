@@ -35,5 +35,5 @@ public interface TimeTableDao {
 	
 	List<TimeTableBean> getStartTimeByMovie(String movieName);
 	
-	List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater);
+	List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater, String version);
 }

@@ -92,8 +92,8 @@ public class TimeTableServiceImpl implements TimeTableService{
 	}
 
 	@Override
-	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater) {
-		return dao.getStartTimeByMovieAndTheater(movieName, theater);
+	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater, String version) {
+		return dao.getStartTimeByMovieAndTheater(movieName, theater, version);
 	}
 	
 }

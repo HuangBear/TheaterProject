@@ -29,7 +29,7 @@
 		data : {
 			url : link,
 			},
-		type : "POST",
+		type : "GET",
 		success : function(data) {
 			$("#pageItems").html(data);
 		}
