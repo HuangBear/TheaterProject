@@ -89,51 +89,51 @@
 						</header>
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic10.jpg"
-									alt="" /></a>
+								<p><p>
+								<a href="#" class="image fit">2019/09/05</a>
 							</div>
 							<div class="col-8"> <a href="#" id="n1">
-								<h4>2019/09/05</h4>
+								<p>								
 								<p>【大叔之愛】片尾告示</p></a>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic11.jpg"
-									alt="" /></a>
+								<p><p>
+								<a href="#" class="image fit">2019/08/29</a>
 							</div>
 							<div class="col-8"><a href="#" id="n2">
-								<h4>2019/08/29</h4>
+								<p>							
 								<p>【第九分局】片尾告示</p></a>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
-									alt="" /></a>
+								<p><p>
+								<a href="#" class="image fit">2019/08/14</a>
 							</div>
 							<div class="col-8"><a href="#" id="n3">
-								<h4>2019/08/14</h4>
+								<p>								
 								<p>【驅魔使者】片尾公告</p></a>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic13.jpg"
-									alt="" /></a>
+								<p><p>
+								<a href="#" class="image fit">2019/06/15</a>
 							</div>
 							<div class="col-8"><a href="#" id="n4">
-								<h4>2019/06/15</h4>
+								<p>								
 								<p class="p">信用卡優惠影城現場購票公告</p></a>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
-									alt="" /></a>
+								<p><p>
+								<a href="#" class="image fit">2019/03/13</a>
 							</div>
 							<div class="col-8"><a href="#" id="n5">
-								<h4>2019/03/13</h4>
+								<p>								
 								<p class="p">行動支付公告</p></a>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
-									alt="" /></a>
+								<p><p>
+								<a href="#" class="image fit">2016/09/01</a>
 							</div>
 							<div class="col-8">
-								<h4>2016/09/01</h4>
+								<p>								
 								<p>影城觀影入場須知</p>
 							</div>
 						</div>

@@ -140,31 +140,31 @@
 									type="password" placeholder="請輸入密碼 (英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
+							<dl>
 							<dd>
 								<label for="account" style="text-align:left">*請再輸入密碼一次：</label>
 								<input id="password" path="password" class="text"
 									type="password" placeholder="請重複上面所輸入之密碼 (英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
+							<dl>
 							<dd>
 								<label for="memberId" style="text-align:left">*身分證字號：</label>
 								<input id="memberId" path="memberId" class="text"
 									type="text" placeholder="請輸入身分證字號" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
+							<dl>
 							<dd>
 								<label for="birthday" style="text-align:left">*生日：</label>
 								<input id="birthday" path="birthday" class="text"
 									type="text" placeholder="請輸入出生年月日" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
-							<d1>
+							<dl>
 							<dd>
-								<label>男</label><input type="radio" name="gender" value="male">
-								<label>女</label><input type="radio" name="gender" value="female">
+								<label for="radio1">男</label><input type="radio" id="radio1" name="gender" value="male">
+								<label for="radio2">女</label><input type="radio" id="radio2" name="gender" value="female">
 							</dl>
 
 							<dl>

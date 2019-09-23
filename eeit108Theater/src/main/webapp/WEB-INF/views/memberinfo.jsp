@@ -39,42 +39,47 @@
 						<p>8+9尚雷諾熊大寬元您好</p>
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic10.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/memberinfo.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>基本資料</h4>
 								<p>個人資訊修改</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic11.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/order.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>訂單查詢</h4>
 								<p>當前購票資訊</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/record.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>消費紀錄</h4>
 								<p>歷史觀影紀錄</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic13.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/support.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>申訴進度</h4>
 								<p>客服答覆情況</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/favorite.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>個人收藏</h4>
 								<p>個人喜愛的電影或影評</p>
 							</div>
