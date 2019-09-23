@@ -75,7 +75,10 @@
      	  <p><span>首頁文章 放置處</span></p>
      	  <p><span>${error}</span></p>
      </div>
-     
+    
+		
+
+
      <!-- ------------------------------------------------------------------------------------------------- -->	
      <!-- 內文放在這個上面 -->
   
@@ -86,7 +89,43 @@
     <!-- ------------------------------------------以下Footer-------------------------------------------------- -->
     	
 	<jsp:include page="/WEB-INF/views/admin/Footer.jsp" />
+<script>
+		$(function() {
+			openWebsocket();
 
+		});
+
+		function openWebsocket() {
+			var area = document.getElementById('talkarea');
+			var text = document.getElementById('talktext');
+			var websocket = new WebSocket("ws://" + location.host
+					+ "/eeit108Theater/websocket.do");
+
+			websocket.onopen = function(evt) {
+
+			};
+
+			websocket.onmessage = function(message) {
+				var jsonData = JSON.parse(message.data);
+				if (jsonData.message != null) {
+					area.value += jsonData.message + "\n";
+				}
+			};
+
+			websocket.onclose = function(evt) {
+				websocket.close();
+			};
+
+			websocket.onerror = function(evt) {
+				websocket.close();
+			};
+
+			$('#sendmsg').click(function() {
+				websocket.send(text.value);
+				text.value = "";
+			});
+		}
+	</script>
 </body>
 
 </html>
