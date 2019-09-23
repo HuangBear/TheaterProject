@@ -57,7 +57,7 @@
 	<div id="page-wrapper">
 		<div id="header">
 			<!--Header-->
-			<jsp:include page="header.jsp" />
+			<jsp:include page="../header.jsp" />
 		</div>
 		<!-- Main-->
 		<div class="wrapper style1">
@@ -106,11 +106,15 @@
 								<a href="#">NewBulletin</a>
 							</h2>
 						</header>
-						<div>${ErrMsg.changeMsg}</div>
-
 						<div id="accordion">
-
-							<h3>新增/編輯</h3>
+							<c:choose>
+								<c:when test="${empty bulletinBean.no}">
+									<h3>新增公告</h3>
+								</c:when>
+								<c:when test="${!empty bulletinBean.no}">
+									<h3>編輯公告</h3>
+								</c:when>
+							</c:choose>
 							<div>
 								<form:form method='POST' modelAttribute="bulletinBean" enctype="multipart/form-data">
 									<form:hidden path="no" value="${param.no}" />
@@ -201,6 +205,8 @@
 									<div>
 										<form:input id="file" style="border-radius: 5px" type="file" path="bulletinImage" />
 										<label>文宣上傳</label>
+										<a style="color: red;">${ErrMsg.photo}</a>
+										
 									</div>
 
 									<c:choose>
@@ -224,43 +230,45 @@
 									</c:choose>
 								</form:form>
 							</div>
-							<h3>編輯紀錄</h3>
-							<div>
-								<table>
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>標題</th>
-											<th colspan="2">優惠方案</th>
-											<th>詳情</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var='sb' items='${sameBulletinBean}'>
-											<tr>
-												<c:if test="${sb.available}">
-													<td>${sb.no}</td>
-													<td>${sb.title}</td>
-													<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-													<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-													<td><img name="add_host" id="unavai_cont_${sb.no}" width="20px"
-														src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-												</c:if>
-											</tr>
-											<div class="unavai_cont_${sb.no} add-model hide">
-												<div>${sb.context}
-													<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
-												</div>
-												<div>
-													<input type="button" value="返回" name="back" class="unavai_cont_${sb.no}">
-												</div>
-											</div>
-										</c:forEach>
-									</tbody>
-								</table>
-
-							</div>
-
+							<c:choose>
+								<c:when test="${!empty sameBulletinBean[1]}">
+									<h3>歷史紀錄</h3>
+									<div>
+										<table>
+											<thead>
+												<tr>
+<!-- 													<th>#</th> -->
+													<th>標題</th>
+													<th colspan="2">優惠方案</th>
+													<th>詳情</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var='sb' items='${sameBulletinBean}' begin="1">
+													<tr>
+														<c:if test="${sb.available}">
+<%-- 															<td>${sb.no}</td> --%>
+															<td>${sb.title}</td>
+															<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+															<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+															<td><img name="add_host" id="unavai_cont_${sb.no}" width="20px"
+																src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
+														</c:if>
+													</tr>
+													<div class="unavai_cont_${sb.no} add-model hide">
+														<div>${sb.context}
+															<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
+														</div>
+														<div>
+															<input type="button" value="返回" name="back" class="unavai_cont_${sb.no}">
+														</div>
+													</div>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</c:when>
+							</c:choose>
 
 						</div>
 					</div>
@@ -273,7 +281,7 @@
 
 
 	<!-- Footer -->
-	<jsp:include page="footer.jsp" />
+	<jsp:include page="../footer.jsp" />
 	<!-- Scripts -->
 	<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" -->
 	<!-- 		crossorigin="anonymous"></script> -->
@@ -294,28 +302,24 @@
 	<script>
 		//    Datepicker
 		$(function() {
-			var dateFormat = "yy-mm-dd", from = $("#from").datepicker(
-					{
-						monthNamesShort : ["一", "二", "三", "四", "五", "六", "七",
-								"八", "九", "十", "十一", "十二"],
-						dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
-						defaultDate : "+1d",
-						changeMonth : true,
-						numberOfMonths : 1,
-						dateFormat : "yy-mm-dd"
-					}).on("change", function() {
+			var dateFormat = "yy-mm-dd", from = $("#from").datepicker({
+				monthNamesShort : [ "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" ],
+				dayNamesMin : [ "日", "一", "二", "三", "四", "五", "六" ],
+				defaultDate : "+1d",
+				changeMonth : true,
+				numberOfMonths : 1,
+				dateFormat : "yy-mm-dd"
+			}).on("change", function() {
 				to.datepicker("option", "minDate", getDate(this));
 				console.log(this)
-			}), to = $("#to").datepicker(
-					{
-						monthNamesShort : ["一", "二", "三", "四", "五", "六", "七",
-								"八", "九", "十", "十一", "十二"],
-						dayNamesMin : ["日", "一", "二", "三", "四", "五", "六"],
-						defaultDate : "+1M",
-						changeMonth : true,
-						numberOfMonths : 1,
-						dateFormat : "yy-mm-dd"
-					}).on("change", function() {
+			}), to = $("#to").datepicker({
+				monthNamesShort : [ "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" ],
+				dayNamesMin : [ "日", "一", "二", "三", "四", "五", "六" ],
+				defaultDate : "+1M",
+				changeMonth : true,
+				numberOfMonths : 1,
+				dateFormat : "yy-mm-dd"
+			}).on("change", function() {
 				from.datepicker("option", "maxDate", getDate(this));
 			});
 
@@ -337,15 +341,15 @@
 				var i = $(this).attr("value");
 				// 				alert(i);
 				switch (i) {
-					case "0" :
-						var o = "discount";
-						break;
-					case "1" :
-						var o = "discountP";
-						break;
-					case "2" :
-						var o = "discountT";
-						break;
+				case "0":
+					var o = "discount";
+					break;
+				case "1":
+					var o = "discountP";
+					break;
+				case "2":
+					var o = "discountT";
+					break;
 				}
 				// 				alert(o);
 				var targete = $("." + o);
@@ -373,11 +377,11 @@
 				$(targete).addClass('hide');
 			});
 		});
-		$( function() {
-		    $( "#accordion" ).accordion({
-		      heightStyle: "content"
-		    });
-		  } );
+		$(function() {
+			$("#accordion").accordion({
+				heightStyle : "content"
+			});
+		});
 
 		$(function() {
 			$("[name='add_host']").click(function() {
