@@ -11,19 +11,19 @@ import com.web.entity.OrderBean;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
-	
+
 	@Autowired
 	SessionFactory factory;
-	
+
 	public Boolean isExist(Integer orderNo) {
-		if(factory.getCurrentSession().get(OrderBean.class, orderNo) == null)
-			return false;		
+		if (factory.getCurrentSession().get(OrderBean.class, orderNo) == null)
+			return false;
 		return true;
 	}
-	
+
 	@Override
 	public int saveOrder(OrderBean order) {
-		if(order.getNo() != null)
+		if (order.getNo() != null)
 			return 0;
 		factory.getCurrentSession().save(order);
 		return 1;
@@ -31,7 +31,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public int deleteOrderByNo(Integer orderNo) {
-		if(!isExist(orderNo))
+		if (!isExist(orderNo))
 			return 0;
 		factory.getCurrentSession().delete(orderNo);
 		return 1;
@@ -45,8 +45,8 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public int updateOrder(OrderBean order) {
-		if(!isExist(order.getNo()))
-		return 0;
+		if (!isExist(order.getNo()))
+			return 0;
 		factory.getCurrentSession().update(order);
 		return 1;
 	}
@@ -68,9 +68,15 @@ public class OrderDaoImpl implements OrderDao {
 		return factory.getCurrentSession().get(OrderBean.class, orderNo);
 	}
 
+	@Override
+	public OrderBean getOrderById(String orderId) {
+		String hql = "FROM OrderBean o WHERE o.orderId = :oid";
+		return (OrderBean) factory.getCurrentSession().createQuery(hql).setParameter("oid", orderId).uniqueResult();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderBean> getOrdersByOwnerId(Integer memberId) {
+	public List<OrderBean> getOrdersByOwnerId(String memberId) {
 		String hql = "FROM OrderBean o WHERE o.ownerId = :ownid";
 		List<OrderBean> list = factory.getCurrentSession().createQuery(hql).setParameter("ownid", memberId).list();
 		return list;
@@ -89,6 +95,22 @@ public class OrderDaoImpl implements OrderDao {
 	public List<OrderBean> getAllAvailable() {
 		String hql = "FROM OrderBean o WHERE o.available = :true";
 		List<OrderBean> list = factory.getCurrentSession().createQuery(hql).setParameter("true", Boolean.TRUE).list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderBean> getGuestOrders(String ownerEmail, String ownerPhone, Boolean checkStatus) {
+		String hql = "FROM OrderBean o WHERE o.ownerEmail = :email AND o.ownerPhone = :phone AND o.checked = :check ORDER BY o.orderTime";
+		List<OrderBean> list = factory.getCurrentSession().createQuery(hql).setParameter("email", ownerEmail).setParameter("phone", ownerPhone).setParameter("check", checkStatus).list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderBean> getMemberOrders(String memberId, Boolean checkStatus) {
+		String hql = "FROM OrderBean o WHERE o.ownerId = :mid AND o.checked = :check ORDER BY o.orderTime";
+		List<OrderBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mid", memberId).setParameter("check", checkStatus).list();
 		return list;
 	}
 
