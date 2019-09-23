@@ -42,6 +42,8 @@
 			border-radius:10px;
 			background-color:#F5F5F5;
 	}
+	
+	.p{vertical-align:center;}
 </style>
 
 </head>
@@ -67,29 +69,25 @@
 						<p>8+9尚雷諾熊大寬元您好</p>
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic10.jpg"
-									alt="" /></a>
+								<a href="#" class="image fit"><img src="images/frontend/ticket.png" alt="" /></a>
 							</div>
 							<div class="col-8" id="notdone">
-								<h4><a href="#">未取票</a></h4>
-								<p>Amet nullam fringilla nibh nulla convallis tique ante
-									proin.</p>
+								<br>
+								<h3><a href="#">未取票</a></h3>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic11.jpg"
-									alt="" /></a>
+								<a href="#" class="image fit"><img src="images/frontend/pickup.png" alt="" style="size:80%;"/></a>
 							</div>
 							<div class="col-8" id="done">
-								<h4><a href="#">已取票</a></h4>
-								<p>Amet nullam fringilla nibh nulla convallis tique ante
-									proin.</p>
+								<br>
+								<h3><a href="#">已取票</a></h3>
 							</div>
 							<div class="col-4">
 								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
-								<h4>歷史記錄</h4>
+								<h4></h4>
 								<p>Amet nullam fringilla nibh nulla convallis tique ante
 									proin.</p>
 							</div>
@@ -134,18 +132,18 @@
 								</thead>																
 								<tbody style="padding:10px;">
 									<tr>
-										<td style="text-align:center;">											
+										<td style="text-align:center;vertical-align:center;">											
 											<p>未取票</p>
 										</td>
-										<td>
+										<td style="text-align:center;vertical-align:center;">
 											<P>取票序號：</P>
 											<p>訂票時間：</p>
-											<p>影廳：</p>
-											<p>電影：</p>
-											<p>場次：</p>
-											<p>餐點：</p>
-											<p>數量：</p>
-											<p>總計金額：</p>
+											<p><img src="images/frontend/iconplace.png" style="height:25px; width:25px;"/>影廳：</p>
+											<p><img src="images/frontend/iconfilm.png" style="height:25px; width:25px;"/>電影：</p>
+											<p><img src="images/frontend/icontime.png" style="height:25px; width:25px;"/>場次：</p>
+											<p><img src="images/frontend/iconmeal.png" style="height:25px; width:25px;"/>餐點：</p>
+											<p><img src="images/frontend/iconpeople.png" style="height:25px; width:25px;"/>數量：</p>
+											<p><img src="images/frontend/iconprice.png" style="height:25px; width:25px;"/>總計金額：</p>
 										</td>
 									</tr>
 								</tbody>
