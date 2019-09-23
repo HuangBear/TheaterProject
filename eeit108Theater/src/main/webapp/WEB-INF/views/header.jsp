@@ -25,6 +25,7 @@
 		<li class="foo1"><a href="<c:url value='/theater'/>">影城特色</a></li>
 		<li class="foo1"><a href="<c:url value='/forums'/>">電影討論</a></li>	
 		<li class="login foo1">
+
 		
 		 <c:choose> 
 				<c:when test="${empty LoginOK.memberImage}">

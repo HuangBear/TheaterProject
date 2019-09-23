@@ -47,8 +47,27 @@ public class MovieBean implements Serializable{
 	private Blob movieImage;
 	@Transient
 	private String fileName;
+	
 	@Transient
 	private MultipartFile uploadImage;
+	private String engMovieName;
+	private String rating;
+	
+	public String getEngMovieName() {
+		return engMovieName;
+	}
+
+	public void setEngMovieName(String engMovieName) {
+		this.engMovieName = engMovieName;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
 	
 	public MultipartFile getUploadImage() {
 		return uploadImage;

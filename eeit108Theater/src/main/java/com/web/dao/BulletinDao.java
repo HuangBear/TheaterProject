@@ -13,6 +13,8 @@ public interface BulletinDao {
 
 	List<BulletinBean> getDeadBulletin();
 
+	List<BulletinBean> getSameBulletinByBortingId(Integer no);
+
 	int updateBulletindByBortingId(Integer no, Boolean bo);
 
 	void insertBulletin(BulletinBean bb);
@@ -20,7 +22,5 @@ public interface BulletinDao {
 	EmployeeBean getEmployeeById(Integer employeeId);
 
 	BulletinBean getBulletinById(Integer bulletin_no);
-
-	 List<BulletinBean> getSameBulletinByBortingId(Integer no);
 
 }
