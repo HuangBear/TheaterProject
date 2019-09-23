@@ -28,13 +28,14 @@ public class ArticleDaoImpl implements ArticleDao {
 	    return list;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
-	    String hql = "FROM ArticleBean bb WHERE bb.movie = :movie";
+	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie";
 	    Session session = null;
 	    List<ArticleBean> list = new ArrayList<>();
 	    session = factory.getCurrentSession();
-	    list = session.createQuery(hql).getResultList();
+	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
 	    return list;
 	}
 	
