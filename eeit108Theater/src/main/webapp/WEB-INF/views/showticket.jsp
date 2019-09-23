@@ -44,6 +44,12 @@
 	}
 	
 	.p{vertical-align:center;}
+	
+	.iconimg{
+		height:25px; 
+		width:25px;
+		vertical-align: middle;	
+	}
 </style>
 
 </head>
@@ -138,12 +144,12 @@
 										<td style="text-align:center;vertical-align:center;">
 											<P>取票序號：</P>
 											<p>訂票時間：</p>
-											<p><img src="images/frontend/iconplace.png" style="height:25px; width:25px;"/>影廳：</p>
-											<p><img src="images/frontend/iconfilm.png" style="height:25px; width:25px;"/>電影：</p>
-											<p><img src="images/frontend/icontime.png" style="height:25px; width:25px;"/>場次：</p>
-											<p><img src="images/frontend/iconmeal.png" style="height:25px; width:25px;"/>餐點：</p>
-											<p><img src="images/frontend/iconpeople.png" style="height:25px; width:25px;"/>數量：</p>
-											<p><img src="images/frontend/iconprice.png" style="height:25px; width:25px;"/>總計金額：</p>
+											<p><img src="images/frontend/iconplace.png" class="iconimg"/>影廳：</p>
+											<p><img src="images/frontend/iconfilm.png" class="iconimg"/>電影：</p>
+											<p><img src="images/frontend/icontime.png" class="iconimg"/>場次：</p>
+											<p><img src="images/frontend/iconmeal.png" class="iconimg"/>餐點：</p>
+											<p><img src="images/frontend/iconpeople.png" class="iconimg" style="width:25px;height:25px;"/>數量：</p>
+											<p><img src="images/frontend/iconprice.png" class="iconimg"/>總計金額：</p>
 										</td>
 									</tr>
 								</tbody>
