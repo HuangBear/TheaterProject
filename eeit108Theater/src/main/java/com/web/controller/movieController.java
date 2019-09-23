@@ -12,7 +12,9 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -26,12 +28,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
 import com.web.service.TimeTableService;
+
+import data.util.SystemUtils2018;
 
 @Controller
 public class movieController {
@@ -49,6 +54,14 @@ public class movieController {
 		model.addAttribute("comingMovies", comingMovie);
 		model.addAttribute("releasedMovies", releasedMovie);
 		return "movie";
+	}
+	
+	@RequestMapping("/MoviesForum")
+	public String MoviesForumList(Model model) {
+		List<MovieBean> moviesForumList = service.getAllMovies();
+		model.addAttribute("title", "討論版");
+		model.addAttribute("Movies", moviesForumList);
+		return "MoviesForum";
 	}
 
 	@RequestMapping("/movieTimes_{no}")
@@ -146,8 +159,6 @@ public class movieController {
 	public String getAddNewMovie(Model model) {
 		MovieBean mb = new MovieBean();
 		model.addAttribute("movieBean", mb);
-		String rootDirectory = context.getRealPath("/");
-		System.out.println(rootDirectory);
 		return "addMovie";
 	}
 	@RequestMapping(value = "/addMovie", method = RequestMethod.POST)
@@ -155,7 +166,6 @@ public class movieController {
 		MultipartFile uploadImage = mb.getUploadImage();
 		String originalFilename = uploadImage.getOriginalFilename();
 		String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
-		String rootDirectory = context.getRealPath("/");
 		if (uploadImage != null && !uploadImage.isEmpty()) {
 			try {
 				byte[] b = uploadImage.getBytes();
@@ -166,19 +176,55 @@ public class movieController {
 				e.printStackTrace();
 			}
 		}
-		
 		service.saveMovie(mb);
+		String picPath = "C:\\Users\\User\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images";
 		
+		//  建立Blob物件，交由 Hibernate 寫入資料庫
+		//  將上傳的檔案移到指定的資料夾
 		try {
-			File imageFolder = new File(rootDirectory, "images");
-			if (!imageFolder.exists()) {
-				imageFolder.mkdirs();
-			}
-			File file = new File(imageFolder, mb.getNo() + ext);
+			File file = new File(picPath, mb.getNo().toString() + ext);
 			uploadImage.transferTo(file);
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 		}
 		return "redirect:/movie";
 	}
+	@RequestMapping(value = "/editMovie", method = RequestMethod.GET)
+	public String editMovieGet(@RequestParam(value = "no", required = false) Integer no, Model model) {
+		MovieBean formerMovieBean = service.getMovieById(no);
+		model.addAttribute("former", formerMovieBean);
+		return "editMovie";
+	}
+	@RequestMapping(value = "/editMovie", method = RequestMethod.POST)
+	public String editMoviePost(@ModelAttribute("former") MovieBean formerMovieBean, Model model, Integer no) throws IOException, SerialException, SQLException {
+		MultipartFile uploadImage = formerMovieBean.getUploadImage();
+		String originalFilename = uploadImage.getOriginalFilename();
+		String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+		String picPath = "C:\\Users\\User\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images";
+		if (uploadImage != null && !uploadImage.isEmpty()) {
+			byte[] b = uploadImage.getBytes();
+			Blob blob = new SerialBlob(b);
+			formerMovieBean.setMovieImage(blob);
+			try {
+				File file = new File(picPath, formerMovieBean.getNo().toString() + ext);
+				uploadImage.transferTo(file);
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+			}
+		} else {
+			Blob blob = SystemUtils2018.fileToBlob(picPath + formerMovieBean.getNo() + ".jpg");
+			formerMovieBean.setMovieImage(blob);
+		}
+		service.updateMovie(formerMovieBean);
+		return "redirect:/movie";
+	}
+	@RequestMapping("/movieList")
+	public String movieList(Model model) {
+		List<MovieBean> list = service.getAllMovies();
+		model.addAttribute("movie", list);
+		return "movieList";
+	}
 }
+

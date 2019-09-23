@@ -46,14 +46,31 @@ public class MovieBean implements Serializable{
 	private String genres;
 	private Blob movieImage;
 	@Transient
+	private String fileName;
+	@Transient
 	private MultipartFile uploadImage;
 	
 	public MultipartFile getUploadImage() {
 		return uploadImage;
 	}
 	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	public void setUploadImage(MultipartFile uploadImage) {
 		this.uploadImage = uploadImage;
+	}
+	public MovieBean() {
+		super();
+	}
+	public MovieBean(Integer no) {
+		super();
+		this.no = no;
 	}
 	
 	@OneToMany(mappedBy = "movie")

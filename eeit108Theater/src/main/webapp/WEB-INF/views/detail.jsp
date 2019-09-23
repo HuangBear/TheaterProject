@@ -38,14 +38,14 @@
                     if (!is_clicked) {
                         var j = i;
                         while (j != -1) {
-                            document.getElementById(`gem${j}`).src = "images/D4.png";
+                            document.getElementById(`gem${j}`).src = "images/frontend/D4.png";
                             j--;
                         }
                     }
                 });
                 gems[i].addEventListener("mouseout", function () {
                     if (!is_clicked) {
-                        document.getElementById(`gem${i}`).src = "images/D3.png";
+                        document.getElementById(`gem${i}`).src = "images/frontend/D3.png";
                     }
                 });
                 gems[i].addEventListener("click", function () {
@@ -54,10 +54,10 @@
                         var m = i;
                         var n = i + 1;
                         for (m; m >= 0; m--) {
-                            document.getElementById(`gem${m}`).src = "images/D4.png";
+                            document.getElementById(`gem${m}`).src = "images/frontend/D4.png";
                         }
                         for (n; n < 5; n++) {
-                            document.getElementById(`gem${n}`).src = "images/D3.png";
+                            document.getElementById(`gem${n}`).src = "images/frontend/D3.png";
                         }
                     }
                     is_clicked = true;
@@ -70,7 +70,7 @@
                 document.getElementById(`idsc`).innerHTML = `${score}`;
                 for (k = 0; k < 5; k++) {
 
-                    document.getElementById(`gem${k}`).src = "images/D3.png";
+                    document.getElementById(`gem${k}`).src = "images/frontend/D3.png";
                 }
             });
             document.getElementById("submitAll").addEventListener("click", function () {
@@ -85,7 +85,7 @@
                 is_clicked = false;
                 document.getElementById(`idsc`).innerHTML = `${score}`;
                 for (k = 0; k < 5; k++) {
-                    document.getElementById(`gem${k}`).src = "images/D4.png";
+                    document.getElementById(`gem${k}`).src = "images/frontend/D4.png";
                 }
             });
         });
@@ -105,68 +105,72 @@
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 						<hr class="first" />
-
+						
+						<section> 
+							<header><h3><a href="#">電影介紹</a></h3></header>
+						
 						<hr />
-						<section> <header>
-						<h3>
-							<a href="#">電影介紹</a>
-						</h3>
-						</header>
-
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic10.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/release.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#one">上映日期：</a></h4>
 								<p>Release Date</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic11.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/cast.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#two">導演/主要演員：</a></h4>
 								<p>Cast</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/filmlength.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#three">片長、類型：</a></h4>
 								<p>Film Length / Type</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic13.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/trailer.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#four">預告片：</a></h4>
 								<p>Trailer</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/introduction.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#five">劇情簡介：</a></h4>
 								<p>About The Story</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/score.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#six">評分</a></h4>
 								<p>Score</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/comment.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#seven">評論</a></h4>
 								<p>Comment</p>
 							</div>

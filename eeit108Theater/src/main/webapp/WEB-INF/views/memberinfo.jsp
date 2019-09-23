@@ -9,14 +9,18 @@
 <head>
 <title>716影城 - 會員資訊</title>
 <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/main.css" />
+	
+
 <noscript>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
+
 </head>
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
@@ -33,101 +37,190 @@
 						<hr class="first" />
 						
 						<h3>
-							<a href="#">會員資訊</a>
+							<a href="#" id="button1">會員資訊</a>
 						</h3>
-						</header>
-						<p>8+9尚雷諾熊大寬元您好</p>
+						
+						<p>${LoginOK.name}您好</p>
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic10.jpg"
-									alt="" /></a>
+
+								<a href="#" class="image fit"><img src="images/frontend/memberinfo.png" alt="" /></a>
 							</div>
 							<div class="col-8">
+
+								<p>
 								<h4>基本資料</h4>
-								<p>個人資訊修改</p>
+								<p><a href="#" ><b id="button2">個人資訊修改</b></a></p>
+
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic11.jpg"
-									alt="" /></a>
+
+								<a href="#" class="image fit"><img src="images/frontend/order.png" alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>訂單查詢</h4>
 								<p>當前購票資訊</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/record.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>消費紀錄</h4>
 								<p>歷史觀影紀錄</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic13.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/support.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>申訴進度</h4>
 								<p>客服答覆情況</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/favorite.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4>個人收藏</h4>
 								<p>個人喜愛的電影或影評</p>
 							</div>
 						</div>
-						</section>
+						
 					</div>
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
-						<article id="main"> <header>
-						<h2>
+<!-- 				---------------------------------------------------------	 -->
+					<div id="memberInfo">
+					<article id="main"> 
+						
+						<header>
+						 <h2>
 							<a href="#">個人資訊</a>
-						</h2>
-						<p>Morbi convallis lectus malesuada sed fermentum dolore amet
-						</p>
-						</header> <a href="#" class="image featured"><img
-							src="images/frontend/pic06.jpg" alt="" /></a>
-						<p>Commodo id natoque malesuada sollicitudin elit suscipit.
-							Curae suspendisse mauris posuere accumsan massa posuere lacus
-							convallis tellus interdum. Amet nullam fringilla nibh nulla
-							convallis ut venenatis purus lobortis. Auctor etiam porttitor
-							phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum
-							consequat integer interdum integer purus sapien. Nibh eleifend
-							nulla nascetur pharetra commodo mi augue interdum tellus. Ornare
-							cursus augue feugiat sodales velit lorem. Semper elementum
-							ullamcorper lacinia natoque aenean scelerisque vel lacinia mollis
-							quam sodales congue.</p>
-						<section> <header>
-						<h3>Ultrices tempor sagittis nisl</h3>
+						 </h2>
+						    <p>會員名稱: ${LoginOK.name}</p>
+						
+						    <p>註冊時間: ${LoginOK.registerTime}</p>
+						
+						</header> 
+						   <a href="#" class="image featured"><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" width="200px"/></a>
+						 
+					
+						
+						<section> 
+						<header>
+						  <h3>關於我:</h3>
 						</header>
-						<p>Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus
-							ultrices porttitor sollicitudin imperdiet at pretium tellus in
-							euismod a integer sodales neque. Nibh quis dui quis mattis eget
-							imperdiet venenatis feugiat. Neque primis ligula cum erat aenean
-							tristique luctus risus ipsum praesent iaculis. Fermentum elit
-							fringilla consequat dis arcu. Pellentesque mus tempor vitae
-							pretium sodales porttitor lacus. Phasellus egestas odio nisl duis
-							sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra
-							magna.</p>
-						<p>Eleifend auctor turpis magnis sed porta nisl pretium.
-							Aenean suspendisse nulla eget sed etiam parturient orci cursus
-							nibh. Quisque eu nec neque felis laoreet diam morbi egestas.
-							Dignissim cras rutrum consectetur ut penatibus fermentum nibh
-							erat malesuada varius.</p>
-						</section> <section> <header>
-						<h3>Augue euismod feugiat tempus</h3>
-						</header>
-						<p>Pretium tellus in euismod a integer sodales neque. Nibh
-							quis dui quis mattis eget imperdiet venenatis feugiat. Neque
-							primis ligula cum erat aenean tristique luctus risus ipsum
-							praesent iaculis. Fermentum elit ut nunc urna volutpat donec
-							cubilia commodo risus morbi. Lobortis vestibulum velit malesuada
-							ante egestas odio nisl duis sociis purus faucibus morbi. Eget
-							massa mus etiam sociis pharetra magna.</p>
-						</section> </article>
+						    <p>會員個人介紹 來自資料庫 會員可於會員編輯欄位輸入</p>
+						
+						</section> 
+						
+						<section> 
+						 <header>
+						   <h3>標題2</h3>
+						 </header>
+						    <p>視情況輸入內文2</p>
+						</section> 
+					</article>
+					</div>
+<!-- 			    ---------------------------------------------------------- -->
+			<div id="memberEdit" style="display:none">
+					<article id="main"> 
+						
+						<header>
+						 <h2>
+							<a href="#">會員資料修改</a>
+						 </h2>
+						</header> 
+
+					<section> 
+						
+						<form:form method='POST' modelAttribute="memberBean" action="memberUpdateX" enctype="multipart/form-data">
+							                                                                           
+							${error}
+							
+							<form:input id="no" path="no" class="text" type="hidden"
+									value="${LoginOK.no}" />     
+							<dl>
+							<dd>
+								<label for="name" style="text-align:left">*您的姓名：</label>
+								<form:input id="name" path="name" class="text" type="text"
+									value="${LoginOK.name}" tabindex="1" autocomplete="off"
+									maxlength="50"  />     
+							</dl>
+							<dl>
+							<dd>
+								<label for="email" style="text-align:left">*電子信箱：</label>
+								<form:input id="email" path="email" class="text"
+									type="text" value="${LoginOK.email}" tabindex="2"
+									autocomplete="off" maxlength="50" />
+							</dl>
+							<dl>
+							<dd>
+								<label for="phoneNum" style="text-align:left">*行動電話：</label>
+								<form:input id="phoneNum" path="phoneNum" class="text"
+									type="text" value="${LoginOK.phoneNum}" tabindex="2"
+									autocomplete="off" maxlength="50" />
+							</dl>
+							
+							<dl>
+							<dd>
+								<label for="password" style="text-align:left">*密碼：</label>
+								<form:input id="password" path="password" class="text"
+									type="password" value="${LoginOK.password}" tabindex="2"
+									autocomplete="off" maxlength="50" />
+							</dl>
+
+							<dl>
+							<dd>
+								<label for="memberId" style="text-align:left">*身分證字號：</label>
+								<form:input id="memberId" path="memberId" class="text"
+									type="text" value="${LoginOK.memberId}" tabindex="2"
+									autocomplete="off" maxlength="50" />
+							</dl>
+
+							<dl>
+							<dd>
+
+							<label for="gender" style="text-align:left">*性別：</label>
+							<form:select  id="gender"   required="required" path="gender">
+                            <form:option value="1" selected="selected">男</form:option>
+				            <form:option value="2" >女</form:option>
+                            </form:select>
+							
+							</dl>
+							
+							<dl>
+							<dd>
+
+							<label for="uploadImage" style="text-align:left">上傳照片：</label>
+							
+                             <form:input type="file" id="uploadImage" class="form-control" 
+                                path="uploadImage"/> 
+							
+							</dl>
+									
+
+							<dl>
+							<dd>
+								<a><form:button  type="submit" 
+									style="font-size: 20px; width: 450px; height: 60px;">送出</form:button></a>
+							</dd>
+							</dl>
+<!-- 								<input id="type" name="form" type='hidden' value='true' /> -->
+						</form:form>
+						
+					</section> 
+						
+						
+						
+					</article>
+					</div>
+<!-- 			    ---------------------------------------------------------- -->
+
 					</div>
 				</div>
 				<hr />
@@ -180,5 +273,18 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script type="text/javascript">
+	$(document).ready(function() {         
+		$("#button1").click(function() { 
+		$("#memberInfo").show(); 
+		$("#memberEdit").hide();      
+		});
+
+		$("#button2").click(function() { 
+		$("#memberEdit").show(); 
+		$("#memberInfo").hide();      
+		});
+	});
+</script>
 </body>
 </html>
