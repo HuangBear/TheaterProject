@@ -49,10 +49,21 @@
         </a>
         </li>
         <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="Table2">
+          <i class="fas fa-fw fa-table"></i>
+          <span>電影清單</span></a>
+        </li>
+        <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="emp_add">
           <i class="fas fa-fw fa-table"></i>
           <span>新增員工</span></a>
         </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="movie_add">
+          <i class="fas fa-fw fa-table"></i>
+          <span>新增電影</span></a>
+        </li>
+        
     </ul>
 
  <!-- ------------------------------------------------------------------------------------------------- -->	

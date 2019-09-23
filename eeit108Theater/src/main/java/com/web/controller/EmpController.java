@@ -118,16 +118,16 @@ public class EmpController {
 		List<EmployeeBean> list = service.getAllEmployees();
 		model.addAttribute("employees", list);
 		model.addAttribute("employeeBean", employeeBean);
-		return "admin/"+url;
+		return "forward:/admin/"+url;
 	}
 	
 	
-//	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
-//	public String AddEmpGet(Model model) {
-//		EmployeeBean employeeBean = new EmployeeBean();
-//		model.addAttribute("employeeBean", employeeBean);
-//		return "admin/emp_add";
-//	}
+	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
+	public String AddEmpGet(Model model) {
+		EmployeeBean employeeBean = new EmployeeBean();
+		model.addAttribute("employeeBean", employeeBean);
+		return "admin/emp_add";
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/admin/emp_add")
 	public String AddEmpPost(@ModelAttribute("employeeBean")EmployeeBean employeeBean,

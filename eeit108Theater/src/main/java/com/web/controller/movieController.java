@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.web.entity.EmployeeBean;
+import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
@@ -121,23 +123,24 @@ public class movieController {
 	public String movieTicketing(Model model, @PathVariable Integer no) {
 		MovieBean movie = service.getMovieById(no);
 		model.addAttribute("movie", movie);
-		List<TimeTableBean> times = time_service.getStartTimeByMovie(movie.getMovieName());
-		List<TimeTableBean> theaters = time_service.getTimeTablesByMovie(movie.getMovieName());
-		model.addAttribute("times", times);
-		model.addAttribute("theaters", theaters);
+		TimeTableBean ttb = time_service.getTimeTableByNo(no);
+		model.addAttribute("ttb", ttb);
 		String[] movieTheater = {"A廳", "B廳", "C廳", "D廳", "E廳", "F廳", "G廳", "H廳", "I廳", "J廳"};
+		String[] movieVersion = {"2D", "3D", "IMAX"};
 		List<TimeTableBean> startTime = new ArrayList<>();
 		for (int i = 0; i < movieTheater.length; i++) {
-			startTime = time_service.getStartTimeByMovieAndTheater(movie.getMovieName(), movieTheater[i]);
-			if (startTime.isEmpty()) {
-				continue;
-			} else {
-				model.addAttribute("startTime[" + i + "]", startTime);
-				model.addAttribute("theater" + i, movieTheater[i]);
-				System.out.println(startTime);
-			}
-		}
-		
+			for (int j = 0; j < movieVersion.length; j++) {
+				startTime = time_service.getStartTimeByMovieAndTheater(movie.getMovieName(), movieTheater[i], movieVersion[j]);
+				if (startTime.isEmpty()) {
+					continue;
+				} else {
+					model.addAttribute("startTime" + i, startTime);
+					model.addAttribute("theater" + i, movieTheater[i]);
+					model.addAttribute("version", movieVersion[j]);
+					System.out.println(startTime);
+				}	
+			}	
+		}	
 		return "ticketing";
 	}
 	
@@ -192,13 +195,13 @@ public class movieController {
 		}
 		return b;
 	}
-	@RequestMapping(value = "/addMovie", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/movie_add", method = RequestMethod.GET)
 	public String getAddNewMovie(Model model) {
 		MovieBean mb = new MovieBean();
 		model.addAttribute("movieBean", mb);
-		return "addMovie";
+		return "admin/movie_add";
 	}
-	@RequestMapping(value = "/addMovie", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/movie_add", method = RequestMethod.POST)
 	public String processAddNewMovieForm(@ModelAttribute("movieBean") MovieBean mb, HttpServletRequest request) {
 		MultipartFile uploadImage = mb.getUploadImage();
 		String originalFilename = uploadImage.getOriginalFilename();
@@ -257,11 +260,11 @@ public class movieController {
 		service.updateMovie(formerMovieBean);
 		return "redirect:/movie";
 	}
-	@RequestMapping("/movieList")
-	public String movieList(Model model) {
+	@RequestMapping("/admin/Table2")
+	public String EmpTable1(Model model) {
 		List<MovieBean> list = service.getAllMovies();
-		model.addAttribute("movie", list);
-		return "movieList";
+		model.addAttribute("movies", list);
+		return "admin/Table2";
 	}
 }
 
