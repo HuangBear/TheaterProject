@@ -38,8 +38,6 @@
 		<mapping class="com.web.entity.BulletinBean"></mapping>
 		<mapping class="com.web.entity.ReplyBean"></mapping>
 		<mapping class="com.web.entity.LikeOrDislikeBean"></mapping>
-		
-		
 
 	</session-factory>
 </hibernate-configuration>
