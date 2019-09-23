@@ -59,8 +59,12 @@ public class movieController {
 	@RequestMapping("/MoviesForum")
 	public String MoviesForumList(Model model) {
 		List<MovieBean> moviesForumList = service.getAllMovies();
+		List<MovieBean> ReleasedMoviesList = service.getReleasedMovies();
+		List<MovieBean> ComingMoviesList = service.getComingMovies();
 		model.addAttribute("title", "討論版");
 		model.addAttribute("Movies", moviesForumList);
+		model.addAttribute("ReleasedMovies", ReleasedMoviesList);
+		model.addAttribute("ComingMovies", ComingMoviesList);
 		return "MoviesForum";
 	}
 
