@@ -32,9 +32,29 @@
 	});
 </script>
 <style type="text/css">
-#B ul li {
-	display: inline;
-}
+	#B ul li {list-style-type:none;
+			list-style-position:inside;
+			display:inline;
+			border:1px solid gray;
+			border-radius:5px;
+			text-align:center;
+			}
+			
+	.td{text-align:left;
+		margin:auto;
+		
+	}
+		
+	.dtdd {	display:inline;
+			border:1px solid gray;
+			border-radius:15px;
+			text-align:center;
+			font-size:18px;
+			padding:10px;
+			margin:0px 25px 0px 0px;
+			}
+			
+	.foo:hover { background: #dadee3; }		
 </style>
 
 
@@ -48,24 +68,44 @@
 		<!-- Main -->
 		<div id="B">
 			<center>
-				<ul>
-					<!-- 				<li><a href="#" id="movie01">牠 第二章</a></li> -->
-					<!-- 				<li><a href="#" id="movie02">航海王：奪寶爭霸戰</a></li> -->
-					<!-- 				<li><a href="#" id="movie03">全面攻佔 3：天使救援</a></li> -->
-					<!-- 				<li><a href="#" id="movie04">玩命關頭：特別行動</a></li> -->
-					<!-- 				<li><a href="#" id="movie05">大叔之愛電影版</a></li> -->
-					<!-- 				<li><a href="#" id="movie06">極限逃生</a></li> -->
-					<!-- 				<li><a href="#" id="movie07">NG你的人生</a></li> -->
-					<!-- 				<li><a href="#" id="movie08">我家有個開心農場</a></li> -->
-					<!-- 				<li><a href="#" id="movie08">天氣之子</a></li> -->
-					<!-- 				<li><a href="#" id="movie08">星際救援</a></li> -->
-					<!-- 				<li><a href="#" id="movie08">返校</a></li> -->
-					<!-- 				<li><a href="#" id="movie08">小丑</a></li>			 -->
-					<c:forEach var='releasedMovie' items='${releasedMovies}'>
-						<li><a href='ticketing_${releasedMovie.no}' class='hello'>${releasedMovie.movieName}</a></li>
-					</c:forEach>
-				</ul>
-			</center>
+				<table style="width:1440px;margin:auto;">
+					<tr><td class="td">‧<a href="#" id="movie01">牠 第二章</a></td>
+						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td>
+						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td>
+						<td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td>
+						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td>
+					</tr>					
+					<tr><td class="td">‧<a href="#" id="movie06">極限逃生</a></td>
+						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td>
+						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td>
+						<td class="td">‧<a href="#" id="movie08">天氣之子</a></td>
+						<td class="td">‧<a href="#" id="movie08">星際救援</a></td>
+					</tr>
+					<tr><td class="td">‧<a href="#" id="movie08">返校</a></td>
+						<td class="td">‧<a href="#" id="movie08">小丑</a></td>
+						<td class="td">‧<a href="#" id="movie01">牠 第二章</a></td>
+						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td>
+						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td>
+					</tr>	
+					<tr><td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td>
+						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td>
+						<td class="td">‧<a href="#" id="movie06">極限逃生</a></td>
+						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td>
+						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td>
+					</tr>
+					<tr><td class="td">‧<a href="#" id="movie08">天氣之子</a></td>
+						<td class="td">‧<a href="#" id="movie08">星際救援</a></td>
+						<td class="td">‧<a href="#" id="movie08">返校</a></td>
+						<td class="td">‧<a href="#" id="movie08">小丑</a></td>
+					</tr>
+					<br>
+				</table>
+
+<%-- 					<c:forEach var = 'releasedMovie' items = '${releasedMovies}'> --%>
+<%-- 						<li><a href = 'ticketing_${releasedMovie.no}' class = 'hello'>${releasedMovie.movieName}</a></li> --%>
+<%-- 					</c:forEach> --%>
+
+			</center>		
 		</div>
 		<hr>
 
@@ -73,25 +113,24 @@
 		<div class="wrapper style1" id="minfo01">
 			<div class="container">
 				<div class="row gtr-200">
-					<div class="col-4 col-12-mobile" id="sidebar">
-						<section>
-							<header>
-								<h3>
-									<a href="#">Sed lorem etiam consequat</a>
-								</h3>
-							</header>
-							<p>Tempus cubilia ultrices tempor sagittis. Nisl fermentum
-								consequat integer interdum.</p>
-							<div class="row gtr-50">
-								<div class="col-4">
-									<a href="#" class="image fit"><img
-										src="images/frontend/now01.jpg" alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>Nibh sed cubilia</h4>
-									<p>Amet nullam fringilla nibh nulla convallis tique ante
-										proin.</p>
-								</div>
+					<div class="col-4 col-12-mobile" id="sidebar">						
+						<section> <header>
+						<h2>
+							<a href="#">牠 第二章</a>
+						</h2>
+						</header>
+						<p>IT CHAPTER TWO</p>
+						<p>上映日期：2019/09/05</p>
+						<div class="row gtr-50">
+							<div class="col-4">
+								<a href="#" class="image fit"><img src="images/frontend/now01.jpg"
+									alt="" /></a>
+							</div>
+							<div class="col-8">
+								<p>
+								<p>輔導級 15+</p>
+								<p>片長：2 時 49 分</p>
+								<p>類型：懸疑、驚悚、恐怖</p>
 							</div>
 							<footer>
 								<a href="detail" class="button">電影介紹</a>
@@ -99,191 +138,72 @@
 						</section>
 					</div>
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
-						<article id="main">
-							<header>
-								<h2>
-									<a href="#">${movie.movieName}</a>
-								</h2>
-								<p>Morbi convallis lectus malesuada sed fermentum dolore
-									amet</p>
-							</header>
-							<section>
-								<div id="B">
-									<header>
-										<h3>請選擇日期：</h3>
-									</header>
-									<ul>
-										<li>
-											<c:forEach var = 'hello' items = '${startTime0}' begin = '1' end = '1'>
-										<fmt:formatDate value="${hello}" pattern='yyyy-MM-dd' />
-										</c:forEach></li>
-									</ul>
-								</div>
-							</section>
+						<article id="main"> <header>
 
-							<section>
-								<div id="B">
-									<header>
-										<h3>請選擇廳別場次：</h3>
-									</header>
-									<!-- 							<ul><h6>IMAX：</h6> -->
-									<!-- <!-- 								<li><a href="#" >08:00</a></li> -->
+						<h2>
+<%-- 							<a href="#">${movie.movieName}</a> --%>
+						</h2>
+						<p>Morbi convallis lectus malesuada sed fermentum dolore amet
+						</p>
 
-									<!-- 							</ul> -->
+						</header>
+						<section>
+							<div id="B">
+							<header><h3>請選擇日期：</h3></header>
 
-									<!-- 							<ul><h6>一般數位：</h6> -->
-									<!-- 								<li><a href="#" >09:00</a></li> -->
-									<!-- 								<li><a href="#" >11:00</a></li> -->
-									<!-- 								<li><a href="#" >13:00</a></li> -->
-									<!-- 								<li><a href="#" >15:00</a></li> -->
-									<!-- 								<li><a href="#" >17:00</a></li> -->
-									<!-- 								<li><a href="#" >19:00</a></li> -->
-									<!-- 								<li><a href="#" >21:00</a></li> -->
-									<!-- 								<li><a href="#" >23:00</a></li> -->
-									<!-- 							</ul> -->
-									<c:choose>
-										<c:when test='${!empty startTime0}'>
-											<b>${theater0}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime0}'>
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
+								<dt>
+									<dd  class="dtdd foo"><a href="#">9/11(三)</a></dd>
+									<dd  class="dtdd foo"><a href="#">9/12(四)</a></dd>
+									<dd  class="dtdd foo"><a href="#">9/13(五)</a></dd>
+									<dd  class="dtdd foo"><a href="#">9/14(六)</a></dd>
+									<dd  class="dtdd foo"><a href="#">9/15(日)</a></dd>
+									<dd  class="dtdd foo"><a href="#">9/16(一)</a></dd>
+									<dd  class="dtdd foo"><a href="#">9/17(二)</a></dd>
+								</dt>
 
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime1}'>
-											<b>${theater1}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime1}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-	
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
+<%-- 									<fmt:formatDate value="${startTime}" pattern='MM-dd' /> --%>
 
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime2}'>
-											<b>${theater2}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime2}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
+							</div> 
+						</section> 
+						
+						<section>
+							<div id="B">
+							<header><h3>請選擇廳別場次：</h3></header>
 
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime3}'>
-											<b>${theater3}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime3}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
+<%-- 								<c:forEach var = 'time' items = '${times}'> --%>
+<%-- 									<li><fmt:formatDate value="${time}" pattern='HH:mm' /></li> --%>
+<%-- 								</c:forEach> --%>
 
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime4}'>
-											<b>${theater4}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime4}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
-
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime5}'>
-											<b>${theater5}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime5}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
-
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime6}'>
-											<b>${theater6}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime6}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
-
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime7}'>
-											<b>${theater7}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime7}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
-
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime8}'>
-											<b>${theater8}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime8}'>
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
-
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test='${!empty startTime9}'>
-											<b>${theater9}</b><span>   </span><b>${version}</b><br>
-											<c:forEach var='startTime' items='${startTime9}'>
-												
-													<span><fmt:formatDate value="${startTime}" pattern='HH:mm' /></span>
-				
-											</c:forEach>
-											<br>
-										</c:when>
-										<c:otherwise>
-
-										</c:otherwise>
-									</c:choose>
-																	</div>
-								<footer>
-									<a href="seatbear" class="button">選擇座位</a>
-								</footer>
-
-							</section>
-						</article>
+								<h6>IMAX：</h6><p>
+								<dt>
+									<dd class="dtdd foo"><a href="#">08:00</a></dd>
+									<dd class="dtdd foo"><a href="#">10:00</a></dd>
+									<dd class="dtdd foo"><a href="#">12:00</a></dd>
+									<dd class="dtdd foo"><a href="#">14:00</a></dd>
+									<dd class="dtdd foo"><a href="#">16:00</a></dd>
+									<dd class="dtdd foo"><a href="#">18:00</a></dd>
+									<dd class="dtdd foo"><a href="#">20:00</a></dd>
+									<dd class="dtdd foo"><a href="#">22:00</a></dd>
+								</dt><p>
+								
+								<h6>一般數位：</h6><p>
+								<dt>
+									<dd class="dtdd foo"><a href="#">09:00</a></dd>
+									<dd class="dtdd foo"><a href="#">11:00</a></dd>
+									<dd class="dtdd foo"><a href="#">13:00</a></dd>
+									<dd class="dtdd foo"><a href="#">15:00</a></dd>
+									<dd class="dtdd foo"><a href="#">17:00</a></dd>
+									<dd class="dtdd foo"><a href="#">19:00</a></dd>
+									<dd class="dtdd foo"><a href="#">21:00</a></dd>
+									<dd class="dtdd foo"><a href="#">23:00</a></dd>
+								</dt>
+							
+							</div>
+						<footer> 
+							<a href="seat" class="button">選擇座位</a>
+						</footer> 
+						
+						</section> </article>
 					</div>
 				</div>
 			</div>
