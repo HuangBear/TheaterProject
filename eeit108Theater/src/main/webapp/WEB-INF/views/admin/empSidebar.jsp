@@ -47,16 +47,27 @@
           <i class="fas fa-fw fa-table"></i>
           <span>員工清單</span>
         </a>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="Mem_list">
+          <i class="fas fa-fw fa-table"></i>
+          <span>會員清單</span></a>
         </li>
+        </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="Table2">
+          <i class="fas fa-fw fa-table"></i>
+          <span>電影清單</span></a>
+        </li>
+        
         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="emp_add">
           <i class="fas fa-fw fa-table"></i>
           <span>新增員工</span></a>
         </li>
         <li class="nav-item">
-        <a class="itemTag nav-link" href="#" id="Mem_list">
+        <a class="itemTag nav-link" href="#" id="movie_add">
           <i class="fas fa-fw fa-table"></i>
-          <span>會員清單</span></a>
+          <span>新增電影</span></a>
         </li>
         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="newBulletin">
@@ -73,6 +84,8 @@
           <i class="fa fa-cog" aria-hidden="true"></i>
           <span>即時客服</span></a>
         </li>
+		
+
     </ul>
 
  <!-- ------------------------------------------------------------------------------------------------- -->	

@@ -1,6 +1,6 @@
 @import
-	url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600")
-	;
+	url('https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap');
+/* 	url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600"); */
 
 @import url("fontawesome-all.min.css");
 
@@ -20,7 +20,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	font-family: 'Noto Sans HK', sans-serif;
 	vertical-align: baseline;
 }
 
@@ -86,7 +86,7 @@ body {
 	color: #5b5b5b;
 	font-size: 15pt;
 	line-height: 1.85em;
-	font-family: 'Source Sans Pro', sans-serif;
+ 	font-family: 'Noto Sans HK', sans-serif;  /*'Source Sans Pro', sans-serif; */
 	font-weight: 300;
 }
 
@@ -104,7 +104,7 @@ body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 input, textarea, select {
 	font-size: 15pt;
 	line-height: 1.85em;
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Noto Sans HK', sans-serif;		/*'Source Sans Pro', sans-serif;*/
 	font-weight: 300;
 }
 
@@ -1796,7 +1796,7 @@ input[type="button"].alt:hover, input[type="submit"].alt:hover, input[type="rese
 	text-rendering: auto;
 	line-height: 1;
 	text-transform: none !important;
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 5 Free';     /*'Font Awesome 5 Free';*/
 	font-weight: 400;
 }
 
@@ -1814,7 +1814,7 @@ input[type="button"].alt:hover, input[type="submit"].alt:hover, input[type="rese
 }
 
 .icon.brands:before {
-	font-family: 'Font Awesome 5 Brands';
+	font-family: 'Font Awesome 5 Brands';   /*'Font Awesome 5 Brands';*/
 }
 
 .icon.circled {
@@ -2674,7 +2674,7 @@ body.homepage.is-preload #header:after {
 		text-rendering: auto;
 		line-height: 1;
 		text-transform: none !important;
-		font-family: 'Font Awesome 5 Free';
+		font-family: 'Font Awesome 5 Free';    /*'Font Awesome 5 Free';*/
 		font-weight: 900;
 	}
 	#navButton .toggle:before {

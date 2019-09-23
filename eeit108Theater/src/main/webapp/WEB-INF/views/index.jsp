@@ -10,15 +10,18 @@
 <head>
 <title>716CINEMA</title>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/main.css" />	
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />	
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <noscript>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous">  
+</script>
 
 <style>
 	.t1{width:600 ; height:480px ; text-align:center}
@@ -31,8 +34,7 @@
 	margin-left:10px;
 }
 	
-	.center{
-	
+	.center{	
 	margin-left:0px;
 	display: inline;
 }
@@ -133,9 +135,94 @@ button:focus{
 input::placeholder{
 	text-align:center;
 }
-	
-	
+
+    fieldset {
+      border: 0;
+    }
+    label {
+      display: block;
+      margin: 30px 0 0 0;
+    }
+    .overflow {
+      height: 200px;
+    }
+    
+    .iconimg{
+    	width:25px; 
+    	height:25px;
+    	vertical-align: middle;
+    }
+
 </style>
+
+<script type="text/javascript">
+	$(document).ready(function() {         
+		$("#enjoy").click(function() { 
+		$("#bizs").show(); 
+		$("#716").hide();      
+		});
+	});
+	
+	
+	
+	let adImgs, adsImgs, count = 0, flag = true, t;
+    function show() {
+        adImgs[count].className = "none";
+        adsImgs[count].className = "ads";
+        count++;
+        if (count > 4) count = 0;
+        adImgs[count].className = "block";
+        adsImgs[count].className = "adsborder";
+    }
+    t = window.setInterval(show, 2000);
+
+    document.addEventListener("DOMContentLoaded", function () {
+        adImgs = document.querySelectorAll("img.block,img.none");
+        // alert(adImgs.length);
+        adsImgs = document.querySelectorAll("img.ads,img.adsborder");
+        // alert(adsImgs.length);
+        document.getElementById("idpauseplay").addEventListener("click", pauseplayf);
+        document.getElementById("idback").addEventListener("click", backf);
+        document.getElementById("idnext").addEventListener("click", nextf);
+    });
+
+    function pauseplayf() {
+        if (flag) {
+            flag = false;
+            window.clearInterval(t);
+            document.getElementById("idpauseplay").src = "images/play1.png";
+        } else {
+            flag = true;
+            t = window.setInterval(show, 2000);
+            document.getElementById("idpauseplay").src = "images/pause1.png";
+        }
+    }
+
+    function backf() {
+        adImgs[count].className = "none";
+        adsImgs[count].className = "ads";
+        count--;
+        if (count < 0) count = 4;
+        adImgs[count].className = "block";
+        adsImgs[count].className = "adsborder";
+    }
+
+    function nextf() {
+        show();
+    }
+
+
+
+  	$( function() {
+    	$( "#speed" ).selectmenu();
+ 		$( "#files" ).selectmenu();
+ 		$( "#number" )
+      		.selectmenu()
+      		.selectmenu( "menuWidget" )
+       		 .addClass( "overflow" );
+		$( "#salutation" ).selectmenu();
+ 	 } );
+</script>
 
 </head>
 
@@ -144,7 +231,7 @@ input::placeholder{
 		<div id="header">
 			<!-- header -->
 			<jsp:include page="header.jsp" />
-			<div class="inner">
+			<div class="inner" id="716">
 				<header>
 				<h1>
 					<a href="index" id="logo">歡迎進入<strong>716影城</strong>全新的觀影體驗</a>
@@ -154,8 +241,35 @@ input::placeholder{
 					為了給影迷最佳觀影體驗，本據點將採取全4K影廳規格，<br>
 					讓影像投影畫質大幅提升，並透過優化程度使影像達到最清晰、栩栩如生效果。</p>
 				</header>
-				<footer> <a href="#banner" class="button circled scrolly">ENJOY</a>
+				<footer> <a href="#" class="button circled scrolly" id="enjoy">ENJOY</a>
 				</footer>
+			</div> 
+			
+			<div class="inner" id="bizs" style="display:none;">
+                <article>
+                    <!--請在此加上標題標籤並套用title樣式-->
+                    <fieldset class="field">
+                        <div class="div1" id="links">
+                            <a href="#"><img id="ad0" class="block" src="images/frontend/biz1.jpg"></a>
+                            <a href="#"><img id="ad1" class="none" src="images/frontend/biz2.jpg"></a>
+                            <a href="#"><img id="ad2" class="none" src="images/frontend/biz3.jpg"></a>
+
+                        </div>
+                        <hr>
+                        <div class="div2">
+                            <img id="sad0" class="adsborder" src="images/frontend/G1-M31.jpg">
+                            <img id="sad1" class="ads" src="images/frontend/G2-M33.jpg">
+                            <img id="sad2" class="ads" src="images/frontend/G3-M104.jpg">
+
+                        </div>
+
+                        <div class="div2">
+                            <img id="idback" class="control" src="images/frontend/back1.png">
+                            <img id="idpauseplay" class="control" src="images/frontend/pause1.png">
+                            <img id="idnext" class="control" src="images/frontend/next1.png">
+                        </div>
+                    </fieldset>
+                </article>
 			</div>
 			
 		</div>
@@ -291,70 +405,120 @@ input::placeholder{
 		</div>
 		</section>
 		
-		<center>
-		<div style="margin:auto ; display:inline-block;">
-			<div style="border:1px solid black; margin:auto ;display:inline-block;">
-				<h4><a href="#">快速訂票</a></h4>
-				<br>
-				<select name="請選擇電影名稱" length="10">
-					<option value="0">--請選擇電影--</option>
-					<option value="1">牠</option>
-					<option value="2">航海王：奪寶爭霸戰</option>
-					<option value="3">全面攻佔3：天使救援</option>
-				</select><br>
-				<select name="請選擇查詢廳次" length="10">
-					<option value="0">--請選擇日期--</option>
-					<option value="1">2019/09/11(三)</option>
-					<option value="2">2019/09/12(四)</option>
-					<option value="3">2019/09/13(五)</option>
-				</select><br>
-				<select name="請選擇查詢廳次" length="10">
-					<option value="0">--請選擇影廳--</option>
-					<option value="1">喔氣氣氣氣 - IMAX廳</option>
-					<option value="2">高雄發大財 - 3D數位廳</option>
-					<option value="3">為什麼說謊 - 一般數位廳</option>
-				</select><br>
-				<select name="請選擇查詢廳次" length="10">
-					<option value="0">--請選擇場次--</option>
-					<option value="1">11:30</option>
-					<option value="2">14:30</option>
-					<option value="3">17:30</option>
-				</select><br>
+		<artical>
+			<center>
+			<section style="margin:auto ;display:inline-block;">
+			<div style="margin:auto ;display:inline-block;">			
+<!-- 				<section>				 -->
+<!-- 					<div style="border:1px solid gray; margin:auto ; border-radius:15px;"> -->
+<!-- 						<h4><a href="#">快速訂票</a></h4> -->
+<!-- 						<p><p> -->
+<!-- 						<table> -->
+<!-- 							<tr><select name="請選擇電影名稱" length="10"> -->
+<!-- 									<option value="0">--請選擇電影--</option> -->
+<!-- 									<option value="1">牠</option> -->
+<!-- 									<option value="2">航海王：奪寶爭霸戰</option> -->
+<!-- 									<option value="3">全面攻佔3：天使救援</option> -->
+<!-- 								</select></tr><br> -->
+<!-- 							<tr><select name="請選擇查詢廳次" length="10"> -->
+<!-- 									<option value="0">--請選擇日期--</option> -->
+<!-- 									<option value="1">2019/09/11(三)</option> -->
+<!-- 									<option value="2">2019/09/12(四)</option> -->
+<!-- 									<option value="3">2019/09/13(五)</option> -->
+<!-- 								</select></tr><br> -->
+<!-- 							<tr><select name="請選擇查詢廳次" length="10"> -->
+<!-- 									<option value="0">--請選擇影廳--</option> -->
+<!-- 									<option value="1">喔氣氣氣氣 - IMAX廳</option> -->
+<!-- 									<option value="2">高雄發大財 - 3D數位廳</option> -->
+<!-- 									<option value="3">為什麼說謊 - 一般數位廳</option> -->
+<!-- 								</select></tr><br> -->
+<!-- 							<tr><select name="請選擇查詢廳次" length="10"> -->
+<!-- 									<option value="0">--請選擇場次--</option> -->
+<!-- 									<option value="1">11:30</option> -->
+<!-- 									<option value="2">14:30</option> -->
+<!-- 									<option value="3">17:30</option> -->
+<!-- 								</select></tr> -->
+<!-- 						</table> -->
+<!-- 						<p>			 -->
+<%-- 							<center> --%>
+<!-- 							<button class="" id="" onclick="ShowL()">前往訂票</button> -->
+<!-- 							<button class="" id="" onclick="ShowR()">查詢座位</button>			 -->
+<%-- 							</center> --%>
+<!-- 					</div> -->
+<!-- 				</section> -->
 				
-				<button class="" id="" onclick="ShowL()">前往訂票</button>
-				<button class="" id="" onclick="ShowR()">查詢座位</button>
-			
+				<section style="margin:auto ;display:inline-block; ">				
+					<div style="border:1px solid gray; margin:auto ; border-radius:15px;padding:0px 30px 0px 30px; background-color:#c5c6c7">        <!--#106ecc #c5c6c7*-->      
+						<p>
+						<h4><a href="#" style="color:white;">快速訂票</a></h4>
+						<p><p>
+						<form action="#">
+							<fieldset>								
+									<img src="images/frontend/showmovie.png" class="iconimg" >
+									<select name="請選擇電影名稱" id="speed">
+										<option>請選擇電影名稱</option>
+										<option>牠</option>
+										<option>航海王：奪寶爭霸戰</option>
+      									<option>全面攻佔3：天使救援</option>
+      									<option>玩命關頭：特別行動</option>
+    								</select><br><br>
+ 									
+ 									<img src="images/frontend/choosedate.png" class="iconimg">
+    								<select name="請選擇查詢日期" id="files">
+        								<option>請選擇查詢日期</option>
+        								<option>09/21(六)</option>
+        								<option>09/22(日)</option>
+        								<option>09/23(一)</option>
+        								<option>09/24(二)</option>
+    								</select><br><br>
+ 									
+ 									<img src="images/frontend/theaterplace.png" class="iconimg">
+    								<select name="請選擇查詢廳次" id="number">
+      									<option>請選擇查詢廳次</option>
+      									<option>IMAX</option>
+      									<option>一般數位</option>
+      									<option>3D</option>
+      									<option>4DX</option>
+    								</select><br><br>
+ 
+ 									<img src="images/frontend/timetable.png" class="iconimg" style="height:20px;width:25px;">
+    								<select name="請選擇查詢場次" id="salutation">
+      									<option>請選擇查詢場次</option>
+      									<option>09:30</option>
+      									<option>11:30</option>
+      									<option>14:30</option>
+      									<option>17:30</option>
+    								</select><br>
+    							</table>
+  							</fieldset>
+						</form>
+						<p>			
+							<center>
+							<button class="" id="" onclick="ShowL()">前往訂票</button>
+							<button class="" id="" onclick="ShowR()">查詢座位</button>			
+							</center>
+						<p>
+					</div>
+				</section>
+							
+				<section style="display:inline-block;vertical-align:top;">		
+					<div style="border:1px solid gray;border-radius:15px;padding:0px 30px 0px 30px;">
+						<p>
+						<label style="text-align:left;"><h4>最新公告<a href="news">/MORE</a></h4></label>
+						<p>
+						<ul style="text-align:left;">
+							<li><a href="news">2019/09/05 【大叔之愛】片尾告示</a></li>
+							<li><a href="news">2019/08/29 【第九分局】片尾告示</a></li>
+							<li><a href="news">2019/08/14 【驅魔使者】片尾公告</a></li>
+							<li><a href="news">2019/04/30   信用卡優惠影城現場購票公告</a></li>
+							<li><a href="news">2019/02/13   行動支付公告</a></li>							
+						</ul>	
+					</div>					
+				</section>						
 			</div>
-						
-			<div style="border:1px solid black; margin:auto ; display:inline-block;">
-				<label style="display:inline-block"><h4>最新公告<a href="news">/MORE</a></h4></label>
-				<br>
-				<ul>
-					<li>
-						<time>2019/09/05</time>
-						<a href="news">【大叔之愛】片尾告示</a>
-					</li>
-					<li>
-						<time>2019/08/29</time>
-						<a href="news">【第九分局】片尾告示</a>
-					</li>
-					<li>
-						<time>2019/08/14</time>
-						<a href="news">【驅魔使者】片尾公告</a>
-					</li>
-					<li>
-						<time>2019/04/30</time>
-						<a href="news">信用卡優惠影城現場購票公告</a>
-					</li>
-					<li>
-						<time>2019/02/13</time>
-						<a href="news">行動支付公告</a>
-					</li>							
-				</ul>
-	
-			</div>
-		</div>
-		</center>
+			</section>
+			</center>
+		</artical>
 
 		<hr>
 
@@ -450,20 +614,16 @@ input::placeholder{
 		<jsp:include page="footer.jsp" />
 	</div>
 	<!-- Scripts -->
-	<script
-		src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/js/jquery.dropotron.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/js/jquery.scrolly.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/js/jquery.scrollex.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/js/browser.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrolly.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrollex.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/browser.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/breakpoints.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/util.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 
 </html>

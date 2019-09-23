@@ -163,6 +163,7 @@
 									type="password" placeholder="請輸入密碼 (英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
+
 <!-- 							<dl> -->
 <!-- 							<dd> -->
 <!-- 								<label for="account" style="text-align:left">*請再輸入密碼一次：</label> -->
@@ -170,6 +171,7 @@
 <%-- 									type="password" placeholder="請重複上面所輸入之密碼 (英文大小寫有差別 )" tabindex="2" --%>
 <%-- 									autocomplete="off" maxlength="50" /> --%>
 <!-- 							</dl> -->
+
 							<dl>
 							<dd>
 								<label for="memberId" style="text-align:left">*身分證字號：</label>
@@ -186,12 +188,14 @@
 							</dl>
 							<dl>
 							<dd>
+
 							<label for="gender" style="text-align:left">*性別：</label>
 							<form:select  id="gender"   required="required" path="gender">
                             <form:option value="1" selected="selected">男</form:option>
 				            <form:option value="2" >女</form:option>
                             </form:select>
 							
+
 							</dl>
 
 							<dl>

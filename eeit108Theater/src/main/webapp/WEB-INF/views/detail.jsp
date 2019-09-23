@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -38,14 +39,14 @@
                     if (!is_clicked) {
                         var j = i;
                         while (j != -1) {
-                            document.getElementById(`gem${j}`).src = "images/D4.png";
+                            document.getElementById(`gem${j}`).src = "images/frontend/D4.png";
                             j--;
                         }
                     }
                 });
                 gems[i].addEventListener("mouseout", function () {
                     if (!is_clicked) {
-                        document.getElementById(`gem${i}`).src = "images/D3.png";
+                        document.getElementById(`gem${i}`).src = "images/frontend/D3.png";
                     }
                 });
                 gems[i].addEventListener("click", function () {
@@ -54,10 +55,10 @@
                         var m = i;
                         var n = i + 1;
                         for (m; m >= 0; m--) {
-                            document.getElementById(`gem${m}`).src = "images/D4.png";
+                            document.getElementById(`gem${m}`).src = "images/frontend/D4.png";
                         }
                         for (n; n < 5; n++) {
-                            document.getElementById(`gem${n}`).src = "images/D3.png";
+                            document.getElementById(`gem${n}`).src = "images/frontend/D3.png";
                         }
                     }
                     is_clicked = true;
@@ -70,7 +71,7 @@
                 document.getElementById(`idsc`).innerHTML = `${score}`;
                 for (k = 0; k < 5; k++) {
 
-                    document.getElementById(`gem${k}`).src = "images/D3.png";
+                    document.getElementById(`gem${k}`).src = "images/frontend/D3.png";
                 }
             });
             document.getElementById("submitAll").addEventListener("click", function () {
@@ -85,7 +86,7 @@
                 is_clicked = false;
                 document.getElementById(`idsc`).innerHTML = `${score}`;
                 for (k = 0; k < 5; k++) {
-                    document.getElementById(`gem${k}`).src = "images/D4.png";
+                    document.getElementById(`gem${k}`).src = "images/frontend/D4.png";
                 }
             });
         });
@@ -105,68 +106,72 @@
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 						<hr class="first" />
-
+						
+						<section> 
+							<header><h3><a href="#">電影介紹</a></h3></header>
+						
 						<hr />
-						<section> <header>
-						<h3>
-							<a href="#">電影介紹</a>
-						</h3>
-						</header>
-
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic10.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/release.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#one">上映日期：</a></h4>
 								<p>Release Date</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic11.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/cast.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#two">導演/主要演員：</a></h4>
 								<p>Cast</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/filmlength.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#three">片長、類型：</a></h4>
 								<p>Film Length / Type</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic13.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/trailer.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#four">預告片：</a></h4>
 								<p>Trailer</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/introduction.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#five">劇情簡介：</a></h4>
 								<p>About The Story</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/score.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#six">評分</a></h4>
 								<p>Score</p>
 							</div>
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
+								<a href="#" class="image fit"><img src="images/frontend/comment.png"
 									alt="" /></a>
 							</div>
 							<div class="col-8">
+								<p>
 								<h4><a href="#seven">評論</a></h4>
 								<p>Comment</p>
 							</div>
@@ -179,44 +184,43 @@
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 						<article id="main"> <header>
 						<h2>
-							<a>牠 第二章</a>
+							<a>${movie.movieName}</a>
 						</h2>
 						<a href="ticketing" class="button">前往討論</a>
-						<p>IT CHAPTER TWO</p>
-						</header> <a><img src="images/frontend/now01.jpg" alt="" /></a>
+						<p>${movie.engMovieName}</p>
+						</header> <a><img src="<c:url value = '/getPicture/${movie.no}'/>" alt="" style = 'width: 400px; height: 800px;' /></a>
 						
 						<section> <header>
 						<h3><a name="one">上映日期：</a></h3>
 						</header>
-						<p>2019/09/05</p>
+						<p><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${releasedMovie.openingDate}" /></p>
 						</section> 
 						
 						<section> <header>
 						<h3><a name="two">導演/主要演員：</a></h3>
 						</header>
-						<p>導演：安迪馬希堤(Andy Muschietti) <br>
-						         演員：詹姆斯麥艾維(James McAvoy)、 傑維爾伯特(Javier Botet)、 <br>
-						          潔西卡雀絲坦(Jessica Chastain)、 比爾史卡斯加德(Bill Skarsgård)、 <br>
-						          比爾哈德爾(Bill Hader)</p>
+						<p>導演：${movie.directors}<br>
+						         演員：${movie.casts}</p>
 						</section>
 						
 						<section> <header>
 						<h3><a name="three">片長、類型：</a></h3>
 						</header>
-						<p>片長：2時49分<br>
-							類型：懸疑、驚悚、恐怖</p>
+						<p>片長：${movie.duration}<br>
+							類型：${movie.genres}</p>
 						</section>
 						 
 						<section> <header>
 						<h3><a name="four">預告片：</a></h3>
 						</header>
-						<p><iframe width="640" height="360" src="https://www.youtube.com/embed/-BU5z3j-bs0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+						<p><iframe width="640" height="360" src="${link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 						</section>
 						 
 						<section> <header>
 						<h3><a name="five">劇情簡介：</a></h3>
 						</header>
-						<p>導演安迪馬希堤再度集結了少年版與成年版的魯蛇俱樂部成員，為了小丑潘尼懷斯，他們在27年後重回故鄉德瑞鎮。預告從貝芙莉(潔西卡雀絲坦 飾)回到德瑞鎮的故居畫面開始，赫然發現小丑潘尼懷斯並沒有被消滅，牠在27年後又回來了，正如同這個小鎮的歷史，每27年邪惡力量就會再度甦醒。於是各奔東西的魯蛇們在闊別了多年之後，再度回到這個讓他們充滿夢靨的故鄉，一同勇敢面對小丑潘尼懷斯。</p>
+						<p>${movie.introduction}</p>
 						</section>
 						 
 						<section> <header>

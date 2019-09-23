@@ -142,6 +142,7 @@ public class EmpController {
 		model.addAttribute("employeeBean", employeeBean);
 		model.addAttribute("memberBean", memberBean);
 		model.addAttribute("now", new Date());
+
 		return "forward:/admin/"+url;
 	}
 	

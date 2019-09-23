@@ -1,45 +1,35 @@
 package com.web.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.sql.Blob;
+
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.sql.rowset.serial.SerialBlob;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.ArticleBean;
 import com.web.entity.MemberBean;
+import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.service.ArticleService;
 
@@ -51,12 +41,16 @@ public class ArticleController {
 	@Autowired
 	ServletContext context;
 
-	@RequestMapping({"/Articles"})
-	public String list(Model model) {
+	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
+	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 		model.addAttribute("title", "討論版");
-		model.addAttribute("subtitle", "請遵守版規");
-		List<ArticleBean> list = service.getAllArticles();
+		model.addAttribute("subtitle","test");
+			
+		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
+		session = request.getSession();
+		
+		session.setAttribute("movie", no);
 		return "Articles";
 	}
 
@@ -75,7 +69,7 @@ public class ArticleController {
 	}
 
 	@RequestMapping("/Article")
-	public String getArticleById(@RequestParam("no") Integer no, Model model) {
+	public String getArticleById(@RequestParam("id") Integer no, Model model) {
 		ArticleBean ab = service.getArticleById(no);
 		ReplyBean rb = service.getReplyById(no);
 		System.out.println(ab);
@@ -85,16 +79,18 @@ public class ArticleController {
 		return "Article";
 	}
 
-	@RequestMapping(value = "/Articles/add", method = RequestMethod.GET)
-	public String getAddNewArticleForm(Model model) {
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String getAddNewArticleForm(Model model,HttpServletRequest request,HttpSession session) {
+		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
+		
 		model.addAttribute("ArticleBean", ab);
 		return "addArticle";
 	}
 	
-	@RequestMapping(value = "/Articles/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processAddNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
-		      BindingResult result, HttpServletRequest request ) {
+		      BindingResult result, HttpServletRequest request ) throws ParseException {
 		
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
@@ -114,35 +110,52 @@ public class ArticleController {
 		{
 			errorMessage.put("titleOver", "字數超過30字");
 		}
-		System.out.println("title=" + ab.getTitle());
-		System.out.println("title.length=" + ab.getTitle().length());
-//		if (bb.getgp() == null) {
-//			bb.setgp(0);
+		ab.setLikeCount(0);
+		ab.setDislikeCount(0);
+		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		ab.setAuthor(new MemberBean(AuthorS));
+		int MovieS = Integer.parseInt(request.getParameter("movie"));
+		ab.setMovie(new MovieBean(MovieS));
+		ab.setAvailable(true);
+		ab.setPostTime(new Date());
+		service.addArticle(ab);
 
 		if (!errorMessage.isEmpty())
 		{
 			return "addArticle";
 		} else
 		{
-			service.addArticle(ab);
-			return "redirect:/addArticle";
+			return "redirect:/MoviesForum";
 		}
 		
 	}
 
 
 	
-	@RequestMapping(value = "/Articles/edit", method = RequestMethod.GET)
-	public String getEditArticleForm(Model model) {
-		ArticleBean ab = new ArticleBean();
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String getEditArticleForm(@RequestParam("id") Integer no, Model model) {
+		ArticleBean ab = service.getArticleById(no);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		ab.setPostTimeString(ssdf.format(ab.getPostTime()));
+		String NoS =Integer.toString(ab.getNo());
+		ab.setNoString(NoS);
+		String LikeS =Integer.toString(ab.getLikeCount());
+		ab.setLikeCountString(LikeS);
+		String DislikeS =Integer.toString(ab.getDislikeCount());
+		ab.setDislikeCountString(DislikeS);
+		String AuthorS =Integer.toString(ab.getAuthor().getNo());
+		ab.setAuthorString(AuthorS);
+		String MovieS =Integer.toString(ab.getMovie().getNo());
+		ab.setMovieString(MovieS);
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("Article", service.getArticleById(no));
 		return "editArticle";
 	}
 	
-	@RequestMapping(value = "/Articles/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String processEditNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
-		      BindingResult result, HttpServletRequest request ) {
-		
+		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		System.err.println("==============");
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
 		try
@@ -161,18 +174,42 @@ public class ArticleController {
 		{
 			errorMessage.put("titleOver", "字數超過30字");
 		}
+		System.out.println("==postString==="+request.getParameter("postTimeString"));
+		System.out.println("==postString==="+request.getParameter("noString"));
+		int NoS = Integer.parseInt(request.getParameter("noString"));
+		ab.setNo(NoS);
+		int LikeS = Integer.parseInt(request.getParameter("likeCountString"));
+		ab.setLikeCount(LikeS);
+		int DislikeS = Integer.parseInt(request.getParameter("dislikeCountString"));
+		ab.setDislikeCount(DislikeS);
+		int AuthorS = Integer.parseInt(request.getParameter("authorString"));
+		ab.setAuthor(new MemberBean(AuthorS));
+		int MovieS = Integer.parseInt(request.getParameter("movieString"));
+		ab.setMovie(new MovieBean(MovieS));
+		ab.setAvailable(true);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("postTimeString=" + ab.getPostTimeString());
+		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
+		
+		
 		System.out.println("title=" + ab.getTitle());
 		System.out.println("title.length=" + ab.getTitle().length());
 //		if (bb.getgp() == null) {
 //			bb.setgp(0);
+		System.out.println("no=" + ab.getNo());
+		System.out.println("content=" + ab.getContent());
+		System.out.println("tag=" + ab.getTag());
+		System.out.println("postTime=" + ab.getPostTime());
+		System.out.println("postTimeString=" + ab.getPostTimeString());
+		
+		service.editArticle(ab);
 
 		if (!errorMessage.isEmpty())
 		{
 			return "editArticle";
 		} else
 		{
-			service.addArticle(ab);
-			return "redirect:/editArticle";
+			return "redirect:/MoviesForum";
 		}
 		
 	}
@@ -199,7 +236,7 @@ public class ArticleController {
 				, "tag"
 				, "title"
 				, "content"
-				, "memberId"
+				, "postTime"
 				);
 	}
 //	@RequestMapping(value = "/getPicture/{bookId}", method = RequestMethod.GET)
