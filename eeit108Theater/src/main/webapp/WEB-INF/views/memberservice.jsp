@@ -74,8 +74,8 @@
 						
 						<form:form method='POST' modelAttribute="memberBean" action="memberLogin" enctype="multipart/form-data">
 							<h3>會員登入</h3>
-							${error}
-							${name}${welcome}${logout}
+							<em>${error}${errMsg}</em>
+							<em>${name}${welcome}${logout}</em>
 							<dl>
 							<dd>
 								<label for="email" style="text-align:left">會員email：</label>
@@ -89,14 +89,20 @@
 								<form:input id="password" path="password" class="text"
 									type="password" placeholder="請輸入密碼 ( 英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" /></dd>
+									
 							</dl>
+							
 							<dl>
 							<dd>
+								
+				            	
+								
 								<form:button  type="submit" style="font-size: 20px;width: 450px; height: 60px;">
 									 登入</form:button><br></dd></dl>
 									 
 								<dl><dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
 									 重填</form:button><br>	
+						      	 
 								<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 								<a href="#" class="image fit" ><img src="images/facebooklogin.jpg"
 									alt="" style="width:450px; display:block; margin:auto;"/></a></fb:login-button><br>
@@ -107,7 +113,9 @@
 								
 							</dd>
 							</dl>
-								<input id="type" name="form" type='hidden' value='true' />
+							
+								<input id="remember" name="remember" type="checkbox" value='true' >remember me<br>
+								
 						</form:form>
 											
 					</div>

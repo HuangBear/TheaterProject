@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.dao.MemberDao;
 import com.web.entity.MemberBean;
-
 import com.web.service.MemberService;
+import com.web.util.SecurityCipher;
 
 @Transactional
 @Service
@@ -106,7 +106,7 @@ public class MemberServiceImpl implements MemberService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			memberBean.setRegisterTime(new Date()); //set member註冊時間 (熊設計的表格是設定not null 一定要填)
+			memberBean.setRegisterTime(new Date()); //set member註冊時間 (設計的表格是設定not null 一定要填)
 			memberBean.setAvailable(true); //set member Available 預設true:在職 false:停權
 			memberBean.setCommentPermission(true); //set member Permission 預設true
 			memberBean.setBanCounter(0);
@@ -125,9 +125,10 @@ public class MemberServiceImpl implements MemberService{
 	public MemberBean checkEmailPassword(String email, String password) {
 		MemberBean mb=new MemberBean();
 		mb=null;
+		String ercryptPwd = SecurityCipher.encryptString(password);
 		List<MemberBean> list=memberDao.getAllMembers();
 		for(MemberBean memberBean:list) {
-			if(memberBean.getEmail().equals(email)&& memberBean.getPassword().equals(password)){
+			if(memberBean.getEmail().equals(email)&& memberBean.getPassword().equals(ercryptPwd)){
 				mb=memberBean;
 			}
 		}
