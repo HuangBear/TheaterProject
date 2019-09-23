@@ -1,44 +1,34 @@
 package com.web.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
+import java.io.UnsupportedEncodingException;
+
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.ArticleBean;
 import com.web.entity.MemberBean;
+import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.service.ArticleService;
 
@@ -50,9 +40,11 @@ public class ArticleController {
 	@Autowired
 	ServletContext context;
 
-	@RequestMapping({"/Forums"})
-	public String list(Model model) {
-		List<ArticleBean> list = service.getAllArticles();
+	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
+	public String list(Model model,@RequestParam("id") Integer no) {
+		model.addAttribute("title", "討論版");
+		model.addAttribute("subtitle","test");
+		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
 		return "Articles";
 	}
@@ -72,7 +64,7 @@ public class ArticleController {
 	}
 
 	@RequestMapping("/Article")
-	public String getArticleById(@RequestParam("no") Integer no, Model model) {
+	public String getArticleById(@RequestParam("id") Integer no, Model model) {
 		ArticleBean ab = service.getArticleById(no);
 		ReplyBean rb = service.getReplyById(no);
 		System.out.println(ab);
@@ -82,101 +74,139 @@ public class ArticleController {
 		return "Article";
 	}
 
-	@RequestMapping(value = "/Articles/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewArticleForm(Model model) {
 		ArticleBean ab = new ArticleBean();
 		model.addAttribute("ArticleBean", ab);
 		return "addArticle";
 	}
-
-//	@RequestMapping(value = "/forums/add", method = RequestMethod.POST)
-//	public String processAddNewForumForm(@ModelAttribute("ForumBean") ForumBean bb, 
-//		      BindingResult result, HttpServletRequest request ) {
-//		String[] suppressedFields = result.getSuppressedFields();
-//		if (suppressedFields.length > 0) {
-//			throw new RuntimeException("嘗試傳入不允許的欄位: " + 
-//		    StringUtils.arrayToCommaDelimitedString(suppressedFields));
-//		}
-//		if (bb.getgp() == null) {
-//			bb.setgp(0);
-//		}
-//		MultipartFile productImage = bb.getForumImage();
-//		String originalFilename = productImage.getOriginalFilename();
-//		bb.setFileName(originalFilename);
-//		
-//		String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
-//		String rootDirectory = context.getRealPath("/");
-//		//  建立Blob物件，交由 Hibernate 寫入資料庫
-//		if (productImage != null && !productImage.isEmpty() ) {
-//			try {
-//				byte[] b = productImage.getBytes();
-//				Blob blob = new SerialBlob(b);
-//				bb.setCoverImage(blob);
-//			} catch(Exception e) {
-//				e.printStackTrace();
-//				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
-//			}
-//		}
-//		service.addForum(bb);
-//		//  將上傳的檔案移到指定的資料夾
-//		try {
-//			File imageFolder = new File(rootDirectory, "images");
-//			if (!imageFolder.exists()) imageFolder.mkdirs();
-//			File file = new File(imageFolder, bb.getForumId() + ext);
-//			productImage.transferTo(file);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
-//		}
-//		return "redirect:/Forums";
-//	}
 	
-	@RequestMapping(value = "/Articles/edit", method = RequestMethod.GET)
-	public String getEditArticleForm(Model model) {
-		ArticleBean ab = new ArticleBean();
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String processAddNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
+		      BindingResult result, HttpServletRequest request ) throws ParseException {
+		
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
+		{
+			errorMessage.put("titleNull", "請輸入標題");
+		} else if (ab.getTitle().length() > 30)
+		{
+			errorMessage.put("titleOver", "字數超過30字");
+		}
+		ab.setLikeCount(0);
+		ab.setDislikeCount(0);
+		int AuthorS = Integer.parseInt(request.getParameter("authorString"));
+		ab.setAuthor(new MemberBean(AuthorS));
+		int MovieS = Integer.parseInt(request.getParameter("movieString"));
+		ab.setMovie(new MovieBean(MovieS));
+		ab.setAvailable(true);
+		ab.setPostTime(new Date());
+		service.addArticle(ab);
+
+		if (!errorMessage.isEmpty())
+		{
+			return "addArticle";
+		} else
+		{
+			return "redirect:/addArticle";
+		}
+		
+	}
+
+
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String getEditArticleForm(@RequestParam("id") Integer no, Model model) {
+		ArticleBean ab = service.getArticleById(no);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		ab.setPostTimeString(ssdf.format(ab.getPostTime()));
+		String NoS =Integer.toString(ab.getNo());
+		ab.setNoString(NoS);
+		String LikeS =Integer.toString(ab.getLikeCount());
+		ab.setLikeCountString(LikeS);
+		String DislikeS =Integer.toString(ab.getDislikeCount());
+		ab.setDislikeCountString(DislikeS);
+		String AuthorS =Integer.toString(ab.getAuthor().getNo());
+		ab.setAuthorString(AuthorS);
+		String MovieS =Integer.toString(ab.getMovie().getNo());
+		ab.setMovieString(MovieS);
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("Article", service.getArticleById(no));
 		return "editArticle";
 	}
-	// return "forward:/anotherFWD": 轉發(forward)給能夠匹配給 /anotherFWD的控制器方法
-	// 將與下一棒的程式共用同一個請求物件
-	// return "anotherFWD": 也是轉發，但Spring框架會視anotherFWD為視圖的邏輯名稱來尋找
-	// 對應的視圖，然後由該視圖來產生回應    
-//	@RequestMapping(value = "/forwardDemo")
-//	public String forward(Model model, HttpServletRequest request) {
-//	    String uri = request.getRequestURI();
-//	    model.addAttribute("modelData0", "這是以/forwardDemo送來的請求");
-//	    model.addAttribute("uri0", uri);
-//	    return "forward:/anotherFWD";
-//	}
-//	// 被轉發的方法，將與前一個方法共用同一個請求物件
-//	@RequestMapping(value = "/anotherFWD")
-//	public String forwardA(Model model, HttpServletRequest request) {
-//	    String uri = request.getRequestURI();
-//	    model.addAttribute("modelData1", "這是以/anotherFWD送來的請求");
-//	    model.addAttribute("uri1", uri);
-//	    return "forwardedPage";
-//	}
-	// return "redirect:/redirectAnother": 通知瀏覽器對新網址 /redirectAnother發出請求，即重定向
-	// (redirect)。由於是另外一個請求，所以放在原來之請求物件內的資料將不存在。必須將屬性物件儲存
-	// 在 RedirectAttributes物件內，另外一個請求才會看的到對應的視圖，然後由該視圖來產生回應。
-//	@RequestMapping(value = "/redirectDemo")
-//	public String redirect(Model model, RedirectAttributes redirectAttributes, 
-//	                    HttpServletRequest request) {
-//	    String uri = request.getRequestURI();
-//	    model.addAttribute("modelData2", "這是以/redirectDemo送來的請求，即將通知瀏覽器對"
-//	                        + "新網址發出請求，但瀏覽器不會顯示這樣的訊息");
-//	    model.addAttribute("uri2", uri);
-//	    redirectAttributes.addFlashAttribute("modelData3", "這是加在RedirectAttributes"
-//	                        + "物件內的屬性物件，瀏覽器會顯示");
-//	    redirectAttributes.addFlashAttribute("uri3", uri);
-//	    return "redirect:/redirectAnother";
-//	}
-//	//-------------------------
-	// 瀏覽器對新網址重新發出的請求將會由這個請求器方法來處理
-//	@RequestMapping(value = "/redirectAnother")
-//	public String redirectA(Model model, HttpServletRequest request) {
-//	    return "redirectedPage";
-//	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String processEditNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
+		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
+		{
+			errorMessage.put("titleNull", "請輸入標題");
+		} else if (ab.getTitle().length() > 30)
+		{
+			errorMessage.put("titleOver", "字數超過30字");
+		}
+		System.out.println("==postString==="+request.getParameter("postTimeString"));
+		System.out.println("==postString==="+request.getParameter("noString"));
+		int NoS = Integer.parseInt(request.getParameter("noString"));
+		ab.setNo(NoS);
+		int LikeS = Integer.parseInt(request.getParameter("likeCountString"));
+		ab.setLikeCount(LikeS);
+		int DislikeS = Integer.parseInt(request.getParameter("dislikeCountString"));
+		ab.setDislikeCount(DislikeS);
+		int AuthorS = Integer.parseInt(request.getParameter("authorString"));
+		ab.setAuthor(new MemberBean(AuthorS));
+		int MovieS = Integer.parseInt(request.getParameter("movieString"));
+		ab.setMovie(new MovieBean(MovieS));
+		ab.setAvailable(true);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("postTimeString=" + ab.getPostTimeString());
+		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
+		
+		
+		System.out.println("title=" + ab.getTitle());
+		System.out.println("title.length=" + ab.getTitle().length());
+//		if (bb.getgp() == null) {
+//			bb.setgp(0);
+		System.out.println("no=" + ab.getNo());
+		System.out.println("content=" + ab.getContent());
+		System.out.println("tag=" + ab.getTag());
+		System.out.println("postTime=" + ab.getPostTime());
+		System.out.println("postTimeString=" + ab.getPostTimeString());
+		
+		service.editArticle(ab);
+
+		if (!errorMessage.isEmpty())
+		{
+			return "editArticle";
+		} else
+		{
+			return "redirect:/MoviesForum";
+		}
+		
+	}
+	
 	@ModelAttribute("memberList")
 	public Map<Integer, String> getMemberList() {
 		Map<Integer, String> memberMap = new HashMap<>();
@@ -199,7 +229,7 @@ public class ArticleController {
 				, "tag"
 				, "title"
 				, "content"
-				, "memberId"
+				, "postTime"
 				);
 	}
 //	@RequestMapping(value = "/getPicture/{bookId}", method = RequestMethod.GET)

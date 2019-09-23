@@ -12,9 +12,12 @@
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-.sold {
-	background-color: red;
-	color: white;
+.sold {}
+
+.sold-label {
+    background-color: rgb(255, 78, 78);
+    border-color: rgb(255, 0, 0);
+    opacity: 1;
 }
 
 .table-seat tr {
@@ -30,6 +33,10 @@
 	top: 0;
 	height: 100%;
 }
+
+#btn-submit{
+            transition: 0.5s ease;
+        }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
 	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
@@ -42,46 +49,53 @@
 
 <script>
 	var SelectedSeat = [];
-	var MAX = 3;
+	var MAX = ${ticketCnt};
 	var labelChecked = "ui-checkboxradio-checked ";
 	var labelActive = "ui-state-active ";
 	var labelDisabled = "ui-checkboxradio-disabled "
 	$(function() {
-
 		$("input[name='seat']").checkboxradio({
 			icon : false
 		});
-		$("input").prop("checked", false);
-		$("label").removeClass("ui-checkboxradio-checked ui-state-active");
+		$("input.sold").checkboxradio({
+			icon : false,
+			disabled : true
+		});
 
-		$("label.sold").addClass(labelDisabled);
-		$('label[for^=seat]').filter("[class!='sold']").click(
+		$("input[name='seat']").filter("input[class != 'sold']").click(
 				function() {
-					$(this).addClass(labelDisabled);
-					if (SelectedSeat.length < MAX) {
-						SelectedSeat.push($(this).attr("for"));
+					var id = $(this).attr("id");
+					if (SelectedSeat.indexOf(id) != -1) { //if this is in the selectedSeat, means that user don't want to select it now
+						SelectedSeat.splice(SelectedSeat.indexOf(id), 1);
 					} else {
-						$("label[for='" + SelectedSeat[0] + "']").removeClass(
-								labelActive + labelChecked + labelDisabled);
-						$("#" + SelectedSeat[0]).prop('checked', false);
-						SelectedSeat.splice(0, 1);
-						SelectedSeat.push($(this).attr("for"));
+						SelectedSeat.push($(this).attr("id"));
+						if (SelectedSeat.length > MAX) {
+							$("#" + SelectedSeat[0]).prop("checked", false);
+							$("[for='" + SelectedSeat[0] + "']").removeClass(labelChecked + labelActive);
+							SelectedSeat.splice(0, 1);
+						}
 					}
-					console.log(SelectedSeat);
-					$("input[type='checkbox']:checked").each(function() {
-						console.log($(this).val());
-					});
+					if(SelectedSeat.length > MAX){
+			            console.log("Something WRONG!!!");
+			        } else if(SelectedSeat.length == MAX){
+			            $("#btn-submit").removeClass("disabled");
+			            $("#btn-submit").prop("disabled", false);
+			        } else{
+			            $("#btn-submit").addClass("disabled");
+			            $("#btn-submit").prop("disabled", true);
+			        }
 				});
+		
 	});
 </script>
 </head>
 
 <body>
 	<div class="container">
-		<form action="order/confirmOrder" method="POST">
+		<form action="<c:url value='/order/makeOrder'/>" method="POST">
 			<div class="row">
 				<div class="col-md-3 order-md-2 order-sm-1">
-					<div class="border-1">
+					<div>
 						<table class="table border">
 							<thead>
 								<tr style="text-align: center">
@@ -165,9 +179,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mt-5">
-				<div class="col-md-12">
-					<input class="btn btn-secondary float-right" type="submit" value="Submit">
+			<div class="row mt-5  float-right">
+				<div class="col-md-2 ">
+					<input id="btn-submit" class="btn btn-secondary disabled" type="submit" value="Submit" disabled>
 				</div>
 			</div>
 		</form>

@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.web.entity.ReplyBean;
@@ -30,10 +31,25 @@ public class ArticleBean implements Serializable {
 	private Boolean available;
 	private String title;
 	private String content;
-	@NotNull
+	private String tag;
 	private Date postTime;
 	private Integer likeCount;
 	private Integer dislikeCount;
+	
+	@Transient
+	private String noString;
+	@Transient
+	private String postTimeString;
+	@Transient
+	private String likeCountString;
+	@Transient
+	private String dislikeCountString;
+	@Transient
+	private String authorString;
+	@Transient
+	private String movieString;
+	@Transient
+	private String availableString;
 	
 	@OneToMany(mappedBy = "articleBean",fetch = FetchType.EAGER)
 	private Set<ReplyBean> replys;
@@ -46,6 +62,27 @@ public class ArticleBean implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
 	private MovieBean movie; //B, M2O
+	public ArticleBean() {
+		super();
+		System.out.println("default constructor");
+	}
+	public ArticleBean(Integer no, Boolean available, String title, String content, String tag, Date postTime,
+			Integer likeCount, Integer dislikeCount, String postTimeString, Set<ReplyBean> replys, MemberBean author,
+			MovieBean movie) {
+		super();
+		this.no = no;
+		this.available = available;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.postTime = postTime;
+		this.likeCount = likeCount;
+		this.dislikeCount = dislikeCount;
+		this.postTimeString = postTimeString;
+		this.replys = replys;
+		this.author = author;
+		this.movie = movie;
+	}
 	
 	public Integer getNo() {
 		return no;
@@ -57,6 +94,7 @@ public class ArticleBean implements Serializable {
 		return title;
 	}
 	public void setTitle(String title) {
+		System.out.println("title setter");
 		this.title = title;
 	}
 	public String getContent() {
@@ -78,9 +116,11 @@ public class ArticleBean implements Serializable {
 		this.author = author;
 	}
 	public Date getPostTime() {
+		System.out.println("getpostTime");
 		return postTime;
 	}
 	public void setPostTime(Date postTime) {
+		System.out.println("setpostTime");
 		this.postTime = postTime;
 	}
 	public Integer getLikeCount() {
@@ -102,18 +142,60 @@ public class ArticleBean implements Serializable {
 		this.available = available;
 	}
 	
-	public MemberBean getMemberBean() {
-		return author;
-	}
-	public void setMemberBean(MemberBean memberBean) {
-		this.author = memberBean;
-	}
-	
 	public Set<ReplyBean> getReplys() {
 		return replys;
 	}
 	public void setReplys(Set<ReplyBean> replys) {
 		this.replys = replys;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+	
+	public String getPostTimeString() {
+		System.out.println("posttimestring getter");
+		return postTimeString;
+	}
+	public void setPostTimeString(String postTimeString) {
+		System.out.println("posttimestring setter");
+		this.postTimeString = postTimeString;
+	}
+	public String getNoString() {
+		return noString;
+	}
+	public void setNoString(String noString) {
+		this.noString = noString;
+	}
+	
+	public String getLikeCountString() {
+		return likeCountString;
+	}
+	public void setLikeCountString(String likeCountString) {
+		this.likeCountString = likeCountString;
+	}
+	
+	public String getDislikeCountString() {
+		return dislikeCountString;
+	}
+	public void setDislikeCountString(String dislikeCountString) {
+		this.dislikeCountString = dislikeCountString;
+	}
+	
+	public String getAuthorString() {
+		return authorString;
+	}
+	public void setAuthorString(String authorString) {
+		this.authorString = authorString;
+	}
+	
+	public String getMovieString() {
+		return movieString;
+	}
+	public void setMovieString(String movieString) {
+		this.movieString = movieString;
 	}
 	
 }

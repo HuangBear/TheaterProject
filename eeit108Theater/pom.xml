@@ -10,7 +10,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring.version>4.3.20.RELEASE</spring.version>
-		<security.version>3.2.5.RELEASE</security.version>
+		<security.version>4.2.4.RELEASE</security.version>
 	</properties>
 
 	<build>
@@ -26,6 +26,13 @@
 		</plugins>
 	</build>
 	<dependencies>
+
+		<dependency>
+			<groupId>com.github.dadiyang</groupId>
+			<artifactId>equator</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -167,6 +174,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- spring-security 以上 -->
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 
 	</dependencies>
 </project>

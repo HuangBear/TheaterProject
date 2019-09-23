@@ -13,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "Movie")
@@ -34,12 +38,41 @@ public class MovieBean implements Serializable{
 	private String company;
 	private String[] trailerLink;
 	private Integer duration;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date openingDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endingDate;
 	private String languages;
 	private String genres;
 	private Blob movieImage;
+	@Transient
+	private String fileName;
+	@Transient
+	private MultipartFile uploadImage;
+	
+	public MultipartFile getUploadImage() {
+		return uploadImage;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
 
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setUploadImage(MultipartFile uploadImage) {
+		this.uploadImage = uploadImage;
+	}
+	public MovieBean() {
+		super();
+	}
+	public MovieBean(Integer no) {
+		super();
+		this.no = no;
+	}
+	
 	@OneToMany(mappedBy = "movie")
 	private Set<TimeTableBean> times;// B, O2M
 

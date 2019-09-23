@@ -8,10 +8,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class WebAppInitailizer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-//	@Override
-//	protected Class<?>[] getRootConfigClasses() {
-//		return new Class[] {RootAppConfig.class};
-//	}
+
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub 

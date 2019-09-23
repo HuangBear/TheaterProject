@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.web.dao.ArticleDao;
 import com.web.entity.ArticleBean;
+import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
+import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
@@ -19,6 +21,16 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public List<ArticleBean> getAllArticles() {
 	    String hql = "FROM ArticleBean";
+	    Session session = null;
+	    List<ArticleBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
+	}
+	
+	@Override
+	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
+	    String hql = "FROM ArticleBean bb WHERE bb.movie = :movie";
 	    Session session = null;
 	    List<ArticleBean> list = new ArrayList<>();
 	    session = factory.getCurrentSession();
@@ -96,24 +108,29 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public void addArticle(ArticleBean article) {
 	    Session session = factory.getCurrentSession();
-	    MemberBean cb = getMemberById(article.getNo());
-	    article.setMemberBean(cb);
 	    session.save(article);
 	}	
 	@Override
 	public void editArticle(ArticleBean article) {
 	    Session session = factory.getCurrentSession();
-	    MemberBean cb = getMemberById(article.getNo());
-	    article.setMemberBean(cb);
 	    session.update(article);
 	}
 	@Override
 	public MemberBean getMemberById(int memberId) {
-		MemberBean cb = null;
+		MemberBean mb = null;
 	    Session session = factory.getCurrentSession();
-	    cb = session.get(MemberBean.class, memberId);
-	    return cb;
+	    mb = session.get(MemberBean.class, memberId);
+	    return mb;
 	}	
+	
+	@Override
+	public MovieBean getMovieByNo(int movieNo) {
+		MovieBean mb = null;
+	    Session session = factory.getCurrentSession();
+	    mb = session.get(MovieBean.class, movieNo);
+	    return mb;
+	}	
+	
 	@Override
 	public List<MemberBean> getMemberList() {
 	    String hql = "FROM MemberBean";
@@ -121,4 +138,5 @@ public class ArticleDaoImpl implements ArticleDao {
 	    List<MemberBean> list = session.createQuery(hql).getResultList();
 	    return list;
 	}
+	
 }

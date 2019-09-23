@@ -25,11 +25,11 @@ public class SeatBean implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "seat_no")
 	private Integer no;
-	private Boolean available;
+	private Boolean available = true;
 	@Column(name = "row_X")
 	private String row;
 	@Column(name = "column_Y")
-	private String column;
+	private Integer column;
 	@Column(name = "fk_order_id")
 	private String orderId; //not owner, cannot find order object directly
 	
@@ -48,10 +48,10 @@ public class SeatBean implements Serializable{
 	public void setRow(String row) {
 		this.row = row;
 	}
-	public String getColumn() {
+	public Integer getColumn() {
 		return column;
 	}
-	public void setColumn(String column) {
+	public void setColumn(Integer column) {
 		this.column = column;
 	}
 	public String getOrderId() {
@@ -73,4 +73,7 @@ public class SeatBean implements Serializable{
 		this.available = available;
 	}
 
+	public String getSeatString() {
+		return this.row + this.column;
+	}
 }

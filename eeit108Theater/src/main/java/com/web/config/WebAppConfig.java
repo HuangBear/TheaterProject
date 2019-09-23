@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.web")
+@ComponentScan({"com.web","ecpay"})
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver internalResourceViewResolver()
@@ -50,8 +50,12 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
 		registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/resources/fonts/");
 		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
-		registry.addResourceHandler("/admin/**").addResourceLocations("/WEB-INF/views/admin/");
-	
+		registry.addResourceHandler("/admin/vendor/**").addResourceLocations("/WEB-INF/resources/vendor/");
+		registry.addResourceHandler("/admin/images/**").addResourceLocations("/WEB-INF/resources/images/");
+		registry.addResourceHandler("/admin/js/**").addResourceLocations("/WEB-INF/resources/js/");
+		registry.addResourceHandler("/admin/css/**").addResourceLocations("/WEB-INF/resources/css/");
+		registry.addResourceHandler("/bootstrap/**").addResourceLocations("/WEB-INF/resources/bootstrap/");
+		
 	}
 //	@Override
 //	public void addResourceHandlers(ResourceHandlerRegistry registry)
@@ -66,7 +70,9 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 //	}
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/EmpLogin").setViewName("EmpLogin");
+		
+		registry.addViewController("/EmpLogin3").setViewName("EmpLogin3");
+
 	}
 	@Bean
 	public CommonsMultipartResolver multipartResolver()

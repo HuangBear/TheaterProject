@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @Table(
 		name = "Time_Table",
 		uniqueConstraints = { 
-				@UniqueConstraint(columnNames = { "movieName", "startTime" })
+				@UniqueConstraint(columnNames = { "movieName", "startTime", "theater"})
 				}
 		)
 public class TimeTableBean implements Serializable{
@@ -30,19 +30,20 @@ public class TimeTableBean implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeTable_no")
 	private Integer no;
-	private Boolean available;
+	private Boolean available = true;
 	@NotNull
 	private String movieName;
+	
 	@NotNull
 	private Date startTime;
 	@NotNull
 	private Integer duration;
 	@NotNull
-	private Date endTime;
-	@NotNull
 	private String version;//2D, 3D, or IMAX
 	@NotNull
 	private String theater; //1廳, A廳, B廳
+	@NotNull
+	private Integer breakTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "fk_movie_id")
@@ -69,12 +70,6 @@ public class TimeTableBean implements Serializable{
 	}
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
-	}
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
 	}
 	public Set<SeatBean> getSeats() {
 		return seats;
@@ -111,5 +106,11 @@ public class TimeTableBean implements Serializable{
 	}
 	public void setTheater(String theater) {
 		this.theater = theater;
+	}
+	public Integer getBreakTime() {
+		return breakTime;
+	}
+	public void setBreakTime(Integer breakTime) {
+		this.breakTime = breakTime;
 	}
 }

@@ -1,12 +1,18 @@
 package com.web.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.MemberDao;
+
 import com.web.entity.MemberBean;
 
 @Repository
@@ -17,8 +23,8 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public int saveMember(MemberBean member) {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = factory.getCurrentSession();
+		return (int)session.save(member);
 	}
 
 	@Override
@@ -41,7 +47,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int updateMember(MemberBean member) {
-		// TODO Auto-generated method stub
+		Session session = factory.getCurrentSession();
+		session.update(member);
+		
 		return 0;
 	}
 
@@ -64,8 +72,12 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public MemberBean getMemberByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		MemberBean mb= null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MemberBean e WHERE e.email = :email";
+		mb=(MemberBean)session.createQuery(hql).setParameter("email", email).uniqueResult();
+		
+		return mb;
 	}
 
 	@Override
@@ -74,16 +86,59 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MemberBean> getAllMembers() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM MemberBean";
+	    Session session = null;
+	    List<MemberBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
 	}
 
 	@Override
 	public List<MemberBean> getAllAvailable() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public MemberBean getMemberBeanByEmailPassword(String email, String password) {
+		Session session = null;
+		session = factory.getCurrentSession();
+		Query query = session.createNativeQuery("SELECT * FROM Member WHERE email = :email AND password = :password ", MemberBean.class);
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		Iterator iterator = query.getResultList().iterator();
+		MemberBean mb = null;
+		while (iterator.hasNext()) {
+			mb = (MemberBean) iterator.next();
+		}
+		return mb;
+	}
+
+	@Override
+	public MemberBean checkMemberEmail(String email) {
+		MemberBean mb= null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MemberBean e WHERE e.email = :email";
+		
+		mb=(MemberBean)session.createQuery(hql)
+				.setParameter("email", email).uniqueResult();
+		return mb;
+	}
+
+	@Override
+	public Object getPermissionByMemberEmail(String email) {
+		Session session = factory.getCurrentSession();
+		Query query = session.createNativeQuery("SELECT Permission FROM Member WHERE email = :email  ", MemberBean.class);
+		query.setParameter("email", email);
+		Object result=query.getSingleResult();
+		System.out.println(result);
+		//return (List<EmployeeBean>)query.getResultList();
+		return result;
 	}
 
 }

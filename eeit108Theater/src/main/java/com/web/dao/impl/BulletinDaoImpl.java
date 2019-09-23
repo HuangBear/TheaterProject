@@ -1,7 +1,6 @@
 package com.web.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -19,27 +18,67 @@ public class BulletinDaoImpl implements BulletinDao {
 	@Autowired
 	SessionFactory factory;
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getAllBulletin()
-	{
+	public List<BulletinBean> getExistenceBulletin() {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
-		list = session.createQuery("FROM BulletinBean").getResultList();
-		// BulletinBean 要打類別名稱
+		list = session.createQuery(
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate > getdate() group by bb.bortingId) order by b.no")
+				.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BulletinBean> getExpiredBulletin() {
+		Session session = factory.getCurrentSession();
+		List<BulletinBean> list = new ArrayList<>();
+		list = session.createQuery(
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate < getdate() group by bb.bortingId) order by b.no")
+				.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BulletinBean> getDeadBulletin() {
+		Session session = factory.getCurrentSession();
+		List<BulletinBean> list = new ArrayList<>();
+		list = session.createQuery(
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.available = 0 group by bb.bortingId) order by b.no")
+				.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BulletinBean> getSameBulletinByBortingId(Integer no) {
+		Session session = factory.getCurrentSession();
+		List<BulletinBean> list = new ArrayList<>();
+		list = session.createQuery(
+				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum desc")
+				.setParameter("no", no).list();
+//		System.out.println(list);
 		return list;
 	}
 
 	@Override
-	public void insertBulletin(BulletinBean bb)
-	{
+	public int updateBulletindByBortingId(Integer no, Boolean bo) {
+		Session session = factory.getCurrentSession();
+		int deleteReturn = session.createQuery(
+				"UPDATE BulletinBean b SET b.available = :ava WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no =:no )  ")
+				.setParameter("no", no).setParameter("ava", bo).executeUpdate();
+		return deleteReturn;
+	}
+
+	@Override
+	public void insertBulletin(BulletinBean bb) {
 		Session session = factory.getCurrentSession();
 		EmployeeBean eb = getEmployeeById(bb.getEmployeeId());
 		bb.setEmployee(eb);
 		session.save(bb);
 	}
 
-	public EmployeeBean getEmployeeById(int employeeId)
-	{
+	@Override
+	public EmployeeBean getEmployeeById(Integer employeeId) {
 		EmployeeBean eb = null;
 		Session session = factory.getCurrentSession();
 		eb = session.get(EmployeeBean.class, employeeId);
@@ -47,17 +86,11 @@ public class BulletinDaoImpl implements BulletinDao {
 	}
 
 	@Override
-	public void updateBulletin(BulletinBean bb)
-	{
+	public BulletinBean getBulletinById(Integer bulletin_no) {
+		BulletinBean bb = null;
 		Session session = factory.getCurrentSession();
-		session.update(bb);
-	}
-
-	@Override
-	public void deletecBulletin(Integer bullentin_no)
-	{
-		Session session = factory.getCurrentSession();
-		session.delete(bullentin_no);
+		bb = session.get(BulletinBean.class, bulletin_no);
+		return bb;
 	}
 
 }
