@@ -30,7 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
 	@Override
 	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
-		return dao.getAllArticles();
+		return dao.getArticlesByMovieNo(movieNo);
 	}
     
     @Transactional

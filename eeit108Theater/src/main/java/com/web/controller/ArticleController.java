@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,11 +42,15 @@ public class ArticleController {
 	ServletContext context;
 
 	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
-	public String list(Model model,@RequestParam("id") Integer no) {
+	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 		model.addAttribute("title", "討論版");
 		model.addAttribute("subtitle","test");
+			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
+		session = request.getSession();
+		
+		session.setAttribute("movie", no);
 		return "Articles";
 	}
 
@@ -75,8 +80,10 @@ public class ArticleController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String getAddNewArticleForm(Model model) {
+	public String getAddNewArticleForm(Model model,HttpServletRequest request,HttpSession session) {
+		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
+		
 		model.addAttribute("ArticleBean", ab);
 		return "addArticle";
 	}
@@ -105,9 +112,9 @@ public class ArticleController {
 		}
 		ab.setLikeCount(0);
 		ab.setDislikeCount(0);
-		int AuthorS = Integer.parseInt(request.getParameter("authorString"));
+		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		ab.setAuthor(new MemberBean(AuthorS));
-		int MovieS = Integer.parseInt(request.getParameter("movieString"));
+		int MovieS = Integer.parseInt(request.getParameter("movie"));
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
@@ -118,7 +125,7 @@ public class ArticleController {
 			return "addArticle";
 		} else
 		{
-			return "redirect:/addArticle";
+			return "redirect:/MoviesForum";
 		}
 		
 	}
