@@ -53,6 +53,11 @@
           <i class="fas fa-fw fa-table"></i>
           <span>新增員工</span></a>
         </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="Mem_list">
+          <i class="fas fa-fw fa-table"></i>
+          <span>會員清單</span></a>
+        </li>
     </ul>
 
  <!-- ------------------------------------------------------------------------------------------------- -->	

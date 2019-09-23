@@ -92,7 +92,7 @@
                             
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated  at 00:00 PM</div>
+          <div class="card-footer small text-muted">Updated  at ${now}</div>
         </div>
 
       <script src="js/admin/demo/datatables-demo.js"></script>
