@@ -99,7 +99,7 @@
 				<article id="main" class="special"> 
 					<header><h3><a href="#">電影 - 場外休憩區</a></h3></header>
 					
-					<div id="tabs" style="width:1080px;margin:auto;text-align:center;">
+					<div id="tabs" style="width:1100px;margin:auto;text-align:center;">
   						<ul>
     						<li><a href="#tabs-1">Popularity - 人氣排行</a></li>
     						<li><a href="#tabs-2">Now Showing - 現正熱映</a></li>

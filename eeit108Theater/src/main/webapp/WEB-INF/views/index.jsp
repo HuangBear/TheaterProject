@@ -146,6 +146,12 @@ input::placeholder{
     .overflow {
       height: 200px;
     }
+    
+    .iconimg{
+    	width:25px; 
+    	height:25px;
+    	vertical-align: middle;
+    }
 
 </style>
 
@@ -442,36 +448,40 @@ input::placeholder{
 <!-- 				</section> -->
 				
 				<section style="margin:auto ;display:inline-block; ">				
-					<div style="border:1px solid gray; margin:auto ; border-radius:15px;padding:0px 30px 0px 30px;">
+					<div style="border:1px solid gray; margin:auto ; border-radius:15px;padding:0px 30px 0px 30px; background-color:#c5c6c7">        <!--#106ecc #c5c6c7*-->      
 						<p>
-						<h4><a href="#">快速訂票</a></h4>
+						<h4><a href="#" style="color:white;">快速訂票</a></h4>
 						<p><p>
-						<form action="#" >
-							<fieldset>
+						<form action="#">
+							<fieldset>								
+									<img src="images/frontend/showmovie.png" class="iconimg" >
 									<select name="請選擇電影名稱" id="speed">
 										<option>請選擇電影名稱</option>
 										<option>牠</option>
 										<option>航海王：奪寶爭霸戰</option>
       									<option>全面攻佔3：天使救援</option>
       									<option>玩命關頭：特別行動</option>
-    								</select><br>
- 
+    								</select><br><br>
+ 									
+ 									<img src="images/frontend/choosedate.png" class="iconimg">
     								<select name="請選擇查詢日期" id="files">
         								<option>請選擇查詢日期</option>
         								<option>09/21(六)</option>
         								<option>09/22(日)</option>
         								<option>09/23(一)</option>
         								<option>09/24(二)</option>
-    								</select><br><p>
- 
+    								</select><br><br>
+ 									
+ 									<img src="images/frontend/theaterplace.png" class="iconimg">
     								<select name="請選擇查詢廳次" id="number">
       									<option>請選擇查詢廳次</option>
       									<option>IMAX</option>
       									<option>一般數位</option>
       									<option>3D</option>
       									<option>4DX</option>
-    								</select><br><p>
+    								</select><br><br>
  
+ 									<img src="images/frontend/timetable.png" class="iconimg" style="height:20px;width:25px;">
     								<select name="請選擇查詢場次" id="salutation">
       									<option>請選擇查詢場次</option>
       									<option>09:30</option>
@@ -479,6 +489,7 @@ input::placeholder{
       									<option>14:30</option>
       									<option>17:30</option>
     								</select><br>
+    							</table>
   							</fieldset>
 						</form>
 						<p>			
@@ -490,17 +501,17 @@ input::placeholder{
 					</div>
 				</section>
 							
-				<section style="display:inline-block;">		
+				<section style="display:inline-block;vertical-align:top;">		
 					<div style="border:1px solid gray;border-radius:15px;padding:0px 30px 0px 30px;">
 						<p>
 						<label style="text-align:left;"><h4>最新公告<a href="news">/MORE</a></h4></label>
 						<p>
 						<ul style="text-align:left;">
-							<li><time>2019/09/05</time><a href="news">【大叔之愛】片尾告示</a></li>
-							<li><time>2019/08/29</time><a href="news">【第九分局】片尾告示</a></li>
-							<li><time>2019/08/14</time><a href="news">【驅魔使者】片尾公告</a></li>
-							<li><time>2019/04/30</time><a href="news">信用卡優惠影城現場購票公告</a></li>
-							<li><time>2019/02/13</time><a href="news">行動支付公告</a></li>							
+							<li><a href="news">2019/09/05 【大叔之愛】片尾告示</a></li>
+							<li><a href="news">2019/08/29 【第九分局】片尾告示</a></li>
+							<li><a href="news">2019/08/14 【驅魔使者】片尾公告</a></li>
+							<li><a href="news">2019/04/30   信用卡優惠影城現場購票公告</a></li>
+							<li><a href="news">2019/02/13   行動支付公告</a></li>							
 						</ul>	
 					</div>					
 				</section>						
