@@ -74,6 +74,8 @@ public class EDMTableResetHibernate_Movie {
 					movie.setGenres(token[10]);
 					Blob sb = SystemUtils2018.fileToBlob(token[11]);
 					movie.setMovieImage(sb);
+					movie.setEngMovieName(token[12]);
+					movie.setRating(token[13]);
 					session.save(movie);
 					System.out.println("新增一筆movie紀錄成功");
 				}

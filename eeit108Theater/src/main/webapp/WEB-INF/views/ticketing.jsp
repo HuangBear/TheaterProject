@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -24,14 +25,8 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function() {         
-		$("#movie01").click(function() { 
-		$("#minfo01").show(); 
-		$("#minfo02").hide();      
-		});
-
-		$("#movie02").click(function() { 
-		$("#minfo02").show(); 
-		$("#minfo01").hide();      
+		$(".hello").click(function() { 
+			$("#minfo01").show();     
 		});
 	});
 </script>
@@ -54,25 +49,28 @@
 		<div id="B">
 			<center>
 			<ul>
-				<li><a href="#" id="movie01">牠 第二章</a></li>
-				<li><a href="#" id="movie02">航海王：奪寶爭霸戰</a></li>
-				<li><a href="#" id="movie03">全面攻佔 3：天使救援</a></li>
-				<li><a href="#" id="movie04">玩命關頭：特別行動</a></li>
-				<li><a href="#" id="movie05">大叔之愛電影版</a></li>
-				<li><a href="#" id="movie06">極限逃生</a></li>
-				<li><a href="#" id="movie07">NG你的人生</a></li>
-				<li><a href="#" id="movie08">我家有個開心農場</a></li>
-				<li><a href="#" id="movie08">天氣之子</a></li>
-				<li><a href="#" id="movie08">星際救援</a></li>
-				<li><a href="#" id="movie08">返校</a></li>
-				<li><a href="#" id="movie08">小丑</a></li>			
+<!-- 				<li><a href="#" id="movie01">牠 第二章</a></li> -->
+<!-- 				<li><a href="#" id="movie02">航海王：奪寶爭霸戰</a></li> -->
+<!-- 				<li><a href="#" id="movie03">全面攻佔 3：天使救援</a></li> -->
+<!-- 				<li><a href="#" id="movie04">玩命關頭：特別行動</a></li> -->
+<!-- 				<li><a href="#" id="movie05">大叔之愛電影版</a></li> -->
+<!-- 				<li><a href="#" id="movie06">極限逃生</a></li> -->
+<!-- 				<li><a href="#" id="movie07">NG你的人生</a></li> -->
+<!-- 				<li><a href="#" id="movie08">我家有個開心農場</a></li> -->
+<!-- 				<li><a href="#" id="movie08">天氣之子</a></li> -->
+<!-- 				<li><a href="#" id="movie08">星際救援</a></li> -->
+<!-- 				<li><a href="#" id="movie08">返校</a></li> -->
+<!-- 				<li><a href="#" id="movie08">小丑</a></li>			 -->
+					<c:forEach var = 'releasedMovie' items = '${releasedMovies}'>
+						<li><a href = 'ticketing_${releasedMovie.no}' class = 'hello'>${releasedMovie.movieName}</a></li>
+					</c:forEach>
 			</ul>
 			</center>		
 		</div>
 		<hr>
 
 		
-		<div class="wrapper style1" id="minfo01" style="display:none">
+		<div class="wrapper style1" id="minfo01">
 			<div class="container">
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">						
@@ -100,7 +98,7 @@
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 						<article id="main"> <header>
 						<h2>
-							<a href="#">牠 第二章</a>
+							<a href="#">${movie.movieName}</a>
 						</h2>
 						<p>Morbi convallis lectus malesuada sed fermentum dolore amet
 						</p>
@@ -109,14 +107,16 @@
 							<div id="B">
 							<header><h3>請選擇日期：</h3></header>
 							<ul>
-								<li><a href="#" >9/11(三)</a></li>
-								<li><a href="#" >9/12(四)</a></li>
-								<li><a href="#" >9/13(五)</a></li>
-								<li><a href="#" >9/14(六)</a></li>
-								<li><a href="#" >9/15(日)</a></li>
-								<li><a href="#" >9/16(一)</a></li>
-								<li><a href="#" >9/17(二)</a></li>
-								<li><a href="#" >9/18(三)</a></li>
+<!-- 								<li><a href="#" >9/11(三)</a></li> -->
+<!-- 								<li><a href="#" >9/12(四)</a></li> -->
+<!-- 								<li><a href="#" >9/13(五)</a></li> -->
+<!-- 								<li><a href="#" >9/14(六)</a></li> -->
+<!-- 								<li><a href="#" >9/15(日)</a></li> -->
+<!-- 								<li><a href="#" >9/16(一)</a></li> -->
+<!-- 								<li><a href="#" >9/17(二)</a></li> -->
+<!-- 								<li><a href="#" >9/18(三)</a></li> -->
+									<fmt:formatDate value="${startTime}" pattern='MM-dd' />
+									
 							</ul>
 							</div> 
 						</section> 
@@ -125,14 +125,17 @@
 							<div id="B">
 							<header><h3>請選擇廳別場次：</h3></header>
 							<ul><h6>IMAX：</h6>
-								<li><a href="#" >08:00</a></li>
-								<li><a href="#" >10:00</a></li>
-								<li><a href="#" >12:00</a></li>
-								<li><a href="#" >14:00</a></li>
-								<li><a href="#" >16:00</a></li>
-								<li><a href="#" >18:00</a></li>
-								<li><a href="#" >20:00</a></li>
-								<li><a href="#" >22:00</a></li>
+<!-- 								<li><a href="#" >08:00</a></li> -->
+<!-- 								<li><a href="#" >10:00</a></li> -->
+<!-- 								<li><a href="#" >12:00</a></li> -->
+<!-- 								<li><a href="#" >14:00</a></li> -->
+<!-- 								<li><a href="#" >16:00</a></li> -->
+<!-- 								<li><a href="#" >18:00</a></li> -->
+<!-- 								<li><a href="#" >20:00</a></li> -->
+<!-- 								<li><a href="#" >22:00</a></li> -->
+								<c:forEach var = 'time' items = '${times}'>
+									<li><fmt:formatDate value="${time}" pattern='HH:mm' /></li>
+								</c:forEach>
 							</ul>
 							
 							<ul><h6>一般數位：</h6>
@@ -154,97 +157,96 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 		
 		
 		
-				<div class="wrapper style1" id="minfo02" style="display:none">
-			<div class="container">
-				<div class="row gtr-200">
-					<div class="col-4 col-12-mobile" id="sidebar">
-						<hr class="first" />
+<!-- 				<div class="wrapper style1" id="minfo02" style="display:none"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<div class="row gtr-200"> -->
+<!-- 					<div class="col-4 col-12-mobile" id="sidebar"> -->
+<!-- 						<hr class="first" /> -->
 					
-						<section> <header>
-						<h3>
-							<a href="#">Sed lorem etiam consequat</a>
-						</h3>
-						</header>
-						<p>Tempus cubilia ultrices tempor sagittis. Nisl fermentum
-							consequat integer interdum.</p>
-						<div class="row gtr-50">
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/movie5.jpg"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<h4>Nibh sed cubilia</h4>
-								<p>Amet nullam fringilla nibh nulla convallis tique ante
-									proin.</p>
-							</div>
-						</div>
-						<footer> <a href="detail" class="button">電影介紹</a>
-						</footer> </section>
-					</div>
-					<div class="col-8 col-12-mobile imp-mobile" id="content">
-						<article id="main"> <header>
-						<h2>
-							<a href="#">航海王：奪寶爭霸戰</a>
-						</h2>
-						<p>Morbi convallis lectus malesuada sed fermentum dolore amet
-						</p>
-						</header>
-						<section> 
-						<div id="B">
-							<header><h3>請選擇日期：</h3></header>
-							<ul>
-								<li><a href="#" >9/11(三)</a></li>
-								<li><a href="#" >9/12(四)</a></li>
-								<li><a href="#" >9/13(五)</a></li>
-								<li><a href="#" >9/14(六)</a></li>
-								<li><a href="#" >9/15(日)</a></li>
-								<li><a href="#" >9/16(一)</a></li>
-								<li><a href="#" >9/17(二)</a></li>
-								<li><a href="#" >9/18(三)</a></li>
-							</ul>
-							</div>
-						</section> 
+<!-- 						<section> <header> -->
+<!-- 						<h3> -->
+<!-- 							<a href="#">Sed lorem etiam consequat</a> -->
+<!-- 						</h3> -->
+<!-- 						</header> -->
+<!-- 						<p>Tempus cubilia ultrices tempor sagittis. Nisl fermentum -->
+<!-- 							consequat integer interdum.</p> -->
+<!-- 						<div class="row gtr-50"> -->
+<!-- 							<div class="col-4"> -->
+<!-- 								<a href="#" class="image fit"><img src="images/frontend/movie5.jpg" -->
+<!-- 									alt="" /></a> -->
+<!-- 							</div> -->
+<!-- 							<div class="col-8"> -->
+<!-- 								<h4>Nibh sed cubilia</h4> -->
+<!-- 								<p>Amet nullam fringilla nibh nulla convallis tique ante -->
+<!-- 									proin.</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<footer> <a href="detail" class="button">電影介紹</a> -->
+<!-- 						</footer> </section> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-8 col-12-mobile imp-mobile" id="content"> -->
+<!-- 						<article id="main"> <header> -->
+<!-- 						<h2> -->
+<!-- 							<a href="#">航海王：奪寶爭霸戰</a> -->
+<!-- 						</h2> -->
+<!-- 						<p>Morbi convallis lectus malesuada sed fermentum dolore amet -->
+<!-- 						</p> -->
+<!-- 						</header> -->
+<!-- 						<section>  -->
+<!-- 						<div id="B"> -->
+<!-- 							<header><h3>請選擇日期：</h3></header> -->
+<!-- 							<ul> -->
+<!-- 								<li><a href="#" >9/11(三)</a></li> -->
+<!-- 								<li><a href="#" >9/12(四)</a></li> -->
+<!-- 								<li><a href="#" >9/13(五)</a></li> -->
+<!-- 								<li><a href="#" >9/14(六)</a></li> -->
+<!-- 								<li><a href="#" >9/15(日)</a></li> -->
+<!-- 								<li><a href="#" >9/16(一)</a></li> -->
+<!-- 								<li><a href="#" >9/17(二)</a></li> -->
+<!-- 								<li><a href="#" >9/18(三)</a></li> -->
+<!-- 							</ul> -->
+<!-- 							</div> -->
+<!-- 						</section>  -->
 						
-						<section>
-							<div id="B">
-							<header><h3>請選擇廳別場次：</h3></header>
-							<ul><h6>IMAX：</h6>
-								<li><a href="#" >08:00</a></li>
-								<li><a href="#" >10:00</a></li>
-								<li><a href="#" >12:00</a></li>
-								<li><a href="#" >14:00</a></li>
-								<li><a href="#" >16:00</a></li>
-								<li><a href="#" >18:00</a></li>
-								<li><a href="#" >20:00</a></li>
-								<li><a href="#" >22:00</a></li>
-							</ul>
+<!-- 						<section> -->
+<!-- 							<div id="B"> -->
+<!-- 							<header><h3>請選擇廳別場次：</h3></header> -->
+<!-- 							<ul><h6>IMAX：</h6> -->
+<!-- 								<li><a href="#" >08:00</a></li> -->
+<!-- 								<li><a href="#" >10:00</a></li> -->
+<!-- 								<li><a href="#" >12:00</a></li> -->
+<!-- 								<li><a href="#" >14:00</a></li> -->
+<!-- 								<li><a href="#" >16:00</a></li> -->
+<!-- 								<li><a href="#" >18:00</a></li> -->
+<!-- 								<li><a href="#" >20:00</a></li> -->
+<!-- 								<li><a href="#" >22:00</a></li> -->
+<!-- 							</ul> -->
 							
-							<ul><h6>一般數位：</h6>
-								<li><a href="#" >09:00</a></li>
-								<li><a href="#" >11:00</a></li>
-								<li><a href="#" >13:00</a></li>
-								<li><a href="#" >15:00</a></li>
-								<li><a href="#" >17:00</a></li>
-								<li><a href="#" >19:00</a></li>
-								<li><a href="#" >21:00</a></li>
-								<li><a href="#" >23:00</a></li>
-							</ul>
-							</div>
-						<footer> 
-							<a href="seat" class="button">選擇座位</a>
-						</footer> 
+<!-- 							<ul><h6>一般數位：</h6> -->
+<!-- 								<li><a href="#" >09:00</a></li> -->
+<!-- 								<li><a href="#" >11:00</a></li> -->
+<!-- 								<li><a href="#" >13:00</a></li> -->
+<!-- 								<li><a href="#" >15:00</a></li> -->
+<!-- 								<li><a href="#" >17:00</a></li> -->
+<!-- 								<li><a href="#" >19:00</a></li> -->
+<!-- 								<li><a href="#" >21:00</a></li> -->
+<!-- 								<li><a href="#" >23:00</a></li> -->
+<!-- 							</ul> -->
+<!-- 							</div> -->
+<!-- 						<footer>  -->
+<!-- 							<a href="seat" class="button">選擇座位</a> -->
+<!-- 						</footer>  -->
 						
-						</section> </article>
-					</div>
-				</div>
-			</div>
+<!-- 						</section> </article> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 
-		</div>
+<!-- 		</div> -->
 		
 		<hr>
 		<center>
