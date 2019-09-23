@@ -117,7 +117,12 @@
 						 <header>
 						   <h3>標題2</h3>
 						 </header>
-						    <p>視情況輸入內文2</p>
+						    <div id="websocketdiv">
+								<textarea id="area" style="font-size: 20px; font-family: '微軟正黑體';
+								 margin-top: 20px;" readonly="readonly" rows="10" cols="42"></textarea>
+								<input type="text" id="text" size="53" />
+								<input id="sendmsg" type="button" value="送出" />
+							</div>
 						</section> 
 					</article>
 					</div>
@@ -290,5 +295,35 @@
 		});
 	});
 </script>
+
+	<script>
+		var websocket = new WebSocket("ws://" + location.host
+				+ "/eeit108Theater/websocket.do");
+
+		websocket.onopen = function processOpen() {
+		};
+
+		websocket.onmessage = function(message) {
+			var jsonData = JSON.parse(message.data);
+			if (jsonData.message != null) {
+				area.value += jsonData.message + "\n";
+			}
+		};
+
+		websocket.onclose = function (evt) {
+	        websocket.close();
+	    };
+	    
+		websocket.onerror = function(evt) {
+			websocket.close();
+		};
+
+		$(function() {
+			$('#sendmsg').click(function() {
+				websocket.send(text.value);
+				text.value = "";
+			});
+		});
+	</script>
 </body>
 </html>

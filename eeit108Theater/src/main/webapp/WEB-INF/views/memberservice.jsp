@@ -23,6 +23,7 @@
     </script>
 	
 <script type="text/javascript">
+
 	$(document).ready(function() {         
 		$("#login").click(function() { 
 		$("#loginview").show(); 
@@ -35,6 +36,8 @@
 		});
 	});
 </script>
+
+
 <style>
 	.sv1{width:800px;
 		border:3px solid	#AAAAAA;
@@ -81,14 +84,15 @@
 								<label for="email" style="text-align:left">會員email：</label>
 								<form:input id="email" path="email" class="text" type="text"
 									placeholder="請輸入會員email" tabindex="1" autocomplete="off"
-									maxlength="50"  />     <!-- autofocus="autofocus" --></dd>
+									value="${cookie.account.value}" maxlength="50"  />  
+									   <!-- autofocus="autofocus" --></dd>
 							</dl>
 							<dl>
 							<dd>
 								<label for="pwd" style="text-align:left">密碼：</label>
 								<form:input id="password" path="password" class="text"
 									type="password" placeholder="請輸入密碼 ( 英文大小寫有差別 )" tabindex="2"
-									autocomplete="off" maxlength="50" /></dd>
+									value="${cookie.pwd.value}" autocomplete="off" maxlength="50" /></dd>
 									
 							</dl>
 							
@@ -97,24 +101,27 @@
 								
 				            	
 								
-								<form:button  type="submit" style="font-size: 20px;width: 450px; height: 60px;">
+								<form:button  type="submit"  style="font-size: 20px;width: 450px; height: 60px;">
 									 登入</form:button><br></dd></dl>
 									 
 								<dl><dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
 									 重填</form:button><br>	
 						      	 
 								<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-								<a href="#" class="image fit" ><img src="images/facebooklogin.jpg"
-									alt="" style="width:450px; display:block; margin:auto;"/></a></fb:login-button><br>
+								
+<!-- 								<a href="#" class="image fit" ><img src="images/facebooklogin.jpg" -->
+<!-- 									alt="" style="width:450px; display:block; margin:auto;"/></a></fb:login-button><br> -->
 									
-								<a href="#" class="image fit"><img src="images/googlelogin.jpg"
-									alt="" style="width:450px; display:block; margin:auto;"/></a>
+<!-- 								<a href="#" class="image fit"><img src="images/googlelogin.jpg" -->
+<!-- 									alt="" style="width:450px; display:block; margin:auto;"/></a> -->
 <!-- 								<button type="button" id="btnSignIn"></button> -->
 								
 							</dd>
 							</dl>
 							
-								<input id="remember" name="remember" type="checkbox" value='true' >remember me<br>
+								<input id="remember" name="remember" type='checkbox' class="icon" 
+								style="-webkit-appearance: checkbox;"/>Remember Me
+ 								
 								
 						</form:form>
 											
@@ -179,8 +186,6 @@
 							</dl>
 							<dl>
 							<dd>
-<%-- 								<form:input type="radio" name="gender" value="male" path="gender" checked/><label>男</label> --%>
-<%-- 								<form:input type="radio" name="gender" value="female" path="gender"/><label>女</label> --%>
 							<label for="gender" style="text-align:left">*性別：</label>
 							<form:select  id="gender"   required="required" path="gender">
                             <form:option value="1" selected="selected">男</form:option>
@@ -196,8 +201,11 @@
 							</dd>
 							</dl>
 								<input id="type" name="form" type='hidden' value='true' />
+								
+								
+							
+					            
 						</form:form>
-					
 					</div>
 				</div>
 				

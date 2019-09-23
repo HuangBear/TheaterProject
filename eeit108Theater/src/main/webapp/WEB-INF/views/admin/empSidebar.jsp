@@ -58,6 +58,21 @@
           <i class="fas fa-fw fa-table"></i>
           <span>會員清單</span></a>
         </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="newBulletin">
+          <i class="fas fa-fw fa-table"></i>
+          <span>發布公告</span></a>
+        </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="allBulletin">
+          <i class="fas fa-fw fa-table"></i>
+          <span>歷史公告</span></a>
+        </li>
+         <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="WebSocket">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+          <span>即時客服</span></a>
+        </li>
     </ul>
 
  <!-- ------------------------------------------------------------------------------------------------- -->	

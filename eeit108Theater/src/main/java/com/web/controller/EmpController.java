@@ -90,6 +90,20 @@ public class EmpController {
 		model.addAttribute("employees", list);
 		return "admin/Table";
 	}
+	@RequestMapping("/admin/Mem_list")
+	public String MemTable1(Model model) {
+		MemberBean memberBean=new MemberBean();
+		List<MemberBean> listMem = serviceM.getAllMembers();
+		model.addAttribute("members", listMem);
+		model.addAttribute("memberBean", memberBean);
+		model.addAttribute("now", new Date());
+		return "admin/Mem_list";
+	}
+	@RequestMapping("/admin/WebSocket")
+	public String Chat(Model model) {
+		
+		return "admin/WebSocket";
+	}
 	@RequestMapping("admin/empIndexA")
 	public String EmpListA(Model model, Principal principal,HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -128,16 +142,16 @@ public class EmpController {
 		model.addAttribute("employeeBean", employeeBean);
 		model.addAttribute("memberBean", memberBean);
 		model.addAttribute("now", new Date());
-		return "admin/"+url;
+		return "forward:/admin/"+url;
 	}
 	
 	
-//	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
-//	public String AddEmpGet(Model model) {
-//		EmployeeBean employeeBean = new EmployeeBean();
-//		model.addAttribute("employeeBean", employeeBean);
-//		return "admin/emp_add";
-//	}
+	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
+	public String AddEmpGet(Model model) {
+		EmployeeBean employeeBean = new EmployeeBean();
+		model.addAttribute("employeeBean", employeeBean);
+		return "admin/emp_add";
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/admin/emp_add")
 	public String AddEmpPost(@ModelAttribute("employeeBean")EmployeeBean employeeBean,

@@ -163,7 +163,8 @@ public class MemberController {
 	
 		
 		if ("on".equals(flag)) {
-			account = java.net.URLEncoder.encode(account, "UTF-8");
+			System.out.println("有勾RememberMe");
+			//account = java.net.URLEncoder.encode(account, "UTF-8");
 			Cookie accountCookie = new Cookie("account", account);
 			Cookie pwdCookie = new Cookie("pwd", pwd);
 			Cookie flagCookie = new Cookie("flag", "checked");
@@ -181,7 +182,7 @@ public class MemberController {
 			response.addCookie(pwdCookie);
 			response.addCookie(flagCookie);
 			}
-			else {
+			else {System.out.println("沒勾RememberMe");
 				account = java.net.URLEncoder.encode(account, "UTF-8");
 				Cookie accountCookie = new Cookie("account", account);
 				Cookie pwdCookie = new Cookie("pwd", pwd);
