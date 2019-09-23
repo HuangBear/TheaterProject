@@ -1,10 +1,14 @@
 package com.web.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.web.entity.MovieBean;
 
 @Controller
 public class AllController {
@@ -30,11 +34,11 @@ public class AllController {
 		return "right-sidebar";
 	}
 	
-	@RequestMapping("/films")
-	public String films()
-	{
-		return "films";
-	}
+//	@RequestMapping("/films")
+//	public String films()
+//	{
+//		return "films";
+//	}
 	
 	@RequestMapping("/forums")
 	public String forums()
@@ -54,11 +58,11 @@ public class AllController {
 		return "theater";
 	}
 	
-	@RequestMapping("/ticketing")
-	public String ticketing()
-	{
-		return "ticketing";
-	}
+//	@RequestMapping("/ticketing")
+//	public String ticketing()
+//	{
+//		return "ticketing";
+//	}
 	
 	@RequestMapping("/showtimes")
 	public String showtimes()

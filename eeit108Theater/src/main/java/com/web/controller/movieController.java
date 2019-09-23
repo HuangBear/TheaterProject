@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -46,14 +45,14 @@ public class movieController {
 	TimeTableService time_service;
 	@Autowired
 	ServletContext context;
-
-	@RequestMapping("/movie")
-	public String movieIntroduction(Model model) {
+	
+	@RequestMapping("/films")
+	public String films(Model model) {
 		List<MovieBean> comingMovie = service.getComingMovies();
 		List<MovieBean> releasedMovie = service.getReleasedMovies();
 		model.addAttribute("comingMovies", comingMovie);
 		model.addAttribute("releasedMovies", releasedMovie);
-		return "movie";
+		return "films";
 	}
 	
 	@RequestMapping("/MoviesForum")
@@ -67,11 +66,20 @@ public class movieController {
 		model.addAttribute("ComingMovies", ComingMoviesList);
 		return "MoviesForum";
 	}
-
-	@RequestMapping("/movieTimes_{no}")
+	
+	@RequestMapping("/detail_{no}")
 	public String movieTimes(Model model, @PathVariable Integer no) {
-		MovieBean movie = service.getMovieById(no);
-		String[] string = movie.getTrailerLink();
+		MovieBean movieDetails = service.getMovieById(no);
+		String[] string = movieDetails.getTrailerLink();
+		model.addAttribute("movie", movieDetails);
+		model.addAttribute("link", string[0]);
+		return "detail";
+	}
+
+//	@RequestMapping("/movieTimes_{no}")
+//	public String movieTimes(Model model, @PathVariable Integer no) {
+//		MovieBean movie = service.getMovieById(no);
+//		String[] string = movie.getTrailerLink();
 //		List<TimeTableBean> times = time_service.getStartTimeByMovie(movie.getMovieName());
 //		List<TimeTableBean> theatersB = time_service.getTheaterByMovieName(movie.getMovieName());
 //		List<TimeTableBean> theatersA = new ArrayList<>();
@@ -84,13 +92,43 @@ public class movieController {
 //		}
 //		model.addAttribute("link", string[0]);
 //		model.addAttribute("movie", movie);
-////		model.addAttribute("times", times);
+//		model.addAttribute("times", times);
 //		model.addAttribute("theatersA", theatersA);
 //		model.addAttribute("theatersB", theatersB);
 //
 //		System.out.println(theatersA);
 //		List<TimeTableBean> times = time_service.getStartTimeByMovie(movie.getMovieName());
 //		List<TimeTableBean> theaters = time_service.getTimeTablesByMovie(movie.getMovieName());
+//		String[] movieTheater = {"A廳", "B廳", "C廳", "D廳", "E廳", "F廳", "G廳", "H廳", "I廳", "J廳"};
+//		List<TimeTableBean> startTime = new ArrayList<>();
+//		for (int i = 0; i < movieTheater.length; i++) {
+//			startTime = time_service.getStartTimeByMovieAndTheater(movie.getMovieName(), movieTheater[i]);
+//			if (startTime.isEmpty()) {
+//				continue;
+//			} else {
+//				model.addAttribute("startTime[" + i + "]", startTime);
+//				model.addAttribute("theater" + i, movieTheater[i]);
+//				System.out.println(startTime);
+//			}
+//		}
+//		model.addAttribute("link", string[0]);
+//		model.addAttribute("movie", movie);
+//		return "movieTimes";
+//	}
+	@RequestMapping("/ticketing")
+	public String movieTicketingIndex(Model model) {
+		List<MovieBean> releasedMovies = service.getReleasedMovies();
+		model.addAttribute("releasedMovies", releasedMovies);
+		return "ticketing";
+	}
+	@RequestMapping("/ticketing_{no}")
+	public String movieTicketing(Model model, @PathVariable Integer no) {
+		MovieBean movie = service.getMovieById(no);
+		model.addAttribute("movie", movie);
+		List<TimeTableBean> times = time_service.getStartTimeByMovie(movie.getMovieName());
+		List<TimeTableBean> theaters = time_service.getTimeTablesByMovie(movie.getMovieName());
+		model.addAttribute("times", times);
+		model.addAttribute("theaters", theaters);
 		String[] movieTheater = {"A廳", "B廳", "C廳", "D廳", "E廳", "F廳", "G廳", "H廳", "I廳", "J廳"};
 		List<TimeTableBean> startTime = new ArrayList<>();
 		for (int i = 0; i < movieTheater.length; i++) {
@@ -103,9 +141,8 @@ public class movieController {
 				System.out.println(startTime);
 			}
 		}
-		model.addAttribute("link", string[0]);
-		model.addAttribute("movie", movie);
-		return "movieTimes";
+		
+		return "ticketing";
 	}
 	
 	@RequestMapping(value = "/getPicture/{no}", method = RequestMethod.GET)
@@ -118,7 +155,7 @@ public class movieController {
 		MovieBean movie = service.getMovieById(no);
 		if (movie != null) {
 			Blob blob = movie.getMovieImage();
-			filename = "movie001.jpeg";
+			filename = "1.jpeg";
 			if (blob != null) {
 				try {
 					len = (int) blob.length();
