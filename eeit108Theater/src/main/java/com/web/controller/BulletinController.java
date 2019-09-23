@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSON;
 import com.web.entity.BulletinBean;
 import com.web.equator.BulletinEquator;
 import com.web.service.impl.BulletinServiceImpl;
@@ -44,12 +46,14 @@ public class BulletinController {
 	@Autowired
 	ServletContext context;
 
+	String Root = "bulletin/";
+
 	// other2allBulletin
 	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET)
 	public String other2allBulletin(Model model) {
 		List<List<BulletinBean>> list = service.getStatsBulletin();
 		model.addAttribute("statusBulletin", list);
-		return "allBulletin";
+		return Root + "allBulletin";
 	}
 
 	// other2newBulletin
@@ -57,10 +61,10 @@ public class BulletinController {
 	public String other2newBulletin(Model model) {
 		BulletinBean bb = new BulletinBean();
 		model.addAttribute("bulletinBean", bb);
-		return "newBulletin";
+		return Root + "newBulletin";
 	}
 
-	// ????
+	// edit_allBulletin2newBulletin
 	@RequestMapping(value = "/allBulletin/{bulletin_no}", method = RequestMethod.GET)
 	public String edit_allBulletin2newBulletin(@PathVariable("bulletin_no") Integer no,
 			Model model) {
@@ -68,10 +72,10 @@ public class BulletinController {
 		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 		model.addAttribute("bulletinBean", bb);
 		model.addAttribute("sameBulletinBean", list);
-		return "newBulletin";
+		return Root + "newBulletin";
 	}
 
-	// 找圖片
+	// find picture
 	@RequestMapping(value = "/getBulletinPicture/{bulletin_no}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletRequest resp,
 			@PathVariable Integer bulletin_no) {
@@ -94,6 +98,30 @@ public class BulletinController {
 		headers.setContentType(mediaType);
 		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
 		return responseEntity;
+	}
+
+	// AJAX Find image
+	@RequestMapping(value = "/ajaxImg")
+	@ResponseBody
+	public String ajaxImgFunction(Integer no) throws Exception {
+//		System.out.println("ajaxImg");
+		Blob blob = service.getBulletinBeanById(no).getCoverImage();
+//		System.out.println(blob);
+//		System.out.println(blob.toString());
+		// 得到图片的二进制数据
+		byte[] image = blob.getBytes(1, (int) blob.length());
+		System.out.println("JSON.toJSONString(image)=" + JSON.toJSONString(image));
+		return JSON.toJSONString(image);
+	}
+
+	// AJAX Find context
+	@RequestMapping(value = "/ajaxContext", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+//	(produces = "text/html;charset=ISO-8859-1")
+	public String ajaxContextFunction(Integer no) throws Exception {
+		String str = service.getBulletinBeanById(no).getContext();
+		System.out.println("str" + str);
+		return str;
 	}
 
 	// post_newBulletin2allBulletin
@@ -121,29 +149,36 @@ public class BulletinController {
 		String originalFilename = bulletinImage.getOriginalFilename();
 		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.jpg";
 		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
+		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 		url = context.getRealPath(url);
 		byte[] b = bulletinImage.getBytes();
-		if (bulletinImage != null && !bulletinImage.isEmpty()) {
-			bb.setFileName(originalFilename);
-			try {
-				b = bulletinImage.getBytes();
-				Blob blob = new SerialBlob(b);
+		if (photoType.equals("jpg") || photoType.equals("jpeg") || photoType.equals("png")) {
+			if (bulletinImage != null && !bulletinImage.isEmpty()) {
+				bb.setFileName(originalFilename);
+				System.out.println("photoType=" + photoType);
+				try {
+					b = bulletinImage.getBytes();
+					Blob blob = new SerialBlob(b);
+					bb.setCoverImage(blob);
+					System.out.println("insertBlob=" + blob);
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+					throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+				}
+			} else {
+				bb.setFileName(imgFilename);
+				System.out.println("imgFilename=" + imgFilename);
+				Blob blob = SystemUtils2018.fileToBlob(url);
 				bb.setCoverImage(blob);
 				System.out.println("insertBlob=" + blob);
-			} catch (IOException | SQLException e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 			}
 		} else {
-			bb.setFileName(imgFilename);
-			System.out.println("imgFilename=" + imgFilename);
-			Blob blob = SystemUtils2018.fileToBlob(url);
-			bb.setCoverImage(blob);
-			System.out.println("insertBlob=" + blob);
+			errorMessage.put("photo", "請上傳jpeg/jpg/png");
 		}
+
 		System.out.println("ErrMsg=" + request.getAttribute("ErrMsg"));
 		if (!errorMessage.isEmpty()) {
-			return "newBulletin";
+			return Root + "newBulletin";
 		} else {
 			Date now = new Date();
 			redirectAttributes.addFlashAttribute("changeMsg", "新增成功");
@@ -178,21 +213,29 @@ public class BulletinController {
 		// 圖片存資料庫
 		MultipartFile bulletinImage = bb.getBulletinImage();
 		String originalFilename = bulletinImage.getOriginalFilename();
+
 		byte[] b = bulletinImage.getBytes();
-		System.out.println("byte[] b =" + b);
-		System.out.println("getBulletinImage=" + bb.getBulletinImage());
-		System.out.println("originalFilename=" + originalFilename);
-		System.out.println("bb.getNo()=" + bb.getNo());
+//		System.out.println("byte[] b =" + b);
+//		System.out.println("getBulletinImage=" + bb.getBulletinImage());
+//		System.out.println("originalFilename=" + originalFilename);
+//		System.out.println("bb.getNo()=" + bb.getNo());
 		BulletinBean obb = service.getBulletinBeanById((bb.getNo()));
 		Integer flag = null;
 		if (originalFilename != null && !originalFilename.isEmpty()) {
-			bb.setFileName(originalFilename);
-			b = bulletinImage.getBytes();
-			Blob blob = new SerialBlob(b);
-			bb.setCoverImage(blob);
-			flag = 1;
-			System.out.println(flag);
-			System.out.println("editBlob=" + blob);
+			String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+			System.out.println(photoType);
+			if (photoType.equals("jpg") || photoType.equals("jpeg") || photoType.equals("png")) {
+				bb.setFileName(originalFilename);
+				b = bulletinImage.getBytes();
+				Blob blob = new SerialBlob(b);
+				bb.setCoverImage(blob);
+				flag = 1;
+				System.out.println(flag);
+				System.out.println("editBlob=" + blob);
+			} else {
+				errorMessage.put("photo", "請上傳jpeg/jpg/png");
+			}
+
 		} else {
 			bb.setCoverImage(obb.getCoverImage());
 			bb.setFileName(obb.getFileName());
@@ -217,12 +260,12 @@ public class BulletinController {
 		// 存入
 		if (!errorMessage.isEmpty()) {
 			System.out.println("資料輸入有錯誤，網頁跳回");
-			return "newBulletin";
+			return Root + "newBulletin";
 		} else {
 			if (bet) {
 				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
 				System.out.println("資料未修改，網頁跳回");
-				return "newBulletin";
+				return Root + "newBulletin";
 			} else {
 				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
 				service.insertNewBulletin(bb);
