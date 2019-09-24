@@ -127,7 +127,7 @@
 					<h3><a href="#">訂單清單</a></h3>					
 					
 					<div id="accordion">
-  						<h3><td>01 - </td><td>2019/09/19</td><td>牠 第二章</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><td>01 - </td><td>2019/09/19</td><td>牠 第二章</td></tr></h3>
   						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
