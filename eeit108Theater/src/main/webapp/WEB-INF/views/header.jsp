@@ -23,7 +23,7 @@
 		<li class="foo1"><a href="<c:url value='/news'/>">活動公告</a></li>
 		<li class="foo1"><a href="<c:url value='/biz'/>">業務專區</a></li>
 		<li class="foo1"><a href="<c:url value='/theater'/>">影城特色</a></li>
-		<li class="foo1"><a href="<c:url value='/forums'/>">電影討論</a></li>	
+		<li class="foo1"><a href="<c:url value='/MoviesForum'/>">電影討論</a></li>	
 		<li class="login foo1">
 
 		

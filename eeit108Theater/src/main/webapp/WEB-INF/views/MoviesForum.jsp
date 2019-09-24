@@ -116,88 +116,60 @@
 						<div id="tabs-1">
 							<table class="tbst">
 								<tbody style="text-align: left;">
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">01
-												─ 牠 第二章</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">02
-												─ 航海王：奪寶爭霸戰</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">03
-												─ 全面攻佔 3：天使救援</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">04
-												─ 玩命關頭：特別行動</a></td>
-									</tr>
+									<c:forEach var='Movie' items='${Movies}'>
+										<tr>
+											<td>${Movie.no}</td>
+											<td><a
+												href="<spring:url value='/MoviesForum/Articles?id=${Movie.no}' />"
+												class="btn btn-primary btn-lg btn-block"
+												style="font-size: 16px"> ${Movie.movieName} </a></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 						<div id="tabs-2">
 							<table class="tbst">
 								<tbody style="text-align: left;">
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">01
-												─ 大叔之愛電影版</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">02
-												─ 極限逃生</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">03
-												─ NG你的人生</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">04
-												─ 我家有個開心農場</a></td>
-									</tr>
+									<c:forEach var='ReleasedMovie' items='${ReleasedMovies}'>
+										<tr>
+											<td>${ReleasedMovie.no}</td>
+											<td><a
+												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />"
+												class="btn btn-primary btn-lg btn-block"
+												style="font-size: 16px"> ${ReleasedMovie.movieName} </a></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 						<div id="tabs-3">
 							<table class="tbst">
 								<tbody style="text-align: left;">
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">01
-												─ 天氣之子</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">02
-												─ 星際救援</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">03
-												─ 返校</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">04
-												─ 小丑</a></td>
-									</tr>
+									<c:forEach var='ReleasedMovie' items='${ReleasedMovies}'>
+										<tr>
+											<td>${ReleasedMovie.no}</td>
+											<td><a
+												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />"
+												class="btn btn-primary btn-lg btn-block"
+												style="font-size: 16px"> ${ReleasedMovie.movieName} </a></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 						<div id="tabs-4">
 							<table class="tbst">
 								<tbody style="text-align: left;">
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">01
-												─ 你願意嫁給我老公嗎？</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">02
-												─ 亂世佳人</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">03
-												─ 第九分局</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">04
-												─ 下半場</a></td>
-									</tr>
+									<c:forEach var='ComingMovie' items='${ComingMovies}'>
+										<tr>
+											<td>${ComingMovie.no}</td>
+											<td style="width: 500px; height: 50px;"><a
+												href="<spring:url value='/MoviesForum/Articles?id=${ComingMovie.no}' />"
+												class="btn btn-primary btn-lg btn-block"
+												style="font-size: 16px"> ${ComingMovie.movieName} </a></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
