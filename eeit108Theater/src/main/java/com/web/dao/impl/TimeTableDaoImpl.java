@@ -129,9 +129,9 @@ public class TimeTableDaoImpl implements TimeTableDao{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater) {
-		String hql = "SELECT DISTINCT t.startTime FROM TimeTableBean t WHERE t.movieName = :mname and t.theater = :mtheater";
-		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).setParameter("mtheater", theater).getResultList();
+	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater, String version) {
+		String hql = "SELECT DISTINCT t.startTime FROM TimeTableBean t WHERE t.movieName = :mname and t.theater = :mtheater and t.version = :mversion";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).setParameter("mtheater", theater).setParameter("mversion", version).getResultList();
 		return list;
 	}
 }

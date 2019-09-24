@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,13 +29,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 import com.web.service.MemberService;
+import com.web.util.SecurityCipher;
 
 @Controller
 public class MemberController {
@@ -65,6 +66,9 @@ public class MemberController {
 				&& memberBean.getPhoneNum() != null && memberBean.getPhoneNum().length() != 0
 				&& memberBean.getEmail() != null && memberBean.getEmail().length() != 0
 				&& memberBean.getMemberId() != null && memberBean.getMemberId().length() != 0) {
+			
+			String SecurityPwd =SecurityCipher.encryptString(memberBean.getPassword());
+			memberBean.setPassword(SecurityPwd);
 			redirectAttributes.addFlashAttribute("name", memberBean.getName());
 			redirectAttributes.addFlashAttribute("welcome", "註冊成功");
 
@@ -132,10 +136,71 @@ public class MemberController {
 //會員登入
 	@RequestMapping(value = "memberLogin", method = RequestMethod.POST)
 	public String MemberLoginProcess(@ModelAttribute("memberBean") MemberBean memberBean, HttpServletRequest request,
-			RedirectAttributes redirectAttributes, Model model, HttpSession session) {
-
+			RedirectAttributes redirectAttributes, Model model,
+			HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException {
+		String errMsg = "";
+		String account = memberBean.getEmail();
+		String pwd = memberBean.getPassword();
+		String flag = request.getParameter("remember");
 		session = request.getSession();
+		
+		if (account == null || account.trim().length() == 0) {
+			errMsg += "1.*帳號必須輸入;";
+		} else {
+			request.setAttribute("setacc", account);
+		}
 
+		if (pwd == null || pwd.trim().length() == 0) {
+			errMsg += "2.*密碼必須輸入;";
+		} else {
+			request.setAttribute("setpwd", pwd);
+		}
+		if (errMsg.length() != 0) {		
+			redirectAttributes.addFlashAttribute("errMsg", errMsg);
+			return "redirect:/memberservice";
+		}
+		
+	
+		
+		if ("on".equals(flag)) {
+			System.out.println("有勾RememberMe");
+			//account = java.net.URLEncoder.encode(account, "UTF-8");
+			Cookie accountCookie = new Cookie("account", account);
+			Cookie pwdCookie = new Cookie("pwd", pwd);
+			Cookie flagCookie = new Cookie("flag", "checked");
+			
+			// cookie存活時間
+			accountCookie.setMaxAge(5 * 60);
+			pwdCookie.setMaxAge(5 * 60);
+			flagCookie.setMaxAge(5 * 60);
+			// cookie儲存的位置
+			accountCookie.setPath(request.getContextPath());
+			pwdCookie.setPath(request.getContextPath());
+			flagCookie.setPath(request.getContextPath());
+			// 儲存cookie
+			response.addCookie(accountCookie);
+			response.addCookie(pwdCookie);
+			response.addCookie(flagCookie);
+			}
+			else {System.out.println("沒勾RememberMe");
+				account = java.net.URLEncoder.encode(account, "UTF-8");
+				Cookie accountCookie = new Cookie("account", account);
+				Cookie pwdCookie = new Cookie("pwd", pwd);
+				Cookie flagCookie = new Cookie("flag", "checked");
+
+				// cookie存活時間
+				accountCookie.setMaxAge(0);
+				pwdCookie.setMaxAge(0);
+				flagCookie.setMaxAge(0);
+				// cookie儲存的位置
+				accountCookie.setPath(request.getContextPath());
+				pwdCookie.setPath(request.getContextPath());
+				flagCookie.setPath(request.getContextPath());
+				// 儲存cookie
+				response.addCookie(accountCookie);
+				response.addCookie(pwdCookie);
+				response.addCookie(flagCookie);
+			}
 		MemberBean LoginMB = null;
 		LoginMB = service.checkEmailPassword(memberBean.getEmail(), memberBean.getPassword());
 		if (LoginMB != null) {
@@ -149,7 +214,9 @@ public class MemberController {
 		} else
 			redirectAttributes.addFlashAttribute("error", "登錄失敗，帳號或密碼錯誤");
 		return "redirect:/memberservice";
-	}
+		}
+		
+	
 
 	
 	@RequestMapping("memberLogout")

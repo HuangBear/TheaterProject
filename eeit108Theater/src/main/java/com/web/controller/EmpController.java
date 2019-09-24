@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -35,7 +36,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.EmployeeBean;
+import com.web.entity.MemberBean;
 import com.web.service.EmployeeService;
+import com.web.service.MemberService;
 
 @Controller
 public class EmpController {
@@ -44,6 +47,8 @@ public class EmpController {
 	ServletContext context;
 	@Autowired
 	EmployeeService service;
+	@Autowired
+	MemberService serviceM;
 	@Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -85,6 +90,20 @@ public class EmpController {
 		model.addAttribute("employees", list);
 		return "admin/Table";
 	}
+	@RequestMapping("/admin/Mem_list")
+	public String MemTable1(Model model) {
+		MemberBean memberBean=new MemberBean();
+		List<MemberBean> listMem = serviceM.getAllMembers();
+		model.addAttribute("members", listMem);
+		model.addAttribute("memberBean", memberBean);
+		model.addAttribute("now", new Date());
+		return "admin/Mem_list";
+	}
+	@RequestMapping("/admin/WebSocket")
+	public String Chat(Model model) {
+		
+		return "admin/WebSocket";
+	}
 	@RequestMapping("admin/empIndexA")
 	public String EmpListA(Model model, Principal principal,HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -115,19 +134,25 @@ public class EmpController {
 	public String updatePage(Model model, HttpServletRequest req, HttpSession session) {
 		String url = req.getParameter("url");
 		EmployeeBean employeeBean = new EmployeeBean();
-		List<EmployeeBean> list = service.getAllEmployees();
-		model.addAttribute("employees", list);
+		MemberBean memberBean=new MemberBean();
+		List<MemberBean> listMem = serviceM.getAllMembers();
+		List<EmployeeBean> listEmp = service.getAllEmployees();
+		model.addAttribute("employees", listEmp);
+		model.addAttribute("members", listMem);
 		model.addAttribute("employeeBean", employeeBean);
-		return "admin/"+url;
+		model.addAttribute("memberBean", memberBean);
+		model.addAttribute("now", new Date());
+
+		return "forward:/admin/"+url;
 	}
 	
 	
-//	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
-//	public String AddEmpGet(Model model) {
-//		EmployeeBean employeeBean = new EmployeeBean();
-//		model.addAttribute("employeeBean", employeeBean);
-//		return "admin/emp_add";
-//	}
+	@RequestMapping(method = RequestMethod.GET, value = "/admin/emp_add")
+	public String AddEmpGet(Model model) {
+		EmployeeBean employeeBean = new EmployeeBean();
+		model.addAttribute("employeeBean", employeeBean);
+		return "admin/emp_add";
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/admin/emp_add")
 	public String AddEmpPost(@ModelAttribute("employeeBean")EmployeeBean employeeBean,

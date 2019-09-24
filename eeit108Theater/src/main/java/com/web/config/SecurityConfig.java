@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/EmpLogin").loginProcessingUrl("/EmpLoginAction")
 		.successHandler((request, response, auth) -> {
             request.getSession().setAttribute("loginOK", auth.getName());
+            request.getSession().setAttribute("empLoginOK", auth.getName());
             response.sendRedirect("admin/empIndexA");})
 		.failureHandler((request, response, ex) -> {
 			//request.getSession().setAttribute("error", "登入失敗");

@@ -37,10 +37,10 @@ div {
 		<c:forEach var='releasedMovie' items='${releasedMovies}'>
 			<div
 				style='width: 130px; height: 310px; margin: 15px 8px 15px 8px; display: inline-block; text-align: center; border: 1px solid black; padding-top: 40px;'>
-				<a href = "<c:url value = '/movieTimes_${releasedMovie.no}' />">
+				<a href = "<c:url value = '/detail_${releasedMovie.no}' />">
 					<img src="<c:url value = '/getPicture/${releasedMovie.no}'/>"
 					style='width: 100px; height: 120px;'></a><br>
-				<a href = "<c:url value = '/movieTimes_${releasedMovie.no}' />">
+				<a href = "<c:url value = '/detail_${releasedMovie.no}' />">
 					<b style='font-size: 16px;'>${releasedMovie.movieName}</b></a><br> 
 				<b style='font-size: 16px'><fmt:formatDate pattern="yyyy-MM-dd"
 						value="${releasedMovie.openingDate}" />上映</b><br> 
@@ -59,13 +59,13 @@ div {
 		<c:forEach var='comingMovie' items='${comingMovies}'>
 			<div
 				style='width: 130px; height: 310px; margin: 15px 8px 15px 8px; display: inline-block; text-align: center; border: 1px solid black; padding-top: 40px;'>
-				<a href = "<c:url value = '/movieTimes_${comingMovie.no}' />">
+				<a href = "<c:url value = '/detail_${comingMovie.no}' />">
 					<img src="<c:url value = '/getPicture/${comingMovie.no}'/>"
 					style='width: 100px; height: 120px;'></a><br> 
-				<a href = "<c:url value = '/movieTimes_${comingMovie.no}' />">
+				<a href = "<c:url value = '/detail_${comingMovie.no}' />">
 					<b style='font-size: 16px;'>${comingMovie.movieName}</b></a><br> 
 				<b style='font-size: 16px'><fmt:formatDate pattern="yyyy-MM-dd"
-						value="${comingMovie.openingDate}" />上映</b></b><br>
+						value="${comingMovie.openingDate}" />上映</b><br>
 				<b style = 'font-size: 16px'>${comingMovie.duration}</b>
 			</div>
 		</c:forEach>

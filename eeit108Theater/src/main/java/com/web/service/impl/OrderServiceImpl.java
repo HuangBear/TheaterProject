@@ -79,19 +79,20 @@ public class OrderServiceImpl implements OrderService{
 			System.out.println("row = " + row);
 			Integer col = Integer.valueOf(rowCol.substring(1));
 			System.out.println("col = " + col);
-			
-			SeatBean sb = sdao.getSeat(tid, row, col);
+			if(sdao.getSeat(tid, row, col) != null) {
+				return -1;
+			}
+			SeatBean sb = new SeatBean(tid, row, col);
 			list.add(sb);
 		}
 		ob.setSeats(list);
-		System.out.println("setSeatToOrder\n" + list);
+		System.out.println("===setSeatToOrder Result:\n" + list);
 		return seats.length;
 	}
 	
 	@Override
-	public List<OrderBean> getOrdersByOwnerId(Integer memberId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderBean> getOrdersByOwnerId(String memberId) {
+		return odao.getOrdersByOwnerId(memberId);
 	}
 
 	
@@ -106,6 +107,18 @@ public class OrderServiceImpl implements OrderService{
 	public List<OrderBean> getAllAvailable() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<OrderBean> getGuestOrders(String ownerEmail, String ownerPhone, Boolean checkStatus) {
+		return odao.getGuestOrders(ownerEmail, ownerPhone, checkStatus);
+	}
+
+
+	@Override
+	public List<OrderBean> getMemberOrders(String memberId, Boolean checkStatus) {
+		return odao.getMemberOrders(memberId, checkStatus);
 	}
 
 }
