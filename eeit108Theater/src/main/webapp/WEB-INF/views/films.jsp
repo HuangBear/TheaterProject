@@ -20,7 +20,7 @@
 </noscript>
 <style>
 	#hello img {
-		height: 405px;
+		height: 550px;
 	}
 </style>
 </head>

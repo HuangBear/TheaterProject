@@ -69,10 +69,10 @@
 						
 						<section> <header>
 						<h3>
-							<a href="#">購票記錄</a>
+							<a href="#">訂票查詢</a>
 						</h3>
 						</header>
-						<p>8+9尚雷諾熊大寬元您好</p>
+						<p>訪客您好</p>
 						<div class="row gtr-50">
 							<div class="col-4">
 								<a href="#" class="image fit"><img src="images/frontend/ticket.png" alt="" /></a>
@@ -88,36 +88,7 @@
 								<br>
 								<h3><a href="#">已取票</a></h3>
 							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic12.jpg"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<h4></h4>
-								<p>Amet nullam fringilla nibh nulla convallis tique ante
-									proin.</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic13.jpg"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<h4>Sed tempus fringilla</h4>
-								<p>Amet nullam fringilla nibh nulla convallis tique ante
-									proin.</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/pic14.jpg"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<h4>Malesuada fermentum</h4>
-								<p>Amet nullam fringilla nibh nulla convallis tique ante
-									proin.</p>
-							</div>
-						</div>
-						<footer> <a href="#" class="button">會員資訊</a>
-						</footer> </section>
+						</section>
 					</div>
 					
 					
@@ -155,7 +126,7 @@
 								</tbody>
 							</table>
   						</div>
-  						<h3><td>02 - </td><td>2019/09/19</td><td>第九分局</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><td>02 - </td><td>2019/09/19</td><td>第九分局</td></tr></h3>
   						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
@@ -183,7 +154,7 @@
 								</tbody>
 							</table>
   						</div>
-  						<h3><tr><td>03 - </td><td>2019/08/31</td><td>航海王：奪寶爭霸戰</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><tr><td>03 - </td><td>2019/08/31</td><td>航海王：奪寶爭霸戰</td></tr></h3>
  						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
@@ -211,7 +182,7 @@
 								</tbody>
 							</table>
   						</div>
-  						<h3><tr><td>04 - </td><td>2019/07/27</td><td>全面攻佔 3：天使救援</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><tr><td>04 - </td><td>2019/07/27</td><td>全面攻佔 3：天使救援</td></tr></h3>
   						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">

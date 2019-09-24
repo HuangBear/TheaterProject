@@ -214,10 +214,10 @@ public class OrderBean implements Serializable {
 		int ticketSum = 0, foodSum = 0;
 		for (OrderItemBean oi : this.getOrderItems()) {
 			if (oi.getType().equals("ticket")) {
-				ticketCnt++;
+				ticketCnt += oi.getQuantity();
 				ticketSum += oi.getSumPrice().intValue();
 			} else {
-				foodCnt++;
+				foodCnt += oi.getQuantity();
 				foodSum += oi.getSumPrice().intValue();
 			}
 		}
@@ -249,5 +249,12 @@ public class OrderBean implements Serializable {
 			}
 		}
 	}
-
+	
+	public List<String> getSeatsList() {
+		List<String> seats = new ArrayList<>();
+		for(SeatBean sb : this.getSeats()) {
+			seats.add(sb.getSeatString());
+		}
+		return seats;
+	}
 }

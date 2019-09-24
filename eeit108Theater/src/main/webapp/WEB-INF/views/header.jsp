@@ -18,18 +18,19 @@
 		<li class="foo1"><a href="<c:url value='/ticketing'/>">線上訂票</a>
 			<ul>
 				<li><a href="<c:url value='/ticketing'/>">時刻查詢</a></li>
+				<li><a href="<c:url value='/visitorticket'/>">訂票查詢</a></li>
 				<li><a href="<c:url value='/price'/>">票價說明</a></li>
 			</ul></li>
 		<li class="foo1"><a href="<c:url value='/news'/>">活動公告</a></li>
 		<li class="foo1"><a href="<c:url value='/biz'/>">業務專區</a></li>
 		<li class="foo1"><a href="<c:url value='/theater'/>">影城特色</a></li>
-		<li class="foo1"><a href="<c:url value='/forums'/>">電影討論</a></li>	
+		<li class="foo1"><a href="<c:url value='/MoviesForum'/>">電影討論</a></li>	
 		<li class="login foo1">
 
 		
 		 <c:choose> 
 				<c:when test="${empty LoginOK.memberImage}">
-				<img src="<c:url value='/images/frontend/coustom.png'/>">
+				<img src="<c:url value='/images/frontend/loginicon.png'/>">
 				</c:when>
 				
 				<c:when test="${!empty LoginOK.memberImage}">

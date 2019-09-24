@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
@@ -35,6 +34,17 @@ public class SeatBean implements Serializable{
 	
 	@Column(name = "fk_timeTable_id")
 	private Integer timeTableId; //not owner, cannot find timetable object directly
+	
+	public SeatBean() {
+		super();
+	}
+	
+	public SeatBean(Integer timeTableId, String row, Integer column) {
+		super();
+		this.timeTableId = timeTableId;
+		this.row = row;
+		this.column = column;
+	}
 	
 	public Integer getNo() {
 		return no;

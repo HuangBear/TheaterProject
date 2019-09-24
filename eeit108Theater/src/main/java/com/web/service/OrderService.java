@@ -22,8 +22,12 @@ public interface OrderService {
 
 	int setSeatToOrder(OrderBean ob, String[] seats);
 
-	List<OrderBean> getOrdersByOwnerId(Integer memberId);
+	List<OrderBean> getOrdersByOwnerId(String memberId);
 
+	List<OrderBean> getGuestOrders(String ownerEmail,String ownerPhone, Boolean checkStatus);
+	
+	List<OrderBean> getMemberOrders(String memberId, Boolean checkStatus);
+	
 	List<OrderBean> getAllOrders();
 
 	List<OrderBean> getAllAvailable();

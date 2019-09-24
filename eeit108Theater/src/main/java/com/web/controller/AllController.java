@@ -142,6 +142,12 @@ public class AllController {
 		return "showticket";
 	}
 	
+	@RequestMapping("/visitorticket")
+	public String visitorticket()
+	{
+		return "visitorticket";
+	}
+	
 	@RequestMapping("/memberinfo")
 	public String memberinfo()
 	{
