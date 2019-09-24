@@ -120,7 +120,7 @@
 							</dl>
 							
 								<input id="remember" name="remember" type='checkbox' class="icon" 
-								style="-webkit-appearance: checkbox;"/>Remember Me
+								style="-webkit-appearance: checkbox;" ${cookie.flag.value}/>Remember Me
  								
 								
 						</form:form>

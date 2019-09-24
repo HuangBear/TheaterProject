@@ -93,10 +93,10 @@
             </div>
           </div>
           <div class="card-footer small text-muted">Updated  at ${now}</div>
+          <a href="/EmpPDF">pdf</a>
         </div>
 
-      <script src="js/admin/demo/datatables-demo.js"></script>
-  	  <script src="js/admin/demo/chart-area-demo.js"></script>
+
 <script>
  $(".itemTag2").click(function() {
     	
