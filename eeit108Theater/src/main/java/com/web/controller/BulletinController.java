@@ -46,10 +46,10 @@ public class BulletinController {
 	@Autowired
 	ServletContext context;
 
-	String Root = "bulletin/";
+	String Root = "/admin/";
 
 	// other2allBulletin
-	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/allBulletin", method = RequestMethod.GET)
 	public String other2allBulletin(Model model) {
 		List<List<BulletinBean>> list = service.getStatsBulletin();
 		model.addAttribute("statusBulletin", list);
@@ -57,7 +57,7 @@ public class BulletinController {
 	}
 
 	// other2newBulletin
-	@RequestMapping(value = "/newBulletin", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/newBulletin", method = RequestMethod.GET)
 	public String other2newBulletin(Model model) {
 		BulletinBean bb = new BulletinBean();
 		model.addAttribute("bulletinBean", bb);
@@ -65,7 +65,7 @@ public class BulletinController {
 	}
 
 	// edit_allBulletin2newBulletin
-	@RequestMapping(value = "/allBulletin/{bulletin_no}", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/allBulletin/{bulletin_no}", method = RequestMethod.GET)
 	public String edit_allBulletin2newBulletin(@PathVariable("bulletin_no") Integer no,
 			Model model) {
 		BulletinBean bb = service.getBulletinBeanById(no);
@@ -117,7 +117,6 @@ public class BulletinController {
 	// AJAX Find context
 	@RequestMapping(value = "/ajaxContext", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-//	(produces = "text/html;charset=ISO-8859-1")
 	public String ajaxContextFunction(Integer no) throws Exception {
 		String str = service.getBulletinBeanById(no).getContext();
 		System.out.println("str" + str);
@@ -125,7 +124,7 @@ public class BulletinController {
 	}
 
 	// post_newBulletin2allBulletin
-	@RequestMapping(value = "/newBulletin", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/newBulletin", method = RequestMethod.POST)
 	public String post_newBulletin2allBulletin(@ModelAttribute("bulletinBean") BulletinBean bb,
 			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException {
@@ -186,12 +185,12 @@ public class BulletinController {
 			bb.setBortingId(bb.getEmployeeId() + "_" + now.toString());
 			bb.setPostTime(now);
 			service.insertNewBulletin(bb);
-			return "redirect:/allBulletin";
+			return "redirect:/" + Root + "allBulletin";
 		}
 	}
 
 	// edit_newBulletin2allBulletin
-	@RequestMapping(value = "/allBulletin/{bulletin_no}", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/allBulletin/{bulletin_no}", method = RequestMethod.POST)
 	public String edit_newBulletin2allBulletin(@ModelAttribute("bulletinBean") BulletinBean bb,
 			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException, ParseException {
@@ -270,29 +269,29 @@ public class BulletinController {
 				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
 				service.insertNewBulletin(bb);
 				System.out.println("資料已修改");
-				return "redirect:/allBulletin";
+				return "redirect:/" + Root + "allBulletin";
 			}
 		}
 	}
 
 	// deleteSstatus
-	@RequestMapping(value = "/allBulletin/deleteSstatus/{sb.no}")
+	@RequestMapping(value = "admin/allBulletin/deleteSstatus/{sb.no}")
 	public String deleteSstatus(@PathVariable("sb.no") Integer no,
 			RedirectAttributes redirectAttributes) {
 		int deleteReturn = service.updateBulletinBeanById(no, false);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料刪除");
 		System.out.println("資料已刪除，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
-		return "redirect:/allBulletin";
+		return "redirect:/" + Root + "allBulletin";
 	}
 
 	// restoreSstatus
-	@RequestMapping(value = "/allBulletin/restore/{sb.no}")
+	@RequestMapping(value = "admin/allBulletin/restore/{sb.no}")
 	public String restoreSstatus(@PathVariable("sb.no") Integer no,
 			RedirectAttributes redirectAttributes) {
 		int deleteReturn = service.updateBulletinBeanById(no, true);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料復原");
 		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
-		return "redirect:/allBulletin";
+		return "redirect:/" + Root + "allBulletin";
 	}
 
 //	準備方法
