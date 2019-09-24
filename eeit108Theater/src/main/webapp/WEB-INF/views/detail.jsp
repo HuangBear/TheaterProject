@@ -181,6 +181,8 @@
 						</footer>
 						</section>
 					</div>
+					
+					<!-- 電影介紹內容 -->
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 						<article id="main"> <header>
 						<h2>
@@ -188,7 +190,7 @@
 						</h2>
 						<a href="ticketing" class="button">前往討論</a>
 						<p>${movie.engMovieName}</p>
-						</header> <a><img src="<c:url value = '/getPicture/${movie.no}'/>" alt="" style = 'width: 400px; height: 800px;' /></a>
+						</header> <a><img src="<c:url value = '/getPicture/${movie.no}'/>" alt="" style = 'width: 400px; height: 550px;' /></a>
 						
 						<section> <header>
 						<h3><a name="one">上映日期：</a></h3>
@@ -269,41 +271,31 @@
 					</div>
 				</div>
 				
-				<div><h6><a>其他人還看了：</a></h6></div>
-				
+				<br><br><br>
+				<div><h3><a>其他人還看了：</a></h3></div>
 				<hr />
-			
+				<br>
 				<div class="row">
-					<p><article class="col-4 col-12-mobile special"> <a href="#"
+					<article class="col-4 col-12-mobile special"> <a href="#"
 						class="image featured"><img src="images/frontend/now03.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">全面攻佔 3：天使救援</a>
-					</h3>
-					</header>
-					<p>ANGEL HAS FALLEN<br>
-						上映日期：2019/08/21</p>
+						<header><h3><a href="#">全面攻佔 3：天使救援</a></h3></header>
+							<p>ANGEL HAS FALLEN<br>
+								上映日期：2019/08/21</p>
 					</article>
+					
 					<article class="col-4 col-12-mobile special"> <a href="#"
 						class="image featured"><img src="images/frontend/now05.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">大叔之愛電影版</a>
-					</h3>
-					</header>
-					<p>OSSANS LOVE THE MOVIE <br>
-						上映日期：2019/09/06</p>
+						<header><h3><a href="#">大叔之愛電影版</a></h3></header>
+							<p>OSSANS LOVE THE MOVIE <br>
+								上映日期：2019/09/06</p>
 					</article>
+					
 					<article class="col-4 col-12-mobile special"> <a href="#"
 						class="image featured"><img src="images/frontend/movie5.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">航海王：奪寶爭霸戰</a>
-					</h3>
-					</header>
-					<p>ONE PIECE STAMPEDE<br>
-						上映日期：2019/08/21</p>
-					</article></p>
+						<header><h3><a href="#">航海王：奪寶爭霸戰</a></h3></header>
+							<p>ONE PIECE STAMPEDE<br>
+								上映日期：2019/08/21</p>
+					</article>
 				</div>
 			</div>
 

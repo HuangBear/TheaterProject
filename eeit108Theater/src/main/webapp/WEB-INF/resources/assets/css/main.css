@@ -1494,7 +1494,7 @@ footer {
 .image.featured {
 	display: block;
 	width: 100%;
-	margin: 0 0 4em 0;
+	margin: 0 0 0.5em 0;     /*0 0 4em 0*/
 }
 
 .image.left {
@@ -2572,7 +2572,7 @@ body.homepage.is-preload #header:after {
 
 	/* Image */
 	.image.featured {
-		margin: 0 0 2em 0;
+		margin: auto;     /*0 0 2em 0*/
 	}
 	.image.left {
 		margin: 0 1em 1em 0;

@@ -296,74 +296,51 @@ input::placeholder{
 		<div class="reel">
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie1.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">第九分局</a></strong>
-			</h3>
-			</header>
-			<p> 
-				THE 9TH PRECINCT<br>
-				2019-08-29
-			</p>
+				src="images/frontend/movie1.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">第九分局</a></strong></h3></header>
+					<p>THE 9TH PRECINCT<br>
+						2019-08-29
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie2.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">極限逃生</a></strong>
-			</h3>
-			</header>
-			<p>
-				EXIT<br>
-				2019-08-30
-			</p>
+				src="images/frontend/movie2.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">極限逃生</a></strong></h3></header>
+					<p>EXIT<br>
+						2019-08-30
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie3.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">你願意嫁給我老公嗎？</a></strong>
-			</h3>
-			</header>
-			<p>
-				AFTER THE WEDDING<br>
-				2019-08-30
-			</p>
+				src="images/frontend/movie3.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">你願意嫁給我老公嗎？</a></strong></h3></header>
+					<p>AFTER THE WEDDING<br>
+						2019-08-30
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie4.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">亂世佳人</a></strong>
-			</h3>
-			</header>
-			<p>
-				GONE WITH THE WIND<br>
-				2019-08-30
-			</p>
+				src="images/frontend/movie4.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">亂世佳人</a></strong></h3></header>
+					<p>GONE WITH THE WIND<br>
+						2019-08-30
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie5.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">航海王：奪寶爭霸戰</a></strong>
-			</h3>
-			</header>
-			<p>
-				ONE PIECE STAMPEDE<br>
-				2019-08-21
-			</p>
+				src="images/frontend/movie5.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">航海王：奪寶爭霸戰</a></strong></h3></header>
+					<p>ONE PIECE STAMPEDE<br>
+						2019-08-21
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie6.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">下半場</a></strong>
-			</h3>
-			</header>
-			<p> WE ARE CHAMPIONS<br>
-				2019-08-23
-			</p>
+				src="images/frontend/movie6.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">下半場</a></strong></h3></header>
+					<p> WE ARE CHAMPIONS<br>
+						2019-08-23
+					</p>
 			</article>
 
 			<!--  <article> <a href="#" class="image featured"><img

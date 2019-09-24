@@ -29,7 +29,7 @@
 		
 		 <c:choose> 
 				<c:when test="${empty LoginOK.memberImage}">
-				<img src="<c:url value='/images/frontend/coustom.png'/>">
+				<img src="<c:url value='/images/frontend/loginicon.png'/>">
 				</c:when>
 				
 				<c:when test="${!empty LoginOK.memberImage}">
