@@ -93,7 +93,8 @@
             </div>
           </div>
           <div class="card-footer small text-muted">Updated  at ${now}</div>
-          <a href="/EmpPDF">pdf</a>
+          <a href="<c:url value='/admin/EmpPDF.pdf'/>">pdf</a>
+          			
         </div>
 
 

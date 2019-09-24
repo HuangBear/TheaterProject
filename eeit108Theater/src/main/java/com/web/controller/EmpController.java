@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.EmployeeBean;
@@ -311,4 +312,12 @@ public class EmpController {
 	    }
 	    return b;
 	}
+	
+	@RequestMapping(value = "/admin/EmpPDF.pdf", method = RequestMethod.GET)
+	public ModelAndView EmpPdf() {
+		List<EmployeeBean> list = service.getAllEmployees();
+		System.out.println("running PDF controller,going to create MAV.");
+		return new ModelAndView("empPdfView", "allEmp", list);
+	}
+	
 }
