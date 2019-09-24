@@ -54,7 +54,7 @@
 				<td>${movie.openingDate}</td>
 				<td>${movie.endingDate}</td>
 				<td>
-				<button class="itemTag2 btn btn-info"  id="${movie.no}">
+				<button class="editBtn btn btn-info"  id="${movie.no}">
 				編輯
 				</button><p>
 				</td>
@@ -79,14 +79,14 @@
       <script src="js/admin/demo/datatables-demo.js"></script>
   	  <script src="js/admin/demo/chart-area-demo.js"></script>
 <script>
- $(".itemTag2").click(function() {
+ $(".editBtn").click(function() {
     	
-    	var pk = $(this).attr("id");
+    	var no = $(this).attr("id");
     	//var pquantity = $(this).val();
     	$.ajax({
-    		url : "<c:url value='/admin/updateEMP'/>",
+    		url : "<c:url value='/admin/movie_edit'/>",
     		data : {
-    			pk : pk,
+    			no : no,
     			//quantity : pquantity
     		},
     		type : "GET",

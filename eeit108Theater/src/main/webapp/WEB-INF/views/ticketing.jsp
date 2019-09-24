@@ -69,41 +69,56 @@
 		<div id="B">
 			<center>
 				<table style="width:1440px;margin:auto;">
-					<tr><td class="td">‧<a href="#" id="movie01">牠 第二章</a></td>
-						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td>
-						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td>
-						<td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td>
-						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td>
-					</tr>					
-					<tr><td class="td">‧<a href="#" id="movie06">極限逃生</a></td>
-						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td>
-						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td>
-						<td class="td">‧<a href="#" id="movie08">天氣之子</a></td>
-						<td class="td">‧<a href="#" id="movie08">星際救援</a></td>
-					</tr>
-					<tr><td class="td">‧<a href="#" id="movie08">返校</a></td>
-						<td class="td">‧<a href="#" id="movie08">小丑</a></td>
-						<td class="td">‧<a href="#" id="movie01">牠 第二章</a></td>
-						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td>
-						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td>
-					</tr>	
-					<tr><td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td>
-						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td>
-						<td class="td">‧<a href="#" id="movie06">極限逃生</a></td>
-						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td>
-						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td>
-					</tr>
-					<tr><td class="td">‧<a href="#" id="movie08">天氣之子</a></td>
-						<td class="td">‧<a href="#" id="movie08">星際救援</a></td>
-						<td class="td">‧<a href="#" id="movie08">返校</a></td>
-						<td class="td">‧<a href="#" id="movie08">小丑</a></td>
-					</tr>
-					<br>
+<!-- 					<tr><td class="td">‧<a href="#" id="movie01">牠 第二章</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td> -->
+<!-- 					</tr>					 -->
+<!-- 					<tr><td class="td">‧<a href="#" id="movie06">極限逃生</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">天氣之子</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">星際救援</a></td> -->
+<!-- 					</tr> -->
+<!-- 					<tr><td class="td">‧<a href="#" id="movie08">返校</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">小丑</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie01">牠 第二章</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td> -->
+<!-- 					</tr>	 -->
+<!-- 					<tr><td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie06">極限逃生</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td> -->
+<!-- 					</tr> -->
+<!-- 					<tr><td class="td">‧<a href="#" id="movie08">天氣之子</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">星際救援</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">返校</a></td> -->
+<!-- 						<td class="td">‧<a href="#" id="movie08">小丑</a></td> -->
+<!-- 					</tr> -->
+<!-- 					<br> -->
+					<c:forEach var = 'releasedMovie' items = '${releasedMovies}' varStatus='nihao'>
+						<c:choose>
+							<c:when test ='${nihao.count % 5 == 1}'>
+								<tr>
+									<td>．<a href = 'ticketing_${releasedMovie.no}' class = 'hello'>${releasedMovie.movieName}</a></td>
+							</c:when>
+							<c:when test ='${nihao.count % 5 == 0}'>
+									<td>．<a href = 'ticketing_${releasedMovie.no}' class = 'hello'>${releasedMovie.movieName}</a></td>
+									<tr>
+							</c:when>
+							<c:otherwise>
+								<td>．<a href = 'ticketing_${releasedMovie.no}' class = 'hello'>${releasedMovie.movieName}</a></td>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+
 				</table>
 
-<%-- 					<c:forEach var = 'releasedMovie' items = '${releasedMovies}'> --%>
-<%-- 						<li><a href = 'ticketing_${releasedMovie.no}' class = 'hello'>${releasedMovie.movieName}</a></li> --%>
-<%-- 					</c:forEach> --%>
+					
 
 			</center>		
 		</div>
@@ -116,11 +131,11 @@
 					<div class="col-4 col-12-mobile" id="sidebar">						
 						<section> <header>
 						<h2>
-							<a href="#">牠 第二章</a>
+							<a href="#">${movie.movieName}</a>
 						</h2>
 						</header>
-						<p>IT CHAPTER TWO</p>
-						<p>上映日期：2019/09/05</p>
+						<p>${movie.engMovieName}</p>
+						<p>上映日期：<fmt:formatDate value="${movie.openingDate}" pattern='yyyy-MM-dd' /></p>
 						<div class="row gtr-50">
 							<div class="col-4">
 								<a href="#" class="image fit"><img src="images/frontend/now01.jpg"
@@ -128,9 +143,24 @@
 							</div>
 							<div class="col-8">
 								<p>
-								<p>輔導級 15+</p>
-								<p>片長：2 時 49 分</p>
-								<p>類型：懸疑、驚悚、恐怖</p>
+								<p>
+									<c:choose>
+										<c:when test = '${movie.rating == "普遍級"}'>
+											${movie.rating} 0+
+										</c:when>
+										<c:when test ='${movie.rating == "保護級"}'>
+											${movie.rating} 6+
+										</c:when>
+										<c:when test = '${movie.rating == "輔導級"}'>
+											${movie.rating} 12+
+										</c:when>
+										<c:when test = '${movie.rating == "限制級"}'>
+											${movie.rating} 18+
+										</c:when>
+									</c:choose>
+								</p>
+								<p>片長：${movie.duration}</p>
+								<p>類型：${movie.genres}</p>
 							</div>
 							<footer>
 								<a href="detail" class="button">電影介紹</a>
@@ -152,13 +182,15 @@
 							<header><h3>請選擇日期：</h3></header>
 
 								<dt>
-									<dd  class="dtdd foo"><a href="#">9/11(三)</a></dd>
-									<dd  class="dtdd foo"><a href="#">9/12(四)</a></dd>
-									<dd  class="dtdd foo"><a href="#">9/13(五)</a></dd>
-									<dd  class="dtdd foo"><a href="#">9/14(六)</a></dd>
-									<dd  class="dtdd foo"><a href="#">9/15(日)</a></dd>
-									<dd  class="dtdd foo"><a href="#">9/16(一)</a></dd>
-									<dd  class="dtdd foo"><a href="#">9/17(二)</a></dd>
+<!-- 									<dd  class="dtdd foo"><a href="#">9/11(三)</a></dd> -->
+<!-- 									<dd  class="dtdd foo"><a href="#">9/12(四)</a></dd> -->
+<!-- 									<dd  class="dtdd foo"><a href="#">9/13(五)</a></dd> -->
+<!-- 									<dd  class="dtdd foo"><a href="#">9/14(六)</a></dd> -->
+<!-- 									<dd  class="dtdd foo"><a href="#">9/15(日)</a></dd> -->
+<!-- 									<dd  class="dtdd foo"><a href="#">9/16(一)</a></dd> -->
+<!-- 									<dd  class="dtdd foo"><a href="#">9/17(二)</a></dd> -->
+										<dd class = "dtdd foo" id = 'first'><a href="#">${today}</a></dd>
+								
 								</dt>
 
 <%-- 									<fmt:formatDate value="${startTime}" pattern='MM-dd' /> --%>
@@ -173,30 +205,45 @@
 <%-- 								<c:forEach var = 'time' items = '${times}'> --%>
 <%-- 									<li><fmt:formatDate value="${time}" pattern='HH:mm' /></li> --%>
 <%-- 								</c:forEach> --%>
-
-								<h6>IMAX：</h6><p>
-								<dt>
-									<dd class="dtdd foo"><a href="#">08:00</a></dd>
-									<dd class="dtdd foo"><a href="#">10:00</a></dd>
-									<dd class="dtdd foo"><a href="#">12:00</a></dd>
-									<dd class="dtdd foo"><a href="#">14:00</a></dd>
-									<dd class="dtdd foo"><a href="#">16:00</a></dd>
-									<dd class="dtdd foo"><a href="#">18:00</a></dd>
-									<dd class="dtdd foo"><a href="#">20:00</a></dd>
-									<dd class="dtdd foo"><a href="#">22:00</a></dd>
-								</dt><p>
+							
+<!-- 								<h6>IMAX：</h6><p> -->
+<!-- 								<dt> -->
+<!-- 									<dd class="dtdd foo"><a href="#">08:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">10:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">12:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">14:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">16:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">18:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">20:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">22:00</a></dd> -->
+<!-- 								</dt><p> -->
 								
-								<h6>一般數位：</h6><p>
-								<dt>
-									<dd class="dtdd foo"><a href="#">09:00</a></dd>
-									<dd class="dtdd foo"><a href="#">11:00</a></dd>
-									<dd class="dtdd foo"><a href="#">13:00</a></dd>
-									<dd class="dtdd foo"><a href="#">15:00</a></dd>
-									<dd class="dtdd foo"><a href="#">17:00</a></dd>
-									<dd class="dtdd foo"><a href="#">19:00</a></dd>
-									<dd class="dtdd foo"><a href="#">21:00</a></dd>
-									<dd class="dtdd foo"><a href="#">23:00</a></dd>
-								</dt>
+<!-- 								<h6>一般數位：</h6><p> -->
+<!-- 								<dt> -->
+<!-- 									<dd class="dtdd foo"><a href="#">09:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">11:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">13:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">15:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">17:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">19:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">21:00</a></dd> -->
+<!-- 									<dd class="dtdd foo"><a href="#">23:00</a></dd> -->
+<!-- 								</dt> -->
+							<c:choose>
+								<c:when test = '${!empty startTime0}'>
+									<b>${theater0}</b><b>${version}</b>
+									<dt>
+									<c:forEach var = 'startTime' items = '${startTime0}'>
+										<dd class="dtdd foo"><a href="#"><fmt:formatDate value="${startTime}" pattern='HH:mm' /></a></dd>
+									</c:forEach>
+									</dt>
+								</c:when>
+								<c:otherwise>
+					
+								</c:otherwise>
+							</c:choose>
+							
+							
 							
 							</div>
 						<footer> 
