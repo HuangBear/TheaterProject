@@ -115,26 +115,48 @@
 					
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 <!-- 				---------------------------------------------------------	 -->
-						<div id="memberInfo">
-							<article id="main"> 
-								<header><h3><a href="#">◎ 個人資訊</a></h3></header>
-						    		<p>會員名稱： ${LoginOK.name}</p>
-								    <p>註冊時間：${LoginOK.registerTime}</p>								 
-						   	<a href="#" ><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" style="width:400px"/></a>
-							<section> 
-								<header><h4>關於我：</h4></header>
-						    	<p>會員個人介紹 來自資料庫 會員可於會員編輯欄位輸入</p>
-							</section> 
-							<section> 
+
+					<div id="memberInfo">
+					<article id="main"> 
+						
+						<header>
+						 <h2>
+							<a href="#">個人資訊</a>
+						 </h2>
+						    <p>會員名稱: ${LoginOK.name}</p>
+						
+						    <p>註冊時間: ${LoginOK.registerTime}</p>
+						
+						</header> 
+						   <a href="#" class="image featured"><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" width="200px"/></a>
+						 
+					
+						
+						<section> 
+						<header>
+						  <h3>關於我:</h3>
+						</header>
+						    <p>${LoginOK.aboutMe}</p>
+						
+						</section> 
+						<section> 
 								<header><h4>喜愛電影類型：</h4></header>
 						    	<p>視情況輸入內文2</p>
 							</section> 
-							<section> 
-								<header><h4>標題2：</h4></header>
-						    	<p>視情況輸入內文2</p>
-							</section> 
-							</article>
-						</div>
+						<section> 
+						 <header>
+						   <h3>標題2</h3>
+						 </header>
+						    <div id="websocketdiv">
+								<textarea id="area" style="font-size: 20px; font-family: '微軟正黑體';
+								 margin-top: 20px;" readonly="readonly" rows="10" cols="42"></textarea>
+								<input type="text" id="text" size="53" />
+								<input id="sendmsg" type="button" value="送出" />
+							</div>
+						</section> 
+					</article>
+					</div>
+
 <!-- 			    ---------------------------------------------------------- -->
 						<div id="memberEdit" style="display:none">
 							<article id="main"> 
@@ -191,6 +213,15 @@
         	                    <form:option value="1" selected="selected">男</form:option>
 					            <form:option value="2" >女</form:option>
                 	            </form:select>							
+							</dl>
+							<dl>
+							<dd>
+
+							<label for="aboutMe" style="text-align:left">關於我：</label>
+							
+                             <form:input type="text" id="aboutMe" class="form-control" 
+                               value="${LoginOK.aboutMe}" path="aboutMe"/> 
+							
 							</dl>
 							
 							<dl>
@@ -270,6 +301,38 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		
+
+
+
+	<script>
+		var websocket = new WebSocket("ws://" + location.host
+				+ "/eeit108Theater/websocket.do");
+
+		websocket.onopen = function processOpen() {
+		};
+
+		websocket.onmessage = function(message) {
+			var jsonData = JSON.parse(message.data);
+			if (jsonData.message != null) {
+				area.value += jsonData.message + "\n";
+			}
+		};
+
+		websocket.onclose = function (evt) {
+	        websocket.close();
+	    };
+	    
+		websocket.onerror = function(evt) {
+			websocket.close();
+		};
+
+		$(function() {
+			$('#sendmsg').click(function() {
+				websocket.send(text.value);
+				text.value = "";
+			});
+		});
+	</script>
+
 </body>
 </html>

@@ -7,7 +7,7 @@
 <title>START</title>
 </head>
 <body>
-	<p/>Hi! ${loginMember.name} 
+	<p/>Hi! ${LoginOK.name} 
 	<p/>Let's start! 
 	<p/>Movie Name = ${timeTable.movie.movieName} 
 	<p/>Start at = ${timeTable.startTime} 

@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
+<noscript>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/noscript.css" />
+</noscript>
 <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 <style>
 .form-control[readonly] {
@@ -18,84 +22,143 @@
 .ui-widget-header {
 	background-color: white;
 }
+
+p {
+	margin: 0.5% 2%;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
 	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
 	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
-	<div class="container" style="width: 80%">
-		<div class="row">
-			<div class="col-12">
-				<div id="movie-info" class="row mb-3">
-					<div class="col-md-2">
-						<span>電影分級</span>
-					</div>
-					<div class="col-md-6">
-						<h3>電影名稱 ${order.timeTable.movieName}</h3>
-					</div>
-					<div class="col-md-4">
-						<div>時間 ${order.timeTable.startTime}</div>
-						<div>片長${order.timeTable.duration}</div>
-						<div>影廳 ${order.timeTable.theater}</div>
-					</div>
-				</div>
-				<div>
-					<table class="table border">
-						<thead>
-							<tr>
-								<th>訂單資訊</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>訂購人姓名: ${order.ownerName}</td>
-							</tr>
-							<tr>
-								<td>訂購人Email: ${order.ownerEmail}</td>
-							</tr>
-							<tr>
-								<td>訂購人電話: ${order.ownerPhone}</td>
-							</tr>
-							<c:forEach var='item' items="${order.orderItems}">
-								<tr>
-									<td>
-										<div>${item.itemName}</div>
-										<div class="float-right">${item.unitPrice}X${item.quantity}=${item.sumPrice}</div>
-									</td>
-								</tr>
-							</c:forEach>
-							<tr>
-								<td>
-									<div>座位</div>
-									<div class="float-right"><c:forEach var="seat" items="${order.seats}"> ${seat.seatString}</c:forEach></div>
+	<div id="page-wrapper">
+		<div id="header1">
+			<!-- Header -->
+			<jsp:include page="../header.jsp" />
+		</div>
+		<!-- Main -->
+		<div class="wrapper style1">
 
-								</td>
-								<td>
-									<div>
-										<b>Total</b>
-									</div>
-									<div class="float-right">
-										<b>${order.totalPrice}</b>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div id="movie-info" class="row mb-3">
+							<div class="col-md-2">
+								<span>電影分級</span>
+							</div>
+							<div class="col-md-6">
+								<h3>電影名稱 ${order.timeTable.movieName}</h3>
+							</div>
+							<div class="col-md-4">
+								<div>時間 ${order.timeTable.startTime}</div>
+								<div>片長${order.timeTable.duration}</div>
+								<div>影廳 ${order.timeTable.theater}</div>
+								<div>
+									座位
+									<c:forEach var="seat" items="${order.seatsList}"> ${seat}</c:forEach>
+								</div>
+							</div>
+
+						</div>
+						<div>
+							<table class="table border" style="border-radius: 10px">
+								<thead>
+									<tr class="table-warning">
+										<th>
+											<div class="h2">
+												<strong>訂單編號 : ${order.orderId}</strong>
+											</div>
+											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，請妥善保存訂單編號及訂購人資料以便日後查詢該筆訂單</small>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr>
+										<td>
+											<div>付款狀態</div>
+											<c:choose>
+												<c:when test="${order.paid}">
+													<p style="text-align: right; color: green">付款成功</p>
+												</c:when>
+												<c:otherwise>
+													<p style="text-align: right; color: red">付款失敗</p>
+												</c:otherwise>
+											</c:choose>
+
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<div>訂購人</div>
+
+											<p>姓名: ${order.ownerName}</p>
+											<p>Email: ${order.ownerEmail}</p>
+											<p>電話: ${order.ownerPhone}</p>
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div>商品明細</div>
+											<c:forEach var='item' items="${order.orderItems}">
+												<p>${item.itemName}</p>
+												<p style="text-align: right;">${item.unitPrice}X${item.quantity}=${item.sumPrice}</p>
+											</c:forEach>
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											<div>總計</div>
+											<p>
+												<strong style="text-align: center;">123${order.totalPrice}</strong>
+											</p>
+
+										</td>
+									</tr>
+									<c:if test="${order.paid}">
+										<tr>
+											<td>
+												<div>取票狀態</div>
+												<p style="text-align: right;">未取票</p>
+											</td>
+										</tr>
+									</c:if>
+
+
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-end">
+					<div class="col-md-auto col-12-mobile">
+						<a><button class="">再次訂票</button></a>
+					</div>
+					<div class="col-md-auto col-12-mobile">
+						<a href="<c:url value='/index'/>"><button>回首頁</button></a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row justify-content-end">
-			<div class="col-lg-2">
-				<button class="btn btn-primary">回首頁</button>
-				<button class="btn btn-primary">再次訂票</button>
-			</div>
-		</div>
+
+		<!-- Footer -->
+		<jsp:include page="../footer.jsp" />
 	</div>
 
-
+	<!-- Scripts -->
+	<script src="<c:url value='/assets/js/jquery.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/jquery.dropotron.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/jquery.scrolly.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/jquery.scrollex.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/browser.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/breakpoints.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/util.js'/>"></script>
+	<script src="<c:url value='/assets/js/main.js'/>"></script>
 </body>
 </html>
