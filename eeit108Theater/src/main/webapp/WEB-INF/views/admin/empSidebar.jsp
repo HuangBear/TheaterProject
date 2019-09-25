@@ -40,7 +40,7 @@
           <span>新增電影</span></a>
         </li>
         <li class="nav-item">
-        <a class="itemTag nav-link" href="#" id="bulletin_new">
+        <a class="itemTag nav-link" href="#" id="bulletin_add">
           <i class="fas fa-fw fa-table"></i>
           <span>發布公告</span></a>
         </li>
@@ -48,6 +48,11 @@
         <a class="itemTag nav-link" href="#" id="bulletin_all">
           <i class="fas fa-fw fa-table"></i>
           <span>歷史公告</span></a>
+        </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="allProducts">
+          <i class="fas fa-fw fa-table"></i>
+          <span>商品清單</span></a>
         </li>
          <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="WebSocket">

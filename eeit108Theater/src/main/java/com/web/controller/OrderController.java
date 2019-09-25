@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.entity.MemberBean;
@@ -39,7 +40,7 @@ public class OrderController {
 
 	final String pac = "order/";
 
-	@RequestMapping("/allProducts")
+	@RequestMapping("/allPro")
 	public String showAllProduct(Model model) {
 		model.addAttribute("products", pServ.getAll());
 		return pac + "allProducts";
@@ -148,8 +149,8 @@ public class OrderController {
 		// model.addAttribute("sideBar", this.getSideBar(rowCnt));
 		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, soldSeats);
 		model.addAttribute("seatTable", s);
-		if(req.getAttribute("seatSoldErr") == null) {
-			model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));			
+		if (req.getAttribute("seatSoldErr") == null) {
+			model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));
 		}
 		System.out.println(s);
 		System.err.println("====showSeat END====");
@@ -164,7 +165,7 @@ public class OrderController {
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		ob.sortOrderItem("ticket", "drink");
 		ob.calTotalPrice();
-		if(oServ.setSeatToOrder(ob, seats) == -1) {
+		if (oServ.setSeatToOrder(ob, seats) == -1) {
 			System.err.println("=== Selected seats has been sold already ===");
 			req.setAttribute("ticketCnt", seats.length);
 			req.setAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
@@ -299,29 +300,65 @@ public class OrderController {
 
 	@RequestMapping("/search")
 	public String orderDetail(HttpServletRequest req, Model model, HttpSession session) {
+		System.err.println("=====OrderDetail Start=====");
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		if (mb == null) { // 非會員
 			System.out.println("hasn't login");
-			return "index";
+			System.err.println("=====OrderDetail Forward To guestCheck=====");
+			return pac + "guestCheck";
+		}
+		List<OrderBean> checkedOrders = null;
+		List<OrderBean> uncheckedOrders = null;
+		String memberId = mb.getMemberId();
+		checkedOrders = oServ.getMemberOrders(memberId, true);
+		uncheckedOrders = oServ.getMemberOrders(memberId, false);
+
+		if (checkedOrders == null || checkedOrders.isEmpty()) {
+			System.out.println("no checked orders");
+		} else {
+			model.addAttribute("checkedOrders", checkedOrders);
+		}
+		if (uncheckedOrders == null || uncheckedOrders.isEmpty()) {
+			System.out.println("no unchecked orders");
+		} else {
+			model.addAttribute("uncheckedOrders", uncheckedOrders);
 		}
 
-		String memberId = mb.getMemberId();
-
-		return pac + "detail";
+		System.err.println("=====OrderDetail End=====");
+		return pac + "memberDetail";
 	}
 
-//	private String getSideBar(int rowCnt) {
-//		StringBuilder s = new StringBuilder(512);
-//		char row = 'A';
-//		for (int i = 0; i < rowCnt; i++) {
-//			s.append("<tr><td>" + (char) (row + i) + "</td></tr>");
-//			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
-//				s.append(
-//						"<tr><td><label class=\"invisible\"for=\"bar-space\"></label><input type=\"checkbox\"name=\"seat\"id=\"bar-space\"value=\"space\"></td></tr>");
-//			}
-//		}
-//		return s.toString();
-//	}
+	@RequestMapping(value = "/guest", method = RequestMethod.POST)
+	public String guestSearch(HttpServletRequest req, Model model) {
+		System.err.println("=====GuestSearch start=====");
+		String email = req.getParameter("email").trim();
+		String phone = req.getParameter("phone").trim();
+		System.out.println(email);
+		System.out.println(phone);
+		Map<String, String> errMsg = new HashMap<>();
+		if (email == null || email.equals("")) {
+			errMsg.put("email", "該欄不能空白");
+		} else {
+			if(email.indexOf("@") == -1 || email.indexOf(".") == -1)
+				errMsg.put("email", "Email格式不正確");
+		}
+		if (phone == null || phone.equals("")) {
+			errMsg.put("phone", "該欄不能空白");
+		} else {
+			if(!phone.matches("[0-9]{10}")) {
+				errMsg.put("phone", "電話格式不正確");
+			}
+		}
+		if(!errMsg.isEmpty()) {
+			model.addAttribute("errMsg", errMsg);
+			return pac + "guestCheck";
+		}
+		List<OrderBean> list = oServ.getGuestOrders(email, phone, false);
+		if (list != null && !list.isEmpty())
+			model.addAttribute("uncheckedOrders", list);
+		System.err.println("=====GuestSearch END=====");
+		return pac + "guestDetail";
+	}
 
 	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> soldSeats) {
 		StringBuilder s = new StringBuilder(65536);

@@ -317,35 +317,37 @@
 						// 							});
 						// 						});
 
-						function submitForm() {
-							var formData = new FormData();//必须是new FormData后台才能接收到
-							formData.append("title", $("#title").val());
-							formData.append("context", $("#context").val());
-							formData.append("discount0", $("#discount0").val());
-							formData.append("discount1", $("#discount1").val());
-							formData.append("discount2", $("#discount2").val());
-							formData.append("discountPriceBuy", $("#discountPriceBuy").val());
-							formData.append("discountPriceFree", $("#discountPriceFree").val());
-							formData.append("discountTickBuy", $("#discountTickBuy").val());
-							formData.append("discountTickFree", $("#discountTickFree").val());
-							formData.append("employeeId", $("#employeeId").val());
-							formData.append("bulletinImage", $("#bulletinImage")[0].files[0]);
-							$.ajax({
-								url : "${pageContext.request.contextPath}/admin/bulletin_add",
-								data : formData,
-								type : 'POST',
-								datatype : "json",
-								contentType : false,//必须false才会自动加上正确的Content-Type
-								processData : false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理 
-								success : function(jdata) {
-									$('#pageItems').html(jdata);
-									alert(jdata);
-								},
-								error : function(jdata) {
-									alert("error");
-								}
-							});
-						}
+						// 						function submitForm() {
+						// 							var formData = new FormData();//必须是new FormData后台才能接收到
+						// 							formData.append("title", $("#title").val());
+						// 							formData.append("context", $("#context").val());
+						// 							formData.append("discount0", $("#discount0").val());
+						// 							formData.append("discount1", $("#discount1").val());
+						// 							formData.append("discount2", $("#discount2").val());
+						// 							formData.append("discountPriceBuy", $("#discountPriceBuy").val());
+						// 							formData.append("discountPriceFree", $("#discountPriceFree").val());
+						// 							formData.append("discountTickBuy", $("#discountTickBuy").val());
+						// 							formData.append("discountTickFree", $("#discountTickFree").val());
+						// 							formData.append("employeeId", $("#employeeId").val());
+						// 							formData.append("bulletinImage", $("#bulletinImage")[0].files[0]);
+						// 							$.ajax({
+						// 								url : "${pageContext.request.contextPath}/admin/bulletin_add",
+						// 								data : formData,
+						// 								type : 'POST',
+						// 								datatype : "json",
+						// 								contentType : false,//必须false才会自动加上正确的Content-Type
+						// 								processData : false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理 
+						// 								success : function(jdata) {
+						// 									$('#pageItems').html(jdata);
+						// 									alert(jdata);
+						// 								},
+						// 								error : function(jdata) {
+						// 									alert("error");
+						// 								}
+						// 							});
+						// 						}
+
+					
 					</script>
 				</div>
 

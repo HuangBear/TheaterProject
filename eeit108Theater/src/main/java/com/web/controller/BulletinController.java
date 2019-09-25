@@ -51,23 +51,23 @@ public class BulletinController {
 
 	// other2bulletin_all
 	@RequestMapping(value = "/bulletin_all", method = RequestMethod.GET)
-	public String other2bulletin_all(Model model) {
+	public String other2bulletin_all(Model model, HttpServletRequest req) {
 		List<List<BulletinBean>> list = service.getStatsBulletin();
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
 	}
 
-	// other2bulletin_new
-	@RequestMapping(value = "/bulletin_new", method = RequestMethod.GET)
-	public String other2bulletin_new(Model model) {
+	// other2bulletin_add
+	@RequestMapping(value = "/bulletin_add", method = RequestMethod.GET)
+	public String other2bulletin_add(Model model) {
 		BulletinBean bb = new BulletinBean();
 		model.addAttribute("bulletinBean", bb);
-		return Root + "bulletin_new";
+		return Root + "bulletin_add";
 	}
 
-	// edit_bulletin_all2bulletin_new
+	// edit_bulletin_all2bulletin_add
 	@RequestMapping(value = "/bulletin_all/edit", method = RequestMethod.GET)
-	public String edit_bulletin_all2bulletin_new(Model model, HttpServletRequest req) {
+	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
 		Integer no = Integer.valueOf(req.getParameter("no"));
 		BulletinBean bb = service.getBulletinBeanById(no);
 		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
@@ -124,9 +124,9 @@ public class BulletinController {
 		return str;
 	}
 
-	// post_bulletin_new2bulletin_all
-	@RequestMapping(value = "/bulletin_new", method = RequestMethod.POST)
-	public String post_bulletin_new2bulletin_all(@ModelAttribute("bulletinBean") BulletinBean bb,
+	// post_bulletin_add2bulletin_all
+	@RequestMapping(value = "/bulletin_add", method = RequestMethod.POST)
+	public String post_bulletin_add2bulletin_all(@ModelAttribute("bulletinBean") BulletinBean bb,
 			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException {
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -178,7 +178,7 @@ public class BulletinController {
 
 		System.out.println("ErrMsg=" + request.getAttribute("ErrMsg"));
 		if (!errorMessage.isEmpty()) {
-			return Root + "bulletin_new";
+			return Root + "bulletin_add";
 		} else {
 			Date now = new Date();
 			redirectAttributes.addFlashAttribute("changeMsg", "新增成功");
@@ -190,9 +190,9 @@ public class BulletinController {
 		}
 	}
 
-	// edit_bulletin_new2bulletin_all
+	// edit_bulletin_add2bulletin_all
 	@RequestMapping(value = "/bulletin_all/{bulletin_no}", method = RequestMethod.POST)
-	public String edit_bulletin_new2bulletin_all(@ModelAttribute("bulletinBean") BulletinBean bb,
+	public String edit_bulletin_add2bulletin_all(@ModelAttribute("bulletinBean") BulletinBean bb,
 			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException, ParseException {
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -260,12 +260,12 @@ public class BulletinController {
 		// 存入
 		if (!errorMessage.isEmpty()) {
 			System.out.println("資料輸入有錯誤，網頁跳回");
-			return Root + "bulletin_new";
+			return Root + "bulletin_add";
 		} else {
 			if (bet) {
 				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
 				System.out.println("資料未修改，網頁跳回");
-				return Root + "bulletin_new";
+				return Root + "bulletin_add";
 			} else {
 				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
 				service.insertNewBulletin(bb);
@@ -282,7 +282,7 @@ public class BulletinController {
 		int deleteReturn = service.updateBulletinBeanById(no, false);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料刪除");
 		System.out.println("資料已刪除，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
-		return "redirect:/" + Root + "bulletin_all";
+		return "forward:/" + Root + "bulletin_all";
 
 	}
 
@@ -293,7 +293,7 @@ public class BulletinController {
 		int deleteReturn = service.updateBulletinBeanById(no, true);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料復原");
 		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
-		return "redirect:/" + Root + "bulletin_all";
+		return "forward:/" + Root + "bulletin_all";
 	}
 
 //	準備方法

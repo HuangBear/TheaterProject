@@ -225,29 +225,31 @@
 			<button id="status_dele_${sb.no} " name="back" class="btn btn-danger">返回</button>
 		</div>
 		<div>
-			<button class=" btn btn-info" name="deleteSstatus" id="deleteSstatus_${sb.no}">確定</button>
+			<button class=" btn btn-info" name="deleteSstatus" id="stat_deleteSstatus_${sb.no}">確定</button>
 		</div>
 	</div>
 </c:forEach>
 
 
-		<script type="text/javascript">
-			$("[name=deleteSstatus]").click(function() {
-				var str = $(this).attr("id");
-				var id = str.substring(str.lastIndexOf("_") + 1);
-				$.ajax({
-					url : "<c:url value='/admin/bulletin_all/deleteSstatus'/>",
-					data : {
-						no : id,
-					},
-					type : "GET",
-					cache : false,
-					success : function(data) {
-						$("#pageItems").html(data);
-					}
-				});
-			});
-		</script>
+<script type="text/javascript">
+	$("[name=deleteSstatus]").click(function() {
+		var str = $(this).attr("id");
+		var id = str.substring(str.lastIndexOf("_") + 1);
+	
+		$.ajax({
+			url : "<c:url value='/admin/bulletin_all/deleteSstatus'/>",
+			data : {
+				no : id,
+
+			},
+			type : "GET",
+			cache : false,
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
+</script>
 
 <!-- 過期區 -->
 <c:forEach var='sb' items='${statusBulletin[1]}'>
@@ -269,7 +271,7 @@
 			<button id="unstat_dele_${sb.no}" name="back" class=" btn btn-danger">返回</button>
 		</div>
 		<div>
-			<button class=" btn btn-info" name="deleteSstatus" id="deleteSstatus_${sb.no}">確定</button>
+			<button class=" btn btn-info" name="deleteSstatus" id="pass_deleteSstatus_${sb.no}">確定</button>
 		</div>
 	</div>
 </c:forEach>
@@ -283,27 +285,28 @@
 			<button id="unavai_dele_${sb.no}" name="back" class=" btn btn-danger">返回</button>
 		</div>
 		<div>
-			<button class=" btn btn-info" name="restore" id="restore_${sb.no}">確定</button>
+			<button class=" btn btn-info" name="restore" id="dead_restore_${sb.no}">確定</button>
 		</div>
 	</div>
 </c:forEach>
 <script type="text/javascript">
-			$("[name=restore]").click(function() {
-				var str = $(this).attr("id");
-				var id = str.substring(str.lastIndexOf("_") + 1);
-				$.ajax({
-					url : "<c:url value='/admin/bulletin_all/restore'/>",
-					data : {
-						no : id,
+	$("[name=restore]").click(function() {
+		var str = $(this).attr("id");
+		var id = str.substring(str.lastIndexOf("_") + 1);
+
+		$.ajax({
+			url : "<c:url value='/admin/bulletin_all/restore'/>",
+			data : {
+				no : id,
 					},
-					cache : false,
-					type : "GET",
-					success : function(data) {
-						$("#pageItems").html(data);
-					}
-				});
-			});
-		</script>
+			cache : false,
+			type : "GET",
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
+</script>
 
 <!-- Breadcrumbs-->
 
