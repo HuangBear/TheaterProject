@@ -49,6 +49,11 @@
           <i class="fas fa-fw fa-table"></i>
           <span>歷史公告</span></a>
         </li>
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="allProducts">
+          <i class="fas fa-fw fa-table"></i>
+          <span>商品清單</span></a>
+        </li>
          <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="WebSocket">
           <i class="fa fa-cog" aria-hidden="true"></i>
