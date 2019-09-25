@@ -48,22 +48,17 @@
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
-		<div style="text-align: center" class="jumbotron">
-			<h1>${title}</h1>
-			<p>${subtitle}</p>
-		</div>
-		<hr
-			style="height: 1px; border: none; color: #333; background-color: #333;">
+		<hr style="height: 1px; border: solid; color: #333; background-color: #333;">
 		<a href="<spring:url value='/add' />" class="btn btn-primary btn-lg"
-			style="font-size: 16px">發文</a><BR>
+			style="font-size: 26px;">發文</a><BR>
 
 				<c:forEach var='Article' items='${Articles}'>
-					<div class="col-sm-6 col-md-3" style="width: 900px; height: 90px">
+					<div class="col-sm-6 col-md-5" style="width: 900px; height: 90px;border: solid;margin: auto;">
 									<a href="<spring:url value='/Article?id=${Article.no}' />"
 										class="btn btn-primary btn-lg btn-block"
-										style="font-size: 16px"> <span
+										style="font-size: 26px;"> <span
 										class="glyphicon-info-sigh glyphicon"></span> ${Article.title}
-										發文者 : ${Article.author.name} 發文時間: ${Article.postTime}
+										發文者 : ${Article.author.name}   發文時間: ${Article.postTime}
 									</a>
 					</div>
 				</c:forEach>

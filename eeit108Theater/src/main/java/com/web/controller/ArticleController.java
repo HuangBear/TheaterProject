@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.entity.ArticleBean;
+import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
@@ -43,13 +44,10 @@ public class ArticleController {
 
 	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
-		model.addAttribute("title", "討論版");
-		model.addAttribute("subtitle","test");
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
 		session = request.getSession();
-		
 		session.setAttribute("movie", no);
 		return "Articles";
 	}
@@ -68,15 +66,45 @@ public class ArticleController {
 		return "Articles";
 	}
 
-	@RequestMapping("/Article")
-	public String getArticleById(@RequestParam("id") Integer no, Model model) {
+	@RequestMapping(value = "/Article", method = RequestMethod.GET)
+	public String getArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
+		session = request.getSession();
 		ArticleBean ab = service.getArticleById(no);
 		ReplyBean rb = service.getReplyById(no);
-		System.out.println(ab);
-		System.out.println(rb);
+		LikeOrDislikeBean lb = new LikeOrDislikeBean();
+		String NoS =Integer.toString(ab.getNo());
+		lb.setArticleNoString(NoS);
+		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
 		model.addAttribute("Reply", service.getReplyById(no));
 		return "Article";
+	}
+	
+	@RequestMapping(value = "/Article", method = RequestMethod.POST)
+	public String processArticleLikeOrDislike(@RequestParam("id") Integer id,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
+		String LikeButton = request.getParameter("button");
+		int article = Integer.parseInt(request.getParameter("articleNoString"));
+		lb.setArticle(new ArticleBean(article));
+		int memberNo = Integer.parseInt(request.getParameter("member"));
+		lb.setMember(memberNo);
+		System.out.println("檢查斷點1");
+		if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
+            lb.setLikeOrDislike(true);
+            service.addGp(lb);
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
+        	lb.setLikeOrDislike(false);
+        	service.addGp(lb);
+        } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)!="null") {
+            lb.setLikeOrDislike(true);
+            service.updateGp(lb);
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)!="null") {
+        	lb.setLikeOrDislike(false);
+        	service.updateGp(lb);
+        }
+		model.addAttribute("id", id);
+		
+		return "../Article";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -214,14 +242,110 @@ public class ArticleController {
 		
 	}
 	
-	@ModelAttribute("memberList")
-	public Map<Integer, String> getMemberList() {
-		Map<Integer, String> memberMap = new HashMap<>();
-		List<MemberBean> list = service.getMemberList();
-		for (MemberBean cb : list) {
-			memberMap.put(cb.getNo(), cb.getName());
+	@RequestMapping(value = "/addReply", method = RequestMethod.GET)
+	public String getAddReplyForm(@RequestParam("id") Integer no, Model model) {
+		ArticleBean ab = service.getArticleById(no);
+		ReplyBean rb = new ReplyBean();
+		String NoS =Integer.toString(ab.getNo());
+		ab.setNoString(NoS);
+		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("ReplyBean", rb);
+		return "addReply";
+	}
+	
+	@RequestMapping(value = "/addReply", method = RequestMethod.POST)
+	public String processAddReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
+		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		return memberMap;
+		
+		System.out.println("==postString==="+request.getParameter("postTimeString"));
+		System.out.println("==postString==="+request.getParameter("noString"));
+		int articleNoS = Integer.parseInt(request.getParameter("articleString"));
+		rb.setArticle(new ArticleBean(articleNoS));
+		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		rb.setAuthor(new MemberBean(AuthorS));
+		rb.setAvailable(true);
+		rb.setPostTime(new Date());
+		System.out.println("article=" + rb.getArticle());
+		System.out.println("content=" + rb.getContent());
+		System.out.println("postTime=" + rb.getPostTime());
+		
+		service.addReply(rb);
+
+		if (!errorMessage.isEmpty())
+		{
+			return "addReply";
+		} else
+		{
+			return "redirect:/MoviesForum";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/editReply", method = RequestMethod.GET)
+	public String getEditReplyForm(@RequestParam("id") Integer no, Model model) {
+		ReplyBean rb = service.getReplyById(no);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		rb.setPostTimeString(ssdf.format(rb.getPostTime()));
+		String NoS =Integer.toString(rb.getNo());
+		rb.setNoString(NoS);
+		String articleNoS =Integer.toString(rb.getArticle().getNo());
+		rb.setArticleString(articleNoS);
+		model.addAttribute("ReplyBean", rb);
+		return "editReply";
+	}
+	
+	@RequestMapping(value = "/editReply", method = RequestMethod.POST)
+	public String processEditReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
+		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		System.out.println("==postString=="+request.getParameter("postTimeString"));
+		System.out.println("==postString=="+request.getParameter("noString"));
+		int NoS = Integer.parseInt(request.getParameter("noString"));
+		rb.setNo(NoS);
+		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		rb.setAuthor(new MemberBean(AuthorS));
+		int ArticleS = Integer.parseInt(request.getParameter("articleString"));
+		rb.setArticle(new ArticleBean(ArticleS));
+		rb.setAvailable(true);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("postTimeString=" + rb.getPostTimeString());
+		rb.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
+		
+		System.out.println("content=" + rb.getContent());
+		System.out.println("postTime=" + rb.getPostTime());
+		
+		service.editReply(rb);
+
+		if (!errorMessage.isEmpty())
+		{
+			return "editReply";
+		} else
+		{
+			return "redirect:/MoviesForum";
+		}
+		
 	}
 
 	@ModelAttribute("tagList")
