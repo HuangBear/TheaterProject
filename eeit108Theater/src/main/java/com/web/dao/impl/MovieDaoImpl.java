@@ -61,7 +61,7 @@ public class MovieDaoImpl implements MovieDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getReleasedMovies() {
-		String hql = "FROM MovieBean m WHERE m.openingDate <= :mopeningDate";
+		String hql = "FROM MovieBean m WHERE m.openingDate <= :mopeningDate and m.endingDate >= :mopeningDate";
 		Session session = null;
 		List<MovieBean> list = new ArrayList<>();
 		session = factory.getCurrentSession();

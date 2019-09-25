@@ -23,6 +23,8 @@ public interface TimeTableDao {
 	// query
 	TimeTableBean getTimeTableByNo(Integer timeTableNo);
 	
+	List<TimeTableBean> getTimeTableBeanByMovieName(String movieName);
+	
 	List<TimeTableBean> getTheaterByMovieName(String movieName);
 
 	List<TimeTableBean> getTimeTablesByMovie(String movieName);
@@ -35,5 +37,9 @@ public interface TimeTableDao {
 	
 	List<TimeTableBean> getStartTimeByMovie(String movieName);
 	
-	List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater, String version);
+	List<TimeTableBean> getMovieTimeByTheater(String movieName, String theater);
+	
+	List<String> getTheatersByMovieName(String movieName);
+	
+	List<TimeTableBean> getStartTimeByDateAndVersionAndMovie(String startDate, String version, String movieName);
 }
