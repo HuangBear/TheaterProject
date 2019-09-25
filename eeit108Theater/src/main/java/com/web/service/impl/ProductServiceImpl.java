@@ -29,8 +29,7 @@ public class ProductServiceImpl implements ProductService{
 	SeatDao sdao; 
 	@Override
 	public int saveProduct(ProductBean product) {
-		// TODO Auto-generated method stub
-		return 0;
+		return pdao.saveProduct(product);
 	}
 
 	

@@ -139,7 +139,13 @@ public class AllController {
 	@RequestMapping("/showticket")
 	public String showticket()
 	{
-		return "showticket";
+		return "forward:/order/search";
+	}
+	
+	@RequestMapping("/visitorticket")
+	public String visitorticket()
+	{
+		return "forward:/order/search";
 	}
 	
 	@RequestMapping("/memberinfo")

@@ -115,6 +115,13 @@
 					
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 <!-- 				---------------------------------------------------------	 -->
+						<div id="memberInfo">
+							<article id="main"> 						
+								<h3><a href="#">◎ 個人資訊</a></h3>
+								<br>
+						    		<p>會員名稱：${LoginOK.name}</p>
+								    <p>註冊時間：${LoginOK.registerTime}</p>
+						   <a href="#" class="image featured"><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" style="width:300px;"/></a>
 
 					<div id="memberInfo">
 					<article id="main"> 

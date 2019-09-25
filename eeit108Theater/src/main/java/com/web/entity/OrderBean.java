@@ -257,4 +257,16 @@ public class OrderBean implements Serializable {
 		}
 		return seats;
 	}
+	
+	public String getSeatsString() {
+		String result = "";
+		for(String seat : this.getSeatsList()) {
+			result += ", " + seat;
+		}
+		return result.substring(1);
+	}
+	
+	public int getSeatCnt() {
+		return this.getSeats().size();
+	}
 }

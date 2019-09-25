@@ -43,34 +43,34 @@ public class EDMTableResetHibernate_TimeTable {
 					}
 						String[] token = line.split("\\|");
 						
-						DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-						String[] splitBlank = token[2].split(" ");
-						String[] splitColon = splitBlank[1].split(":");
+						String[] splitColon = token[3].split(":");
 						int hour = Integer.parseInt(splitColon[0]);
 						int minute = Integer.parseInt(splitColon[1]);
 						int sum = hour * 60 + minute;
-						int breakTime = Integer.parseInt(token[6]);
+						int breakTime = Integer.parseInt(token[7]);
 						
 					do {
 						TimeTableBean time = new TimeTableBean();
 						boolean boolean1 = Boolean.parseBoolean(token[0]);
 						time.setAvailable(boolean1);
 						time.setMovieName(token[1]);
-						
-						time.setStartTime(sdf.parse(token[2]));
-						int duration = Integer.parseInt(token[3]);
+						time.setStartDate(token[2]);
+						time.setStartTime(token[3]);
+						int duration = Integer.parseInt(token[4]);
 						if (duration % 10 != 0) {                      // 使每場電影的間隔尾數不是0以外的數字
 							duration += 10 - (duration % 10);
 						}
 						sum += duration + breakTime;
 						String HH = String.valueOf(sum / 60);
 						String mm = String.valueOf(sum % 60);
+						if (Integer.parseInt(mm) < 10) {
+							mm = "0" + mm;
+						}
+						token[3] = HH + ":" + mm;
 						
-						token[2] = splitBlank[0] + " " + HH + ":" + mm;
-
-						time.setDuration(Integer.parseInt(token[3]));
-						time.setVersion(token[4]);
-						time.setTheater(token[5]);
+						time.setDuration(Integer.parseInt(token[4]));
+						time.setVersion(token[5]);
+						time.setTheater(token[6]);
 						time.setMovie(session.get(MovieBean.class, 1));
 						time.setBreakTime(breakTime);
 						session.save(time);

@@ -1,5 +1,6 @@
 package com.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +94,30 @@ public class TimeTableServiceImpl implements TimeTableService{
 
 	@Override
 	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater, String version) {
-		return dao.getStartTimeByMovieAndTheater(movieName, theater, version);
+		return null;
 	}
+
+	@Override
+	public List<TimeTableBean> getTimeTableBeanByMovieName(String movieName) {
+		return dao.getTimeTableBeanByMovieName(movieName);
+	}
+	
+	@Override
+	public List<List<TimeTableBean>> getMovieTime(String movieName){
+		List<List<TimeTableBean>> list = new ArrayList<>();
+		for(String theater : dao.getTheatersByMovieName(movieName)) {
+			list.add(dao.getMovieTimeByTheater(movieName, theater));
+		}
+		return list;
+	}
+	@Override
+	public List<TimeTableBean> getStartTimeByDateAndVersionAndMovie(String startDate, String version, String movieName) {
+		return dao.getStartTimeByDateAndVersionAndMovie(startDate, version, movieName);
+	}
+
+	@Override
+	public List<String> getTheatersByMovieName(String movieName) {
+		return dao.getTheatersByMovieName(movieName);
+	}	 
 	
 }
