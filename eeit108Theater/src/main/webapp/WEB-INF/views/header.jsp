@@ -54,8 +54,9 @@
 				<ul>
 			    
 			    <li><a href="<c:url value='/memberinfo'/>">歡迎您 ${LoginOK.name}</a></li>
-				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
 				<li><a href="<c:url value='/memberinfo'/>">會員設定</a></li>
+				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
+				<li><a href="<c:url value='/qaservice'/>">客服中心</a></li>
 				<li><a href="<c:url value='/memberLogout'/>">登出</a></li>
 
 				</ul>

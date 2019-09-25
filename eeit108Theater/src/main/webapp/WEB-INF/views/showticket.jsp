@@ -50,6 +50,7 @@
 		width:25px;
 		vertical-align: middle;	
 	}
+	
 </style>
 
 </head>
@@ -155,7 +156,7 @@
 								</tbody>
 							</table>
   						</div>
-  						<h3><td>02 - </td><td>2019/09/19</td><td>第九分局</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><td>02 - </td><td>2019/09/19</td><td>第九分局</td></tr></h3>
   						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
@@ -183,7 +184,7 @@
 								</tbody>
 							</table>
   						</div>
-  						<h3><tr><td>03 - </td><td>2019/08/31</td><td>航海王：奪寶爭霸戰</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><tr><td>03 - </td><td>2019/08/31</td><td>航海王：奪寶爭霸戰</td></tr></h3>
  						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">
@@ -211,7 +212,7 @@
 								</tbody>
 							</table>
   						</div>
-  						<h3><tr><td>04 - </td><td>2019/07/27</td><td>全面攻佔 3：天使救援</td></tr></h3>
+  						<h3 style="border:#ad8c80;background-color:#ad8c80;"><tr><td>04 - </td><td>2019/07/27</td><td>全面攻佔 3：天使救援</td></tr></h3>
   						<div>
     						<table class="tbst">
 								<thead style="background-color:#AAAAAA ; text-align:left; height:10px; ">

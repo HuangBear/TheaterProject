@@ -154,6 +154,12 @@ public class AllController {
 		return "memberinfo";
 	}
 	
+	@RequestMapping("/qaservice")
+	public String qaservice()
+	{
+		return "qaservice";
+	}
+	
 	@RequestMapping("/index")
 	public String index1()
 	{
