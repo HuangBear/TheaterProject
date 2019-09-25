@@ -40,12 +40,12 @@
           <span>新增電影</span></a>
         </li>
         <li class="nav-item">
-        <a class="itemTag nav-link" href="#" id="newBulletin">
+        <a class="itemTag nav-link" href="#" id="bulletin_new">
           <i class="fas fa-fw fa-table"></i>
           <span>發布公告</span></a>
         </li>
         <li class="nav-item">
-        <a class="itemTag nav-link" href="#" id="allBulletin">
+        <a class="itemTag nav-link" href="#" id="bulletin_all">
           <i class="fas fa-fw fa-table"></i>
           <span>歷史公告</span></a>
         </li>

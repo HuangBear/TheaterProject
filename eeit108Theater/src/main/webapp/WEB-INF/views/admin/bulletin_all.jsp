@@ -34,8 +34,8 @@
 
 <!-- <script src="js/admin/demo/datatables-demo.js"></script> -->
 <!-- <script src="js/admin/demo/chart-area-demo.js"></script> -->
-<!-- <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --> -->
-<!-- <!-- <link rel="stylesheet" href="/resources/demos/style.css"> --> -->
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
@@ -49,7 +49,7 @@
 
 	//back button
 	$(function() {
-		$("[name=back]").click(function() {
+		$(":button[name=back]").click(function() {
 			var str = $(this).attr("id");
 			var targete = $("." + str);
 			$(targete).addClass('hide');
@@ -112,7 +112,7 @@
 					"no" : inputId
 				}, //参数
 				dataType : 'json',
-				url : " <c:url value='/ajaxImg' />",
+				url : " <c:url value='/admin/ajaxImg' />",
 				success : function(data) {
 					//将图片的Base64编码设置给src
 					$("#ImagePic").attr("src", "data:image/png;base64," + data);
@@ -128,7 +128,7 @@
 					"no" : inputId
 				}, //参数
 				dataType : 'text',
-				url : " <c:url value='/ajaxContext' />",
+				url : " <c:url value='/admin/ajaxContext' />",
 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 				success : function(data) {
 					//将图片的Base64编码设置给src
@@ -141,7 +141,7 @@
 
 		});
 		//	back
-		$("[name=cont_box_back]").click(function() {
+		$(":button[name=cont_box_back]").click(function() {
 			var str = $(this).attr("id");
 			var targete = $("." + str);
 			$(targete).addClass('hide');
@@ -178,10 +178,10 @@
 <div class="context_box add-model hide">
 	<div id="ContextPic"></div>
 	<div>
-		<img id="ImagePic${sb.no}" alt="Base64 encoded image" width="100" height="100" />
+		<img id="ImagePic${sb.no}" alt="Base64 encoded image" width="250" />
 	</div>
 	<div>
-		<input id="context_box" type="button" value="返回" name="cont_box_back" class=" btn btn-danger">
+		<button id="context_box" name="cont_box_back" class="btn btn-danger">返回</button>
 	</div>
 </div>
 
@@ -193,24 +193,61 @@
 	<div class="status_edit_${sb.no} add-model hide">
 		<h4>對"${sb.title}""編輯?</h4>
 		<div>
-			<input id="status_edit_${sb.no} " type="button" value="返回" name="back" class="btn btn-danger">
+			<button id="status_edit_${sb.no} " name="back" class="btn btn-danger">返回</button>
 		</div>
 		<div>
-			<input class=" btn btn-info" type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/allBulletin/${sb.no}'">
+			<button class=" btn btn-info" id="edit_${sb.no}" name="edit">確定</button>
+			<%-- 			<input class=" btn btn-info" type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/bulletin_all/${sb.no}'"> --%>
+			<script type="text/javascript">
+				$("[name=edit]").click(function() {
+					var str = $(this).attr("id");
+					var id = str.substring(str.lastIndexOf("_") + 1);
+					$.ajax({
+						url : "<c:url value='/admin/bulletin_all/edit'/>",
+						data : {
+							no : id,
+						},
+						type : "GET",
+						cache : false,
+						success : function(data) {
+							$("#pageItems").html(data);
+						}
+					});
+				});
+			</script>
+
 		</div>
 	</div>
 	<!-- 進行中刪除 -->
 	<div class="status_dele_${sb.no} add-model hide">
 		<h4>對"${sb.title}"刪除?</h4>
 		<div>
-			<input id="status_dele_${sb.no} " type="button" value="返回" name="back" class="btn btn-danger">
+			<button id="status_dele_${sb.no} " name="back" class="btn btn-danger">返回</button>
 		</div>
 		<div>
-			<input class=" btn btn-info" type="button" value="確定"
-				onclick="javascript:location.href='${pageContext.request.contextPath}/admin/allBulletin/deleteSstatus/${sb.no}'">
+			<button class=" btn btn-info" name="deleteSstatus" id="deleteSstatus_${sb.no}">確定</button>
 		</div>
 	</div>
 </c:forEach>
+
+
+		<script type="text/javascript">
+			$("[name=deleteSstatus]").click(function() {
+				var str = $(this).attr("id");
+				var id = str.substring(str.lastIndexOf("_") + 1);
+				$.ajax({
+					url : "<c:url value='/admin/bulletin_all/deleteSstatus'/>",
+					data : {
+						no : id,
+					},
+					type : "GET",
+					cache : false,
+					success : function(data) {
+						$("#pageItems").html(data);
+					}
+				});
+			});
+		</script>
 
 <!-- 過期區 -->
 <c:forEach var='sb' items='${statusBulletin[1]}'>
@@ -218,10 +255,10 @@
 	<div class="unstat_edit_${sb.no} add-model hide">
 		<h4>對"${sb.title}""編輯?</h4>
 		<div>
-			<input id="unstat_edit_${sb.no} " type="button" value="返回" name="back" class="btn btn-danger">
+			<button id="unstat_edit_${sb.no} " name="back" class="btn btn-danger">返回</button>
 		</div>
 		<div>
-			<input class=" btn btn-info" type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/allBulletin/${sb.no}'">
+			<button class=" btn btn-info" id="edit_${sb.no}" name="edit">確定</button>
 		</div>
 	</div>
 
@@ -229,11 +266,10 @@
 	<div class="unstat_dele_${sb.no} add-model hide">
 		<h4>對"${sb.title}"刪除?</h4>
 		<div>
-			<input id="unstat_dele_${sb.no}" type="button" value="返回" name="back" class=" btn btn-danger">
+			<button id="unstat_dele_${sb.no}" name="back" class=" btn btn-danger">返回</button>
 		</div>
 		<div>
-			<input class=" btn btn-info" type="button" value="確定"
-				onclick="javascript:location.href='${pageContext.request.contextPath}/admin/allBulletin/deleteUnSstatus/${sb.no}'">
+			<button class=" btn btn-info" name="deleteSstatus" id="deleteSstatus_${sb.no}">確定</button>
 		</div>
 	</div>
 </c:forEach>
@@ -244,21 +280,36 @@
 	<div class="unavai_dele_${sb.no} add-model hide">
 		<h4>對"${sb.title}"復原?</h4>
 		<div>
-			<input id="unavai_dele_${sb.no}" type="button" value="返回" name="back" class=" btn btn-danger">
+			<button id="unavai_dele_${sb.no}" name="back" class=" btn btn-danger">返回</button>
 		</div>
 		<div>
-			<input class=" btn btn-info" type="button" value="確定"
-				onclick="javascript:location.href='${pageContext.request.contextPath}/admin/allBulletin/restore/${sb.no}'">
+			<button class=" btn btn-info" name="restore" id="restore_${sb.no}">確定</button>
 		</div>
 	</div>
 </c:forEach>
-
+<script type="text/javascript">
+			$("[name=restore]").click(function() {
+				var str = $(this).attr("id");
+				var id = str.substring(str.lastIndexOf("_") + 1);
+				$.ajax({
+					url : "<c:url value='/admin/bulletin_all/restore'/>",
+					data : {
+						no : id,
+					},
+					cache : false,
+					type : "GET",
+					success : function(data) {
+						$("#pageItems").html(data);
+					}
+				});
+			});
+		</script>
 
 <!-- Breadcrumbs-->
 
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="#">Home</a></li>
-	<li class="breadcrumb-item active">allBulletin</li>
+	<li class="breadcrumb-item active">bulletin_all</li>
 </ol>
 
 
@@ -307,7 +358,7 @@
 					</table>
 				</div>
 				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-					<table  class=' table table-hover'id='dataTable' width='70%' cellspacing='0'>
+					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
 						<thead>
 							<tr>
 								<th scope="col">標題</th>
@@ -318,7 +369,6 @@
 							</tr>
 						</thead>
 						<tbody>
-
 							<c:forEach var='sb' items='${statusBulletin[1]}'>
 								<tr>
 									<td class="hide">${sb.no}</td>
@@ -329,7 +379,6 @@
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<td><img name="add_host" id="unstat_edit_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
 									<td><img name="add_host" id="unstat_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
-
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -348,7 +397,6 @@
 						<tbody>
 							<c:forEach var='sb' items='${statusBulletin[2]}'>
 								<tr>
-
 									<td class="hide">${sb.no}</td>
 									<td>${sb.title}</td>
 									<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
@@ -356,7 +404,6 @@
 									<td><img name="context_box" id="context_box_${sb.no}" width="20px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<td><img name="add_host" id="unavai_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
-
 								</tr>
 							</c:forEach>
 						</tbody>

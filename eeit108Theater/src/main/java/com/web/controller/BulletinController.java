@@ -39,6 +39,7 @@ import com.web.service.impl.BulletinServiceImpl;
 import data.util.SystemUtils2018;
 
 @Controller
+@RequestMapping(value = "/admin")
 public class BulletinController {
 
 	@Autowired
@@ -46,33 +47,33 @@ public class BulletinController {
 	@Autowired
 	ServletContext context;
 
-	String Root = "/admin/";
+	final String Root = "admin/";
 
-	// other2allBulletin
-	@RequestMapping(value = "admin/allBulletin", method = RequestMethod.GET)
-	public String other2allBulletin(Model model) {
+	// other2bulletin_all
+	@RequestMapping(value = "/bulletin_all", method = RequestMethod.GET)
+	public String other2bulletin_all(Model model) {
 		List<List<BulletinBean>> list = service.getStatsBulletin();
 		model.addAttribute("statusBulletin", list);
-		return Root + "allBulletin";
+		return Root + "bulletin_all";
 	}
 
-	// other2newBulletin
-	@RequestMapping(value = "admin/newBulletin", method = RequestMethod.GET)
-	public String other2newBulletin(Model model) {
+	// other2bulletin_new
+	@RequestMapping(value = "/bulletin_new", method = RequestMethod.GET)
+	public String other2bulletin_new(Model model) {
 		BulletinBean bb = new BulletinBean();
 		model.addAttribute("bulletinBean", bb);
-		return Root + "newBulletin";
+		return Root + "bulletin_new";
 	}
 
-	// edit_allBulletin2newBulletin
-	@RequestMapping(value = "admin/allBulletin/{bulletin_no}", method = RequestMethod.GET)
-	public String edit_allBulletin2newBulletin(@PathVariable("bulletin_no") Integer no,
-			Model model) {
+	// edit_bulletin_all2bulletin_new
+	@RequestMapping(value = "/bulletin_all/edit", method = RequestMethod.GET)
+	public String edit_bulletin_all2bulletin_new(Model model, HttpServletRequest req) {
+		Integer no = Integer.valueOf(req.getParameter("no"));
 		BulletinBean bb = service.getBulletinBeanById(no);
 		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 		model.addAttribute("bulletinBean", bb);
 		model.addAttribute("sameBulletinBean", list);
-		return Root + "newBulletin";
+		return Root + "bulletin_edit";
 	}
 
 	// find picture
@@ -123,9 +124,9 @@ public class BulletinController {
 		return str;
 	}
 
-	// post_newBulletin2allBulletin
-	@RequestMapping(value = "admin/newBulletin", method = RequestMethod.POST)
-	public String post_newBulletin2allBulletin(@ModelAttribute("bulletinBean") BulletinBean bb,
+	// post_bulletin_new2bulletin_all
+	@RequestMapping(value = "/bulletin_new", method = RequestMethod.POST)
+	public String post_bulletin_new2bulletin_all(@ModelAttribute("bulletinBean") BulletinBean bb,
 			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException {
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -177,7 +178,7 @@ public class BulletinController {
 
 		System.out.println("ErrMsg=" + request.getAttribute("ErrMsg"));
 		if (!errorMessage.isEmpty()) {
-			return Root + "newBulletin";
+			return Root + "bulletin_new";
 		} else {
 			Date now = new Date();
 			redirectAttributes.addFlashAttribute("changeMsg", "新增成功");
@@ -185,13 +186,13 @@ public class BulletinController {
 			bb.setBortingId(bb.getEmployeeId() + "_" + now.toString());
 			bb.setPostTime(now);
 			service.insertNewBulletin(bb);
-			return "redirect:/" + Root + "allBulletin";
+			return "redirect:/" + Root + "bulletin_all";
 		}
 	}
 
-	// edit_newBulletin2allBulletin
-	@RequestMapping(value = "admin/allBulletin/{bulletin_no}", method = RequestMethod.POST)
-	public String edit_newBulletin2allBulletin(@ModelAttribute("bulletinBean") BulletinBean bb,
+	// edit_bulletin_new2bulletin_all
+	@RequestMapping(value = "/bulletin_all/{bulletin_no}", method = RequestMethod.POST)
+	public String edit_bulletin_new2bulletin_all(@ModelAttribute("bulletinBean") BulletinBean bb,
 			BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException, ParseException {
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -259,39 +260,40 @@ public class BulletinController {
 		// 存入
 		if (!errorMessage.isEmpty()) {
 			System.out.println("資料輸入有錯誤，網頁跳回");
-			return Root + "newBulletin";
+			return Root + "bulletin_new";
 		} else {
 			if (bet) {
 				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
 				System.out.println("資料未修改，網頁跳回");
-				return Root + "newBulletin";
+				return Root + "bulletin_new";
 			} else {
 				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
 				service.insertNewBulletin(bb);
 				System.out.println("資料已修改");
-				return "redirect:/" + Root + "allBulletin";
+				return "redirect:/" + Root + "bulletin_all";
 			}
 		}
 	}
 
 	// deleteSstatus
-	@RequestMapping(value = "admin/allBulletin/deleteSstatus/{sb.no}")
-	public String deleteSstatus(@PathVariable("sb.no") Integer no,
-			RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/bulletin_all/deleteSstatus")
+	public String deleteSstatus(HttpServletRequest req, RedirectAttributes redirectAttributes) {
+		Integer no = Integer.valueOf(req.getParameter("no"));
 		int deleteReturn = service.updateBulletinBeanById(no, false);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料刪除");
 		System.out.println("資料已刪除，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
-		return "redirect:/" + Root + "allBulletin";
+		return "redirect:/" + Root + "bulletin_all";
+
 	}
 
 	// restoreSstatus
-	@RequestMapping(value = "admin/allBulletin/restore/{sb.no}")
-	public String restoreSstatus(@PathVariable("sb.no") Integer no,
-			RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/bulletin_all/restore")
+	public String restoreSstatus(HttpServletRequest req, RedirectAttributes redirectAttributes) {
+		Integer no = Integer.valueOf(req.getParameter("no"));
 		int deleteReturn = service.updateBulletinBeanById(no, true);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料復原");
 		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
-		return "redirect:/" + Root + "allBulletin";
+		return "redirect:/" + Root + "bulletin_all";
 	}
 
 //	準備方法

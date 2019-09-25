@@ -5,7 +5,8 @@
 <style type="text/css">
 .hid {
 	/* 	visibility: hidden; */
-	display: none;
+	/* 	display: none; */
+	
 }
 
 .shade {
@@ -33,8 +34,8 @@
 </style>
 
 
-<script src="js/admin/demo/datatables-demo.js"></script>
-<script src="js/admin/demo/chart-area-demo.js"></script>
+<!-- <script src="js/admin/demo/datatables-demo.js"></script> -->
+<!-- <script src="js/admin/demo/chart-area-demo.js"></script> -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 
@@ -48,8 +49,8 @@
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" -->
 <!-- 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
 <script>
 	//    Datepicker
@@ -82,7 +83,6 @@
 			} catch (error) {
 				date = null;
 			}
-
 			return date;
 		}
 	});
@@ -113,7 +113,7 @@
 	});
 
 	//file image showPhoto
-	$('#file').change(function() {
+	$('#bulletinImage').change(function() {
 		var file = $(this)[0].files[0];
 		var reader = new FileReader;
 		reader.onload = function(e) {
@@ -180,19 +180,11 @@
 			</c:if>
 
 			<div id="accordion">
-				<c:choose>
-					<c:when test="${empty bulletinBean.no}">
-						<h3>新增公告</h3>
-					</c:when>
-					<c:when test="${!empty bulletinBean.no}">
-						<h3>編輯公告</h3>
-					</c:when>
-				</c:choose>
+				<h3>新增公告</h3>
 				<div>
 
-					<form:form method='POST' modelAttribute="bulletinBean" enctype="multipart/form-data">
+					<form:form method='POST' commandName="myEntryForm" action="bulletin_all/add" modelAttribute="bulletinBean" enctype="multipart/form-data">
 						<form:hidden path="no" value="${param.no}" />
-
 						<div class="form-group row">
 							<label for="title" class="col-sm-2 col-form-label">標題:</label>
 							<div class="col-sm-10">
@@ -206,7 +198,7 @@
 						<div class="form-group row">
 							<label class="context" class="col-sm-2 col-form-label">公告內容:</label>
 							<div class="col-sm-10">
-								<form:textarea path="context" placeholder="輸入公告內容，字數請勿大於300字 " class="form-control" maxlength="300" value="${param.context}" />
+								<form:textarea path="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" value="${param.context}" class="form-control" />
 								<div>
 									<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 								</div>
@@ -215,9 +207,9 @@
 
 						<div class="form-group row">
 							<label for="from" class="col-sm-2 col-form-label ">startDate</label>
-							<form:input type="text" id="from" path="startDate" class="col-sm-4 col-form-label "/>
+							<form:input type="text" id="from" path="startDate" class="col-sm-4 col-form-label " />
 							<label for="to" class="col-sm-2 col-form-label ">endDate</label>
-							<form:input type="text" id="to" path="endDate" class="col-sm-4 col-form-label "/>
+							<form:input type="text" id="to" path="endDate" class="col-sm-4 col-form-label " />
 							<div>
 								<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 							</div>
@@ -289,66 +281,73 @@
 
 						</div>
 
-						<c:choose>
-							<c:when test="${empty bulletinBean.no}">
-								<div>
-									<img id="showPhoto" />
-								</div>
-								<div>
-									<input id="btnAdd" type='submit' class='btn btn-info'>
-								</div>
-							</c:when>
-							<c:when test="${!empty bulletinBean.no}">
-								<div>
-									<img id="showPhoto" src="<c:url value='/getBulletinPicture/${bulletinBean.no}' />" />
-								</div>
-								<div>
-									<input id="btnEdit" type='submit' class='btn btn-info'> <a href='<c:url value="/allBulletin"/>'><input id="btnReset" type="button"
-										class='btn btn-danger' value="取消編輯"></a>
-								</div>
-							</c:when>
-						</c:choose>
-					</form:form>
-				</div>
-				<c:choose>
-					<c:when test="${!empty sameBulletinBean[1]}">
-						<h3>歷史紀錄</h3>
+						<!-- button -->
+
 						<div>
-							<table>
-								<thead>
-									<tr>
-										<!-- 													<th>#</th> -->
-										<th>標題</th>
-										<th colspan="2">優惠方案</th>
-										<th>詳情</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var='sb' items='${sameBulletinBean}' begin="1">
-										<tr>
-											<c:if test="${sb.available}">
-												<%-- 															<td>${sb.no}</td> --%>
-												<td>${sb.title}</td>
-												<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-												<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-												<td><img name="add_host" id="unavai_cont_${sb.no}" width="20px"
-													src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-											</c:if>
-										</tr>
-										<div class="unavai_cont_${sb.no} add-model hide">
-											<div>${sb.context}
-												<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
-											</div>
-											<div>
-												<input id="unavai_cont_${sb.no}" type="button" value="返回" name="back" class=" btn btn-danger">
-											</div>
-										</div>
-									</c:forEach>
-								</tbody>
-							</table>
+							<img id="showPhoto" />
 						</div>
-					</c:when>
-				</c:choose>
+						<div>
+							<input id="btnAdd" type='submit' class='btn btn-primary'>
+						</div>
+
+
+					</form:form>
+					<script>
+						// 						$(function() {
+						// 							$("#myEntryForm").submit(function(e) {
+						// 								e.preventDefault();
+
+						// 				                var formData = new FormData(this);
+
+						// 				                $.ajax({
+						// 				                type: 'POST',
+						// 				                url: $(this).attr('action'),
+						// 				                data:formData,
+						// 				                cache:false,
+						// 				                contentType: false,
+						// 				                processData: false,
+						// 				                success: function(data) {
+						// 				                    $('#pageItems').html("<img src=" + data.url + "" + data.name + ">");
+						// 				                },
+						// 				                error: function(data) {
+						// 				                    $('#pageItems').html("<h2>this file type is not supported</h2>");
+						// 				                }
+						// 				                });
+
+						// 							});
+						// 						});
+
+						function submitForm() {
+							var formData = new FormData();//必须是new FormData后台才能接收到
+							formData.append("title", $("#title").val());
+							formData.append("context", $("#context").val());
+							formData.append("discount0", $("#discount0").val());
+							formData.append("discount1", $("#discount1").val());
+							formData.append("discount2", $("#discount2").val());
+							formData.append("discountPriceBuy", $("#discountPriceBuy").val());
+							formData.append("discountPriceFree", $("#discountPriceFree").val());
+							formData.append("discountTickBuy", $("#discountTickBuy").val());
+							formData.append("discountTickFree", $("#discountTickFree").val());
+							formData.append("employeeId", $("#employeeId").val());
+							formData.append("bulletinImage", $("#bulletinImage")[0].files[0]);
+							$.ajax({
+								url : "${pageContext.request.contextPath}/admin/bulletin_add",
+								data : formData,
+								type : 'POST',
+								datatype : "json",
+								contentType : false,//必须false才会自动加上正确的Content-Type
+								processData : false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理 
+								success : function(jdata) {
+									$('#pageItems').html(jdata);
+									alert(jdata);
+								},
+								error : function(jdata) {
+									alert("error");
+								}
+							});
+						}
+					</script>
+				</div>
 
 			</div>
 
