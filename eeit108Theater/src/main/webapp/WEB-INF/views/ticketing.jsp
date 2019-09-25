@@ -29,7 +29,31 @@
 		$(".hello").click(function() {
 			$("#minfo01").show();
 		});
+		$("#today").show();
+		$("#tomorrow").hide();
+		$("#tdat").hide();
+		
+		$("#first").click(function() {
+			$("#today").show();
+			$("#tomorrow").hide();
+			$("#tdat").hide();
+		});
+		
+		$("#second").click(function() {
+			$("#today").hide();
+			$("#tomorrow").show();
+			$("#tdat").hide();
+		});
+		
+		$("#third").click(function() {
+			$("#today").hide();
+			$("#tomorrow").hide();
+			$("#tdat").show();
+		});		
 	});
+	
+	
+	
 </script>
 <style type="text/css">
 	#B ul li {list-style-type:none;
@@ -68,37 +92,7 @@
 		<!-- Main -->
 		<div id="B">
 			<center>
-				<table style="width:1440px;margin:auto;">
-<!-- 					<tr><td class="td">‧<a href="#" id="movie01">牠 第二章</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td> -->
-<!-- 					</tr>					 -->
-<!-- 					<tr><td class="td">‧<a href="#" id="movie06">極限逃生</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">天氣之子</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">星際救援</a></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr><td class="td">‧<a href="#" id="movie08">返校</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">小丑</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie01">牠 第二章</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie02">航海王：奪寶爭霸戰</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie03">全面攻佔 3：天使救援</a></td> -->
-<!-- 					</tr>	 -->
-<!-- 					<tr><td class="td">‧<a href="#" id="movie04">玩命關頭：特別行動</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie05">大叔之愛電影版</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie06">極限逃生</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie07">NG你的人生</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">我家有個開心農場</a></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr><td class="td">‧<a href="#" id="movie08">天氣之子</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">星際救援</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">返校</a></td> -->
-<!-- 						<td class="td">‧<a href="#" id="movie08">小丑</a></td> -->
-<!-- 					</tr> -->
-<!-- 					<br> -->
+				<table style="width:1440px;margin:auto;">				
 					<c:forEach var = 'releasedMovie' items = '${releasedMovies}' varStatus='nihao'>
 						<c:choose>
 							<c:when test ='${nihao.count % 5 == 1}'>
@@ -138,8 +132,7 @@
 						<p>上映日期：<fmt:formatDate value="${movie.openingDate}" pattern='yyyy-MM-dd' /></p>
 						<div class="row gtr-50">
 							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/now01.jpg"
-									alt="" /></a>
+								<a href="#" class="image fit"><img src="<c:url value = '/getPicture/${movie.no}'/>" ></a>
 							</div>
 							<div class="col-8">
 								<p>
@@ -182,15 +175,9 @@
 							<header><h3>請選擇日期：</h3></header>
 
 								<dt>
-<!-- 									<dd  class="dtdd foo"><a href="#">9/11(三)</a></dd> -->
-<!-- 									<dd  class="dtdd foo"><a href="#">9/12(四)</a></dd> -->
-<!-- 									<dd  class="dtdd foo"><a href="#">9/13(五)</a></dd> -->
-<!-- 									<dd  class="dtdd foo"><a href="#">9/14(六)</a></dd> -->
-<!-- 									<dd  class="dtdd foo"><a href="#">9/15(日)</a></dd> -->
-<!-- 									<dd  class="dtdd foo"><a href="#">9/16(一)</a></dd> -->
-<!-- 									<dd  class="dtdd foo"><a href="#">9/17(二)</a></dd> -->
-										<dd class = "dtdd foo" id = 'first'><a href="#">${today}</a></dd>
-								
+										<dd class = "dtdd foo" id = 'first'>${today}</dd>
+										<dd class = "dtdd foo" id = 'second'>${tomorrow}</dd>
+										<dd class = "dtdd foo" id = 'third'>${tdat}</dd>														
 								</dt>
 
 <%-- 									<fmt:formatDate value="${startTime}" pattern='MM-dd' /> --%>
@@ -199,52 +186,152 @@
 						</section> 
 						
 						<section>
-							<div id="B">
-							<header><h3>請選擇廳別場次：</h3></header>
-
-<%-- 								<c:forEach var = 'time' items = '${times}'> --%>
-<%-- 									<li><fmt:formatDate value="${time}" pattern='HH:mm' /></li> --%>
-<%-- 								</c:forEach> --%>
+							<div>
+							<header><h3>請選擇票種場次：</h3></header>
 							
-<!-- 								<h6>IMAX：</h6><p> -->
-<!-- 								<dt> -->
-<!-- 									<dd class="dtdd foo"><a href="#">08:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">10:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">12:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">14:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">16:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">18:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">20:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">22:00</a></dd> -->
-<!-- 								</dt><p> -->
-								
-<!-- 								<h6>一般數位：</h6><p> -->
-<!-- 								<dt> -->
-<!-- 									<dd class="dtdd foo"><a href="#">09:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">11:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">13:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">15:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">17:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">19:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">21:00</a></dd> -->
-<!-- 									<dd class="dtdd foo"><a href="#">23:00</a></dd> -->
-<!-- 								</dt> -->
-							<c:choose>
-								<c:when test = '${!empty startTime0}'>
-									<b>${theater0}</b><b>${version}</b>
-									<dt>
-									<c:forEach var = 'startTime' items = '${startTime0}'>
-										<dd class="dtdd foo"><a href="#"><fmt:formatDate value="${startTime}" pattern='HH:mm' /></a></dd>
-									</c:forEach>
+								<div id = "today">
+									<c:choose>
+										<c:when test = '${!empty todayStartTimes_2D}'>
+											<h6>${todayStartTimes_2D[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${todayStartTimes_2D}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
 									</dt>
-								</c:when>
-								<c:otherwise>
-					
-								</c:otherwise>
-							</c:choose>
-							
-							
-							
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test = '${!empty todayStartTimes_3D}'>
+											<h6>${todayStartTimes_3D[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${todayStartTimes_3D}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test = '${!empty todayStartTimes_IMAX}'>
+											<h6>${todayStartTimes_IMAX[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${todayStartTimes_IMAX}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div id = "tomorrow">
+									<c:choose>
+										<c:when test = '${!empty tomorrowStartTimes_2D}'>
+											<h6>${tomorrowStartTimes_2D[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${tomorrowStartTimes_2D}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test = '${!empty tomorrowStartTimes_3D}'>
+											<h6>${tomorrowStartTimes_3D[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${tomorrowStartTimes_3D}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test = '${!empty tomorrowStartTimes_IMAX}'>
+											<h6>${tomorrowStartTimes_IMAX[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${tomorrowStartTimes_IMAX}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div id = "tdat">
+									<c:choose>
+										<c:when test = '${!empty tdatStartTimes_2D}'>
+											<h6>${tdatStartTimes_2D[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${tdatStartTimes_2D}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test = '${!empty tdatStartTimes_3D}'>
+											<h6>${tdatStartTimes_3D[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${tdatStartTimes_3D}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test = '${!empty tdatStartTimes_IMAX}'>
+											<h6>${tdatStartTimes_IMAX[0].version}</h6>
+											<br>
+											<dt>
+										<c:forEach var = 'StartTime' items = '${tdatStartTimes_IMAX}'>
+											<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+										</c:forEach>
+									</dt>
+									<br>
+									<br>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</div>
+									
+									
 							</div>
 						<footer> 
 							<a href="seat" class="button">選擇座位</a>
