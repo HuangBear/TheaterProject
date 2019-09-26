@@ -81,28 +81,43 @@ public class ArticleController {
 		return "Article";
 	}
 	
-	@RequestMapping(value = "/Article", method = RequestMethod.POST)
-	public String processArticleLikeOrDislike(@RequestParam("id") Integer id,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
+	@RequestMapping(value = "/Article{article_no}", method = RequestMethod.POST)
+	public String processArticleLikeOrDislike(@PathVariable("article_no") Integer articleNo,@RequestParam("id") Integer no,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
 		String LikeButton = request.getParameter("button");
 		int article = Integer.parseInt(request.getParameter("articleNoString"));
 		lb.setArticle(new ArticleBean(article));
 		int memberNo = Integer.parseInt(request.getParameter("member"));
 		lb.setMember(memberNo);
-		System.out.println("檢查斷點1");
+		ArticleBean ab = service.getArticleById(no);
 		if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
             lb.setLikeOrDislike(true);
+            ab.setLikeCount(ab.getLikeCount()+1);
             service.addGp(lb);
+            service.editArticle(ab);
         } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
         	lb.setLikeOrDislike(false);
+        	ab.setDislikeCount(ab.getDislikeCount()+1);
         	service.addGp(lb);
-        } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)!="null") {
+        	service.editArticle(ab);
+        } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="true") {
+            
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
+        	
+        } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
             lb.setLikeOrDislike(true);
+            ab.setLikeCount(ab.getLikeCount()+1);
+            ab.setDislikeCount(ab.getDislikeCount()-1);
             service.updateGp(lb);
-        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)!="null") {
+            service.editArticle(ab);
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="true") {
         	lb.setLikeOrDislike(false);
+        	ab.setDislikeCount(ab.getDislikeCount()+1);
+        	ab.setLikeCount(ab.getLikeCount()-1);
         	service.updateGp(lb);
+        	service.editArticle(ab);
         }
-		model.addAttribute("id", id);
+		
+		model.addAttribute("id", no);
 		
 		return "../Article";
 	}

@@ -34,12 +34,12 @@ fieldset {
 			<fieldset>
 			    <div class="form-group">
 					<div class="col-lg-10">
-						<form:input id="articleString" readonly="true" path="articleString" value='${ReplyBean.articleString}' type='text' class='form:input-large'/>
+						<form:input id="articleString" readonly="true" path="articleString" value='${ReplyBean.articleString}' type='hidden' class='form:input-large'/>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-10">
-						<form:input id="noString" readonly="true" path="noString" value='${ReplyBean.noString}' type='text' class='form:input-large'/>
+						<form:input id="noString" readonly="true" path="noString" value='${ReplyBean.noString}' type='hidden' class='form:input-large'/>
 					</div>
 				</div>
 

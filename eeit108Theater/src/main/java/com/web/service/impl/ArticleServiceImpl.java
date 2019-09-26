@@ -81,7 +81,6 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void editArticle(ArticleBean article) {
     	if( article !=null) {
-			System.out.println("emp insert not null");
 			dao.editArticle(article);
 			
 		}else {
