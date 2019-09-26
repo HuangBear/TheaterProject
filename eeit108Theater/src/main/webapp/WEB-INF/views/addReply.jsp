@@ -34,7 +34,7 @@ fieldset {
 			<fieldset>
 			    <div class="form-group">
 					<div class="col-lg-10">
-						<form:input id="articleString" readonly="true" path="articleString" value='${ArticleBean.noString}' type='text' class='form:input-large'/>
+						<form:input id="articleString" readonly="true" path="articleString" value='${ArticleBean.noString}' type='hidden' class='form:input-large'/>
 					</div>
 				</div>
 

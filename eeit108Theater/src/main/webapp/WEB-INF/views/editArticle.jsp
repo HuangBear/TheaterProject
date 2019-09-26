@@ -52,7 +52,7 @@ fieldset {
 					    <a>PostTime</a>
 				    </label>
 					<div class="col-lg-10">
-						<form:input id="postTimeString" readonly="true" path="postTimeString" value='${Article.postTimeString}' type='text' class='form:input-large' />
+						<form:input id="postTimeString" readonly="true" path="postTimeString" value='${Article.postTimeString}' type='hidden' class='form:input-large' />
 					</div>
 				</div>
 

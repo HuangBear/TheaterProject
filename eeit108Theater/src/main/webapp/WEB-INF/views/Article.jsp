@@ -75,7 +75,9 @@
 			<form:input id="articleNoString" readonly="true" path="articleNoString" value='${LikeOrDislikeBean.articleNoString}' type='hidden' class='form:input-large'/>
 			<form:input id="member" path="member" readonly="true" value='${LoginOK.no}' type='hidden' class='form:input-large' />
 				<button type="submit" name="button" value="like">like</button>
+				<a>${Article.likeCount}</a>
 				<button type="submit" name="button" value="dislike">dislike</button>
+				<a>${Article.dislikeCount}</a>
 			</div>
 			</fieldset>
 		</form:form>

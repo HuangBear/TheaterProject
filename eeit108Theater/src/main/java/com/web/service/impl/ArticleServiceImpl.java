@@ -67,7 +67,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
 	@Override
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
-    	System.out.println("檢查斷點2");
 		return dao.getLikeOrDislikeByMemberAndArticle(memberNo,article);
 	}
     
@@ -81,7 +80,6 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void editArticle(ArticleBean article) {
     	if( article !=null) {
-			System.out.println("emp insert not null");
 			dao.editArticle(article);
 			
 		}else {
@@ -118,7 +116,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
 	@Override
 	public void updateGp(LikeOrDislikeBean likeOrDislike) {
+    	System.out.println("確認");
 		dao.updateGp(likeOrDislike);
+	}
+    
+    @Transactional
+	@Override
+	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo,int article) {
+		return dao.getLikeOrDislikeNo(memberNo,article);
 	}
     
     @Transactional

@@ -61,6 +61,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public void updateGp(LikeOrDislikeBean likeOrDislike) {
 		Session session = factory.getCurrentSession();
+		System.out.println("確認2");
 		session.update(likeOrDislike);
 	}
 
@@ -102,7 +103,6 @@ public class ArticleDaoImpl implements ArticleDao {
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
 		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
 		String likeOrDislikeString = null;
-		System.out.println("檢查斷點3");
 		LikeOrDislikeBean likeOrDislike = (LikeOrDislikeBean) factory.getCurrentSession().createQuery(hql).setParameter("member", memberNo).setParameter("article", article).uniqueResult();
 		if(likeOrDislike == null || likeOrDislike.getLikeOrDislike() == null) {
 			return "null";
@@ -155,6 +155,13 @@ public class ArticleDaoImpl implements ArticleDao {
 	    mb = session.get(MovieBean.class, movieNo);
 	    return mb;
 	}	
+	@Override
+	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article) {
+		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
+		LikeOrDislikeBean lb = (LikeOrDislikeBean) factory.getCurrentSession().createQuery(hql).setParameter("member", memberNo).setParameter("article", article).uniqueResult();
+		return lb;
+	}
+	
 	
 	@Override
 	public List<MemberBean> getMemberList() {
