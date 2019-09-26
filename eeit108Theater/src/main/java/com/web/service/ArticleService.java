@@ -28,6 +28,7 @@ public interface ArticleService {
 	void updateGp(LikeOrDislikeBean likeOrDislike);
 	MemberBean  getMemberById(int memberId);
 	MovieBean  getMovieByNo(int movieNo);
+	LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article);
 	List<MemberBean>  getMemberList();
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
 

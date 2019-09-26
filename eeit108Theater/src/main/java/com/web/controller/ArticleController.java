@@ -42,6 +42,8 @@ public class ArticleController {
 	@Autowired
 	ServletContext context;
 
+	String pageId = "?id=";
+	
 	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 			
@@ -81,8 +83,8 @@ public class ArticleController {
 		return "Article";
 	}
 	
-	@RequestMapping(value = "/Article{article_no}", method = RequestMethod.POST)
-	public String processArticleLikeOrDislike(@PathVariable("article_no") Integer articleNo,@RequestParam("id") Integer no,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
+	@RequestMapping(value = "/Article", method = RequestMethod.POST)
+	public String processArticleLikeOrDislike(@RequestParam("id") Integer no,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
 		String LikeButton = request.getParameter("button");
 		int article = Integer.parseInt(request.getParameter("articleNoString"));
 		lb.setArticle(new ArticleBean(article));
@@ -104,12 +106,16 @@ public class ArticleController {
         } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
         	
         } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
+        	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+        	lb.setNo(lbno.getNo());
             lb.setLikeOrDislike(true);
             ab.setLikeCount(ab.getLikeCount()+1);
             ab.setDislikeCount(ab.getDislikeCount()-1);
             service.updateGp(lb);
             service.editArticle(ab);
         } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="true") {
+        	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+        	lb.setNo(lbno.getNo());
         	lb.setLikeOrDislike(false);
         	ab.setDislikeCount(ab.getDislikeCount()+1);
         	ab.setLikeCount(ab.getLikeCount()-1);
@@ -118,8 +124,8 @@ public class ArticleController {
         }
 		
 		model.addAttribute("id", no);
-		
-		return "../Article";
+		String NoS =Integer.toString(no);
+		return "redirect:/Article?id="+NoS;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -162,13 +168,14 @@ public class ArticleController {
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
 		service.addArticle(ab);
-
+		String MovieNoS =Integer.toString(ab.getMovie().getNo());
+		
 		if (!errorMessage.isEmpty())
 		{
 			return "addArticle";
 		} else
 		{
-			return "redirect:/MoviesForum";
+			return "redirect:/MoviesForum/Articles?id="+MovieNoS;
 		}
 		
 	}
@@ -246,13 +253,14 @@ public class ArticleController {
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		
 		service.editArticle(ab);
+		String ArticleNoS =Integer.toString(ab.getNo());
 
 		if (!errorMessage.isEmpty())
 		{
 			return "editArticle";
 		} else
 		{
-			return "redirect:/MoviesForum";
+			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
 	}
@@ -296,13 +304,14 @@ public class ArticleController {
 		System.out.println("postTime=" + rb.getPostTime());
 		
 		service.addReply(rb);
+		String ArticleNoS =request.getParameter("articleString");
 
 		if (!errorMessage.isEmpty())
 		{
 			return "addReply";
 		} else
 		{
-			return "redirect:/MoviesForum";
+			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
 	}
@@ -352,13 +361,14 @@ public class ArticleController {
 		System.out.println("postTime=" + rb.getPostTime());
 		
 		service.editReply(rb);
+		String ArticleNoS =request.getParameter("articleString");
 
 		if (!errorMessage.isEmpty())
 		{
 			return "editReply";
 		} else
 		{
-			return "redirect:/MoviesForum";
+			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
 	}

@@ -33,12 +33,10 @@ public interface ArticleDao {
 	void editReply(ReplyBean reply);
 	void addGp(LikeOrDislikeBean likeOrDislike);
 	void updateGp(LikeOrDislikeBean likeOrDislike);
+	
 	MovieBean getMovieByNo(int movieNo);
+	LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article);
 
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
-
-	
-
-	
 	
 }
