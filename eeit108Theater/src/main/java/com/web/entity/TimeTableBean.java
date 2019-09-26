@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Table(
 		name = "Time_Table",
 		uniqueConstraints = { 
-				@UniqueConstraint(columnNames = { "movieName", "startTime", "theater"})
+				@UniqueConstraint(columnNames = { "movieName", "startTime", "theater", "startDate"})
 				}
 		)
 public class TimeTableBean implements Serializable{

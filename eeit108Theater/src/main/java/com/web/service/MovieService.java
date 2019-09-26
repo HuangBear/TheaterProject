@@ -18,4 +18,5 @@ public interface MovieService {
 	List<MovieBean> getReleasedMovies();
 	List<MovieBean> getComingMovies();
 	List<MovieBean> getAllMovies();
+	List<MovieBean> getOffMovies();
 }
