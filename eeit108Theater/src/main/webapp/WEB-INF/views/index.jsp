@@ -156,63 +156,6 @@ input::placeholder{
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function() {         
-		$("#enjoy").click(function() { 
-		$("#bizs").show(); 
-		$("#716").hide();      
-		});
-	});
-	
-	
-	
-	let adImgs, adsImgs, count = 0, flag = true, t;
-    function show() {
-        adImgs[count].className = "none";
-        adsImgs[count].className = "ads";
-        count++;
-        if (count > 4) count = 0;
-        adImgs[count].className = "block";
-        adsImgs[count].className = "adsborder";
-    }
-    t = window.setInterval(show, 2000);
-
-    document.addEventListener("DOMContentLoaded", function () {
-        adImgs = document.querySelectorAll("img.block,img.none");
-        // alert(adImgs.length);
-        adsImgs = document.querySelectorAll("img.ads,img.adsborder");
-        // alert(adsImgs.length);
-        document.getElementById("idpauseplay").addEventListener("click", pauseplayf);
-        document.getElementById("idback").addEventListener("click", backf);
-        document.getElementById("idnext").addEventListener("click", nextf);
-    });
-
-    function pauseplayf() {
-        if (flag) {
-            flag = false;
-            window.clearInterval(t);
-            document.getElementById("idpauseplay").src = "images/play1.png";
-        } else {
-            flag = true;
-            t = window.setInterval(show, 2000);
-            document.getElementById("idpauseplay").src = "images/pause1.png";
-        }
-    }
-
-    function backf() {
-        adImgs[count].className = "none";
-        adsImgs[count].className = "ads";
-        count--;
-        if (count < 0) count = 4;
-        adImgs[count].className = "block";
-        adsImgs[count].className = "adsborder";
-    }
-
-    function nextf() {
-        show();
-    }
-
-
-
   	$( function() {
     	$( "#speed" ).selectmenu();
  		$( "#files" ).selectmenu();
@@ -243,35 +186,7 @@ input::placeholder{
 				</header>
 				<footer> <a href="#" class="button circled scrolly" id="enjoy">ENJOY</a>
 				</footer>
-			</div> 
-			
-			<div class="inner" id="bizs" style="display:none;">
-                <article>
-                    <!--請在此加上標題標籤並套用title樣式-->
-                    <fieldset class="field">
-                        <div class="div1" id="links">
-                            <a href="#"><img id="ad0" class="block" src="images/frontend/biz1.jpg"></a>
-                            <a href="#"><img id="ad1" class="none" src="images/frontend/biz2.jpg"></a>
-                            <a href="#"><img id="ad2" class="none" src="images/frontend/biz3.jpg"></a>
-
-                        </div>
-                        <hr>
-                        <div class="div2">
-                            <img id="sad0" class="adsborder" src="images/frontend/G1-M31.jpg">
-                            <img id="sad1" class="ads" src="images/frontend/G2-M33.jpg">
-                            <img id="sad2" class="ads" src="images/frontend/G3-M104.jpg">
-
-                        </div>
-
-                        <div class="div2">
-                            <img id="idback" class="control" src="images/frontend/back1.png">
-                            <img id="idpauseplay" class="control" src="images/frontend/pause1.png">
-                            <img id="idnext" class="control" src="images/frontend/next1.png">
-                        </div>
-                    </fieldset>
-                </article>
-			</div>
-			
+			</div> 			
 		</div>
 		<!-- Banner -->
 		<!-- <section id="banner"> <header>
@@ -296,74 +211,51 @@ input::placeholder{
 		<div class="reel">
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie1.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">第九分局</a></strong>
-			</h3>
-			</header>
-			<p> 
-				THE 9TH PRECINCT<br>
-				2019-08-29
-			</p>
+				src="images/frontend/movie1.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">第九分局</a></strong></h3></header>
+					<p>THE 9TH PRECINCT<br>
+						2019-08-29
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie2.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">極限逃生</a></strong>
-			</h3>
-			</header>
-			<p>
-				EXIT<br>
-				2019-08-30
-			</p>
+				src="images/frontend/movie2.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">極限逃生</a></strong></h3></header>
+					<p>EXIT<br>
+						2019-08-30
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie3.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">你願意嫁給我老公嗎？</a></strong>
-			</h3>
-			</header>
-			<p>
-				AFTER THE WEDDING<br>
-				2019-08-30
-			</p>
+				src="images/frontend/movie3.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">你願意嫁給我老公嗎？</a></strong></h3></header>
+					<p>AFTER THE WEDDING<br>
+						2019-08-30
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie4.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">亂世佳人</a></strong>
-			</h3>
-			</header>
-			<p>
-				GONE WITH THE WIND<br>
-				2019-08-30
-			</p>
+				src="images/frontend/movie4.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">亂世佳人</a></strong></h3></header>
+					<p>GONE WITH THE WIND<br>
+						2019-08-30
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie5.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">航海王：奪寶爭霸戰</a></strong>
-			</h3>
-			</header>
-			<p>
-				ONE PIECE STAMPEDE<br>
-				2019-08-21
-			</p>
+				src="images/frontend/movie5.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">航海王：奪寶爭霸戰</a></strong></h3></header>
+					<p>ONE PIECE STAMPEDE<br>
+						2019-08-21
+					</p>
 			</article>
 
 			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie6.jpg" alt="" /></a> <header>
-			<h3>
-				<strong><a href="#">下半場</a></strong>
-			</h3>
-			</header>
-			<p> WE ARE CHAMPIONS<br>
-				2019-08-23
-			</p>
+				src="images/frontend/movie6.jpg" alt="" /></a> 
+				<header><h3><strong><a href="#">下半場</a></strong></h3></header>
+					<p> WE ARE CHAMPIONS<br>
+						2019-08-23
+					</p>
 			</article>
 
 			<!--  <article> <a href="#" class="image featured"><img
@@ -408,45 +300,7 @@ input::placeholder{
 		<artical>
 			<center>
 			<section style="margin:auto ;display:inline-block;">
-			<div style="margin:auto ;display:inline-block;">			
-<!-- 				<section>				 -->
-<!-- 					<div style="border:1px solid gray; margin:auto ; border-radius:15px;"> -->
-<!-- 						<h4><a href="#">快速訂票</a></h4> -->
-<!-- 						<p><p> -->
-<!-- 						<table> -->
-<!-- 							<tr><select name="請選擇電影名稱" length="10"> -->
-<!-- 									<option value="0">--請選擇電影--</option> -->
-<!-- 									<option value="1">牠</option> -->
-<!-- 									<option value="2">航海王：奪寶爭霸戰</option> -->
-<!-- 									<option value="3">全面攻佔3：天使救援</option> -->
-<!-- 								</select></tr><br> -->
-<!-- 							<tr><select name="請選擇查詢廳次" length="10"> -->
-<!-- 									<option value="0">--請選擇日期--</option> -->
-<!-- 									<option value="1">2019/09/11(三)</option> -->
-<!-- 									<option value="2">2019/09/12(四)</option> -->
-<!-- 									<option value="3">2019/09/13(五)</option> -->
-<!-- 								</select></tr><br> -->
-<!-- 							<tr><select name="請選擇查詢廳次" length="10"> -->
-<!-- 									<option value="0">--請選擇影廳--</option> -->
-<!-- 									<option value="1">喔氣氣氣氣 - IMAX廳</option> -->
-<!-- 									<option value="2">高雄發大財 - 3D數位廳</option> -->
-<!-- 									<option value="3">為什麼說謊 - 一般數位廳</option> -->
-<!-- 								</select></tr><br> -->
-<!-- 							<tr><select name="請選擇查詢廳次" length="10"> -->
-<!-- 									<option value="0">--請選擇場次--</option> -->
-<!-- 									<option value="1">11:30</option> -->
-<!-- 									<option value="2">14:30</option> -->
-<!-- 									<option value="3">17:30</option> -->
-<!-- 								</select></tr> -->
-<!-- 						</table> -->
-<!-- 						<p>			 -->
-<%-- 							<center> --%>
-<!-- 							<button class="" id="" onclick="ShowL()">前往訂票</button> -->
-<!-- 							<button class="" id="" onclick="ShowR()">查詢座位</button>			 -->
-<%-- 							</center> --%>
-<!-- 					</div> -->
-<!-- 				</section> -->
-				
+			<div style="margin:auto ;display:inline-block;">							
 				<section style="margin:auto ;display:inline-block; ">				
 					<div style="border:1px solid gray; margin:auto ; border-radius:15px;padding:0px 30px 0px 30px; background-color:#c5c6c7">        <!--#106ecc #c5c6c7*-->      
 						<p>
@@ -504,7 +358,7 @@ input::placeholder{
 				<section style="display:inline-block;vertical-align:top;">		
 					<div style="border:1px solid gray;border-radius:15px;padding:0px 30px 0px 30px;">
 						<p>
-						<label style="text-align:left;"><h4>最新公告<a href="news">/MORE</a></h4></label>
+						<label style="text-align:left;"><h4>最新公告/<a href="news">MORE</a></h4></label>
 						<p>
 						<ul style="text-align:left;">
 							<li><a href="news">2019/09/05 【大叔之愛】片尾告示</a></li>
@@ -521,19 +375,6 @@ input::placeholder{
 		</artical>
 
 		<hr>
-
-
-<!-- 		<table class="t1"> -->
-<!-- 			<tr class="tr"> -->
-<!-- 				<td class="td"><a href="#" class="image featured"><img src="images/now.jpg" alt="" /></a></td> -->
-<!-- 			    <td class="td"><a href="#" class="image featured"><img	src="images/latest.jpg" alt="" /></a> </td> -->
-<!-- 			</tr> -->
-			
-<!-- 			<tr class="tr"> -->
-<!-- 				<td class="td"><header><h3><a href="#">購票系統</a></h3></header></td>		 -->
-<!-- 				<td class="td"><header><h3><a href="#">最新消息</a></h3></header></td> -->
-<!-- 			</tr> -->
-<!-- 		</table> -->
 
 		<!-- Main 		
 		<div class="wrapper style2">
@@ -611,6 +452,7 @@ input::placeholder{
 		</div>-->
 
 		<!-- Footer -->
+		
 		<jsp:include page="footer.jsp" />
 	</div>
 	<!-- Scripts -->

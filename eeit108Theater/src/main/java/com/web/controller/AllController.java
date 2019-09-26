@@ -46,6 +46,18 @@ public class AllController {
 		return "forums";
 	}
 	
+	@RequestMapping("/essay")
+	public String essay()
+	{
+		return "essay";
+	}
+	
+	@RequestMapping("/post")
+	public String post()
+	{
+		return "post";
+	}
+	
 	@RequestMapping("/detail")
 	public String detail()
 	{
@@ -70,28 +82,10 @@ public class AllController {
 		return "showtimes";
 	}
 	
-	@RequestMapping("/showtimes2")
-	public String showtimes2()
-	{
-		return "showtimes2";
-	}
-	
-	@RequestMapping("/showtimes3")
-	public String showtimes3()
-	{
-		return "showtimes3";
-	}
-	
 	@RequestMapping("/seat")
 	public String seat()
 	{
 		return "seat";
-	}
-	
-	@RequestMapping("/seatbear")
-	public String seatbear()
-	{
-		return "seatbear";
 	}
 	
 	@RequestMapping("/orderconfirm")
@@ -139,13 +133,25 @@ public class AllController {
 	@RequestMapping("/showticket")
 	public String showticket()
 	{
-		return "showticket";
+		return "forward:/order/search";
+	}
+	
+	@RequestMapping("/visitorticket")
+	public String visitorticket()
+	{
+		return "forward:/order/search";
 	}
 	
 	@RequestMapping("/memberinfo")
 	public String memberinfo()
 	{
 		return "memberinfo";
+	}
+	
+	@RequestMapping("/qaservice")
+	public String qaservice()
+	{
+		return "qaservice";
 	}
 	
 	@RequestMapping("/index")

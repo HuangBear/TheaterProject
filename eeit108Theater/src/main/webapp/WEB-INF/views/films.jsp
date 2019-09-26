@@ -25,6 +25,7 @@
 	#world img {
 		width: 439.99px;
 		height: 550px;
+
 	}
 </style>
 </head>

@@ -18,6 +18,7 @@
 		<li class="foo1"><a href="<c:url value='/ticketing'/>">線上訂票</a>
 			<ul>
 				<li><a href="<c:url value='/ticketing'/>">時刻查詢</a></li>
+				<li><a href="<c:url value='/visitorticket'/>">訂票查詢</a></li>
 				<li><a href="<c:url value='/price'/>">票價說明</a></li>
 			</ul></li>
 		<li class="foo1"><a href="<c:url value='/news'/>">活動公告</a></li>
@@ -29,7 +30,7 @@
 		
 		 <c:choose> 
 				<c:when test="${empty LoginOK.memberImage}">
-				<img src="<c:url value='/images/frontend/coustom.png'/>">
+				<img src="<c:url value='/images/frontend/loginicon.png'/>">
 				</c:when>
 				
 				<c:when test="${!empty LoginOK.memberImage}">
@@ -53,8 +54,9 @@
 				<ul>
 			    
 			    <li><a href="<c:url value='/memberinfo'/>">歡迎您 ${LoginOK.name}</a></li>
-				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
 				<li><a href="<c:url value='/memberinfo'/>">會員設定</a></li>
+				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
+				<li><a href="<c:url value='/qaservice'/>">客服中心</a></li>
 				<li><a href="<c:url value='/memberLogout'/>">登出</a></li>
 
 				</ul>

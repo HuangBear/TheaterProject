@@ -7,7 +7,7 @@
 
 <html>
 <head>
-<title>No Sidebar - Helios by HTML5 UP</title>
+<title>716影城 - 電影討論區</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -17,7 +17,20 @@
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous">  
+</script>
+
+<style>
+	.estb{text-align:center;
+	}
+
+</style>
+
 </head>
+
+
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
 <div id="header1">
@@ -28,33 +41,45 @@
 		<div class="wrapper style1">
 
 			<div class="container">
-				<article id="main" class="special"> <header>
-				<h2>
-					<a href="#">關於716</a>
-				</h2>
-				<p>一個愛與包容的超優質影城</p>
-				</header> <a href="#" class="image featured"><img src="images/frontend/cinema.jpg"
-					alt="" /></a>
-				<p>716影城內有時髦前衛、聲光炫麗的裝潢，為全國第一座專門為放映電影而量身打造的建築設計，提供了由現成建築物改裝的傳統電影院無法擁有的舒適視聽空間。
-					<br>
-					世界上最棒的影廳之一的4DX影廳，於2019年獨家引進，打造『716影城』全台首座4DX影廳，帶給您世界級的最新影音感官全體驗效果。
-					為滿足觀眾視聽至高無上的享受，716影城應用最新科技，為未來影城之設計規劃建立新規範，也為台灣的電影院史上樹立新的里程碑。
-					出自名室內設計師之手的3間影廳院，皆具備超大型廣角弧形銀幕及球場座位排列的座椅，提供716影城之觀眾寬敞舒適、無障礙的空間，
-					為全台唯一經過THX世界標準聲場環境認證的標準影廳，提供北台灣民眾世界級的影音享受。					
-					<br>
-					※本影城為方便消費者，亦設有無障礙空間。<br>
-					●輪椅席(共46個席次)：第1、3-14廳-各3席，第2、15-18廳-各2席<br>
-					●無障礙電梯：一樓服務台旁<br>
-					●無障礙坡道：二樓服務台前<br>
-					●無障礙停車位：地下停車場二樓<br>
-					●無障礙廁所<br>
-					<br>
-					本據點共3座影廳  30席座位、2席無障礙座位，內含：<br>	
-					1座4DX影廳 140個座位</p>
-				<section> <header>
+				<article id="main" class="special"> 
+					<header>
+						<h2><a href="#">第九分局</a></h2>
+						<p>地上辦不了的案 就交給地下的我們！</p>
+					</header>
 				
-				<h3>Ultrices tempor sagittis nisl</h3>
-				</header>
+				<table class="estb">
+					<thead style="border-bottom:1px solid gray;">
+						<tr><th>編號</th><th>標題</th><th>人氣</th><th>最新回覆</th></tr>
+					</thead>
+					
+					<tbody>
+						<tr><td><b>01</b></td><td><a href="post">內容普普</a></td><td>231</td><td>2019/09/11</td></tr>
+						<tr><td><b>02</b></td><td><a href="#">ZZZZ</td><td>109</td><td>2019/08/21</td></tr>
+						<tr><td><b>03</b></td><td><a href="#">戰起來，戰起來</a></td><td>1,034</td><td>2019/09/25</td></tr>
+						<tr><td><b>04</b></td><td><a href="#">澎恰恰好帥！</a></td><td>842</td><td>2019/09/23</td></tr>
+						<tr><td><b>05</b></td><td><a href="#">女主角好正！</a></td><td>917</td><td>2019/09/24</td></tr>
+					</tbody>
+				
+				</table>
+				
+				
+				
+				
+				
+				<a href="#" class="image featured"><img src="images/frontend/pic06.jpg" alt="" /></a>
+				<p>Commodo id natoque malesuada sollicitudin elit suscipit.
+					Curae suspendisse mauris posuere accumsan massa posuere lacus
+					convallis tellus interdum. Amet nullam fringilla nibh nulla
+					convallis ut venenatis purus lobortis. Auctor etiam porttitor
+					phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum
+					consequat integer interdum integer purus sapien. Nibh eleifend
+					nulla nascetur pharetra commodo mi augue interdum tellus. Ornare
+					cursus augue feugiat sodales velit lorem. Semper elementum
+					ullamcorper lacinia natoque aenean scelerisque vel lacinia mollis
+					quam sodales congue.</p>
+				
+				<section> 
+					<header><h3>Ultrices tempor sagittis nisl</h3></header>
 				<p>Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus
 					ultrices porttitor sollicitudin imperdiet at pretium tellus in
 					euismod a integer sodales neque. Nibh quis dui quis mattis eget
@@ -68,9 +93,9 @@
 					Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim
 					cras rutrum consectetur ut penatibus fermentum nibh erat malesuada
 					varius.</p>
-				</section> <section> <header>
-				<h3>Augue euismod feugiat tempus</h3>
-				</header>
+				</section> 
+				<section> 
+					<header><h3>Augue euismod feugiat tempus</h3></header>
 				<p>Pretium tellus in euismod a integer sodales neque. Nibh quis
 					dui quis mattis eget imperdiet venenatis feugiat. Neque primis
 					ligula cum erat aenean tristique luctus risus ipsum praesent
@@ -78,9 +103,9 @@
 					risus morbi. Lobortis vestibulum velit malesuada ante egestas odio
 					nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis
 					pharetra magna.</p>
-				</section> </article>
+				</section> 
+				</article>
 				
-				<footer> <a href="essay" class="button">回首頁</a></footer>
 				<hr />
 				
 				<div class="row">
