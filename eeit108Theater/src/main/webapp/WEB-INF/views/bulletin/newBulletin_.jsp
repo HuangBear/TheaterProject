@@ -223,8 +223,8 @@
 												<img id="showPhoto" src="<c:url value='/getBulletinPicture/${bulletinBean.no}' />" />
 											</div>
 											<div>
-												<input id="btnEdit" type='submit' class='btn btn-primary'> <a href='<c:url value="/allBulletin"/>'><input id="btnReset" type="button"
-													class='btn btn-primary' value="取消編輯"></a>
+												<input id="btnEdit" type='submit' class='btn btn-info'> <a href='<c:url value="/allBulletin"/>'><input id="btnReset" type="button"
+													class='btn btn-danger' value="取消編輯"></a>
 											</div>
 										</c:when>
 									</c:choose>
@@ -260,7 +260,7 @@
 															<img id="showPhoto" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
 														</div>
 														<div>
-															<input type="button" value="返回" name="back" class="unavai_cont_${sb.no}">
+															<input id="unavai_cont_${sb.no}" type="button" value="返回" name="back" class="btn btn-danger">
 														</div>
 													</div>
 												</c:forEach>
@@ -393,7 +393,7 @@
 
 		$(function() {
 			$("[name|=back]").click(function() {
-				var str = $(this).attr("class");
+				var str = $(this).attr("id");
 				var targete = $("." + str);
 				$(targete).addClass('hide');
 			});
