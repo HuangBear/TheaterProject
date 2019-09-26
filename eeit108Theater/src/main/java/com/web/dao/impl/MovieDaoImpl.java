@@ -57,6 +57,21 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MovieBean> getOffMovies() {
+		String hql = "FROM MovieBean m WHERE m.endingDate < :mdate";
+		Session session = null;
+		List<MovieBean> list = new ArrayList<>();
+		session = factory.getCurrentSession();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String parameter = sdf.format(date);
+		java.sql.Date today = java.sql.Date.valueOf(parameter);
+		list = session.createQuery(hql).setParameter("mdate", today).getResultList();
+		return list;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -116,5 +131,7 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }
