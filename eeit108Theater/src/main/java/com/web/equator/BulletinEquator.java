@@ -48,9 +48,9 @@ public class BulletinEquator {
 		} else if (!equator.isEquals(obb.getStartDate(), bb.getStartDate())) {
 			System.out.println("getStartDate=false");
 			return false;
-		} else if  (!equator.isEquals(obb.getNo(), bb.getNo())) {
-			System.out.println("getNo=false");
-			return false;
+//		} else if  (!equator.isEquals(obb.getNo(), bb.getNo())) {
+//			System.out.println("getNo=false");
+//			return false;
 		} else if (!equator.isEquals(obb.getTitle(), bb.getTitle())) {
 			System.out.println("getTitle=false");
 			return false;

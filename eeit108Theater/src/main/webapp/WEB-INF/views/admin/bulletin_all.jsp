@@ -40,12 +40,12 @@
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
 <script>
-	//accordion
-	$(function() {
-		$("#accordion").accordion({
-			heightStyle : "content"
-		});
-	});
+	// 	//accordion
+	// 	$(function() {
+	// 		$("#accordion").accordion({
+	// 			heightStyle : "content"
+	// 		});
+	// 	});
 
 	//back button
 	$(function() {
@@ -140,12 +140,6 @@
 			});
 
 		});
-		//	back
-		$(":button[name=cont_box_back]").click(function() {
-			var str = $(this).attr("id");
-			var targete = $("." + str);
-			$(targete).addClass('hide');
-		});
 
 		//	context	img effect
 		$("img[name=context_box]").mouseover(
@@ -169,9 +163,60 @@
 					$(this).attr("src", new_str);
 				});
 	});
+
+	$("[name=edit]").click(function() {
+		var str = $(this).attr("id");
+		var id = str.substring(str.lastIndexOf("_") + 1);
+		// 		alert(id);
+		$.ajax({
+			url : "<c:url value='/admin/bulletin_all/edit'/>",
+			data : {
+				no : id,
+			},
+			type : "GET",
+			cache : false,
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
+
+	$("[name=deleteSstatus]").click(function() {
+		var str = $(this).attr("id");
+		var id = str.substring(str.lastIndexOf("_") + 1);
+		var fn = str.substring(0, 4);
+		$.ajax({
+			url : "<c:url value='/admin/bulletin_all/deleteSstatus'/>",
+			data : {
+				no : id,
+				fn : fn,
+			},
+			type : "GET",
+			cache : false,
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
+
+	$("[name=restore]").click(function() {
+		var str = $(this).attr("id");
+		var id = str.substring(str.lastIndexOf("_") + 1);
+		var fn = str.substring(0, 4);
+		$.ajax({
+			url : "<c:url value='/admin/bulletin_all/restore'/>",
+			data : {
+				no : id,
+				fn : fn,
+			},
+			cache : false,
+			type : "GET",
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
 </script>
-
-
 
 
 <!-- 詳情 -->
@@ -181,7 +226,7 @@
 		<img id="ImagePic${sb.no}" alt="Base64 encoded image" width="250" />
 	</div>
 	<div>
-		<button id="context_box" name="cont_box_back" class="btn btn-danger">返回</button>
+		<button id="context_box" name="back" class="btn btn-danger">返回</button>
 	</div>
 </div>
 
@@ -196,25 +241,9 @@
 			<button id="status_edit_${sb.no} " name="back" class="btn btn-danger">返回</button>
 		</div>
 		<div>
-			<button class=" btn btn-info" id="edit_${sb.no}" name="edit">確定</button>
+			<button class=" btn btn-info" id="stat_edit_${sb.no}" name="edit">確定</button>
 			<%-- 			<input class=" btn btn-info" type="button" value="確定" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/bulletin_all/${sb.no}'"> --%>
-			<script type="text/javascript">
-				$("[name=edit]").click(function() {
-					var str = $(this).attr("id");
-					var id = str.substring(str.lastIndexOf("_") + 1);
-					$.ajax({
-						url : "<c:url value='/admin/bulletin_all/edit'/>",
-						data : {
-							no : id,
-						},
-						type : "GET",
-						cache : false,
-						success : function(data) {
-							$("#pageItems").html(data);
-						}
-					});
-				});
-			</script>
+
 
 		</div>
 	</div>
@@ -231,25 +260,6 @@
 </c:forEach>
 
 
-<script type="text/javascript">
-	$("[name=deleteSstatus]").click(function() {
-		var str = $(this).attr("id");
-		var id = str.substring(str.lastIndexOf("_") + 1);
-	
-		$.ajax({
-			url : "<c:url value='/admin/bulletin_all/deleteSstatus'/>",
-			data : {
-				no : id,
-
-			},
-			type : "GET",
-			cache : false,
-			success : function(data) {
-				$("#pageItems").html(data);
-			}
-		});
-	});
-</script>
 
 <!-- 過期區 -->
 <c:forEach var='sb' items='${statusBulletin[1]}'>
@@ -289,24 +299,7 @@
 		</div>
 	</div>
 </c:forEach>
-<script type="text/javascript">
-	$("[name=restore]").click(function() {
-		var str = $(this).attr("id");
-		var id = str.substring(str.lastIndexOf("_") + 1);
 
-		$.ajax({
-			url : "<c:url value='/admin/bulletin_all/restore'/>",
-			data : {
-				no : id,
-					},
-			cache : false,
-			type : "GET",
-			success : function(data) {
-				$("#pageItems").html(data);
-			}
-		});
-	});
-</script>
 
 <!-- Breadcrumbs-->
 
