@@ -27,4 +27,5 @@ public interface MovieDao {
 	List<MovieBean> getComingMovies();
 	List<MovieBean> getAllMovies();
 	List<MovieBean> getAllAvailable();
+	List<MovieBean> getOffMovies();
 }

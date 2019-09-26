@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.dao.ArticleDao;
 import com.web.entity.ArticleBean;
 import com.web.entity.EmployeeBean;
+import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
@@ -65,6 +66,12 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Transactional
 	@Override
+	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
+		return dao.getLikeOrDislikeByMemberAndArticle(memberNo,article);
+	}
+    
+    @Transactional
+	@Override
 	public void addArticle(ArticleBean article) {
 		dao.addArticle(article);
 	}
@@ -73,13 +80,50 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void editArticle(ArticleBean article) {
     	if( article !=null) {
-			System.out.println("emp insert not null");
 			dao.editArticle(article);
 			
 		}else {
 			System.out.println("insert null");
 		}
 		
+	}
+    
+    @Transactional
+	@Override
+	public void addReply(ReplyBean reply) {
+		dao.addReply(reply);
+	}
+    
+    @Transactional
+	@Override
+	public void editReply(ReplyBean reply) {
+    	if( reply !=null) {
+			System.out.println("emp insert not null");
+			dao.editReply(reply);
+			
+		}else {
+			System.out.println("insert null");
+		}
+		
+	}
+    
+    @Transactional
+	@Override
+	public void addGp(LikeOrDislikeBean likeOrDislike) {
+		dao.addGp(likeOrDislike);
+	}
+    
+    @Transactional
+	@Override
+	public void updateGp(LikeOrDislikeBean likeOrDislike) {
+    	System.out.println("確認");
+		dao.updateGp(likeOrDislike);
+	}
+    
+    @Transactional
+	@Override
+	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo,int article) {
+		return dao.getLikeOrDislikeNo(memberNo,article);
 	}
     
     @Transactional

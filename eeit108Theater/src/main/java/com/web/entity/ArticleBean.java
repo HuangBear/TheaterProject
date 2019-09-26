@@ -51,7 +51,7 @@ public class ArticleBean implements Serializable {
 	@Transient
 	private String availableString;
 	
-	@OneToMany(mappedBy = "articleBean",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
 	private Set<ReplyBean> replys;
 	//private String  	companyName;
 
@@ -66,6 +66,11 @@ public class ArticleBean implements Serializable {
 		super();
 		System.out.println("default constructor");
 	}
+	public ArticleBean(Integer no) {
+		super();
+		this.no = no;
+	}
+	
 	public ArticleBean(Integer no, Boolean available, String title, String content, String tag, Date postTime,
 			Integer likeCount, Integer dislikeCount, String postTimeString, Set<ReplyBean> replys, MemberBean author,
 			MovieBean movie) {

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.entity.ArticleBean;
+import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
@@ -41,15 +42,14 @@ public class ArticleController {
 	@Autowired
 	ServletContext context;
 
+	String pageId = "?id=";
+	
 	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
-		model.addAttribute("title", "討論版");
-		model.addAttribute("subtitle","test");
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
 		session = request.getSession();
-		
 		session.setAttribute("movie", no);
 		return "Articles";
 	}
@@ -68,15 +68,64 @@ public class ArticleController {
 		return "Articles";
 	}
 
-	@RequestMapping("/Article")
-	public String getArticleById(@RequestParam("id") Integer no, Model model) {
+	@RequestMapping(value = "/Article", method = RequestMethod.GET)
+	public String getArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
+		session = request.getSession();
 		ArticleBean ab = service.getArticleById(no);
 		ReplyBean rb = service.getReplyById(no);
-		System.out.println(ab);
-		System.out.println(rb);
+		LikeOrDislikeBean lb = new LikeOrDislikeBean();
+		String NoS =Integer.toString(ab.getNo());
+		lb.setArticleNoString(NoS);
+		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
 		model.addAttribute("Reply", service.getReplyById(no));
 		return "Article";
+	}
+	
+	@RequestMapping(value = "/Article", method = RequestMethod.POST)
+	public String processArticleLikeOrDislike(@RequestParam("id") Integer no,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
+		String LikeButton = request.getParameter("button");
+		int article = Integer.parseInt(request.getParameter("articleNoString"));
+		lb.setArticle(new ArticleBean(article));
+		int memberNo = Integer.parseInt(request.getParameter("member"));
+		lb.setMember(memberNo);
+		ArticleBean ab = service.getArticleById(no);
+		if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
+            lb.setLikeOrDislike(true);
+            ab.setLikeCount(ab.getLikeCount()+1);
+            service.addGp(lb);
+            service.editArticle(ab);
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
+        	lb.setLikeOrDislike(false);
+        	ab.setDislikeCount(ab.getDislikeCount()+1);
+        	service.addGp(lb);
+        	service.editArticle(ab);
+        } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="true") {
+            
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
+        	
+        } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
+        	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+        	lb.setNo(lbno.getNo());
+            lb.setLikeOrDislike(true);
+            ab.setLikeCount(ab.getLikeCount()+1);
+            ab.setDislikeCount(ab.getDislikeCount()-1);
+            service.updateGp(lb);
+            service.editArticle(ab);
+        } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="true") {
+        	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+        	lb.setNo(lbno.getNo());
+        	lb.setLikeOrDislike(false);
+        	ab.setDislikeCount(ab.getDislikeCount()+1);
+        	ab.setLikeCount(ab.getLikeCount()-1);
+        	service.updateGp(lb);
+        	service.editArticle(ab);
+        }
+		
+		model.addAttribute("id", no);
+		String NoS =Integer.toString(no);
+		return "redirect:/Article?id="+NoS;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -119,13 +168,14 @@ public class ArticleController {
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
 		service.addArticle(ab);
-
+		String MovieNoS =Integer.toString(ab.getMovie().getNo());
+		
 		if (!errorMessage.isEmpty())
 		{
 			return "addArticle";
 		} else
 		{
-			return "redirect:/MoviesForum";
+			return "redirect:/MoviesForum/Articles?id="+MovieNoS;
 		}
 		
 	}
@@ -203,25 +253,124 @@ public class ArticleController {
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		
 		service.editArticle(ab);
+		String ArticleNoS =Integer.toString(ab.getNo());
 
 		if (!errorMessage.isEmpty())
 		{
 			return "editArticle";
 		} else
 		{
-			return "redirect:/MoviesForum";
+			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
 	}
 	
-	@ModelAttribute("memberList")
-	public Map<Integer, String> getMemberList() {
-		Map<Integer, String> memberMap = new HashMap<>();
-		List<MemberBean> list = service.getMemberList();
-		for (MemberBean cb : list) {
-			memberMap.put(cb.getNo(), cb.getName());
+	@RequestMapping(value = "/addReply", method = RequestMethod.GET)
+	public String getAddReplyForm(@RequestParam("id") Integer no, Model model) {
+		ArticleBean ab = service.getArticleById(no);
+		ReplyBean rb = new ReplyBean();
+		String NoS =Integer.toString(ab.getNo());
+		ab.setNoString(NoS);
+		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("ReplyBean", rb);
+		return "addReply";
+	}
+	
+	@RequestMapping(value = "/addReply", method = RequestMethod.POST)
+	public String processAddReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
+		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		return memberMap;
+		
+		System.out.println("==postString==="+request.getParameter("postTimeString"));
+		System.out.println("==postString==="+request.getParameter("noString"));
+		int articleNoS = Integer.parseInt(request.getParameter("articleString"));
+		rb.setArticle(new ArticleBean(articleNoS));
+		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		rb.setAuthor(new MemberBean(AuthorS));
+		rb.setAvailable(true);
+		rb.setPostTime(new Date());
+		System.out.println("article=" + rb.getArticle());
+		System.out.println("content=" + rb.getContent());
+		System.out.println("postTime=" + rb.getPostTime());
+		
+		service.addReply(rb);
+		String ArticleNoS =request.getParameter("articleString");
+
+		if (!errorMessage.isEmpty())
+		{
+			return "addReply";
+		} else
+		{
+			return "redirect:/Article?id="+ArticleNoS;
+		}
+		
+	}
+	
+	@RequestMapping(value = "/editReply", method = RequestMethod.GET)
+	public String getEditReplyForm(@RequestParam("id") Integer no, Model model) {
+		ReplyBean rb = service.getReplyById(no);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		rb.setPostTimeString(ssdf.format(rb.getPostTime()));
+		String NoS =Integer.toString(rb.getNo());
+		rb.setNoString(NoS);
+		String articleNoS =Integer.toString(rb.getArticle().getNo());
+		rb.setArticleString(articleNoS);
+		model.addAttribute("ReplyBean", rb);
+		return "editReply";
+	}
+	
+	@RequestMapping(value = "/editReply", method = RequestMethod.POST)
+	public String processEditReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
+		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		System.out.println("==postString=="+request.getParameter("postTimeString"));
+		System.out.println("==postString=="+request.getParameter("noString"));
+		int NoS = Integer.parseInt(request.getParameter("noString"));
+		rb.setNo(NoS);
+		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		rb.setAuthor(new MemberBean(AuthorS));
+		int ArticleS = Integer.parseInt(request.getParameter("articleString"));
+		rb.setArticle(new ArticleBean(ArticleS));
+		rb.setAvailable(true);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("postTimeString=" + rb.getPostTimeString());
+		rb.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
+		
+		System.out.println("content=" + rb.getContent());
+		System.out.println("postTime=" + rb.getPostTime());
+		
+		service.editReply(rb);
+		String ArticleNoS =request.getParameter("articleString");
+
+		if (!errorMessage.isEmpty())
+		{
+			return "editReply";
+		} else
+		{
+			return "redirect:/Article?id="+ArticleNoS;
+		}
+		
 	}
 
 	@ModelAttribute("tagList")
