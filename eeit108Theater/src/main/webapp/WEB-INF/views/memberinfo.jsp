@@ -254,10 +254,9 @@
 				</div>
 				
  				
- 				<br><br><br><br><br>
- 				<hr />   <!--下方電影收藏分隔線 -->
-				
+ 				<br><br><br><br><br>				
 				<h3>個人收藏</h3>
+				<hr />   <!--下方電影收藏分隔線 -->
 				<div class="row">
 					<article class="col-4 col-12-mobile special"> <a href="#"
 						class="image featured"><img src="images/frontend/now05.jpg" alt="" /></a>
