@@ -20,11 +20,11 @@
 </noscript>
 <style>
 	#hello img {
-		height: 600px;
+		height: 550px;
 	}
 	#world img {
 		width: 439.99px;
-		height: 600px;
+		height: 550px;
 	}
 </style>
 </head>
