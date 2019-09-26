@@ -68,6 +68,11 @@
 						<a href="<spring:url value='/edit?id=${Article.no}' />"
 							class="btn btn-primary btn-lg" style="font-size: 26px">編輯</a>
 					</c:when>
+					<c:when test="${LoginOK.no!=Article.author.no}">
+						
+					</c:when>
+				</c:choose>
+				<c:choose>
 					<c:when test="${empty LoginOK}">
 						<a href="<spring:url value='/memberservice' />"
 							class="btn btn-primary btn-lg" style="font-size: 26px">回覆</a>
@@ -125,7 +130,8 @@
 			</div>
 
 			<p>
-				<a href="<spring:url value='/MoviesForum/Articles?id=${Article.movie.no}' />"
+				<a
+					href="<spring:url value='/MoviesForum/Articles?id=${Article.movie.no}' />"
 					class="btn btn-default" style="font-size: 26px"> <span
 					class="glyphicon-hand-left glyphicon"></span>返回
 				</a>
