@@ -41,8 +41,6 @@ public class ArticleController {
 	
 	@Autowired
 	ServletContext context;
-
-	String pageId = "?id=";
 	
 	@RequestMapping(value = "/MoviesForum/Articles", method = RequestMethod.GET)
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
@@ -79,7 +77,7 @@ public class ArticleController {
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
-		model.addAttribute("Reply", service.getReplyById(no));
+		model.addAttribute("Reply", rb);
 		return "Article";
 	}
 	
@@ -88,23 +86,47 @@ public class ArticleController {
 		String LikeButton = request.getParameter("button");
 		int article = Integer.parseInt(request.getParameter("articleNoString"));
 		lb.setArticle(new ArticleBean(article));
+		
 		int memberNo = Integer.parseInt(request.getParameter("member"));
 		lb.setMember(memberNo);
 		ArticleBean ab = service.getArticleById(no);
 		if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
             lb.setLikeOrDislike(true);
             ab.setLikeCount(ab.getLikeCount()+1);
-            service.addGp(lb);
+            if(service.getLikeOrDislikeNo(memberNo,article)==null) {
+        		service.addGp(lb);
+        	}else {
+        		LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+            	lb.setNo(lbno.getNo());
+        		service.updateGp(lb);
+        	}
             service.editArticle(ab);
         } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
         	lb.setLikeOrDislike(false);
         	ab.setDislikeCount(ab.getDislikeCount()+1);
-        	service.addGp(lb);
+        	if(service.getLikeOrDislikeNo(memberNo,article)==null) {
+        		service.addGp(lb);
+        	}else {
+        		LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+            	lb.setNo(lbno.getNo());
+        		service.updateGp(lb);
+        	}
+        	
         	service.editArticle(ab);
         } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="true") {
-            
+        	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+        	lb.setNo(lbno.getNo());
+            lb.setLikeOrDislike(null);
+            ab.setLikeCount(ab.getLikeCount()-1);
+            service.updateGp(lb);
+            service.editArticle(ab);
         } else if ("dislike".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
-        	
+        	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
+        	lb.setNo(lbno.getNo());
+        	lb.setLikeOrDislike(null);
+        	ab.setDislikeCount(ab.getDislikeCount()-1);
+        	service.updateGp(lb);
+        	service.editArticle(ab);
         } else if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="false") {
         	LikeOrDislikeBean lbno = service.getLikeOrDislikeNo(memberNo,article);
         	lb.setNo(lbno.getNo());
@@ -126,7 +148,7 @@ public class ArticleController {
 		model.addAttribute("id", no);
 		String NoS =Integer.toString(no);
 		return "redirect:/Article?id="+NoS;
-	}
+		}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewArticleForm(Model model,HttpServletRequest request,HttpSession session) {

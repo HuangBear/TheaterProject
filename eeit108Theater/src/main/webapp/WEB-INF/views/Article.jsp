@@ -63,24 +63,45 @@
 				</div>
 			</div>
 			<p>
-				<a href="<spring:url value='/edit?id=${Article.no}' />"
-					class="btn btn-primary btn-lg" style="font-size: 26px">編輯</a>
-				<a href="<spring:url value='/addReply?id=${Article.no}' />"
-					class="btn btn-primary btn-lg" style="font-size: 26px">回覆</a>
+				<c:choose>
+					<c:when test="${LoginOK.no==Article.author.no}">
+						<a href="<spring:url value='/edit?id=${Article.no}' />"
+							class="btn btn-primary btn-lg" style="font-size: 26px">編輯</a>
+					</c:when>
+					<c:when test="${empty LoginOK}">
+						<a href="<spring:url value='/memberservice' />"
+							class="btn btn-primary btn-lg" style="font-size: 26px">回覆</a>
+					</c:when>
+					<c:when test="${!empty LoginOK}">
+						<a href="<spring:url value='/addReply?id=${Article.no}' />"
+							class="btn btn-primary btn-lg" style="font-size: 26px">回覆</a>
+					</c:when>
+				</c:choose>
 			</p>
-			<form:form method='POST' modelAttribute="LikeOrDislikeBean" class='form-horizontal'
-		                  		 enctype="multipart/form-data">
-			<fieldset>
-			<div class="form-group">
-			<form:input id="articleNoString" readonly="true" path="articleNoString" value='${LikeOrDislikeBean.articleNoString}' type='hidden' class='form:input-large'/>
-			<form:input id="member" path="member" readonly="true" value='${LoginOK.no}' type='hidden' class='form:input-large' />
-				<button type="submit" name="button" value="like">like</button>
-				<a>${Article.likeCount}</a>
-				<button type="submit" name="button" value="dislike">dislike</button>
-				<a>${Article.dislikeCount}</a>
-			</div>
-			</fieldset>
-		</form:form>
+			<form:form method='POST' modelAttribute="LikeOrDislikeBean"
+				class='form-horizontal' enctype="multipart/form-data">
+				<fieldset>
+					<c:choose>
+						<c:when test="${empty LoginOK}">
+						</c:when>
+						<c:when test="${!empty LoginOK}">
+							<div class="form-group">
+								<form:input id="articleNoString" readonly="true"
+									path="articleNoString"
+									value='${LikeOrDislikeBean.articleNoString}' type='hidden'
+									class='form:input-large' />
+								<form:input id="member" path="member" readonly="true"
+									value='${LoginOK.no}' type='hidden' class='form:input-large' />
+								<button type="submit" name="button" value="like">like</button>
+								<a>${Article.likeCount}</a>
+								<button type="submit" name="button" value="dislike">dislike</button>
+								<a>${Article.dislikeCount}</a>
+							</div>
+						</c:when>
+					</c:choose>
+
+				</fieldset>
+			</form:form>
 			<br>
 			<div class="row">
 				<c:forEach var='reply' items='${Article.replys}'>
@@ -92,15 +113,19 @@
 						<p>${reply.content}</p>
 					</div>
 					<p>
-				<a href="<spring:url value='/editReply?id=${reply.no}' />"
-					class="btn btn-primary btn-lg" style="font-size: 26px">編輯</a>
-			</p>
+						<c:choose>
+							<c:when test="${LoginOK.no==reply.author.no}">
+								<a href="<spring:url value='/editReply?id=${reply.no}' />"
+									class="btn btn-primary btn-lg" style="font-size: 26px">編輯</a>
+							</c:when>
+						</c:choose>
+					</p>
 					<br>
 				</c:forEach>
 			</div>
 
 			<p>
-				<a href="<spring:url value='/MoviesForum' />"
+				<a href="<spring:url value='/MoviesForum/Articles?id=${Article.movie.no}' />"
 					class="btn btn-default" style="font-size: 26px"> <span
 					class="glyphicon-hand-left glyphicon"></span>返回
 				</a>

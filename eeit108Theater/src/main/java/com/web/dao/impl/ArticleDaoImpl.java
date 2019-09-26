@@ -102,7 +102,6 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
 		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
-		String likeOrDislikeString = null;
 		LikeOrDislikeBean likeOrDislike = (LikeOrDislikeBean) factory.getCurrentSession().createQuery(hql).setParameter("member", memberNo).setParameter("article", article).uniqueResult();
 		if(likeOrDislike == null || likeOrDislike.getLikeOrDislike() == null) {
 			return "null";

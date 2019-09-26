@@ -49,8 +49,16 @@
 			<jsp:include page="header.jsp" />
 		</div>
 		<hr style="height: 1px; border: solid; color: #333; background-color: #333;">
+		<c:choose>
+		<c:when test="${empty LoginOK}">
+		<a href="<spring:url value='/memberservice' />" class="btn btn-primary btn-lg"
+			style="font-size: 26px;">發文</a><BR>
+		</c:when>
+		<c:when test="${!empty LoginOK}">
 		<a href="<spring:url value='/add' />" class="btn btn-primary btn-lg"
 			style="font-size: 26px;">發文</a><BR>
+		</c:when>
+		</c:choose>
 
 				<c:forEach var='Article' items='${Articles}'>
 					<div class="col-sm-6 col-md-5" style="width: 900px; height: 90px;border: solid;margin: auto;">
