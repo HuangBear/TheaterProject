@@ -199,9 +199,9 @@
 								</c:if>
 								<c:if test="${not empty uncheckedOrders}">
 									<c:forEach var="order" varStatus="index" items="${uncheckedOrders}">
-										<fmt:formatDate var="date" value="${order.timeTable.startTime}" pattern="yyyy/MM/dd HH:mm" />
+<%-- 										<fmt:formatDate var="date" value="${order.timeTable.startTime}" pattern="yyyy/MM/dd HH:mm" /> --%>
 										<fmt:formatDate var="orderTime" value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm" />
-										<h3 style="border: #ad8c80; background-color: #ad8c80;">${index.index + 1}.${date}-${order.timeTable.movieName}</h3>
+										<h3 style="border: #ad8c80; background-color: #ad8c80;">${index.index + 1}. ${order.timeTable.startDate} ${order.timeTable.startTime}-${order.timeTable.movieName}</h3>
 										<div>
 											<table class="tbst">
 												<thead style="background-color: #AAAAAA; text-align: left; height: 10px;">
@@ -225,7 +225,7 @@
 																<img src="<c:url value='/images/frontend/iconfilm.png'/>" class="iconimg" title="電影" />：${order.timeTable.movieName}
 															</p>
 															<p>
-																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" title="場次" />：${date}
+																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" title="場次" />：${order.timeTable.startDate} ${order.timeTable.startTime}
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" title="人數"
@@ -255,9 +255,9 @@
 								</c:if>
 								<c:if test="${not empty checkedOrders}">
 									<c:forEach var="order" varStatus="index" items="${checkedOrders}">
-										<fmt:formatDate var="date" value="${order.timeTable.startTime}" pattern="yyyy/MM/dd HH:mm" />
+<%-- 										<fmt:formatDate var="date" value="${order.timeTable.startTime}" pattern="yyyy/MM/dd HH:mm" /> --%>
 										<fmt:formatDate var="orderTime" value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm" />
-										<h3 style="border: #ad8c80; background-color: #ad8c80;">${index.index + 1}.${date}-${order.timeTable.movieName}</h3>
+										<h3 style="border: #ad8c80; background-color: #ad8c80;">${index.index + 1}. ${order.timeTable.startDate} ${order.timeTable.startTime}-${order.timeTable.movieName}</h3>
 										<div>
 											<table class="tbst">
 												<thead style="background-color: #AAAAAA; text-align: left; height: 10px;">
@@ -281,7 +281,7 @@
 																<img src="<c:url value='/images/frontend/iconfilm.png'/>" class="iconimg" title="電影" />：${order.timeTable.movieName}
 															</p>
 															<p>
-																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" title="場次" />：${date}
+																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" title="場次" />：${order.timeTable.startDate} ${order.timeTable.startTime}
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" title="人數"
