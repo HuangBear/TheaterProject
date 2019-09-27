@@ -90,7 +90,7 @@
 
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header1">
+		<div id="header">
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
@@ -106,7 +106,7 @@
 					</header>
 
 					<div id="tabs"
-						style="width: 1080px; margin: auto; text-align: center;">
+						style="width: 1100px; margin: auto; text-align: center;">
 						<ul>
 							<li><a href="#tabs-1">Popularity - 人氣排行</a></li>
 							<li><a href="#tabs-2">Now Showing - 現正熱映</a></li>
