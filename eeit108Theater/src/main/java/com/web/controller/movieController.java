@@ -157,6 +157,8 @@ public class movieController {
 //				}
 //			}
 //		}
+		List<MovieBean> releasedMovies = service.getReleasedMovies();
+		model.addAttribute("releasedMovies", releasedMovies);
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		model.addAttribute("today", sdf.format(date));

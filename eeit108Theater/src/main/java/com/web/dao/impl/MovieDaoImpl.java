@@ -51,6 +51,15 @@ public class MovieDaoImpl implements MovieDao{
 		return mb;
 				
 	}
+	
+	@Override
+	public MovieBean getMovieByName(String name) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MovieBean m WHERE m.movieName = :name";
+		MovieBean mb = (MovieBean) session.createQuery(hql).setParameter("name", name).uniqueResult();
+		return mb;
+		
+	}
 
 	@Override
 	public List<MovieBean> getMoviesByColumn(String columnValue, String columnName) {

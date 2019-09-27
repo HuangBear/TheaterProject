@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.web.dao.impl.MovieDaoImpl;
 import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 
@@ -23,6 +24,7 @@ public class EDMTableResetHibernate_TimeTable {
 		String line = "";
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
+		MovieDaoImpl mdao = new MovieDaoImpl();
 		Transaction tx = null;
 		try
 		{
@@ -71,7 +73,7 @@ public class EDMTableResetHibernate_TimeTable {
 						time.setDuration(Integer.parseInt(token[4]));
 						time.setVersion(token[5]);
 						time.setTheater(token[6]);
-						time.setMovie(session.get(MovieBean.class, 1));
+						time.setMovie(session.get(MovieBean.class, mdao.getMovieByName(token[1]).getNo()));
 						time.setBreakTime(breakTime);
 						session.save(time);
 	
