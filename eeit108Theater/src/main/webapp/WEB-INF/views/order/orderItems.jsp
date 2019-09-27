@@ -188,7 +188,7 @@
 										</c:if>
 									</div>
 								</form>
-								<form method="POST" action="<spring:url value='order/pay?idType=1'/>">
+								<form method="POST" action="<spring:url value='/order/pay?idType=1'/>">
 									<div id="guest">
 										<div class="form-group">
 											<label for="guestName">Name</label>
