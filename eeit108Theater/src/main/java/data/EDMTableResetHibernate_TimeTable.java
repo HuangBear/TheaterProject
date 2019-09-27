@@ -3,8 +3,6 @@ package data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,6 +19,7 @@ public class EDMTableResetHibernate_TimeTable {
 	public static final String UTF8_BOM = "\uFEFF";
 	
 	public static void main(String[] args) {
+		
 		String line = "";
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();

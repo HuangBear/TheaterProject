@@ -296,8 +296,9 @@ public class movieController {
 		return "/admin/empIndexA";
 	}
 	@RequestMapping(value = "/admin/movie_edit", method = RequestMethod.GET)
-	public String editMovieGet(@RequestParam(value = "no", required = false) Integer no, Model model) {
-		MovieBean formerMovieBean = service.getMovieById(no);
+	public String editMovieGet(@RequestParam(value = "no", required = false) Integer no, Model model, HttpServletRequest req) {
+//		MovieBean formerMovieBean = service.getMovieById(no);
+		MovieBean formerMovieBean= service.getMovieById(Integer.parseInt(req.getParameter("no")));
 		model.addAttribute("former", formerMovieBean);
 		return "admin/movie_edit";
 	}

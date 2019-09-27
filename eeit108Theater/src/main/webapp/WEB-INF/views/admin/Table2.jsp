@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 
@@ -51,8 +52,10 @@
 				<td>${movie.engMovieName}</td>
 				<td>${movie.genres}</td>
 				<td>${movie.languages}</td>
-				<td>${movie.openingDate}</td>
-				<td>${movie.endingDate}</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${movie.openingDate}" /></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${movie.endingDate}" /></td>
 				<td>
 				<button class="editBtn btn btn-info"  id="${movie.no}">
 				編輯
@@ -76,8 +79,8 @@
           <div class="card-footer small text-muted">Updated  at 00:00 PM</div>
         </div>
 
-      <script src="js/admin/demo/datatables-demo.js"></script>
-  	  <script src="js/admin/demo/chart-area-demo.js"></script>
+<!--       <script src="js/admin/demo/datatables-demo.js"></script> -->
+<!--   	  <script src="js/admin/demo/chart-area-demo.js"></script> -->
 <script>
  $(".editBtn").click(function() {
     	
