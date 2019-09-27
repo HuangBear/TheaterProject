@@ -164,7 +164,7 @@ input::placeholder{
       		.selectmenu( "menuWidget" )
        		 .addClass( "overflow" );
 		$( "#salutation" ).selectmenu();
- 	 } );
+ 	 });
 </script>
 
 </head>
