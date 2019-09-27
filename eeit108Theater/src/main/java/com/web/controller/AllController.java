@@ -160,4 +160,10 @@ public class AllController {
 		return "index";
 	}
 	
+	@RequestMapping("/indexThanos")
+	public String indexThanos()
+	{
+		return "indexThanos";
+	}
+	
 }
