@@ -100,9 +100,9 @@
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="introduction" class="form-control" 
+              <form:textarea id="introduction" class="form-control" 
               placeholder="introduction" required="required" path="introduction" value = "${former.introduction}"/>
-              <label for="introduction">簡介</label>
+              <label for="introduction"></label>
             </div>
           </div>
           <div class="form-group">
