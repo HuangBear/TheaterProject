@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.TimeTableDao;
+import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 @Repository
 public class TimeTableDaoImpl implements TimeTableDao{
@@ -158,6 +159,6 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mstartDate", startDate).setParameter("mversion", version).setParameter("mmovieName", movieName).getResultList();
 		return list;
 	}
-
+	
 }
 
