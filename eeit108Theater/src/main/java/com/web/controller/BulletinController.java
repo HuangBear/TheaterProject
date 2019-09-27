@@ -159,7 +159,7 @@ public class BulletinController {
 		MultipartFile bulletinImage = multipartRequest.getFile("bulletinImage");
 		String originalFilename = bulletinImage.getOriginalFilename();
 		System.out.println(originalFilename);
-		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.jpg";
+		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
 		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
 		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
@@ -188,8 +188,7 @@ public class BulletinController {
 			System.out.println("insertBlob=" + blob);
 		}
 		// 如果沒有default圖片，else要打開
-//		}
-//		else {
+//		} else {
 //			errorMessage.put("photo", "請上傳jpeg/jpg/png");
 //		}
 		// 如果沒有default圖片，else要打開
@@ -238,7 +237,7 @@ public class BulletinController {
 		MultipartFile bulletinImage = multipartRequest.getFile("bulletinImage");
 		String originalFilename = bulletinImage.getOriginalFilename();
 		System.out.println(originalFilename);
-		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.jpg";
+		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
 		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
 		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 		url = context.getRealPath(url);
@@ -287,23 +286,10 @@ public class BulletinController {
 		boolean bet = et.BEquator(bb, obb);
 		System.out.println("BEquator(bb, obb)=" + bet);
 		System.out.println("ErrMsg=" + req.getAttribute("ErrMsg"));
-		// 塞bulletinBean到前端
 
-//		HashMap<String, String> bulletinBean = new HashMap<>();
-//		bulletinBean.put("title", bb.getTitle());
-//		bulletinBean.put("context", bb.getContext());
-//		bulletinBean.put("stratDate", bb.getStartDate());
-//		bulletinBean.put("endDate", bb.getEndDate());
-//		bulletinBean.put("discount", bb.getDiscount().toString());
-//		bulletinBean.put("discountPriceBuy", bb.getDiscount().toString());
-//		bulletinBean.put("discountPriceBuy", bb.getDiscountPriceFree().toString());
-//		bulletinBean.put("discountTickBuy", bb.getDiscountTickBuy().toString());
-//		bulletinBean.put("discountTickFree", bb.getDiscountTickFree().toString());
-//		bulletinBean.put("employeeId", bb.getEmployeeId().toString());
 		// 存入
 		if (!errorMessage.isEmpty()) {
 			System.out.println("資料輸入有錯誤，網頁跳回");
-
 			bb.setNo(no);
 			List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 			model.addAttribute("bulletinBean", bb);
@@ -417,29 +403,29 @@ public class BulletinController {
 		System.out.println(req.getParameter("discountPriceFree"));
 		System.out.println(req.getParameter("discountTickBuy"));
 		System.out.println(req.getParameter("discountTickFree"));
-		if (req.getParameter("discountPriceBuy").trim().length() != 0) {
+
+		switch (discount)
+		{
+		case 1:
 			discountPriceBuy = Integer.valueOf(req.getParameter("discountPriceBuy"));
-		} else {
-			discountPriceBuy = null;
-		}
-
-		if (req.getParameter("discountPriceFree").trim().length() != 0) {
 			discountPriceFree = Integer.valueOf(req.getParameter("discountPriceFree"));
-		} else {
-			discountPriceFree = null;
-		}
-
-		if (req.getParameter("discountTickBuy").trim().length() != 0) {
-			discountTickBuy = Integer.valueOf(req.getParameter("discountTickBuy"));
-		} else {
 			discountTickBuy = null;
+			discountTickFree = null;
+			break;
+		case 2:
+			discountPriceBuy = null;
+			discountPriceFree = null;
+			discountTickBuy = Integer.valueOf(req.getParameter("discountTickBuy"));
+			discountTickFree = Integer.valueOf(req.getParameter("discountTickFree"));
+			break;
+		default:
+			discountPriceBuy = null;
+			discountPriceFree = null;
+			discountTickBuy = null;
+			discountTickFree = null;
+			break;
 		}
 
-		if (req.getParameter("discountTickFree").trim().length() != 0) {
-			discountTickFree = Integer.valueOf(req.getParameter("discountTickFree"));
-		} else {
-			discountTickFree = null;
-		}
 		Integer pb = discountPriceBuy;
 		Integer pf = discountPriceFree;
 		Integer tb = discountTickBuy;
