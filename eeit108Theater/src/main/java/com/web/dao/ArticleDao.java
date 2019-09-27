@@ -17,6 +17,7 @@ public interface ArticleDao {
 	List<ArticleBean> getAllArticles();
 	
 	List<ReplyBean>  getAllReplys();
+	List<ReplyBean>  getReplysByArticle(int article);
 	
 	List<MemberBean>  getMemberList();
 	
@@ -25,6 +26,7 @@ public interface ArticleDao {
 	
 	public ArticleBean getArticleById(int no);
 	public ReplyBean getReplyById(int no);
+	public ReplyBean getReplyByArticleId(int article);
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article);
 	
 	void  addArticle(ArticleBean article);
@@ -36,7 +38,10 @@ public interface ArticleDao {
 	
 	MovieBean getMovieByNo(int movieNo);
 	LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article);
-
-	List<ArticleBean> getArticlesByMovieNo(int movieNo);
 	
+	
+	List<ArticleBean> getArticlesByMovieNo(int movieNo);
+
+	
+
 }
