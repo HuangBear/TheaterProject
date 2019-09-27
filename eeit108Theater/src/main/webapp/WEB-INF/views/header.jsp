@@ -15,9 +15,9 @@
 		</li>
 		<li style="display: none;"><a href="<c:url value='/index'/>" class="hide">716影城</a>
 		<li class="foo1"><a href="<c:url value='/films'/>">電影介紹</a></li>
-		<li class="foo1"><a href="<c:url value='/ticketing'/>">線上訂票</a>
+		<li class="foo1"><a href="<c:url value='/ticketing_1'/>">線上訂票</a>
 			<ul>
-				<li><a href="<c:url value='/ticketing'/>">時刻查詢</a></li>
+				<li><a href="<c:url value='/ticketing_1'/>">時刻查詢</a></li>
 				<li><a href="<c:url value='/visitorticket'/>">訂票查詢</a></li>
 				<li><a href="<c:url value='/price'/>">票價說明</a></li>
 			</ul></li>
@@ -54,8 +54,9 @@
 				<ul>
 			    
 			    <li><a href="<c:url value='/memberinfo'/>">歡迎您 ${LoginOK.name}</a></li>
-				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
 				<li><a href="<c:url value='/memberinfo'/>">會員設定</a></li>
+				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
+				<li><a href="<c:url value='/qaservice'/>">客服中心</a></li>
 				<li><a href="<c:url value='/memberLogout'/>">登出</a></li>
 
 				</ul>

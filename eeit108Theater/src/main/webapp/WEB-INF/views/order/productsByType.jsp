@@ -127,19 +127,30 @@
 								<table class="table border">
 									<thead>
 										<tr style="text-align: center" class="table-secondary">
-											<th scope="col">會員資料</th>
+											<th scope="col">會員</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Member Name: ${LoginOK.name}</td>
-										</tr>
-										<tr>
-											<td>Member Email: ${LoginOK.email}</td>
-										</tr>
-										<tr>
-											<td>Member Id: ${LoginOK.memberId}</td>
-										</tr>
+										<c:if test="${empty LoginOK}">
+											<tr style="text-align: center">
+												<td>尚未登入</td>
+											</tr>
+											<tr style="text-align: center">
+												<td>
+													<a href="<c:url value='/memberservice'/>">
+														<button type="button">登入</button>
+													</a>
+												</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty LoginOK}">
+											<tr>
+												<td>Hi: ${LoginOK.name}</td>
+											</tr>
+											<tr>
+												<td>帳號: ${LoginOK.email}</td>
+											</tr>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -151,9 +162,9 @@
 										</tr>
 									</thead>
 									<tbody id="orderItems">
-										<tr>
-											<td>primary</td>
-										</tr>
+										<!-- 										<tr> -->
+										<!-- 											<td>primary</td> -->
+										<!-- 										</tr> -->
 										<c:forEach var='item' items="${order.orderItems}">
 											<tr>
 												<td>
@@ -176,23 +187,31 @@
 						</div>
 						<div class="col-md-8 order-md-1 order-sm-2">
 							<div id="movie-info" class="row mb-3">
-								
+
 								<div class="col-md-2 col-xs-4">
-									<span>電影分級</span>
+									<div>電影分級</div>
+									<div>${order.timeTable.movie.rating}</div>
 								</div>
 								<div class="col-md-6 h2 col-xs-8">
-									電影名稱 ${order.timeTable.movieName}
+									<div>${order.timeTable.movieName}</div>
+									<div>${order.timeTable.movie.engMovieName}</div>
 								</div>
 								<div class="col-md-4 col-xs-12">
-									<div>時間 ${order.timeTable.startTime}</div>
+									<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 									<div>影廳 ${order.timeTable.theater}</div>
 								</div>
 							</div>
 							<div id="tabs">
 								<ul>
-									<li><a href="#tabs-1">票種</a></li>
-									<li><a href="#tabs-2">食物</a></li>
-									<li><a href="#tabs-3">飲料</a></li>
+									<li>
+										<a href="#tabs-1">票種</a>
+									</li>
+									<li>
+										<a href="#tabs-2">食物</a>
+									</li>
+									<li>
+										<a href="#tabs-3">飲料</a>
+									</li>
 								</ul>
 								<div id="tabs-1">
 									<table class="table">
@@ -220,7 +239,7 @@
 											</c:forEach>
 										</tbody>
 									</table>
-									<input type="text" class="" id="ticketCnt" name="ticketCnt" hidden="true"/>
+									<input type="text" class="" id="ticketCnt" name="ticketCnt" hidden="true" />
 								</div>
 								<div id="tabs-2">
 									<table class="table">
@@ -282,16 +301,20 @@
 					</div>
 					<div class="row">
 						<div>
-							<label for="rowCnt"></label> <input type="text" id="rowCnt" name="rowCnt" value="15">
+							<label for="rowCnt"></label>
+							<input type="text" id="rowCnt" name="rowCnt" value="15">
 						</div>
 						<div>
-							<label for="aZoneCnt"></label> <input type="text" id="aZoneCnt" name="aZoneCnt" value="5">
+							<label for="aZoneCnt"></label>
+							<input type="text" id="aZoneCnt" name="aZoneCnt" value="5">
 						</div>
 						<div>
-							<label for="bZoneCnt"></label> <input type="text" id="bZoneCnt" name="bZoneCnt" value="15">
+							<label for="bZoneCnt"></label>
+							<input type="text" id="bZoneCnt" name="bZoneCnt" value="15">
 						</div>
 						<div>
-							<label for="zoneNum"></label> <select id="zoneNum" name="zoneNum">
+							<label for="zoneNum"></label>
+							<select id="zoneNum" name="zoneNum">
 								<option value="2">2</option>
 								<option value="3">3</option>
 							</select>
@@ -310,7 +333,7 @@
 		<!-- Footer -->
 		<jsp:include page="../footer.jsp" />
 	</div>
-<%-- 	<script src="<c:url value='/assets/js/jquery.min.js'/>"></script> --%>
+	<%-- 	<script src="<c:url value='/assets/js/jquery.min.js'/>"></script> --%>
 	<script src="<c:url value='/assets/js/jquery.dropotron.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/jquery.scrolly.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/jquery.scrollex.min.js'/>"></script>

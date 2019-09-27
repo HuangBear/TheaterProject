@@ -14,14 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name = "Movie")
-public class MovieBean implements Serializable{
+@Table(
+		name = "Movie", 
+		uniqueConstraints = { 
+				@UniqueConstraint(columnNames = { "movieName" })})
+public class MovieBean implements Serializable {
 
 	private static final long serialVersionUID = 8108696626426463640L;
 	@Id
@@ -47,12 +51,12 @@ public class MovieBean implements Serializable{
 	private Blob movieImage;
 	@Transient
 	private String fileName;
-	
+
 	@Transient
 	private MultipartFile uploadImage;
 	private String engMovieName;
 	private String rating;
-	
+
 	public String getEngMovieName() {
 		return engMovieName;
 	}
@@ -68,11 +72,11 @@ public class MovieBean implements Serializable{
 	public void setRating(String rating) {
 		this.rating = rating;
 	}
-	
+
 	public MultipartFile getUploadImage() {
 		return uploadImage;
 	}
-	
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -84,14 +88,16 @@ public class MovieBean implements Serializable{
 	public void setUploadImage(MultipartFile uploadImage) {
 		this.uploadImage = uploadImage;
 	}
+
 	public MovieBean() {
 		super();
 	}
+
 	public MovieBean(Integer no) {
 		super();
 		this.no = no;
 	}
-	
+
 	@OneToMany(mappedBy = "movie")
 	private Set<TimeTableBean> times;// B, O2M
 
@@ -270,9 +276,11 @@ public class MovieBean implements Serializable{
 	public void setGenres(String genres) {
 		this.genres = genres;
 	}
+
 	public Boolean getAvailable() {
 		return available;
 	}
+
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}

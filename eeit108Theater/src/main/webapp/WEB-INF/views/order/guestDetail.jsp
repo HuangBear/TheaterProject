@@ -93,7 +93,7 @@
 									<a>購票記錄</a>
 								</h3>
 							</header>
-							<p>${LoginOK.name}，您好</p>
+							<p>${order.ownerName}，您好</p>
 							<div class="row gtr-50">
 								<div class="col-4">
 									<a class="image fit"><img src="<c:url value='/images/frontend/ticket.png'/>" title="未取票" /></a>
@@ -146,8 +146,9 @@
 								</c:if>
 								<c:if test="${not empty uncheckedOrders}">
 									<c:forEach var="order" varStatus="index" items="${uncheckedOrders}">
-										<fmt:formatDate var="date" value="${order.timeTable.startTime}" pattern="yyyy/MM/dd HH:mm" />
-										<h3 style="border: #ad8c80; background-color: #ad8c80;">${index.index + 1}-${date}-${order.timeTable.movieName}</h3>
+<%-- 										<fmt:formatDate var="date" value="${order.timeTable.startTime}" pattern="yyyy/MM/dd HH:mm" /> --%>
+										<fmt:formatDate var="orderTime" value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm" />
+										<h3 style="border: #ad8c80; background-color: #ad8c80;">${index.index + 1}. ${order.timeTable.startDate} ${order.timeTable.startTime}-${order.timeTable.movieName}</h3>
 										<div>
 											<table class="tbst">
 												<thead style="background-color: #AAAAAA; text-align: left; height: 10px;">
@@ -163,7 +164,7 @@
 														</td>
 														<td>
 															<P>取票序號：${order.orderId}</P>
-															<p>訂票時間：${order.orderTime}</p>
+															<p>訂票時間：${orderTime}</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconplace.png'/>" class="iconimg" />影廳：${order.timeTable.theater}
 															</p>
@@ -171,7 +172,7 @@
 																<img src="<c:url value='/images/frontend/iconfilm.png'/>" class="iconimg" />電影：${order.timeTable.movieName}
 															</p>
 															<p>
-																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" />場次：${date}
+																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" />場次：${order.timeTable.startDate} ${order.timeTable.startTime}
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" style="width: 25px; height: 25px;" />人數：${order.seatCnt}

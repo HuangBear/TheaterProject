@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.web.entity.ReplyBean;
@@ -26,17 +27,19 @@ public class LikeOrDislikeBean implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "article_no")
+	@Column(name = "likeOrDislike_no")
 	private Integer no;	
 	private Boolean likeOrDislike;
-
 	
 	@Column(name = "fk_member_no")
 	private Integer member;//not owner
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "fk_article_id")
 	private ArticleBean article; //U, M2O
+	
+	@Transient
+	private String articleNoString;
 	
 	public Integer getNo() {
 		return no;
@@ -51,10 +54,10 @@ public class LikeOrDislikeBean implements Serializable {
 	public void setArticle(ArticleBean No) {
 		this.article = No;
 	}
-	public Integer getMemberNo() {
+	public Integer getMember() {
 		return member;
 	}
-	public void setMemberNo(Integer No) {
+	public void setMember(Integer No) {
 		this.member = No;
 	}
 
@@ -63,5 +66,11 @@ public class LikeOrDislikeBean implements Serializable {
 	}
 	public void setLikeOrDislike(Boolean likeOrDislike) {
 		this.likeOrDislike = likeOrDislike;
+	}
+	public String getArticleNoString() {
+		return articleNoString;
+	}
+	public void setArticleNoString(String articleNoString) {
+		this.articleNoString = articleNoString;
 	}
 }

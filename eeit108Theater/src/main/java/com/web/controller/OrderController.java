@@ -64,10 +64,11 @@ public class OrderController {
 	@RequestMapping("/showProducts")
 	public String showProductByType(Model model, HttpSession session, HttpServletRequest req) {
 		System.err.println("====showProductByType Start====");
+		session.removeAttribute("order");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		if (ob == null) {
 			ob = new OrderBean(true);
-			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(req.getParameter("timeTableId"))));
+			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(req.getParameter("time"))));
 //			MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 //			if (mb != null) {
 //				ob.setOwnerEmail(mb.getEmail());

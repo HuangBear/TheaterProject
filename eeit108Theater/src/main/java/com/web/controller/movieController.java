@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -128,30 +130,70 @@ public class movieController {
 	}
 	@RequestMapping("/ticketing_{no}")
 	public String movieTicketing(Model model, @PathVariable Integer no) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String formattedDate = df.format(new java.util.Date());
-		System.out.println(formattedDate);
-		model.addAttribute("today", formattedDate);
+//		Date date = new Date();
+//		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		String today = df.format(date);
+//		model.addAttribute("today", today);
+//		for (int i = 1; i < 3; i++) {
+//			date = tomorrow(date);
+//			String tomorrow = df.format(date);
+//			model.addAttribute("tomorrow" + i, tomorrow);
+//		}
+//		MovieBean movie = service.getMovieById(no);
+//		model.addAttribute("movie", movie);
+//		String[] movieTheater = {"A廳", "B廳", "C廳", "D廳", "E廳", "F廳", "G廳", "H廳", "I廳", "J廳"};
+//		String[] movieVersion = {"2D", "3D", "IMAX"};
+//		List<TimeTableBean> startTime = new ArrayList<>();
+//		for (int i = 0; i < movieTheater.length; i++) {
+//			for (int j = 0; j < movieVersion.length; j++) {
+//				startTime = time_service.getStartTimeByMovieAndTheater(movie.getMovieName(), movieTheater[i], movieVersion[j]);
+//				if (startTime.isEmpty()) {
+//					continue;
+//				} else {
+//					model.addAttribute("startTime" + i, startTime);
+//					model.addAttribute("theater" + i, movieTheater[i]);
+//					model.addAttribute("version" + i, movieVersion[j]);
+//					System.out.println(startTime);
+//				}
+//			}
+//		}
+		List<MovieBean> releasedMovies = service.getReleasedMovies();
+		model.addAttribute("releasedMovies", releasedMovies);
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		model.addAttribute("today", sdf.format(date));
+		model.addAttribute("tomorrow", sdf.format(tomorrow(date)));
+		model.addAttribute("tdat", sdf.format(tomorrow(tomorrow(date))));
 		MovieBean movie = service.getMovieById(no);
 		model.addAttribute("movie", movie);
-		TimeTableBean ttb = time_service.getTimeTableByNo(no);
-		model.addAttribute("ttb", ttb);
-		String[] movieTheater = {"A廳", "B廳", "C廳", "D廳", "E廳", "F廳", "G廳", "H廳", "I廳", "J廳"};
-		String[] movieVersion = {"2D", "3D", "IMAX"};
-		List<TimeTableBean> startTime = new ArrayList<>();
-		for (int i = 0; i < movieTheater.length; i++) {
-			for (int j = 0; j < movieVersion.length; j++) {
-				startTime = time_service.getStartTimeByMovieAndTheater(movie.getMovieName(), movieTheater[i], movieVersion[j]);
-				if (startTime.isEmpty()) {
-					continue;
-				} else {
-					model.addAttribute("startTime" + i, startTime);
-					model.addAttribute("theater" + i, movieTheater[i]);
-					model.addAttribute("version", movieVersion[j]);
-					System.out.println(startTime);
-				}	
-			}	
-		}	
+		String[] version = {"2D", "3D", "IMAX"};
+		List<TimeTableBean> todayStartTimes_2D = new ArrayList<>();
+		List<TimeTableBean> todayStartTimes_3D = new ArrayList<>();
+		List<TimeTableBean> todayStartTimes_IMAX = new ArrayList<>();
+		List<TimeTableBean> tomorrowStartTimes_2D = new ArrayList<>();
+		List<TimeTableBean> tomorrowStartTimes_3D = new ArrayList<>();
+		List<TimeTableBean> tomorrowStartTimes_IMAX = new ArrayList<>();
+		List<TimeTableBean> tdatStartTimes_2D = new ArrayList<>();
+		List<TimeTableBean> tdatStartTimes_3D = new ArrayList<>();
+		List<TimeTableBean> tdatStartTimes_IMAX = new ArrayList<>();
+		todayStartTimes_2D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(date), version[0], movie.getMovieName());
+		todayStartTimes_3D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(date), version[1], movie.getMovieName());
+		todayStartTimes_IMAX = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(date), version[2], movie.getMovieName());
+		tomorrowStartTimes_2D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(tomorrow(date)), version[0], movie.getMovieName());
+		tomorrowStartTimes_3D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(tomorrow(date)), version[1], movie.getMovieName());
+		tomorrowStartTimes_IMAX = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(tomorrow(date)), version[2], movie.getMovieName());
+		tdatStartTimes_2D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(tomorrow(tomorrow(date))), version[0], movie.getMovieName());
+		tdatStartTimes_3D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(tomorrow(tomorrow(date))), version[1], movie.getMovieName());
+		tdatStartTimes_IMAX = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(tomorrow(tomorrow(date))), version[2], movie.getMovieName());
+		model.addAttribute("todayStartTimes_2D", todayStartTimes_2D);
+		model.addAttribute("todayStartTimes_3D", todayStartTimes_3D);
+		model.addAttribute("todayStartTimes_IMAX", todayStartTimes_IMAX);
+		model.addAttribute("tomorrowStartTimes_2D", tomorrowStartTimes_2D);
+		model.addAttribute("tomorrowStartTimes_3D", tomorrowStartTimes_3D);
+		model.addAttribute("tomorrowStartTimes_IMAX", tomorrowStartTimes_IMAX);
+		model.addAttribute("tdatStartTimes_2D", tdatStartTimes_2D);
+		model.addAttribute("tdatStartTimes_3D", tdatStartTimes_3D);
+		model.addAttribute("tdatStartTimes_IMAX", tdatStartTimes_IMAX);
 		return "ticketing";
 	}
 	
@@ -254,8 +296,9 @@ public class movieController {
 		return "/admin/empIndexA";
 	}
 	@RequestMapping(value = "/admin/movie_edit", method = RequestMethod.GET)
-	public String editMovieGet(@RequestParam(value = "no", required = false) Integer no, Model model) {
-		MovieBean formerMovieBean = service.getMovieById(no);
+	public String editMovieGet(@RequestParam(value = "no", required = false) Integer no, Model model, HttpServletRequest req) {
+//		MovieBean formerMovieBean = service.getMovieById(no);
+		MovieBean formerMovieBean= service.getMovieById(Integer.parseInt(req.getParameter("no")));
 		model.addAttribute("former", formerMovieBean);
 		return "admin/movie_edit";
 	}
@@ -289,5 +332,13 @@ public class movieController {
 		model.addAttribute("movies", list);
 		return "admin/Table2";
 	}
+	
+	public Date tomorrow(Date today) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+        return calendar.getTime();
+    }
+
 }
 
