@@ -29,7 +29,9 @@ public interface ProductDao {
 
 	List<ProductBean> getAll();
 	
-	List<ProductBean> getAllAvailableProducts();	
+	List<ProductBean> getAllAvailableProducts();
+	
+	List<ProductBean> getAllUnavailableProducts();
 
 	List<ProductBean> getProductsByType(String type);
 	
