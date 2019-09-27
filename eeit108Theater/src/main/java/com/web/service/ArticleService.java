@@ -18,6 +18,7 @@ public interface ArticleService {
 	
 	public ArticleBean getArticleById(int no);
 	public ReplyBean getReplyById(int no);
+	public ReplyBean getReplyByArticleId(int no);
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article);
 	
 	void  addArticle(ArticleBean article);
@@ -28,6 +29,7 @@ public interface ArticleService {
 	void updateGp(LikeOrDislikeBean likeOrDislike);
 	MemberBean  getMemberById(int memberId);
 	MovieBean  getMovieByNo(int movieNo);
+	
 	LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article);
 	List<MemberBean>  getMemberList();
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);

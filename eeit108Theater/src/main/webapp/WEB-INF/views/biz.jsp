@@ -25,8 +25,6 @@
 
 
 <script type="text/javascript">
-		
-
 
 		$(document).ready(function(){
 			var slideImages = [ {src: 'images/frontend/biz01.jpg'},
@@ -106,8 +104,7 @@
 						</div>
 			
 						<div class="jR3DCarouselCustomSlide">
-							<img src="images/frontend/biz02c.jpg" />
-							</a>				
+							<img src="images/frontend/biz02c.jpg" />			
 						</div>
 			
 						<div class="jR3DCarouselCustomSlide">

@@ -40,12 +40,7 @@
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
 <script>
-	// 	//accordion
-	// 	$(function() {
-	// 		$("#accordion").accordion({
-	// 			heightStyle : "content"
-	// 		});
-	// 	});
+
 
 	//back button
 	$(function() {
@@ -330,24 +325,26 @@
 					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
 						<thead>
 							<tr>
-								<th scope="col">標題</th>
-								<th scope="col" colspan="2">優惠方案</th>
-								<th scope="col">詳情</th>
-								<th scope="col">修改</th>
-								<th scope="col">刪除</th>
+								<th scope="col" width="10%">#</th>
+								<th scope="col" width="30%">標題</th>
+								<th scope="col" width="30%" colspan="2">優惠方案</th>
+								<th scope="col" width="10%">詳情</th>
+								<th scope="col" width="10%">修改</th>
+								<th scope="col" width="10%">刪除</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var='sb' items='${statusBulletin[0]}'>
+							<c:forEach var='sb' items='${statusBulletin[0]}' varStatus="i">
 								<tr>
 									<td class="hide">${sb.no}</td>
+									<th scope="row">${i.index+1}</th>
 									<td>${sb.title}</td>
-									<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
 									<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-									<td><img name="context_box" id="context_box_${sb.no}" width="20px"
+									<td><img name="context_box" id="context_box_${sb.no}" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-									<td><img name="add_host" id="status_edit_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
-									<td><img name="add_host" id="status_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+									<td><img name="add_host" id="status_edit_${sb.no}" width="30px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+									<td><img name="add_host" id="status_dele_${sb.no}" width="30px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -357,24 +354,28 @@
 					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
 						<thead>
 							<tr>
-								<th scope="col">標題</th>
-								<th scope="col" colspan="2">優惠方案</th>
-								<th scope="col">詳情</th>
-								<th scope="col">修改</th>
-								<th scope="col">刪除</th>
+
+								<th scope="col" width="10%">#</th>
+								<th scope="col" width="30%">標題</th>
+								<th scope="col" width="30%" colspan="2">優惠方案</th>
+								<th scope="col" width="10%">詳情</th>
+								<th scope="col" width="10%">修改</th>
+								<th scope="col" width="10%">刪除</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var='sb' items='${statusBulletin[1]}'>
+							<c:forEach var='sb' items='${statusBulletin[1]}' varStatus="i">
 								<tr>
+
 									<td class="hide">${sb.no}</td>
+									<th scope="row">${i.index+1}</th>
 									<td>${sb.title}</td>
-									<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
 									<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-									<td><img name="context_box" id="context_box_${sb.no}" width="20px"
+									<td><img name="context_box" id="context_box_${sb.no}" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-									<td><img name="add_host" id="unstat_edit_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
-									<td><img name="add_host" id="unstat_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+									<td><img name="add_host" id="unstat_edit_${sb.no}" width="30px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+									<td><img name="add_host" id="unstat_dele_${sb.no}" width="30px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -384,22 +385,24 @@
 					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
 						<thead>
 							<tr>
-								<th scope="col">標題</th>
-								<th scope="col" colspan="2">優惠方案</th>
-								<th scope="col">詳情</th>
-								<th scope="col">復原</th>
+								<th scope="col" width="10%">#</th>
+								<th scope="col" width="40%">標題</th>
+								<th scope="col" width="30%" colspan="2">優惠方案</th>
+								<th scope="col" width="10%">詳情</th>
+								<th scope="col" width="10%">復原</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var='sb' items='${statusBulletin[2]}'>
+							<c:forEach var='sb' items='${statusBulletin[2]}' varStatus="i">
 								<tr>
 									<td class="hide">${sb.no}</td>
+									<th scope="row">${i.index+1}</th>
 									<td>${sb.title}</td>
-									<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
 									<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-									<td><img name="context_box" id="context_box_${sb.no}" width="20px"
+									<td><img name="context_box" id="context_box_${sb.no}" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-									<td><img name="add_host" id="unavai_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
+									<td><img name="add_host" id="unavai_dele_${sb.no}" width="30px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -407,96 +410,6 @@
 				</div>
 			</div>
 
-			<!-- -------------------------------------------- -->
-			<!-- 			<h3>進行中</h3> -->
-			<!-- 			<div> -->
-			<!-- 				<table class='table table-bordered' id='dataTable' width='70%' cellspacing='0'> -->
-			<!-- 					<thead> -->
-			<!-- 						<tr> -->
-			<!-- 							<th>標題</th> -->
-			<!-- 							<th colspan="2">優惠方案</th> -->
-			<!-- 							<th>詳情</th> -->
-			<!-- 							<th>修改</th> -->
-			<!-- 							<th>刪除</th> -->
-			<!-- 						</tr> -->
-			<!-- 					</thead> -->
-			<!-- 					<tbody> -->
-			<%-- 						<c:forEach var='sb' items='${statusBulletin[0]}'> --%>
-			<!-- 							<tr> -->
-			<%-- 								<td class="hide">${sb.no}</td> --%>
-			<%-- 								<td>${sb.title}</td> --%>
-			<%-- 								<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td> --%>
-			<%-- 								<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td> --%>
-			<%-- 								<td><img name="context_box" id="context_box_${sb.no}" width="20px" --%>
-			<%-- 									src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td> --%>
-			<%-- 								<td><img name="add_host" id="status_edit_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td> --%>
-			<%-- 								<td><img name="add_host" id="status_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td> --%>
-			<!-- 							</tr> -->
-			<%-- 						</c:forEach> --%>
-			<!-- 					</tbody> -->
-			<!-- 				</table> -->
-			<!-- 			</div> -->
-
-			<!-- 			<h3>已過期</h3> -->
-			<!-- 			<div> -->
-			<!-- 				<table class='table table-bordered' id='dataTable' width='70%' cellspacing='0'> -->
-			<!-- 					<thead> -->
-			<!-- 						<tr> -->
-			<!-- 							<th>標題</th> -->
-			<!-- 							<th colspan="2">優惠方案</th> -->
-			<!-- 							<th>詳情</th> -->
-			<!-- 							<th>加期</th> -->
-			<!-- 							<th>刪除</th> -->
-			<!-- 						</tr> -->
-			<!-- 					</thead> -->
-			<!-- 					<tbody> -->
-
-			<%-- 						<c:forEach var='sb' items='${statusBulletin[1]}'> --%>
-			<!-- 							<tr> -->
-			<%-- 								<td class="hide">${sb.no}</td> --%>
-			<%-- 								<td>${sb.title}</td> --%>
-			<%-- 								<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td> --%>
-			<%-- 								<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td> --%>
-			<%-- 								<td><img name="context_box" id="context_box_${sb.no}" width="20px" --%>
-			<%-- 									src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td> --%>
-			<%-- 								<td><img name="add_host" id="unstat_edit_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td> --%>
-			<%-- 								<td><img name="add_host" id="unstat_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td> --%>
-
-			<!-- 							</tr> -->
-			<%-- 						</c:forEach> --%>
-			<!-- 					</tbody> -->
-			<!-- 				</table> -->
-			<!-- 			</div> -->
-
-			<!-- 			<h3>已刪除</h3> -->
-			<!-- 			<div> -->
-			<!-- 				<table class='table table-bordered' id='dataTable' width='70%' cellspacing='0'> -->
-			<!-- 					<thead> -->
-			<!-- 						<tr> -->
-			<!-- 							<th>標題</th> -->
-			<!-- 							<th colspan="2">優惠方案</th> -->
-			<!-- 							<th>詳情</th> -->
-
-			<!-- 							<th>復原</th> -->
-			<!-- 						</tr> -->
-			<!-- 					</thead> -->
-			<!-- 					<tbody> -->
-			<%-- 						<c:forEach var='sb' items='${statusBulletin[2]}'> --%>
-			<!-- 							<tr> -->
-
-			<%-- 								<td class="hide">${sb.no}</td> --%>
-			<%-- 								<td>${sb.title}</td> --%>
-			<%-- 								<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td> --%>
-			<%-- 								<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td> --%>
-			<%-- 								<td><img name="context_box" id="context_box_${sb.no}" width="20px" --%>
-			<%-- 									src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td> --%>
-			<%-- 								<td><img name="add_host" id="unavai_dele_${sb.no}" width="20px" src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td> --%>
-
-			<!-- 							</tr> -->
-			<%-- 						</c:forEach> --%>
-			<!-- 					</tbody> -->
-			<!-- 				</table> -->
-			<!-- 			</div> -->
 		</div>
 	</div>
 

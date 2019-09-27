@@ -66,6 +66,12 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Transactional
 	@Override
+    public ReplyBean getReplyByArticleId(int no){
+		return dao.getReplyByArticleId(no);
+	}
+    
+    @Transactional
+	@Override
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
 		return dao.getLikeOrDislikeByMemberAndArticle(memberNo,article);
 	}

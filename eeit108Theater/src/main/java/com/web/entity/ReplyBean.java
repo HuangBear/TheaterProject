@@ -34,13 +34,11 @@ public class ReplyBean implements Serializable {
 	private Date postTime;
 	
 	@Transient
-	private String noString;
+	private String rnoString;
 	@Transient
 	private String postTimeString;
 	@Transient
 	private String authorString;
-	@Transient
-	private String movieString;
 	@Transient
 	private String availableString;
 	@Transient
@@ -70,7 +68,7 @@ public class ReplyBean implements Serializable {
 		this.author = author;
 	}
 		
-	public Integer getNo() {
+	public Integer getNo() { 
 		return no;
 	}
 	public void setNo(Integer no) {
@@ -105,11 +103,11 @@ public class ReplyBean implements Serializable {
 		System.out.println("posttimestring setter");
 		this.postTimeString = postTimeString;
 	}
-	public String getNoString() {
-		return noString;
+	public String getrnoString() {
+		return rnoString;
 	}
-	public void setNoString(String noString) {
-		this.noString = noString;
+	public void setrnoString(String rnoString) {
+		this.rnoString = rnoString;
 	}
 	
 	public String getAuthorString() {
@@ -119,12 +117,6 @@ public class ReplyBean implements Serializable {
 		this.authorString = authorString;
 	}
 	
-	public String getMovieString() {
-		return movieString;
-	}
-	public void setMovieString(String movieString) {
-		this.movieString = movieString;
-	}
 	public String getArticleString() {
 		return articleString;
 	}
