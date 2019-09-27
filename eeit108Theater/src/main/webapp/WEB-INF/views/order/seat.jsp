@@ -36,7 +36,8 @@
 	top: 0;
 	height: 100%;
 }
-form label{
+
+form label {
 	margin: auto;
 }
 
@@ -121,9 +122,27 @@ form label{
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>帳號： ${LoginOK.email}</td>
-										</tr>
+										<c:if test="${empty LoginOK}">
+											<tr style="text-align: center">
+												<td>尚未登入</td>
+											</tr>
+											<tr style="text-align: center">
+												<td>
+													<a href="<c:url value='/memberservice'/>">
+														<button type="button">登入</button>
+													</a>
+												</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty LoginOK}">
+											<tr>
+												<td>Hi： ${LoginOK.name}</td>
+											</tr>
+											<tr>
+												<td>帳號： ${LoginOK.email}</td>
+											</tr>
+										</c:if>
+
 									</tbody>
 
 								</table>
@@ -158,20 +177,22 @@ form label{
 						</div>
 						<div class="col-md-8 order-md-1 order-sm-2">
 							<div id="movie-info" class="row mb-3">
-								<div class="col-md-2">
-									<span>電影分級</span>
+								<div class="col-md-2 col-xs-4">
+									<div>電影分級</div>
+									<div>${order.timeTable.movie.rating}</div>
 								</div>
-								<div class="col-md-6">
-									<h3>電影名稱 ${order.timeTable.movieName}</h3>
+								<div class="col-md-6 h2 col-xs-8">
+									<div>${order.timeTable.movieName}</div>
+									<div>${order.timeTable.movie.engMovieName}</div>
 								</div>
 								<div class="col-md-4 col-xs-12">
-									<div>時間 ${order.timeTable.startTime}</div>
+									<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 									<div>影廳 ${order.timeTable.theater}</div>
 								</div>
 							</div>
-							<div style="color:white; background-color:grey;">
-								<div class="h2" style="text-align:center">選擇座位</div>
-								<p style="text-align:center">僅能選擇${ticketCnt}個座位，尚未選滿前無法進行下一步</p>							
+							<div style="color: white; background-color: grey;">
+								<div class="h2" style="text-align: center">選擇座位</div>
+								<p style="text-align: center">僅能選擇${ticketCnt}個座位，尚未選滿前無法進行下一步</p>
 							</div>
 							<div class="overflow-auto">
 								<div id="screen" style="min-width: 550px; text-align: center; margin-bottom: 20px">

@@ -53,13 +53,30 @@
 							<table class="table border">
 								<thead>
 									<tr style="text-align: center" class="table-secondary">
-										<th>Member Info</th>
+										<th>會員</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>帳號： ${LoginOK.email}</td>
-									</tr>
+									<c:if test="${empty LoginOK}">
+										<tr style="text-align: center">
+											<td>尚未登入</td>
+										</tr>
+										<tr style="text-align: center">
+											<td>
+												<a href="<c:url value='/memberservice'/>">
+													<button type="button">登入</button>
+												</a>
+											</td>
+										</tr>
+									</c:if>
+									<c:if test="${not empty LoginOK}">
+										<tr>
+											<td>Hi: ${LoginOK.name}</td>
+										</tr>
+										<tr>
+											<td>帳號: ${LoginOK.email}</td>
+										</tr>
+									</c:if>
 								</tbody>
 
 							</table>
@@ -67,12 +84,16 @@
 					</div>
 					<div class="col-md-8 order-md-1 order-sm-2">
 						<div id="movie-info" class="row mb-2">
-							<div class="col-md-2">
-								<span>電影分級</span>
+							<div class="col-md-2 col-xs-4">
+								<div>電影分級</div>
+								<div>${order.timeTable.movie.rating}</div>
 							</div>
-							<div class="col-md-6 h2">電影名稱 ${order.timeTable.movieName}</div>
-							<div class="col-md-4">
-								<div>時間 ${order.timeTable.startTime}</div>
+							<div class="col-md-6 h2 col-xs-8">
+								<div>${order.timeTable.movieName}</div>
+								<div>${order.timeTable.movie.engMovieName}</div>
+							</div>
+							<div class="col-md-4 col-xs-12">
+								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 								<div>影廳 ${order.timeTable.theater}</div>
 								<div>
 									座位
@@ -85,7 +106,7 @@
 							<p style="text-align: center">請再次確認以下商品名稱、價格及數量</p>
 						</div>
 						<div>
-							<table class="table border">
+							<table class="table border px-10">
 								<thead>
 									<tr style="text-align: center" class="table-secondary">
 										<th>Order List</th>
@@ -121,50 +142,71 @@
 							<div id="tab">
 								<div>
 									<ul>
-										<li style="border-top-left-radius: 20px;"><a href="#member">會員</a></li>
-										<li style="border-top-right-radius: 20px;"><a href="#guest">非會員</a></li>
+										<li style="border-top-left-radius: 20px;">
+											<a href="#member">會員</a>
+										</li>
+										<li style="border-top-right-radius: 20px;">
+											<a href="#guest">非會員</a>
+										</li>
 									</ul>
 								</div>
 
 								<form method="POST" action="<spring:url value='/order/pay?idType=0'/>">
 									<div id="member">
-										<div class="form-group">
-											<label for="memberName">Name</label> <input type="text" class="form-control" id="memberName" name="memberName"
-												aria-describedby="m-nameHelp" value="${LoginOK.name}" readonly> <small id="m-nameHelp"
-												class="form-text text-muted">會員姓名</small>
-										</div>
-										<div class="form-group">
-											<label for="memberEmail">Email address</label> <input type="email" class="form-control" id="memberEmail"
-												name="memberEmail" aria-describedby="m-emailHelp" value="${LoginOK.email}" readonly> <small
-												id="m-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
-										</div>
-										<div class="form-group">
-											<label for="memberPhone">Phone number</label> <input type="text" class="form-control" id="memberPhone"
-												name="memberPhone" aria-describedby="m-phoneHelp" value="${LoginOK.phoneNum}" readonly> <small
-												id="m-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
-										</div>
-										<div class="form-group" style="text-align: center">
-											<button id="btn-submit" class="btn-primary" type="submit">確認付款</button>
-										</div>
+										<c:if test="${empty LoginOK}">
+											<div class="form-group" style="text-align: center">
+												<div>尚未登入</div>
+											</div>
+											<div class="form-group" style="text-align: center">
+												<button type="button">登入</button>
+											</div>
 
+
+										</c:if>
+										<c:if test="${not empty LoginOK}">
+											<div class="form-group">
+												<label for="memberName">Name</label>
+												<input type="text" class="form-control" id="memberName" name="memberName" aria-describedby="m-nameHelp"
+													value="${LoginOK.name}" readonly>
+												<small id="m-nameHelp" class="form-text text-muted">會員姓名</small>
+											</div>
+											<div class="form-group">
+												<label for="memberEmail">Email address</label>
+												<input type="email" class="form-control" id="memberEmail" name="memberEmail" aria-describedby="m-emailHelp"
+													value="${LoginOK.email}" readonly>
+												<small id="m-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
+											</div>
+											<div class="form-group">
+												<label for="memberPhone">Phone number</label>
+												<input type="text" class="form-control" id="memberPhone" name="memberPhone" aria-describedby="m-phoneHelp"
+													value="${LoginOK.phoneNum}" readonly>
+												<small id="m-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
+											</div>
+											<div class="form-group" style="text-align: center">
+												<button id="btn-submit" class="btn-primary" type="submit">確認付款</button>
+											</div>
+										</c:if>
 									</div>
 								</form>
 								<form method="POST" action="<spring:url value='order/pay?idType=1'/>">
 									<div id="guest">
 										<div class="form-group">
-											<label for="guestName">Name</label> <input type="text" class="form-control" id="guestName" name="guestName"
-												aria-describedby="g-nameHelp" placeholder="Enter your name, please"> <small id="g-nameHelp"
-												class="form-text text-muted">請輸入訂購人姓名</small>
+											<label for="guestName">Name</label>
+											<input type="text" class="form-control" id="guestName" name="guestName" aria-describedby="g-nameHelp"
+												placeholder="Enter your name, please">
+											<small id="g-nameHelp" class="form-text text-muted">請輸入訂購人姓名</small>
 										</div>
 										<div class="form-group">
-											<label for="guestEmail">Email address</label> <input type="email" class="form-control" id="guestEmail"
-												name="guestEmail" aria-describedby="g-emailHelp" placeholder="Enter your email, please"> <small
-												id="g-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
+											<label for="guestEmail">Email address</label>
+											<input type="email" class="form-control" id="guestEmail" name="guestEmail" aria-describedby="g-emailHelp"
+												placeholder="Enter your email, please">
+											<small id="g-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
 										</div>
 										<div class="form-group">
-											<label for="guestPhone">Phone number</label> <input type="text" class="form-control" id="guestPhone" name="guestPhone"
-												aria-describedby="g-phoneHelp" placeholder="Enter your phone, please"> <small id="g-phoneHelp"
-												class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
+											<label for="guestPhone">Phone number</label>
+											<input type="text" class="form-control" id="guestPhone" name="guestPhone" aria-describedby="g-phoneHelp"
+												placeholder="Enter your phone, please">
+											<small id="g-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
 										</div>
 										<div class="form-group" style="text-align: center">
 											<button id="btn-submit" class="btn-primary" type="submit">確認付款</button>
@@ -177,10 +219,14 @@
 				</div>
 				<div class="row justify-content-between mt-5">
 					<div class="col-md-auto col-12-mobile">
-						<a><button class="btn-secondary">上一步</button></a>
+						<a>
+							<button class="btn-secondary">上一步</button>
+						</a>
 					</div>
 					<div class="col-md-auto col-12-mobile">
-						<a href="<c:url value='/index'/>"><button class="btn-danger">取消</button></a>
+						<a href="<c:url value='/index'/>">
+							<button class="btn-danger">取消</button>
+						</a>
 					</div>
 				</div>
 			</div>

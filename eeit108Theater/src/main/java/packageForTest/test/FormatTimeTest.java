@@ -19,6 +19,11 @@ public class FormatTimeTest {
 		System.out.println(String.valueOf(new Date(System.currentTimeMillis())));
 		System.out.println(sdf.format(new Date(System.currentTimeMillis())));
 		System.out.println(sdf.format(new Timestamp(System.currentTimeMillis())));
-
+		
+		String hash = "1260524851";
+//		EB1260524851				NA192200437
+		long l = Long.valueOf(hash);
+		System.out.println("hash " + hash + "'s hex = " + Long.toHexString(l));
+		System.out.println("current time hex = " + Long.toHexString(System.currentTimeMillis()));
 	}
 }
