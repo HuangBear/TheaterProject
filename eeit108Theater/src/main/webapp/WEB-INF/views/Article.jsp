@@ -56,7 +56,8 @@
 						style="width: 1500px; height: 500px; border: 1px solid gray; border-radius: 25px;">
 						<h3 style="font-size: 36px">${Article.title}</h3>
 						<div style="width: 800px; height: 50px; font-size: 20px;">
-							<p style="border: 1px solid gray; border-radius: 25px;text-align: center;">No.:${Article.no}
+							<p
+								style="border: 1px solid gray; border-radius: 25px; text-align: center;">No.:${Article.no}
 								發文者: ${Article.author.name} 分類: ${Article.tag} 發文時間:
 								${Article.postTime}</p>
 						</div>
@@ -117,11 +118,20 @@
 								style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
 								<p>${reply.author.name}回覆時間:${Article.postTime}</p>
 							</div>
-
-							<div
-								style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-								<p>${reply.content}</p>
-							</div>
+							<c:choose>
+								<c:when test="${reply.available==true}">
+									<div
+										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
+										<p>${reply.content}</p>
+									</div>
+								</c:when>
+								<c:when test="${reply.available==false}">
+									<div
+										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
+										<p>這篇回覆已經被鎖</p>
+									</div>
+								</c:when>
+							</c:choose>
 							<p>
 								<c:choose>
 									<c:when test="${LoginOK.no==reply.author.no}">
@@ -130,6 +140,29 @@
 									</c:when>
 								</c:choose>
 							</p>
+							<form:form method='POST' modelAttribute="Reply"
+								class='form-horizontal' enctype="multipart/form-data">
+								<fieldset>
+									<c:choose>
+										<c:when test="${LoginOK.no!=Article.author.no}">
+										</c:when>
+										<c:when test="${LoginOK.no==Article.author.no}">
+										<form:input id="articleString" readonly="true"
+											path="articleString"
+											value='${Article.noString=Article.no}' type='hidden'
+											class='form:input-large' />
+										<form:input id="rnoString" readonly="true"
+											path="rnoString"
+											value='${reply.rnoString=reply.no}' type='hidden'
+											class='form:input-large' />
+											<div class="form-group">
+												<button type="submit" name="lockbutton" value="lock">屏蔽</button>
+											</div>
+										</c:when>
+									</c:choose>
+									<hr class="first" />
+								</fieldset>
+							</form:form>
 							<br>
 						</c:forEach>
 					</div>

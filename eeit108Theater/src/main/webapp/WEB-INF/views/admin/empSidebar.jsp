@@ -50,6 +50,11 @@
           <span>歷史公告</span></a>
         </li>
         <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="emp_Forum">
+          <i class="fas fa-fw fa-table"></i>
+          <span>討論管理</span></a>
+        </li>
+        <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="allProducts">
           <i class="fas fa-fw fa-table"></i>
           <span>商品清單</span></a>

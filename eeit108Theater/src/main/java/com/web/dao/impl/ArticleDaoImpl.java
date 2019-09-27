@@ -50,6 +50,16 @@ public class ArticleDaoImpl implements ArticleDao {
 	    return list;
 	}
 	
+	@Override
+	public List<ReplyBean> getReplysByArticle(int article) {
+	    String hql = "FROM ReplyBean rb WHERE rb.article.no = :article";
+	    Session session = null;
+	    List<ReplyBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
+	}
+	
 	@SuppressWarnings("unused")
 	@Override
 	public void addGp(LikeOrDislikeBean likeOrDislike) {
@@ -89,6 +99,13 @@ public class ArticleDaoImpl implements ArticleDao {
 	public ReplyBean getReplyById(int no) {
 		Session session = factory.getCurrentSession();
 		ReplyBean rb = session.get(ReplyBean.class, no);
+		return rb;
+	}
+	
+	@Override
+	public ReplyBean getReplyByArticleId(int article) {
+		String hql = "FROM ReplyBean rb WHERE rb.article.no = :article";
+		ReplyBean rb = (ReplyBean) factory.getCurrentSession().createQuery(hql).setParameter("article", article).uniqueResult();
 		return rb;
 	}
 	
@@ -160,7 +177,6 @@ public class ArticleDaoImpl implements ArticleDao {
 		LikeOrDislikeBean lb = (LikeOrDislikeBean) factory.getCurrentSession().createQuery(hql).setParameter("member", memberNo).setParameter("article", article).uniqueResult();
 		return lb;
 	}
-	
 	
 	@Override
 	public List<MemberBean> getMemberList() {

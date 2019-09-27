@@ -74,6 +74,7 @@ public class ArticleController {
 		LikeOrDislikeBean lb = new LikeOrDislikeBean();
 		String NoS =Integer.toString(ab.getNo());
 		lb.setArticleNoString(NoS);
+		rb.getArticle().setNoString(NoS);
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
@@ -82,14 +83,19 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value = "/Article", method = RequestMethod.POST)
-	public String processArticleLikeOrDislike(@RequestParam("id") Integer no,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
+	public String processArticleLikeOrDislike(@RequestParam("id") Integer no,@ModelAttribute("LikeOrDislikeBean") LikeOrDislikeBean lb,@ModelAttribute("Reply") ReplyBean rb, Model model,HttpServletRequest request,HttpSession session)throws ParseException {
 		String LikeButton = request.getParameter("button");
+		String LockButton = request.getParameter("lockbutton");
+		if("like".equals(LikeButton)||"dislike".equals(LikeButton)) {
+			
 		int article = Integer.parseInt(request.getParameter("articleNoString"));
 		lb.setArticle(new ArticleBean(article));
 		
 		int memberNo = Integer.parseInt(request.getParameter("member"));
 		lb.setMember(memberNo);
+		
 		ArticleBean ab = service.getArticleById(no);
+		
 		if ("like".equals(LikeButton) && service.getLikeOrDislikeByMemberAndArticle(memberNo,article)=="null") {
             lb.setLikeOrDislike(true);
             ab.setLikeCount(ab.getLikeCount()+1);
@@ -144,7 +150,31 @@ public class ArticleController {
         	service.updateGp(lb);
         	service.editArticle(ab);
         }
-		
+		}
+		if("lock".equals(LockButton)) {
+			int article = Integer.parseInt(request.getParameter("articleString"));
+			lb.setArticle(new ArticleBean(article));
+			int rno = Integer.parseInt(request.getParameter("rnoString"));
+			ReplyBean erb = service.getReplyById(rno);
+			System.out.println("檢查數值" + erb.getNo());
+		if ("lock".equals(LockButton) && erb.getAvailable()==true) {
+			erb.setNo(erb.getNo());
+            erb.setAvailable(false);
+            erb.setContent(erb.getContent());
+            erb.setPostTime(erb.getPostTime());
+            erb.setArticle(new ArticleBean(article));
+            System.out.println("檢查數值" + erb.getNo());
+            service.editReply(erb);
+        } else if ("lock".equals(LockButton) && erb.getAvailable()==false) {
+        	erb.setNo(erb.getNo());
+            erb.setAvailable(true);
+            erb.setContent(erb.getContent());
+            erb.setPostTime(erb.getPostTime());
+            erb.setArticle(new ArticleBean(article));
+            System.out.println("檢查數值" + erb.getNo());
+            service.editReply(erb);
+        }
+		}
 		model.addAttribute("id", no);
 		String NoS =Integer.toString(no);
 		return "redirect:/Article?id="+NoS;
@@ -344,7 +374,7 @@ public class ArticleController {
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 		rb.setPostTimeString(ssdf.format(rb.getPostTime()));
 		String NoS =Integer.toString(rb.getNo());
-		rb.setNoString(NoS);
+		rb.setrnoString(NoS);
 		String articleNoS =Integer.toString(rb.getArticle().getNo());
 		rb.setArticleString(articleNoS);
 		model.addAttribute("ReplyBean", rb);
