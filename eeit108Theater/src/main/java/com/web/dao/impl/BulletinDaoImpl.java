@@ -24,7 +24,7 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate > getdate() and bb.available =true group by bb.bortingId) order by b.no")
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate > getdate() and bb.available =true group by bb.bortingId) order by b.no DESC ")
 				.list();
 		return list;
 	}
@@ -34,7 +34,7 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate < getdate() and bb.available =true group by bb.bortingId) order by b.no")
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate < getdate() and bb.available =true group by bb.bortingId) order by b.no DESC ")
 				.list();
 		return list;
 	}
@@ -44,7 +44,7 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.available = 0 group by bb.bortingId) order by b.no")
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.available = 0 group by bb.bortingId) order by b.no DESC ")
 				.list();
 		return list;
 	}
