@@ -89,9 +89,7 @@
 				  var imagurl=profile.getImageUrl();
 				  var name=profile.getName();
 				  var email=profile.getEmail();
-				  var form = new FormData();
-				  form.append("myImg", imagurl);
-				  form.submit();
+				
 				  document.getElementById("myImg").src = imagurl;
 				  document.getElementById("name").innerHTML = name;
 				  document.getElementById("myP").style.visibility = "hidden";
