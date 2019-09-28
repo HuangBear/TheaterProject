@@ -123,24 +123,15 @@
 					
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
 <!-- 				---------------------------------------------------------	 -->
-						<div id="memberInfo">
-							<article id="main"> 						
-								<h3><a href="#">◎ 個人資訊</a></h3>
-								<br>
-						    		<p>會員名稱：${LoginOK.name}</p>
-								    <p>註冊時間：${LoginOK.registerTime}</p>
-						   <a href="#" class="image featured"><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" style="width:300px;"/></a>
-
+						
 					<div id="memberInfo">
 					<article id="main"> 
 						
 						<header>
-						 <h2>
-							<a href="#">個人資訊</a>
-						 </h2>
-						    <p>會員名稱: ${LoginOK.name}</p>
-						
-						    <p>註冊時間: ${LoginOK.registerTime}</p>
+						 <h3><a href="#">◎ 個人資訊</a></h3>
+						    <br>
+						    		<p>會員名稱：${LoginOK.name}</p>
+								    <p>註冊時間：${LoginOK.registerTime}</p>
 						
 						</header> 
 						   <a href="#" class="image featured"><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" width="200px"/></a>
@@ -271,50 +262,16 @@
 
 <!-- 			    ---------------------------------------------------------- -->
 					</div>
-				</div>
+				
 				
  				
- 				<br><br><br><br><br>				
-				<h3>個人收藏</h3>
-				<hr />   <!--下方電影收藏分隔線 -->
-				<div class="row">
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/now05.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">大叔之愛電影版</a>
-					</h3>
-					</header>
-					<p>OSSANS LOVE THE MOVIE <br>
-					        上映日期：2019/09/06</p>
-					</article>
-					
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/coming02.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">我家有個開心農場</a>
-					</h3>
-					</header>
-					<p>THE BIGGEST LITTLE FARM <br>
-					        上映日期：2019/09/12</p>
-					</article>
-					
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/coming04.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">星際救援</a>
-					</h3>
-					</header>
-					<p>Ad Astra <br>
-					        上映日期：2019/09/20</p>
-					</article>
-				</div>
+ 				
+				
 			</div>
 
 		</div>
-
+</div>
+</div>
 		<!-- Footer -->
 		<jsp:include page="footer.jsp" />
 
