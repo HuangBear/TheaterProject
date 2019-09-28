@@ -37,7 +37,14 @@
 		
 		 <c:choose> 
 				<c:when test="${empty LoginOK.memberImage}">
-				<img  src="<c:url value='/images/frontend/loginicon.png' />"  >
+
+					<c:choose>
+						<c:when test="${empty LoginOK.googleUrl}">
+						<img  src="<c:url value='/images/frontend/loginicon.png' />"  ></c:when>
+						<c:when test="${!empty LoginOK.googleUrl}">
+						<img  src="${LoginOK.googleUrl}"  ></c:when>
+					</c:choose>
+				
 				</c:when>
 				
 				<c:when test="${!empty LoginOK.memberImage}">

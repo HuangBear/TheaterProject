@@ -60,6 +60,7 @@ public class MemberController {
 		session = request.getSession();
 		String email=request.getParameter("registGoogleEmail");
 		String name=request.getParameter("registGoogleName");
+		String GoogleImg=request.getParameter("registGoogleImg");
 		System.out.println("googlemember info:"+email+" "+name);
 		MemberBean GoogleMember=new MemberBean();
 		if (service.checkMemberEmail(email)) {
@@ -79,6 +80,7 @@ public class MemberController {
 			GoogleMember.setEmail(email);
 			GoogleMember.setPassword(email);
 			GoogleMember.setMemberId(email);
+			GoogleMember.setGoogleUrl(GoogleImg);
 			service.save(GoogleMember);
 			GoogleMember =service.findMemberByEmail(email);
 			session.setAttribute("LoginOK", GoogleMember);

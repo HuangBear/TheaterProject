@@ -129,7 +129,7 @@
                 
                 						
                  				</form>
-                 				<button onclick="myFunction()" id="myO" style="visibility:hidden">Sign Out</button>
+                 				<button onclick="myFunction()" id="myO" style="visibility:hidden">Google Sign Out</button>
 		
 			<script type="text/javascript">
 			function onSignIn(googleUser) {
@@ -145,6 +145,7 @@
 				  
 				  document.getElementById("registGoogleName").value = name;
 				  document.getElementById("registGoogleEmail").value = email;
+				  document.getElementById("registGoogleImg").value = imagurl;
 				  document.getElementById("myGoogleform").submit();  
 			 }
 				
