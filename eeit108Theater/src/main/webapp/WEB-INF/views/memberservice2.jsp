@@ -97,18 +97,10 @@
 				  
 				  document.getElementById("registGoogleName").value = name;
 				  document.getElementById("registGoogleEmail").value = email;
-				  //document.getElementById("registGoogleImg").value = imagurl;
-				 // alter(document.getElementById("registGoogleName").value);
-				  //alter(document.getElementById("registGoogleEmail").value);
-				//  document.getElementById("status").innerHTML = '歡迎你 '+name+'!<br><a href=?email='+email+'&name='+name+'/>Continue with Google login</a></p>'
-//  				document.getElementById("googleMemberSubmit").innerHTML = 
-// 	 			'歡迎你 '+name+'!<br><button type="submit" id="googleMemberSubmit"></button>Continue with Google login</p>'
 
 				  
 			 }
-			
-			
-			
+				
 			</script>
 			
 <!--  			<button onclick="myFunction()">Sign Out</button> -->

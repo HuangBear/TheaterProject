@@ -47,10 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/").permitAll()
 		.and().authorizeRequests().antMatchers("/resources/**").permitAll()
-		.and().authorizeRequests().antMatchers("/admin/**").hasAuthority("1")
+		.and().authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("1","2","3")
+		
 //		.and().authorizeRequests().antMatchers("/admin/**").permitAll()
-		.and()
-        .rememberMe()
+		
 		
 		.and().formLogin()
 		.loginPage("/EmpLogin").loginProcessingUrl("/EmpLoginAction")
@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.logout().logoutUrl("/admin/perform_logout").logoutSuccessUrl("/EmpLogin?logout");
 		
+    
 		http.csrf().disable();
 	}
 	

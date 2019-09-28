@@ -6,7 +6,14 @@
 <!-- Nav -->
 <style>
 	.foo1:hover{color:gold;}
+	#prfilePic {border-radius: 50%;
+				width:50px;
+				height:50px}
+    
+
 </style>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="309951267841-3oupgh1elatdub7tc7f4iah7eorg5h31.apps.googleusercontent.com">
 
 <nav id="nav">
 	<ul>
@@ -30,12 +37,12 @@
 		
 		 <c:choose> 
 				<c:when test="${empty LoginOK.memberImage}">
-				<img src="<c:url value='/images/frontend/loginicon.png'/>">
+				<img  src="<c:url value='/images/frontend/loginicon.png' />"  >
 				</c:when>
 				
 				<c:when test="${!empty LoginOK.memberImage}">
 
-				<img src="<c:url value='/getMemberPicture/${LoginOK.no}'/>">
+				<img id="prfilePic" src="<c:url value='/getMemberPicture/${LoginOK.no}'/>">
 				</c:when>
 				                        
 		</c:choose>  
@@ -57,13 +64,21 @@
 				<li><a href="<c:url value='/memberinfo'/>">會員設定</a></li>
 				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
 				<li><a href="<c:url value='/qaservice'/>">客服中心</a></li>
-				<li><a href="<c:url value='/memberLogout'/>">登出</a></li>
-
+				<li><a href="<c:url value='/memberLogout'/>" onclick="googleLogOut()">登出</a></li>
+				
 				</ul>
+				
 				
 				</c:when>                        
 		</c:choose>  
-		
+		<div class="g-signin2" data-onsuccess="onSignIn" id="myP"  style="visibility:hidden"></div>
+		<script>
+			function googleLogOut() {
+			
+			gapi.auth2.getAuthInstance().disconnect();
+    		location.reload();
+			}
+			</script>
 <!-- 		<a href="memberservice">會員中心</a> -->
 		
 		
