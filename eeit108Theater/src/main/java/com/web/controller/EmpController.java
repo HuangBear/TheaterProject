@@ -113,7 +113,10 @@ public class EmpController {
 		session.setAttribute("employees", list);
 		model.addAttribute("empEmail", empEmail);
 		EmployeeBean eb1 = service.findByEmail(empEmail);
+		String position=service.checkEmpPermission(eb1);
+		model.addAttribute("position", position);
 		model.addAttribute("now", new Date());
+		
 		session.setAttribute("employeeBean1",eb1);
 		session.setAttribute("empName", eb1.getName());
 		return "admin/empIndexA";
@@ -247,6 +250,8 @@ public class EmpController {
 			//employeeBean=service.findByPrimaryKey(pk);
 			redirectAttributes.addFlashAttribute("name", employeeBean.getName());
 			redirectAttributes.addFlashAttribute("welcome", " 更新成功");
+			String position=service.checkEmpPermission(employeeBean);
+			model.addAttribute("position", position);
 			session.setAttribute("AAA", employeeBean.getEmail());
 			//employeeBean.setNo(pk);
 			service.updateEmp(employeeBean);
