@@ -23,4 +23,6 @@ public interface BulletinDao {
 
 	BulletinBean getBulletinById(Integer bulletin_no);
 
+	List<BulletinBean> getDiscount(String date);
+
 }

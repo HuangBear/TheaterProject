@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,13 @@ public class BulletinServiceImpl {
 		statusBulletin.add(getDeadBulletin);
 
 		return statusBulletin;
+	}
+
+	@Test
+	@Transactional
+	public BulletinBean getDiscount(String date) {
+		dao.getDiscount(date);
+		return null;
 	}
 
 	@Transactional

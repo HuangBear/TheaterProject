@@ -93,4 +93,15 @@ public class BulletinDaoImpl implements BulletinDao {
 		return bb;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<BulletinBean> getDiscount(String date) {
+		Session session = factory.getCurrentSession();
+		List<BulletinBean> list = new ArrayList<>();
+		list = session.createQuery(
+				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId  and bb.endDate > getdate() and bb.startDate < :date  and discount != 0 and bb.available =true group by bb.bortingId) order by b.no DESC ")
+				.setParameter("date", date).list();
+		return list;
+	}
+
 }
