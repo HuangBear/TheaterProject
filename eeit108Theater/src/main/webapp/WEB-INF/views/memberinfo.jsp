@@ -28,12 +28,20 @@
 	$(document).ready(function() {         
 		$("#button1").click(function() { 
 		$("#memberInfo").show(); 
-		$("#memberEdit").hide();      
+		$("#memberEdit").hide();
+		$("#memberChat").hide();
 		});
 
 		$("#button2").click(function() { 
 		$("#memberEdit").show(); 
-		$("#memberInfo").hide();      
+		$("#memberInfo").hide(); 
+		$("#memberChat").hide();
+		});
+		
+		$("#button3").click(function() { 
+		$("#memberChat").show(); 
+		$("#memberInfo").hide();
+		$("#memberEdit").hide();
 		});
 	});
 </script>
@@ -97,7 +105,7 @@
 							<div class="col-8">
 								<p>
 								<h4>申訴進度</h4>
-								<p class="pclr"><a href="#">客服答覆情況</a></p>
+								<p class="pclr" id=button3><a href="#">即時客服</a></p>
 							</div>
 							
 							<div class="col-4">
@@ -131,16 +139,9 @@
 								<header><h3>喜愛電影類型：</h3></header>
 							    	<p>視情況輸入內文2</p>
 							</section> 
-							<section> 
-						 		<header><h3>標題2</h3></header>
-						    
-						    <div id="websocketdiv">
-								<textarea id="area" style="font-size: 20px; font-family: '微軟正黑體';
-								 margin-top: 20px;" readonly="readonly" rows="10" cols="42"></textarea>
-								<input type="text" id="text" size="53" />
-								<input id="sendmsg" type="button" value="送出" />
-							</div>
-							</section> 
+							
+						   
+							
 							</article>
 						</div>
 
@@ -214,7 +215,8 @@
 							<dl>
 							<dd>
 								<label for="uploadImage" style="text-align:left">上傳照片：</label>							
-                            	<form:input type="file" id="uploadImage" class="form-control" 
+                            	<img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"   width="250">
+                            	<br><form:input type="file" id="uploadImage" class="form-control" 
                                 	path="uploadImage"/> 							
 							</dl>									
 
@@ -229,6 +231,26 @@
 						</section> 					
 						</article>
 					</div>
+<!-- 			    ---------------------------------------------------------- -->
+					<div id="memberChat" style="display:none">
+							<article id="main"> 						
+								<h3><a href="#">◎ 即時客服</a></h3>
+								<br>
+						    		<p>會員名稱：${LoginOK.name}</p>
+								    
+						   
+						    <section>
+						    <div id="websocketdiv">
+								<textarea id="area" style="font-size: 20px; font-family: '微軟正黑體';
+								 margin-top: 20px;" readonly="readonly" rows="10" cols="42"></textarea>
+								<input type="text" id="text" size="53" />
+								<input id="sendmsg" type="button" value="送出" />
+							</div>
+							</section> 
+							</article>
+						</div>
+
+
 <!-- 			    ---------------------------------------------------------- -->
 					</div>
 				</div>

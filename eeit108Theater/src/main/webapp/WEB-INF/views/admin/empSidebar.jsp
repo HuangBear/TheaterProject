@@ -17,12 +17,14 @@
           <i class="fas fa-fw fa-table"></i>
           <span>員工清單</span>
         </a>
+        </li>
+        
         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="Mem_list">
           <i class="fas fa-fw fa-table"></i>
           <span>會員清單</span></a>
         </li>
-        </li>
+        
         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="Table2">
           <i class="fas fa-fw fa-table"></i>
@@ -34,11 +36,13 @@
           <i class="fas fa-fw fa-table"></i>
           <span>新增員工</span></a>
         </li>
+        
         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="movie_add">
           <i class="fas fa-fw fa-table"></i>
           <span>新增電影</span></a>
         </li>
+        
         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="newBulletin">
           <i class="fas fa-fw fa-table"></i>

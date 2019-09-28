@@ -123,7 +123,11 @@ public class AllController {
 	{
 		return "memberservice";
 	}
-	
+	@RequestMapping("/memberservice2")
+	public String memberservice2()
+	{
+		return "memberservice2";
+	}
 	@RequestMapping("/login")
 	public String login()
 	{

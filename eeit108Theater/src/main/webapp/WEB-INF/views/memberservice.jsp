@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -35,6 +34,8 @@
 		$("#loginview").hide();      
 		});
 	});
+	
+	
 </script>
 
 
@@ -106,15 +107,14 @@
 									 
 								<dl><dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
 									 重填</form:button><br>	
-						      	 
-								<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+						    
 								
-<!-- 								<a href="#" class="image fit" ><img src="images/facebooklogin.jpg" -->
-<!-- 									alt="" style="width:450px; display:block; margin:auto;"/></a></fb:login-button><br> -->
-									
-<!-- 								<a href="#" class="image fit"><img src="images/googlelogin.jpg" -->
-<!-- 									alt="" style="width:450px; display:block; margin:auto;"/></a> -->
-<!-- 								<button type="button" id="btnSignIn"></button> -->
+								<!--用戶一鍵Google登入或綁定Google帳戶時使用↓-->
+<!--     							<button type="button" href="memberservice2" id="google">Google登入</button> -->
+    						
+								<a href="memberservice2">Google登入</a>
+								
+
 								
 							</dd>
 							</dl>
@@ -164,13 +164,7 @@
 									autocomplete="off" maxlength="50" />
 							</dl>
 
-<!-- 							<dl> -->
-<!-- 							<dd> -->
-<!-- 								<label for="account" style="text-align:left">*請再輸入密碼一次：</label> -->
-<%-- 								<form:input id="password" path="password" class="text" --%>
-<%-- 									type="password" placeholder="請重複上面所輸入之密碼 (英文大小寫有差別 )" tabindex="2" --%>
-<%-- 									autocomplete="off" maxlength="50" /> --%>
-<!-- 							</dl> -->
+
 
 							<dl>
 							<dd>
@@ -327,125 +321,26 @@
 		<script src="assets/js/main.js"></script>
 		
 		<!-- 引用jQuery-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <!--從 Web.config檔 抓取Googl App Client ID--> 
-    <script type="text/javascript">
-        let GoolgeApp_Cient_Id = "@WebConfigurationManager.AppSettings["Google_clientId_forLogin"]";
-        let id_token_to_userIDUrl = "@Url.Action("Test","Home")";  
-    </script>
-    <!--引用Google Sign-in必須的.js，callback function(GoogleSigninInit)名稱自訂 -->
-    <script src="https://apis.google.com/js/platform.js?onload=GoogleSigninInit" async defer></script>
-
+    
+    
     <!--以下請放置到*.js檔-->
     <script type="text/javascript">
     
-    function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-    	  console.log('statusChangeCallback');
-    	  console.log(response);                   // The current login status of the person.
-    	  if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-    	    testAPI();  
-    	  } else {                                 // Not logged into your webpage or we are unable to tell.
-    	    document.getElementById('status').innerHTML = 'Please log ' +
-    	      'into this webpage.';
-    	  }
-    	}
+$(function(){
+		
+		var G_CLIENT_ID = "309951267841-3oupgh1elatdub7tc7f4iah7eorg5h31.apps.googleusercontent.com";
+// 		var G_REDIRECT_URL = "http://localhost:8080/eeit108Theater/identity.do?action=google_login_Action";
+		var G_REDIRECT_URL = "http://localhost:8080/eeit108Theater/GoogleIdentity?action=google_login_Action";
+		var G_SCOPE = 'https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile';
+		
+		
 
+		
+		
+	
+	})
 
-    	function checkLoginState() {               // Called when a person is finished with the Login Button.
-    	  FB.getLoginStatus(function(response) {   // See the onlogin handler
-    	    statusChangeCallback(response);
-    	  });
-    	}
-
-
-    	window.fbAsyncInit = function() {
-    	  FB.init({
-    	    appId      : '{app-id}',
-    	    cookie     : true,                     // Enable cookies to allow the server to access the session.
-    	    xfbml      : true,                     // Parse social plugins on this webpage.
-    	    version    : '{api-version}'           // Use this Graph API version for this call.
-    	  });
-
-
-    	  FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
-    	    statusChangeCallback(response);        // Returns the login status.
-    	  });
-    	};
-
-
-    	(function(d, s, id) {                      // Load the SDK asynchronously
-    	  var js, fjs = d.getElementsByTagName(s)[0];
-    	  if (d.getElementById(id)) return;
-    	  js = d.createElement(s); js.id = id;
-    	  js.src = "https://connect.facebook.net/en_US/sdk.js";
-    	  fjs.parentNode.insertBefore(js, fjs);
-    	}(document, 'script', 'facebook-jssdk'));
-
-
-    	function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-    	  console.log('Welcome!  Fetching your information.... ');
-    	  FB.api('/me', function(response) {
-    	    console.log('Successful login for: ' + response.name);
-    	    document.getElementById('status').innerHTML =
-    	      'Thanks for logging in, ' + response.name + '!';
-    	  });
-    	}
-    	  
-    
-    
-    
-        //jQuery處理button click event 當畫面DOM都載入時....
-        $(function () {
-            $("#btnSignIn").on("click", function () {
-                GoogleLogin();//Google 登入
-            });
-            $("#btnDisconnect").on("click", function () {
-                Google_disconnect();//和Google App斷連
-            });
-        });
-
-        function GoogleSigninInit() {
-            gapi.load('auth2', function () {
-                gapi.auth2.init({
-                    client_id: GoolgeApp_Cient_Id//必填，記得開發時期要開啟 Chrome開發人員工具 查看有沒有403錯誤(Javascript來源被禁止)
-                });
-            });//end gapi.load
-        }//end GoogleSigninInit function
-
-        
-        function GoogleLogin() {
-            let auth2 = gapi.auth2.getAuthInstance();//取得GoogleAuth物件
-            auth2.signIn().then(function (GoogleUser) {
-                console.log("Google登入成功"); 
-                let user_id =  GoogleUser.getId();//取得user id，不過要發送至Server端的話，請使用↓id_token   
-                let AuthResponse = GoogleUser.getAuthResponse(true) ;//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
-                let id_token = AuthResponse.id_token;//取得id_token
-                $.ajax({
-                    url: id_token_to_userIDUrl,
-                    method: "post",
-                    data: { id_token: id_token },
-                    success: function (msg) {
-                        console.log(msg);
-                    }
-                });//end $.ajax 
-               
-            },
-                function (error) {
-                    console.log("Google登入失敗");
-                    console.log(error);
-                });
-
-        }//end function GoogleLogin
-         
-
-         
-        function Google_disconnect() {
-            let auth2 = gapi.auth2.getAuthInstance(); //取得GoogleAuth物件
-
-            auth2.disconnect().then(function () {
-                console.log('User disconnect.');
-            });
-        } 
+      
     </script>
 </body>
 </html>

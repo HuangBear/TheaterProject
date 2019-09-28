@@ -134,6 +134,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeDao.getEmployeeByEmail(email);
 	}
 
+	@Override
+	public EmployeeBean findByEmployeeName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	

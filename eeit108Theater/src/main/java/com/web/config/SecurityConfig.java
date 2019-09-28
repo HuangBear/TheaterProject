@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.web.service.AuthenticationService;
+import com.web.service.EmployeeService;
 
 @EnableWebSecurity
 @Configuration
@@ -24,6 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	public EmployeeService empServ;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

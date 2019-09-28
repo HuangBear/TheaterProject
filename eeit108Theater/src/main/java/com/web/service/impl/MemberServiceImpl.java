@@ -46,7 +46,22 @@ public class MemberServiceImpl implements MemberService{
 		memberDao.updateMember(oldMemBean);
 		
 	}
-
+	@Override
+	public void updateMemberStatus(MemberBean memBean) {
+		MemberBean oldMemBean=memberDao.getMemberByNo(memBean.getNo());
+		oldMemBean.setName(memBean.getName());
+		
+		
+		oldMemBean.setBanCounter(memBean.getBanCounter());
+		oldMemBean.setAvailable(memBean.getAvailable());
+		oldMemBean.setCommentPermission(memBean.getCommentPermission());
+		
+		
+		
+	
+		memberDao.updateMember(oldMemBean);
+		
+	}
 	@Override
 	public void downGradeMember(MemberBean memBean) {
 		// TODO Auto-generated method stub
@@ -68,7 +83,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberBean findMemberByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		return memberDao.getMemberByEmail(email);
 	}
 
 	@Override
@@ -100,19 +115,20 @@ public class MemberServiceImpl implements MemberService{
 			//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 			
+			if(memberBean.getBirthdayString()!=null) {
 			try {
 				memberBean.setBirthday(ssdf.parse(memberBean.getBirthdayString()));  //setmember生日 將輸入的string 轉成date type
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}}
 			memberBean.setRegisterTime(new Date()); //set member註冊時間 (設計的表格是設定not null 一定要填)
 			memberBean.setAvailable(true); //set member Available 預設true:在職 false:停權
 			memberBean.setCommentPermission(true); //set member Permission 預設true
 			memberBean.setBanCounter(0);
 			memberBean.setAboutMe("該會員尚未填寫'關於我'，可於會員資料編輯中填寫，方便大家認識你喔。");;
 			//save member 時 如果想要依照需求額外儲存內容 可加在下面
-			
+			System.out.println("Going to memberRegisterDAO!");
 			memberDao.saveMember(memberBean);
 			
 		}else {

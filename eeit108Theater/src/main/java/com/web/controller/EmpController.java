@@ -113,7 +113,7 @@ public class EmpController {
 		session.setAttribute("employees", list);
 		model.addAttribute("empEmail", empEmail);
 		EmployeeBean eb1 = service.findByEmail(empEmail);
-
+		model.addAttribute("now", new Date());
 		session.setAttribute("employeeBean1",eb1);
 		session.setAttribute("empName", eb1.getName());
 		return "admin/empIndexA";
@@ -238,20 +238,29 @@ public class EmpController {
 			}
 		}}
 		
-		if (true) {
+		if (employeeBean.getPassword() != null
+				&& employeeBean.getPassword().length() != 0 && employeeBean.getName() != null
+				&& employeeBean.getName().length() != 0 
+				&& employeeBean.getPhoneNum() != null && employeeBean.getPhoneNum().length() != 0
+				&& employeeBean.getEmail() != null && employeeBean.getEmail().length() != 0
+				&& employeeBean.getEmployeeId()!= null && employeeBean.getEmployeeId().length() != 0) {
 			//employeeBean=service.findByPrimaryKey(pk);
 			redirectAttributes.addFlashAttribute("name", employeeBean.getName());
 			redirectAttributes.addFlashAttribute("welcome", " 更新成功");
 			session.setAttribute("AAA", employeeBean.getEmail());
 			//employeeBean.setNo(pk);
 			service.updateEmp(employeeBean);
-			return "redirect:/admin/empIndexA";
+			List<EmployeeBean> listEmp = service.getAllEmployees();
+			model.addAttribute("employees", listEmp);
+//			return "redirect:/admin/empIndexA#update";
+			return "redirect:/admin/empIndexA#Table";
 		} 
 		else {
 			redirectAttributes.addFlashAttribute("error", "失敗,資料缺失");
-			return "redirect:/admin/empIndexA";
+			return "redirect:/admin/empIndexA#Table";
 		}
 	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/admin/EmpResign")
 	public String ResignEmp(@RequestParam(value = "pk",required = false)Integer pk,
 			Model model,EmployeeBean employeeBean) {
