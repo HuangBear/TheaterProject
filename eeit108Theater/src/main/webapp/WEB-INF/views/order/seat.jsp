@@ -59,7 +59,7 @@ form label {
 
 <script>
 	var SelectedSeat = [];
-	var MAX = ${ticketCnt};
+	var MAX = ${order.ticketCnt};
 	var labelChecked = "ui-checkboxradio-checked ";
 	var labelActive = "ui-state-active ";
 	var labelDisabled = "ui-checkboxradio-disabled "
@@ -182,8 +182,8 @@ form label {
 									<div>${order.timeTable.movie.rating}</div>
 								</div>
 								<div class="col-md-6 h2 col-xs-8">
-									<div>${order.timeTable.movieName}</div>
-									<div>${order.timeTable.movie.engMovieName}</div>
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
 								</div>
 								<div class="col-md-4 col-xs-12">
 									<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
@@ -192,10 +192,10 @@ form label {
 							</div>
 							<div style="color: white; background-color: grey;">
 								<div class="h2" style="text-align: center">選擇座位</div>
-								<p style="text-align: center">僅能選擇${ticketCnt}個座位，尚未選滿前無法進行下一步</p>
+								<p style="text-align: center">請選擇${order.ticketCnt}個座位</p>
 							</div>
 							<div class="overflow-auto">
-								<div id="screen" style="min-width: 550px; text-align: center; margin-bottom: 20px">
+								<div id="screen" style="min-width: 550px; text-align: center; margin-bottom: 10%;">
 									<button type="button" class="btn btn-secondary btn-lg" style="width: 80%" disabled>Screen</button>
 								</div>
 								<div class="position-relative" style="width: 90%; min-width: 550px; margin: 0 auto;">
@@ -214,7 +214,7 @@ form label {
 					</div>
 					<div class="row mt-5">
 						<div class="col-md-12">
-							<input id="btn-submit" class="btn float-right disabled" type="submit" value="Submit" disabled>
+							<input id="btn-submit" class="btn float-right disabled" type="submit" value="下一步" disabled>
 						</div>
 					</div>
 				</form>

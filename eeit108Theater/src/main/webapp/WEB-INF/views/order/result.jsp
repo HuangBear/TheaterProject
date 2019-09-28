@@ -50,15 +50,14 @@ p {
 								<div>${order.timeTable.movie.rating}</div>
 							</div>
 							<div class="col-md-6 h2 col-xs-8">
-									<div>${order.timeTable.movieName}</div>
-									<div>${order.timeTable.movie.engMovieName}</div>
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
 								</div>
 							<div class="col-md-4 col-xs-12">
 								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 								<div>影廳 ${order.timeTable.theater}</div>
 								<div>
-									座位
-									<c:forEach var="seat" items="${seats}"> ${seat}</c:forEach>
+									座位 ${order.seatsString}
 								</div>
 							</div>
 
@@ -110,7 +109,6 @@ p {
 												<p style="text-align: right;">${item.unitPrice}X${item.quantity}=${item.sumPrice}</p>
 											</c:forEach>
 										</td>
-
 									</tr>
 									<tr>
 										<td>
