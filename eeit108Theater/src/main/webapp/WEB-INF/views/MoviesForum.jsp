@@ -90,7 +90,7 @@
 
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header1">
+		<div id="header">
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
@@ -106,7 +106,7 @@
 					</header>
 
 					<div id="tabs"
-						style="width: 1080px; margin: auto; text-align: center;">
+						style="width: 1100px; margin: auto; text-align: center;">
 						<ul>
 							<li><a href="#tabs-1">Popularity - 人氣排行</a></li>
 							<li><a href="#tabs-2">Now Showing - 現正熱映</a></li>
@@ -122,7 +122,7 @@
 											<td><a
 												href="<spring:url value='/MoviesForum/Articles?id=${Movie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${Movie.movieName} </a></td>
+												style="font-size: 24px"> ${Movie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -137,7 +137,7 @@
 											<td><a
 												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${ReleasedMovie.movieName} </a></td>
+												style="font-size: 26px"> ${ReleasedMovie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -152,7 +152,7 @@
 											<td><a
 												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${ReleasedMovie.movieName} </a></td>
+												style="font-size: 26px"> ${ReleasedMovie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -167,7 +167,7 @@
 											<td style="width: 500px; height: 50px;"><a
 												href="<spring:url value='/MoviesForum/Articles?id=${ComingMovie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${ComingMovie.movieName} </a></td>
+												style="font-size: 26px"> ${ComingMovie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -187,7 +187,7 @@
 											<td style="width: 500px; height: 50px;"><a
 												href="<spring:url value='/MoviesForum/Articles?id=${Movie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${Movie.movieName} </a></td>
+												style="font-size: 26px"> ${Movie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -203,7 +203,7 @@
 											<td style="width: 500px; height: 50px;"><a
 												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${ReleasedMovie.movieName} </a></td>
+												style="font-size: 26px"> ${ReleasedMovie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -219,7 +219,7 @@
 											<td style="width: 500px; height: 50px;"><a
 												href="<spring:url value='/MoviesForum/Articles?id=${ComingMovie.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 16px"> ${ComingMovie.movieName} </a></td>
+												style="font-size: 26px"> ${ComingMovie.movieName} </a></td>
 										</tr>
 									</c:forEach>
 								</tbody>

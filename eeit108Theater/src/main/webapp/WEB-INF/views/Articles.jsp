@@ -26,48 +26,75 @@
 </script>
 <style type="text/css">
 .forum {
-	width: 800px;
+	width: 100px;
 	border: 1px solid gray;
 	border-radius: 25px;
 	margin: auto;
+	padding: 15px 20px;
+	text-align: left;
 }
 
 .forum1 ul li {
 	display: inline;
-}
-
-.tb1 {
-	text-align: center;
 }
 </style>
 </head>
 </head>
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
-	<div id="header1">
+		<div id="header">
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
-		<div style="text-align: center" class="jumbotron">
-			<h1>${title}</h1>
-			<p>${subtitle}</p>
+		<div class="forum">
+			<c:choose>
+				<c:when test="${empty LoginOK}">
+					<a href="<spring:url value='/memberservice' />"
+						class="btn btn-primary btn-lg" style="font-size: 26px;">發文</a>
+					<br>
+				</c:when>
+				<c:when test="${!empty LoginOK}">
+					<a href="<spring:url value='/add' />"
+						class="btn btn-primary btn-lg" style="font-size: 26px;">發文</a>
+					<br>
+				</c:when>
+			</c:choose>
 		</div>
-		<hr
-			style="height: 1px; border: none; color: #333; background-color: #333;">
-		<a href="<spring:url value='/add' />" class="btn btn-primary btn-lg"
-			style="font-size: 16px">發文</a><BR>
+		<div class="wrapper style1">
 
-				<c:forEach var='Article' items='${Articles}'>
-					<div class="col-sm-6 col-md-3" style="width: 900px; height: 90px">
+			<a></a>
+			<div class="container">
+				<article id="main" class="special">
+
+					<c:forEach var='Article' items='${Articles}'>
+						<c:choose>
+							<c:when test="${Article.available==true}">
+								<div class="col-sm-6 col-md-5"
+									style="width: 1080px; border: 1px solid gray; border-radius: 25px; margin: auto; height: 90px; margin: auto; padding: 15px 20px; text-align: center;">
 									<a href="<spring:url value='/Article?id=${Article.no}' />"
 										class="btn btn-primary btn-lg btn-block"
-										style="font-size: 16px"> <span
+										style="font-size: 26px;"> <span
 										class="glyphicon-info-sigh glyphicon"></span> ${Article.title}
 										發文者 : ${Article.author.name} 發文時間: ${Article.postTime}
 									</a>
-					</div>
-				</c:forEach>
-			
+								</div>
+							</c:when>
+							<c:when test="${Article.available==false}">
+								<div class="col-sm-6 col-md-5"
+									style="width: 1080px; border: 1px solid gray; border-radius: 25px; margin: auto; height: 90px; margin: auto; padding: 15px 20px; text-align: center;">
+									<a class="btn btn-primary btn-lg btn-block"
+										style="font-size: 26px;"> <span
+										class="glyphicon-info-sigh glyphicon"></span> 這篇文章已經被鎖
+									</a>
+								</div>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+
+				</article>
+			</div>
+		</div>
+
 		<jsp:include page="footer.jsp" />
 	</div>
 </body>

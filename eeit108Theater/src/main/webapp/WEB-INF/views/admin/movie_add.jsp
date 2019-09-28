@@ -17,8 +17,8 @@
         <div class="container">
       <div class="card card-register mx-auto mt-5">
       <div class="card-header">7-1 Cinema 新增電影</div>
-      <div class="card-body">
-        <form:form method="POST" action="movie_add" modelAttribute="movieBean">
+      <div class="card-body">                            
+        <form:form method="POST" modelAttribute="movie" enctype="multipart/form-data" action = "movie_add">
         
           <div class="form-group">    
                 <div class="form-label-group">
@@ -61,7 +61,7 @@
           <div class="form-group">
             <div class="form-label-group">
               <form:input type="date" id="openingDate" class="form-control" 
-              placeholder="openingDate" required="required" path="openingDate"/>
+               placeholder="openingDate" required="required" path="openingDate"/> 
               <label for="openingDate">上映時間</label>
             </div>
           </div>
@@ -71,20 +71,10 @@
           <div class="form-group">
             <div class="form-label-group">
               <form:input type="date" id="endingDate" class="form-control" 
-              placeholder="endingDate" required="required" path="endingDate"/>
+              placeholder="endingDate" required="required" path="endingDate"/> 
               <label for="endingDate">下檔時間</label>
             </div>
           </div>
-          
-         
-          
-          <div class="form-group">    
-          	<div class="form-label-group">
-            	<form:input type="text" id="movieName" class="form-control" 
-                  placeholder="movieName" required="required" autofocus="autofocus" path="movieName"/>
-                  <label for="movieName">片名</label>
-                </div>
-         </div>
           
           <div class="form-group">
             <div class="form-label-group">
@@ -102,9 +92,9 @@
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="introduction" class="form-control" 
+              <form:textarea id="introduction" class="form-control" 
               placeholder="introduction" required="required" path="introduction"/>
-              <label for="introduction">簡介</label>
+              <label for="introduction"></label>
             </div>
           </div>
           <div class="form-group">
@@ -117,15 +107,22 @@
           <div class="form-group">
             <div class="form-label-group">
               <form:input type="text" id="trailerLink" class="form-control" 
-              placeholder="trailerLink" required="required" path="trailerLink"/>
+              placeholder="trailerLink" required="required" path="trailerLink"/> 
               <label for="trailerLink">預告片</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <form:input type="file" id="movieImage" class="form-control" 
-              placeholder="movieImage" required="required" path="movieImage"/>
-              <label for="movieImage">劇照</label>
+              <form:input type="text" id="company" class="form-control" 
+              placeholder="company" required="required" path="company"/>
+              <label for="company">發行公司</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <form:input type="file" id="uploadImage" class="form-control" 
+            placeholder="uploadImage" required="required" path="uploadImage"/> 
+              <label for="uploadImage">劇照</label>
             </div>
           </div>
           

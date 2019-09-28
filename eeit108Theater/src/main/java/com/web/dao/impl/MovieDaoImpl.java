@@ -51,17 +51,41 @@ public class MovieDaoImpl implements MovieDao{
 		return mb;
 				
 	}
+	
+	@Override
+	public MovieBean getMovieByName(String name) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MovieBean m WHERE m.movieName = :name";
+		MovieBean mb = (MovieBean) session.createQuery(hql).setParameter("name", name).uniqueResult();
+		return mb;
+		
+	}
 
 	@Override
 	public List<MovieBean> getMoviesByColumn(String columnValue, String columnName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MovieBean> getOffMovies() {
+		String hql = "FROM MovieBean m WHERE m.endingDate < :mdate";
+		Session session = null;
+		List<MovieBean> list = new ArrayList<>();
+		session = factory.getCurrentSession();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String parameter = sdf.format(date);
+		java.sql.Date today = java.sql.Date.valueOf(parameter);
+		list = session.createQuery(hql).setParameter("mdate", today).getResultList();
+		return list;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getReleasedMovies() {
-		String hql = "FROM MovieBean m WHERE m.openingDate <= :mopeningDate";
+		String hql = "FROM MovieBean m WHERE m.openingDate <= :mopeningDate and m.endingDate >= :mopeningDate ORDER BY m.openingDate DESC";
 		Session session = null;
 		List<MovieBean> list = new ArrayList<>();
 		session = factory.getCurrentSession();
@@ -116,5 +140,7 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

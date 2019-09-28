@@ -9,14 +9,83 @@
 <head>
 <title>716影城 - 業務專區</title>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/main.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
+
 <noscript>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous">  
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="assets/js/jR3DCarousel.min.js"></script>
+
+
+<script type="text/javascript">
+
+		$(document).ready(function(){
+			var slideImages = [ {src: 'images/frontend/biz01.jpg'},
+	             		 		{src: 'images/frontend/biz02.jpg'},
+	              				{src: 'images/frontend/biz03.jpg'},
+	              				{src: 'images/frontend/biz04.jpg'}]
+			//var jR3DCarousel;
+	
+		jR3DCarousel = $('.jR3DCarouselGallery').jR3DCarousel({
+				width: 1210, 		/* largest allowed width */
+				height: 520, 		/* largest allowed height */
+				slides: slideImages /* array of images source */
+		});
+	
+		var carouselCustomeTemplateProps =  {
+	 			width: 1210, 				/* largest allowed width */
+			  	height: 516, 				/* largest allowed height */
+			  	slideLayout : 'fill',     /* "contain" (fit according to aspect ratio), "fill" (stretches object to fill) and "cover" (overflows box but maintains ratio) */
+			  	animation: 'slide3D', 	/* slide | scroll | fade | zoomInSlide | zoomInScroll | slide3D */
+			  	animationCurve: 'ease',
+			  	animationDuration: 1000,
+			  	animationInterval: 1000,
+			  	slideClass: 'jR3DCarouselCustomSlide',
+			  	autoplay: true,
+			  	controls: true,			/* control buttons */
+			  	navigation: 'circles'			/* circles | squares | '' */,
+			  	perspective: 2000,
+			  	rotationDirection: 'ltr',
+			  	onSlideShow: slideShownCallback
+		}
+	
+		function slideShownCallback($slide){
+			console.log("Slide shown: ", $slide.find('img').attr('src'))
+		}
+
+		jR3DCarouselCustomeTemplate = $('.jR3DCarouselGalleryCustomeTemplate').jR3DCarousel(carouselCustomeTemplateProps);
+
+  		})
+</script>
+
+<style type="text/css">
+
+	.jR3DCarouselGallery,.jR3DCarouselGalleryCustomeTemplate {
+		margin: 0 auto; /* optional - if want to center align */
+	}
+
+	.jR3DCarouselGalleryCustomeTemplate .captions{
+		position: relative;
+		padding: 4px 0;
+		bottom: 27px;
+		background: #ec1c8e;
+		display:block			
+	}
+
+	.jR3DCarouselGalleryCustomeTemplate a{
+		text-decoration: none;			
+	}
+	
+</style>
+
+
 </head>
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
@@ -28,13 +97,27 @@
 		<div class="wrapper style1">
 
 			<div class="container">
-				<article id="main" class="special"> <header>
-				<h2>
-					<a href="#">業務專區</a>
-				</h2>
-				<p></p>
-				</header> <a href="#" class="image featured"><img src="images/frontend/pic06.jpg"
-					alt="" /></a>
+				<article id="main" class="special"> 	
+					<div class="jR3DCarouselGalleryCustomeTemplate" style="margin:auto;transition:transform 1000ms;">
+						<div class="jR3DCarouselCustomSlide">
+							<img src="images/frontend/biz01c.jpg" />
+						</div>
+			
+						<div class="jR3DCarouselCustomSlide">
+							<img src="images/frontend/biz02c.jpg" />			
+						</div>
+			
+						<div class="jR3DCarouselCustomSlide">
+							<img src="images/frontend/biz03c.jpg" />
+						</div>
+						
+						<div class="jR3DCarouselCustomSlide">
+							<img src="images/frontend/biz04c.jpg" />
+						</div>
+					</div>
+				
+				<br><br><br>
+				<header><h2><a href="#">業務專區</a></h2></header> 
 				<hr>
 				<section> 
 					<header>
@@ -98,6 +181,7 @@
 						*新片上映首週、假日與假日前一晚,需搭配可樂爆米花組合餐飲。 <br>
 						-電影介紹 開放下載中 請點選上方附件(不定期更新)</p>
 				</section></article>
+				
 				<hr />
 				<div class="row">
 					<article class="col-4 col-12-mobile special"> <a href="#"
@@ -153,5 +237,9 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery-2.1.4.min.js"></script>
+		<script src="assets/js/jR3DCarousel.js"></script>
+		
+
 </body>
 </html>

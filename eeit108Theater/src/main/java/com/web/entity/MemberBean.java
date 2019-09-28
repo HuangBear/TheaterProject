@@ -73,7 +73,7 @@ public class MemberBean implements Serializable{
 	private Set<ArticleBean> articles;//B, O2M
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_member_id", referencedColumnName = "member_no")
+	@JoinColumn(name = "fk_member_no", referencedColumnName = "member_no")
 	private Set<LikeOrDislikeBean> likeOrDislikes;//U, O2M
 	
 	public MemberBean(Integer no) {

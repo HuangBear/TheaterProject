@@ -7,7 +7,7 @@
 
 <html>
 <head>
-<title>716影城 - 場次查詢</title>
+<title>716影城 - 電影討論區</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -17,41 +17,20 @@
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
-<style>
-	.logo{width:15%;
-		 }
-		 
-	.content {overflow: center;
-              width: 800px;
-              padding-bottom: 20px;
-              border: 3px solid #797777;
-              border-radius: 20px;
-        	 }
-        
-    .title {background-color: rgb(186, 187, 187);
-            line-height: 2.5em;
-            color: #F0F0F0;
-            /* padding-left: 20px; */
-            text-align: center;
-            border-radius: 20px;
-           }
-        
-    .div1 {width: 720px;
-           margin:2% 0%;
-           text-align: center;
-           }
-           
-    .div2 {width: 720px;
-           margin:2% 0%;
-           text-align: left;
-           }           
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous">  
+</script>
 
-    .div3 {width: 720px;
-           text-align: center;
-           }
+<style>
+	.estb{text-align:center;
+	}
 
 </style>
+
 </head>
+
+
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
 <div id="header1">
@@ -61,42 +40,33 @@
 		<!-- Main -->
 		<div class="wrapper style1">
 
-			<center>
 			<div class="container">
-				<article id="main" class="special"> <header>
-
-				</header> <a href="#" class="logo"><img src="images/frontend/716logo.png" alt="" /></a>
+				<article id="main" class="special"> 
+					<header>
+						<h2><a href="#">第九分局</a></h2>
+						<p>地上辦不了的案 就交給地下的我們！</p>
+					</header>
 				
-	
-					<div class="content">
-                	<article>
-                   		<h2 class="title">訂單資訊</h2>
-                   			<p>牠 第二章 (輔) <br>
-                   				IMAX影廳 <br>
-                   				片長：2時49分</p>
-							<hr>                 	
-                        	<div class="div1" id="links">
-                        		場次：10:30
-                        		<br>
-                        		票種：雙人套餐兩張
-                        	</div>
-							<hr>
-						<div class="div2">
-							場次開放時間說明：<br>
-							1.週五上映之電影，新場次公布於每週三中午12:00~下午18:00，開放未來一週(即當週的星期五至下週星期四為止)之場次。<br>
-							2.週三上映之電影，新場次公布於每週一晚上20:00~22:00，開放週三、週四之場次。<br>
-							3.其他因預售活動或特殊假期、特殊開片日之電影，將另行公告場次開放時間。	
-                    	</div>
-                    </div>
-                    <br>
-                        <div class="div3">
-                           	<a href="seat"><input type="submit" value="送出"></a>
-                           	<input type="reset" value="清除">
-                       	</div>
-                	</article>
-            	</div>
-				</center>	
+				<table class="estb">
+					<thead style="border-bottom:1px solid gray;">
+						<tr><th>編號</th><th>標題</th><th>人氣</th><th>最新回覆</th></tr>
+					</thead>
 					
+					<tbody>
+						<tr><td><b>01</b></td><td><a href="post">內容普普</a></td><td>231</td><td>2019/09/11</td></tr>
+						<tr><td><b>02</b></td><td><a href="#">ZZZZ</td><td>109</td><td>2019/08/21</td></tr>
+						<tr><td><b>03</b></td><td><a href="#">戰起來，戰起來</a></td><td>1,034</td><td>2019/09/25</td></tr>
+						<tr><td><b>04</b></td><td><a href="#">澎恰恰好帥！</a></td><td>842</td><td>2019/09/23</td></tr>
+						<tr><td><b>05</b></td><td><a href="#">女主角好正！</a></td><td>917</td><td>2019/09/24</td></tr>
+					</tbody>
+				
+				</table>
+				
+				
+				
+				
+				
+				<a href="#" class="image featured"><img src="images/frontend/pic06.jpg" alt="" /></a>
 				<p>Commodo id natoque malesuada sollicitudin elit suscipit.
 					Curae suspendisse mauris posuere accumsan massa posuere lacus
 					convallis tellus interdum. Amet nullam fringilla nibh nulla
@@ -107,9 +77,9 @@
 					cursus augue feugiat sodales velit lorem. Semper elementum
 					ullamcorper lacinia natoque aenean scelerisque vel lacinia mollis
 					quam sodales congue.</p>
-				<section> <header>
-				<h3>Ultrices tempor sagittis nisl</h3>
-				</header>
+				
+				<section> 
+					<header><h3>Ultrices tempor sagittis nisl</h3></header>
 				<p>Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus
 					ultrices porttitor sollicitudin imperdiet at pretium tellus in
 					euismod a integer sodales neque. Nibh quis dui quis mattis eget
@@ -123,9 +93,9 @@
 					Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim
 					cras rutrum consectetur ut penatibus fermentum nibh erat malesuada
 					varius.</p>
-				</section> <section> <header>
-				<h3>Augue euismod feugiat tempus</h3>
-				</header>
+				</section> 
+				<section> 
+					<header><h3>Augue euismod feugiat tempus</h3></header>
 				<p>Pretium tellus in euismod a integer sodales neque. Nibh quis
 					dui quis mattis eget imperdiet venenatis feugiat. Neque primis
 					ligula cum erat aenean tristique luctus risus ipsum praesent
@@ -133,8 +103,11 @@
 					risus morbi. Lobortis vestibulum velit malesuada ante egestas odio
 					nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis
 					pharetra magna.</p>
-				</section> </article>
+				</section> 
+				</article>
+				
 				<hr />
+				
 				<div class="row">
 					<article class="col-4 col-12-mobile special"> <a href="#"
 						class="image featured"><img src="images/frontend/pic07.jpg" alt="" /></a>

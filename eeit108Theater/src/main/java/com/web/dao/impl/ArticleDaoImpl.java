@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.web.dao.ArticleDao;
 import com.web.entity.ArticleBean;
 import com.web.entity.EmployeeBean;
+import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
@@ -49,26 +50,29 @@ public class ArticleDaoImpl implements ArticleDao {
 	    return list;
 	}
 	
-	@SuppressWarnings("unused")
 	@Override
-	public void updateGp(int no, int newQuantity) {
-		String hql = "UPDATE ArticleBean b SET b.Gp = :Gp WHERE no = :id";
-		Session session = factory.getCurrentSession();
-		
-		int n = session.createQuery(hql).setParameter("Gp", newQuantity)
-	                            .setParameter("id", no)
-	                            .executeUpdate();
+	public List<ReplyBean> getReplysByArticle(int article) {
+	    String hql = "FROM ReplyBean rb WHERE rb.article.no = :article";
+	    Session session = null;
+	    List<ReplyBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
 	}
 	
 	@SuppressWarnings("unused")
 	@Override
-	public void updateBp(int no, int newQuantity) {
-		String hql = "UPDATE ArticleBean b SET b.Bp = :Bp WHERE no = :id";
+	public void addGp(LikeOrDislikeBean likeOrDislike) {
 		Session session = factory.getCurrentSession();
-		
-		int n = session.createQuery(hql).setParameter("Bp", newQuantity)
-	                            .setParameter("id", no)
-	                            .executeUpdate();
+		session.save(likeOrDislike);
+	}
+	
+	@SuppressWarnings("unused")
+	@Override
+	public void updateGp(LikeOrDislikeBean likeOrDislike) {
+		Session session = factory.getCurrentSession();
+		System.out.println("確認2");
+		session.update(likeOrDislike);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -99,10 +103,36 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 	
 	@Override
+	public ReplyBean getReplyByArticleId(int article) {
+		String hql = "FROM ReplyBean rb WHERE rb.article.no = :article";
+		ReplyBean rb = (ReplyBean) factory.getCurrentSession().createQuery(hql).setParameter("article", article).uniqueResult();
+		return rb;
+	}
+	
+	@Override
 	public ArticleBean getArticleById(int no) {
 		Session session = factory.getCurrentSession();
 		ArticleBean ab = session.get(ArticleBean.class, no);
 		return ab;
+	}
+	
+	@Override
+	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
+		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
+		LikeOrDislikeBean likeOrDislike = (LikeOrDislikeBean) factory.getCurrentSession().createQuery(hql).setParameter("member", memberNo).setParameter("article", article).uniqueResult();
+		if(likeOrDislike == null || likeOrDislike.getLikeOrDislike() == null) {
+			return "null";
+		}
+		return String.valueOf(likeOrDislike.getLikeOrDislike());
+//		Boolean lod = likeOrDislike.getLikeOrDislike();
+//		System.out.println("檢查斷點3");
+//		else if(lod == true) {
+//			likeOrDislikeString = "true";
+//		}
+//		else if(lod == false) {
+//			likeOrDislikeString = "false";
+//		}
+//		return likeOrDislikeString;
 	}
 	
 	
@@ -115,6 +145,16 @@ public class ArticleDaoImpl implements ArticleDao {
 	public void editArticle(ArticleBean article) {
 	    Session session = factory.getCurrentSession();
 	    session.update(article);
+	}
+	@Override
+	public void addReply(ReplyBean reply) {
+	    Session session = factory.getCurrentSession();
+	    session.save(reply);
+	}	
+	@Override
+	public void editReply(ReplyBean reply) {
+	    Session session = factory.getCurrentSession();
+	    session.update(reply);
 	}
 	@Override
 	public MemberBean getMemberById(int memberId) {
@@ -131,6 +171,12 @@ public class ArticleDaoImpl implements ArticleDao {
 	    mb = session.get(MovieBean.class, movieNo);
 	    return mb;
 	}	
+	@Override
+	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article) {
+		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
+		LikeOrDislikeBean lb = (LikeOrDislikeBean) factory.getCurrentSession().createQuery(hql).setParameter("member", memberNo).setParameter("article", article).uniqueResult();
+		return lb;
+	}
 	
 	@Override
 	public List<MemberBean> getMemberList() {

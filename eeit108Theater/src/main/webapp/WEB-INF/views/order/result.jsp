@@ -45,19 +45,19 @@ p {
 				<div class="row">
 					<div class="col-12">
 						<div id="movie-info" class="row mb-3">
-							<div class="col-md-2">
-								<span>電影分級</span>
+							<div class="col-md-2 col-xs-4">
+								<div>電影分級</div>
+								<div>${order.timeTable.movie.rating}</div>
 							</div>
-							<div class="col-md-6">
-								<h3>電影名稱 ${order.timeTable.movieName}</h3>
-							</div>
-							<div class="col-md-4">
-								<div>時間 ${order.timeTable.startTime}</div>
-								<div>片長${order.timeTable.duration}</div>
+							<div class="col-md-6 h2 col-xs-8">
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
+								</div>
+							<div class="col-md-4 col-xs-12">
+								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 								<div>影廳 ${order.timeTable.theater}</div>
 								<div>
-									座位
-									<c:forEach var="seat" items="${order.seatsList}"> ${seat}</c:forEach>
+									座位 ${order.seatsString}
 								</div>
 							</div>
 
@@ -81,10 +81,10 @@ p {
 											<div>付款狀態</div>
 											<c:choose>
 												<c:when test="${order.paid}">
-													<p style="text-align: right; color: green">付款成功</p>
+													<h3 style="text-align: right; color: green">付款成功</h3>
 												</c:when>
 												<c:otherwise>
-													<p style="text-align: right; color: red">付款失敗</p>
+													<h3 style="text-align: right; color: red">付款失敗</h3>
 												</c:otherwise>
 											</c:choose>
 
@@ -109,13 +109,12 @@ p {
 												<p style="text-align: right;">${item.unitPrice}X${item.quantity}=${item.sumPrice}</p>
 											</c:forEach>
 										</td>
-
 									</tr>
 									<tr>
 										<td>
 											<div>總計</div>
 											<p>
-												<strong style="text-align: center;">123${order.totalPrice}</strong>
+												<strong style="text-align: center;">${order.totalPrice}</strong>
 											</p>
 
 										</td>
@@ -124,7 +123,7 @@ p {
 										<tr>
 											<td>
 												<div>取票狀態</div>
-												<p style="text-align: right;">未取票</p>
+												<p style="text-align: right; color: red">未取票</p>
 											</td>
 										</tr>
 									</c:if>
@@ -138,10 +137,14 @@ p {
 				</div>
 				<div class="row justify-content-end">
 					<div class="col-md-auto col-12-mobile">
-						<a><button class="">再次訂票</button></a>
+						<a>
+							<button class="">再次訂票</button>
+						</a>
 					</div>
 					<div class="col-md-auto col-12-mobile">
-						<a href="<c:url value='/index'/>"><button>回首頁</button></a>
+						<a href="<c:url value='/index'/>">
+							<button>回首頁</button>
+						</a>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 package com.web.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.TimeTableDao;
+import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 @Repository
 public class TimeTableDaoImpl implements TimeTableDao{
@@ -129,10 +131,34 @@ public class TimeTableDaoImpl implements TimeTableDao{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TimeTableBean> getStartTimeByMovieAndTheater(String movieName, String theater, String version) {
-		String hql = "SELECT DISTINCT t.startTime FROM TimeTableBean t WHERE t.movieName = :mname and t.theater = :mtheater and t.version = :mversion";
-		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).setParameter("mtheater", theater).setParameter("mversion", version).getResultList();
+	public List<TimeTableBean> getMovieTimeByTheater(String movieName, String theater) {
+		String hql = "FROM TimeTableBean t WHERE t.movieName = :mname and t.theater = :mtheater";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).setParameter("mtheater", theater).list();
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getTimeTableBeanByMovieName(String movieName) {
+		String hql = "FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
+		return list;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<String> getTheatersByMovieName(String movieName){
+		String hql = "SELECT DISTINCT t.theater FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<String> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
+		return list;
+	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<TimeTableBean> getStartTimeByDateAndVersionAndMovie(String startDate, String version, String movieName) {
+		String hql = "FROM TimeTableBean t WHERE t.startDate = :mstartDate and t.version = :mversion and t.movieName = :mmovieName";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mstartDate", startDate).setParameter("mversion", version).setParameter("mmovieName", movieName).getResultList();
+		return list;
+	}
+	
 }
 

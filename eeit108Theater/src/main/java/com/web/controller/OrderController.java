@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.entity.MemberBean;
@@ -39,23 +40,24 @@ public class OrderController {
 
 	final String pac = "order/";
 
-	@RequestMapping("/allProducts")
+	@RequestMapping("/allPro") // test for all products
 	public String showAllProduct(Model model) {
 		model.addAttribute("products", pServ.getAll());
 		return pac + "allProducts";
 	}
 
-	@RequestMapping({ "", "/" }) // 未來交給時刻表提供相關訊息
-	public String orderBegin(Model model, HttpSession session, HttpServletRequest req) {
-
-		System.err.println("====orderBegin Start====");
-//		MemberBean mb = pServ.getMemberByNo(1);
-		System.out.println("====MemberBean Got");
-		session.removeAttribute("order");
-//		session.setAttribute("LoginOK", mb);
-		System.err.println("====orderBegin END====");
-		return pac + "start";
-	}
+	// 已經接上時刻表
+//	@RequestMapping({ "", "/" }) // 未來交給時刻表提供相關訊息
+//	public String orderBegin(Model model, HttpSession session, HttpServletRequest req) {
+//
+//		System.err.println("====orderBegin Start====");
+////		MemberBean mb = pServ.getMemberByNo(1);
+//		System.out.println("====MemberBean Got");
+//		session.removeAttribute("order");
+////		session.setAttribute("LoginOK", mb);
+//		System.err.println("====orderBegin END====");
+//		return pac + "start";
+//	}
 
 	/*
 	 * 建立一筆order於httpSession，並將所選擇的時刻表塞入order中。 自資料庫取得商品清單，並在前台顯示 ，供使用者選擇
@@ -63,22 +65,33 @@ public class OrderController {
 	@RequestMapping("/showProducts")
 	public String showProductByType(Model model, HttpSession session, HttpServletRequest req) {
 		System.err.println("====showProductByType Start====");
+		String orderStage = (String) session.getAttribute("orderStage");
+		if (orderStage == null || !orderStage.equals("seat")) { // if user not from seat
+			session.removeAttribute("order");
+			session.setAttribute("orderStage", "product");
+		}
 		OrderBean ob = (OrderBean) session.getAttribute("order");
-		if (ob == null) {
+		if (ob == null) { // if user not from seat
 			ob = new OrderBean(true);
-			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(req.getParameter("timeTableId"))));
-//			MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-//			if (mb != null) {
-//				ob.setOwnerEmail(mb.getEmail());
-//				ob.setOwnerId(mb.getMemberId());
-//				ob.setOwnerName(mb.getName());
-//			}
+			String tid = req.getParameter("time");
+			if (tid == null || tid.trim().equals("")) {
+				System.err.println("Lack of Time Table Id");
+				throw new NullPointerException("Lack of Time Table Id");
+				// Exception due to lack of time table id.
+			}
+			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(tid)));
 			session.setAttribute("order", ob);
 		}
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
 		System.err.println("====showProductByType END====");
+		return pac + "productsByType";
+	}
+
+	@RequestMapping("/reChooseProducts")
+	public String showProductWithOrder() {
+
 		return pac + "productsByType";
 	}
 
@@ -90,6 +103,8 @@ public class OrderController {
 		System.err.println("====orderList begin====");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		List<OrderItemBean> orderList = ob.getOrderItems();
+		Map<String, OrderItemBean> itemsMap = new HashMap<>();
+		ob.setItemsMap(itemsMap);
 		System.out.println("orderList size = " + orderList.size());
 		String name = req.getParameter("name");
 		Integer quantity = Integer.valueOf(req.getParameter("quantity"));
@@ -115,7 +130,12 @@ public class OrderController {
 			oib.calSumPrice();
 			orderList.add(oib);
 		}
+		for (OrderItemBean oib : orderList) {
+			itemsMap.put(oib.getItemName(), oib);
+		}
 		ob.calTotalPrice();
+		if (req.getParameter("ticketCnt") != null)
+			ob.setTicketCnt(Integer.parseInt(req.getParameter("ticketCnt")));
 		System.out.println(ob.getOrderItemString());
 		System.out.println(orderList);
 		System.err.println("====orderList END====");
@@ -130,7 +150,7 @@ public class OrderController {
 	public String showSeat(Model model, HttpSession session, HttpServletRequest req) {
 		System.err.println("====showSeat Start====");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
-
+		session.setAttribute("orderStage", "seat");
 		System.out.println(ob.getOrderItemString());
 		List<SeatBean> seatList = pServ.getSeatsByTimeTable(ob.getTimeTable().getNo());
 		Map<String, Boolean> soldSeats = new HashMap<>();
@@ -148,9 +168,9 @@ public class OrderController {
 		// model.addAttribute("sideBar", this.getSideBar(rowCnt));
 		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, soldSeats);
 		model.addAttribute("seatTable", s);
-		if(req.getAttribute("seatSoldErr") == null) {
-			model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));			
-		}
+//		if (req.getAttribute("seatSoldErr") == null) {
+//			model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));
+//		}
 		System.out.println(s);
 		System.err.println("====showSeat END====");
 		return pac + "seat";
@@ -164,16 +184,16 @@ public class OrderController {
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		ob.sortOrderItem("ticket", "drink");
 		ob.calTotalPrice();
-		if(oServ.setSeatToOrder(ob, seats) == -1) {
+		if (oServ.setSeatToOrder(ob, seats) == -1) {
 			System.err.println("=== Selected seats has been sold already ===");
-			req.setAttribute("ticketCnt", seats.length);
+//			req.setAttribute("ticketCnt", seats.length);
 			req.setAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
 			System.err.println("====showOrder FORWARD TO showSeat====");
 			return "forward: /seat";
 		}
 		model.addAttribute("orderItems", ob.getOrderItems());
-		model.addAttribute("seats", seats);
-		session.setAttribute("ticketCnt", req.getParameter("ticketCnt"));
+		// model.addAttribute("seats", seats);
+//		session.setAttribute("ticketCnt", req.getParameter("ticketCnt"));
 
 		System.err.println("====showOrder END====");
 		return pac + "orderItems";
@@ -299,29 +319,65 @@ public class OrderController {
 
 	@RequestMapping("/search")
 	public String orderDetail(HttpServletRequest req, Model model, HttpSession session) {
+		System.err.println("=====OrderDetail Start=====");
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		if (mb == null) { // 非會員
 			System.out.println("hasn't login");
-			return "index";
+			System.err.println("=====OrderDetail Forward To guestCheck=====");
+			return pac + "guestCheck";
+		}
+		List<OrderBean> checkedOrders = null;
+		List<OrderBean> uncheckedOrders = null;
+		String memberId = mb.getMemberId();
+		checkedOrders = oServ.getMemberOrders(memberId, true);
+		uncheckedOrders = oServ.getMemberOrders(memberId, false);
+
+		if (checkedOrders == null || checkedOrders.isEmpty()) {
+			System.out.println("no checked orders");
+		} else {
+			model.addAttribute("checkedOrders", checkedOrders);
+		}
+		if (uncheckedOrders == null || uncheckedOrders.isEmpty()) {
+			System.out.println("no unchecked orders");
+		} else {
+			model.addAttribute("uncheckedOrders", uncheckedOrders);
 		}
 
-		String memberId = mb.getMemberId();
-
-		return pac + "detail";
+		System.err.println("=====OrderDetail End=====");
+		return pac + "memberDetail";
 	}
 
-//	private String getSideBar(int rowCnt) {
-//		StringBuilder s = new StringBuilder(512);
-//		char row = 'A';
-//		for (int i = 0; i < rowCnt; i++) {
-//			s.append("<tr><td>" + (char) (row + i) + "</td></tr>");
-//			if (rowCnt >= 12 && i == rowCnt / 2 - 2) {
-//				s.append(
-//						"<tr><td><label class=\"invisible\"for=\"bar-space\"></label><input type=\"checkbox\"name=\"seat\"id=\"bar-space\"value=\"space\"></td></tr>");
-//			}
-//		}
-//		return s.toString();
-//	}
+	@RequestMapping(value = "/guest", method = RequestMethod.POST)
+	public String guestSearch(HttpServletRequest req, Model model) {
+		System.err.println("=====GuestSearch start=====");
+		String email = req.getParameter("email").trim();
+		String phone = req.getParameter("phone").trim();
+		System.out.println(email);
+		System.out.println(phone);
+		Map<String, String> errMsg = new HashMap<>();
+		if (email == null || email.equals("")) {
+			errMsg.put("email", "該欄不能空白");
+		} else {
+			if (email.indexOf("@") == -1 || email.indexOf(".") == -1)
+				errMsg.put("email", "Email格式不正確");
+		}
+		if (phone == null || phone.equals("")) {
+			errMsg.put("phone", "該欄不能空白");
+		} else {
+			if (!phone.matches("[0-9]{10}")) {
+				errMsg.put("phone", "電話格式不正確");
+			}
+		}
+		if (!errMsg.isEmpty()) {
+			model.addAttribute("errMsg", errMsg);
+			return pac + "guestCheck";
+		}
+		List<OrderBean> list = oServ.getGuestOrders(email, phone, false);
+		if (list != null && !list.isEmpty())
+			model.addAttribute("uncheckedOrders", list);
+		System.err.println("=====GuestSearch END=====");
+		return pac + "guestDetail";
+	}
 
 	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> soldSeats) {
 		StringBuilder s = new StringBuilder(65536);

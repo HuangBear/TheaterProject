@@ -1,7 +1,6 @@
 package com.web.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Table(
 		name = "Time_Table",
 		uniqueConstraints = { 
-				@UniqueConstraint(columnNames = { "movieName", "startTime", "theater"})
+				@UniqueConstraint(columnNames = { "movieName", "startTime", "theater", "startDate"})
 				}
 		)
 public class TimeTableBean implements Serializable{
@@ -34,8 +33,9 @@ public class TimeTableBean implements Serializable{
 	@NotNull
 	private String movieName;
 	
-	@NotNull
-	private Date startTime;
+	private String startDate;
+	
+	private String startTime;
 	@NotNull
 	private Integer duration;
 	@NotNull
@@ -65,10 +65,10 @@ public class TimeTableBean implements Serializable{
 	public void setMovie(MovieBean movie) {
 		this.movie = movie;
 	}
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 	public Set<SeatBean> getSeats() {
@@ -112,5 +112,11 @@ public class TimeTableBean implements Serializable{
 	}
 	public void setBreakTime(Integer breakTime) {
 		this.breakTime = breakTime;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
 }

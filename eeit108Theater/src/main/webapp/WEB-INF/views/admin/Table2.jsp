@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 
@@ -51,10 +52,12 @@
 				<td>${movie.engMovieName}</td>
 				<td>${movie.genres}</td>
 				<td>${movie.languages}</td>
-				<td>${movie.openingDate}</td>
-				<td>${movie.endingDate}</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${movie.openingDate}" /></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${movie.endingDate}" /></td>
 				<td>
-				<button class="itemTag2 btn btn-info"  id="${movie.no}">
+				<button class="editBtn btn btn-info"  id="${movie.no}">
 				編輯
 				</button><p>
 				</td>
@@ -76,17 +79,17 @@
           <div class="card-footer small text-muted">Updated  at 00:00 PM</div>
         </div>
 
-      <script src="js/admin/demo/datatables-demo.js"></script>
-  	  <script src="js/admin/demo/chart-area-demo.js"></script>
+<!--       <script src="js/admin/demo/datatables-demo.js"></script> -->
+<!--   	  <script src="js/admin/demo/chart-area-demo.js"></script> -->
 <script>
- $(".itemTag2").click(function() {
+ $(".editBtn").click(function() {
     	
-    	var pk = $(this).attr("id");
+    	var no = $(this).attr("id");
     	//var pquantity = $(this).val();
     	$.ajax({
-    		url : "<c:url value='/admin/updateEMP'/>",
+    		url : "<c:url value='/admin/movie_edit'/>",
     		data : {
-    			pk : pk,
+    			no : no,
     			//quantity : pquantity
     		},
     		type : "GET",
