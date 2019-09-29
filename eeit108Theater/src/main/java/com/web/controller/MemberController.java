@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -29,9 +30,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 import com.web.service.MemberService;
 import com.web.util.SecurityCipher;
@@ -51,7 +54,41 @@ public class MemberController {
 		return "memberservice";
 	}
 	
-
+	@RequestMapping(method = RequestMethod.POST, value = "googleMember")
+	public String AddGoogleMember(Model model,
+			RedirectAttributes redirectAttributes, HttpServletRequest request,HttpSession session) {
+		session = request.getSession();
+		String email=request.getParameter("registGoogleEmail");
+		String name=request.getParameter("registGoogleName");
+		String GoogleImg=request.getParameter("registGoogleImg");
+		System.out.println("googlemember info:"+email+" "+name);
+		MemberBean GoogleMember=new MemberBean();
+		if (service.checkMemberEmail(email)) {
+			System.out.println("此Google會員已有資料");
+			GoogleMember =service.findMemberByEmail(email);
+			session.setAttribute("LoginOK", GoogleMember);
+			if(GoogleMember == null) {
+				System.out.println("google member is null");
+			} else {
+				System.out.println(session.getAttribute("LoginOK"));
+			}
+			
+			return "redirect:/";
+		}else {
+			System.out.println("此Google會員第一次登入，將創建簡易會員檔");
+			GoogleMember.setName(name);
+			GoogleMember.setEmail(email);
+			GoogleMember.setPassword(email);
+			GoogleMember.setMemberId(email);
+			GoogleMember.setGoogleUrl(GoogleImg);
+			service.save(GoogleMember);
+			GoogleMember =service.findMemberByEmail(email);
+			session.setAttribute("LoginOK", GoogleMember);
+			
+			return "redirect:/";
+		}
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "memberAdd")
 	public String AddMemberPost(@ModelAttribute("memberBean") MemberBean memberBean, Model model,
 			RedirectAttributes redirectAttributes, BindingResult result, HttpServletRequest request,
@@ -218,7 +255,7 @@ public class MemberController {
 		
 	
 
-	
+	//會員登出	
 	@RequestMapping("memberLogout")
 	public String memLogout(HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		HttpSession session = request.getSession();
@@ -227,7 +264,7 @@ public class MemberController {
 		
 		return "redirect:/memberservice";
 	}
-	
+	//取得會員照片
 	@RequestMapping(value = "/getMemberPicture/{pk}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getMemberPicture(HttpServletResponse resp, @PathVariable Integer pk) {
 	    String filePath = "/resources/images/NoImage.jpg";
@@ -278,5 +315,40 @@ public class MemberController {
 	          e.printStackTrace();
 	    }
 	    return b;
+	}
+	
+	@RequestMapping("/admin/updateMem")
+	public String updateMem(Model model, HttpServletRequest req) {
+		Integer pk = Integer.parseInt(req.getParameter("pk"));
+		HttpSession session=req.getSession();
+		MemberBean mem = service.findMemberByPrimaryKey(pk);
+		session.setAttribute("mem", mem);
+		model.addAttribute("memberBean", new MemberBean());
+		return "admin/UpdateMember";
+	}            
+	
+	@SuppressWarnings("unused")
+	@RequestMapping(method = RequestMethod.POST, value = "/admin/updateMem")
+	public String editMemStatus(
+			@ModelAttribute("memberBean") MemberBean memberBean, Model model,
+			RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
+		
+		
+		if (memberBean!=null) {
+			
+			redirectAttributes.addFlashAttribute("name", memberBean.getName());
+			redirectAttributes.addFlashAttribute("welcome", " 更新成功");
+			
+			
+			service.updateMemberStatus(memberBean);
+			List<MemberBean> listMem = service.getAllMembers();
+			model.addAttribute("members", listMem);
+
+			return "redirect:/admin/empIndexA#Mem_list";
+		} 
+		else {
+			redirectAttributes.addFlashAttribute("error", "失敗,資料缺失");
+			return "redirect:/admin/empIndexA#Mem_list";
+		}
 	}
 }

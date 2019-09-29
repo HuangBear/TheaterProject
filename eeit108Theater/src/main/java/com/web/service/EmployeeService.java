@@ -18,4 +18,7 @@ public interface EmployeeService {
 	 public Boolean checkEmpEmail(String email);
 	 public Integer save(EmployeeBean empBean);
 	 public EmployeeBean checkEmailPassword(String email, String password);
+	 EmployeeBean findByEmployeeName(String name);
+	 public String checkEmpPermission(EmployeeBean empBean);
+	 
 }

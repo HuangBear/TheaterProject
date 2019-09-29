@@ -53,6 +53,8 @@ public class MemberBean implements Serializable{
 	private String imageFileName;
 	@JsonIgnore
 	private String aboutMe;
+	@JsonIgnore
+	private String googleUrl;
 	private Boolean commentPermission;
 	private Integer banCounter;	
 	@NotNull
@@ -212,6 +214,14 @@ public class MemberBean implements Serializable{
 	}
 	public void setAboutMe(String aboutMe) {
 		this.aboutMe = aboutMe;
+	}
+
+	public String getGoogleUrl() {
+		return googleUrl;
+	}
+
+	public void setGoogleUrl(String googleUrl) {
+		this.googleUrl = googleUrl;
 	}
 	
 	

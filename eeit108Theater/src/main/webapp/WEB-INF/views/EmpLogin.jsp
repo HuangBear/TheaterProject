@@ -43,7 +43,9 @@
 			<div class="form-group">
 				<button class="btn btn-primary btn-block" type="submit">Log
 					In</button>
+<!-- 					<input type="checkbox" name="remember"/> -->
 			</div>
+			
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			
 			<a class="forgot" href="#">Forgot your email or password?</a>

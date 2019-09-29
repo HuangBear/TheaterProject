@@ -53,9 +53,12 @@
 <script src="js/admin/demo/datatables-demo.js"></script>
 <script src="js/admin/demo/chart-area-demo.js"></script>
 <script>
+
+
+
 	$(function() {
 		$(".itemTag").click(function() {
-
+			
 			var link = $(this).attr("id");
 			//var pquantity = $(this).val();
 			$.ajax({
@@ -70,9 +73,10 @@
 				}
 			});
 		});
-
+		
 	});
 </script>
+
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
@@ -109,21 +113,35 @@
 			<!-- ------------------------------------------------------------------------------------------------- -->
 
 			<div class="container-fluid" id="pageItems">
-				<%--      <jsp:include page="/WEB-INF/views/admin/empTableList.jsp" /> --%>
-				<p>
-					<span>首頁文章 放置處</span>
-				</p>
-				<p>
-					<span>${error}</span>
-				</p>
-			</div>
-
-
+				
+<!-- 				<p></p> -->
+<!-- 					<span>首頁文章 放置處</span> -->
+<!-- 					<div class="container-fluid">	 -->
+<!-- 					<div class="card mb-3"> -->
+<!--               		 <div class="card-header"> -->
+<!--                 	<i class="fas fa-chart-area"></i>新註冊會員人數 -->
+<!--                </div> -->
+                         
+<!--                <div class="card-body"> -->
+<%--              		<canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
+<!--                </div> -->
+<%--               <div class="card-footer small text-muted">Updated ${now}</div> --%>
+<!--               </div> -->
+<!-- 		      </div> -->
+				
+<!-- 				<p> -->
+<%-- 					<span>${error}</span> --%>
+<!-- 				</p> -->
+		
 
 
 			<!-- ------------------------------------------------------------------------------------------------- -->
 			<!-- 內文放在這個上面 -->
+			</div>
 
+
+
+		
 		</div>
 		<!-- /.content-wrapper -->
 	</div>
@@ -131,43 +149,50 @@
 	<!-- ------------------------------------------以下Footer-------------------------------------------------- -->
 
 	<jsp:include page="/WEB-INF/views/admin/Footer.jsp" />
+	
+
+	
+	
+	
+
+
+	
+</body>
 	<script>
-		$(function() {
-			openWebsocket();
+	window.onload=function (){
+		
+		     var hash = location.hash;
+// 		     alert(hash);
+ 		     switch(hash){
+ 		         case "#Table":
+ 		        	 ajaxFn1(hash);
+ 		        	 break; 
+		         case "#Mem_list":
+		        	 ajaxFn1(hash);
+		              break;
 
-		});
+		         default:
+		              //預設進首頁
+		              break;
 
-		function openWebsocket() {
-			var area = document.getElementById('talkarea');
-			var text = document.getElementById('talktext');
-			var websocket = new WebSocket("ws://" + location.host
-					+ "/eeit108Theater/websocket.do");
-
-			websocket.onopen = function(evt) {
-
-			};
-
-			websocket.onmessage = function(message) {
-				var jsonData = JSON.parse(message.data);
-				if (jsonData.message != null) {
-					area.value += jsonData.message + "\n";
+		     };
+		};
+		function ajaxFn1(hash){
+			var link=hash;
+			//alert(link);
+			var link2=link.replace('#','');
+			//alert(link2);
+			$.ajax({
+				url : "<c:url value='/admin/updatePage'/>",
+				data : {
+					url : link2,
+				},
+				type : "GET",
+				success : function(data) {
+					$("#pageItems").html(data);
 				}
-			};
-
-			websocket.onclose = function(evt) {
-				websocket.close();
-			};
-
-			websocket.onerror = function(evt) {
-				websocket.close();
-			};
-
-			$('#sendmsg').click(function() {
-				websocket.send(text.value);
-				text.value = "";
 			});
 		}
-	</script>
-</body>
-
+ </script>
+ <script src="js/admin/demo/chart-area-demo.js"></script>
 </html>
