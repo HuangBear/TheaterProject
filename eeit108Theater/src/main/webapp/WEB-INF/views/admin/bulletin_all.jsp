@@ -7,7 +7,6 @@
 .hide {
 	display: none;
 }
-
 </style>
 
 <script>
@@ -204,8 +203,47 @@
 			});
 		});
 	});
-</script>
 
+	//postTime length
+	var $len = 11;
+	$(".postTime").each(function() {
+		if ($(this).text().length > $len) {
+			var $text = $(this).text().substring(0, $len - 1);
+			$(this).text($text);
+		}
+	});
+
+	//title length
+	var $len = 20;
+	$(".title").each(function() {
+		if ($(this).text().length > $len) {
+			var $text = $(this).text().substring(0, $len - 1) + "...";
+			$(this).text($text);
+		}
+	});
+	
+	if (${changeMsg != null}) {
+		$("a.hide").trigger("click")
+	}
+</script>
+	<!-- load 視窗 -->
+	<a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
+	<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">${changeMsg}</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <!-- 詳情 -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -380,12 +418,12 @@
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="25%">標題</th>
 								<th scope="col" width="10%">發布時間</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="10%">公告人</th>
-								<th scope="col" width="20%" colspan="2">優惠方案</th>
+								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
 								<th scope="col" width="5%">刪除</th>
@@ -396,13 +434,12 @@
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td>${sb.title}</td>
-									<td>${sb.postTime}</td>
+									<td class="title">${sb.title}</td>
+									<td class="postTime">${sb.postTime}</td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
-									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-									<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<td><img name="img_effect" data-toggle="modal" data-target="#div_stat_edit_${sb.no}" width="30px"
@@ -419,11 +456,12 @@
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="30%">標題</th>
-								<th scope="col" width="10%">起始</th>
-								<th scope="col" width="10%">結束</th>
+								<th scope="col" width="25%">標題</th>
+								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="10%">開始時間</th>
+								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="10%">公告人</th>
-								<th scope="col" width="20%" colspan="2">優惠方案</th>
+								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
 								<th scope="col" width="5%">刪除</th>
@@ -432,15 +470,15 @@
 						<tbody>
 							<c:forEach var='sb' items='${statusBulletin[1]}' varStatus="i">
 								<tr>
-
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td>${sb.title}</td>
+									<td class="title">${sb.title}</td>
+									<td class="postTime">${sb.postTime}</td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
-									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-									<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;
+										${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 
@@ -458,11 +496,12 @@
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="30%">標題</th>
-								<th scope="col" width="10%">起始</th>
-								<th scope="col" width="10%">結束</th>
+								<th scope="col" width="25%">標題</th>
+								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="10%">開始時間</th>
+								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="10%">公告人</th>
-								<th scope="col" width="20%" colspan="2">優惠方案</th>
+								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%"></th>
 								<th scope="col" width="5%">刪除</th>
@@ -473,12 +512,12 @@
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td>${sb.title}</td>
+									<td class="title">${sb.title}</td>
+									<td class="postTime">${sb.postTime}</td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
-									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-									<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<td></td>
