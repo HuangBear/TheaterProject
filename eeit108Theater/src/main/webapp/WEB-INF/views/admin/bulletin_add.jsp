@@ -215,16 +215,6 @@
 
 	<div class="card-body">
 		<div class="table-responsive">
-			<!-- load視窗 -->
-			<c:if test="${ErrMsg.changeMsg!=null}">
-				<div class="change shade">
-					<div>${ErrMsg.changeMsg}</div>
-					<div>
-						<input type="button" value="返回" name="change" class="btn btn-info">
-					</div>
-				</div>
-			</c:if>
-
 			<div id="accordion">
 				<h3>新增公告</h3>
 				<div>

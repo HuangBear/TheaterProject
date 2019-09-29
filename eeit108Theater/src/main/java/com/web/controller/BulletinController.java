@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.alibaba.fastjson.JSON;
 import com.web.entity.BulletinBean;
 import com.web.equator.BulletinEquator;
-import com.web.service.impl.BulletinServiceImpl;
+import com.web.service.BulletinService;
 
 import data.util.SystemUtils2018;
 
@@ -42,7 +42,7 @@ import data.util.SystemUtils2018;
 public class BulletinController {
 
 	@Autowired
-	BulletinServiceImpl service;
+	BulletinService service;
 	@Autowired
 	ServletContext context;
 
@@ -212,6 +212,7 @@ public class BulletinController {
 			return Root + "bulletin_add";
 		} else {
 			Date now = new Date();
+//			redirectAttributes.addAttribute("changeMsg", "新增成功");
 			redirectAttributes.addFlashAttribute("changeMsg", "新增成功");
 			System.out.println("新增成功");
 			Integer employeeId = Integer.valueOf(req.getParameter("employeeId"));
