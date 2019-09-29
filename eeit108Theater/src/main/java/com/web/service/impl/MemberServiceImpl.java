@@ -172,9 +172,9 @@ public class MemberServiceImpl implements MemberService{
 			helper.setTo(memBean.getEmail());// 收件人
 			helper.setSubject("<重要> 7-1 CINEMA影城  會員認證信");// 主題
 			helper.setText("<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><body>"
-					+ "<h4>您的名稱:" + memBean.getName() + "</h4><br><h4>請點：" + "<a href='" + request.getScheme() + "://"
+					+ "<h3>親愛的會員 " + memBean.getName()+ " 您好" + "</h3><br><h4>感謝您註冊本網站會員 </h4> " + "<h4><a href='" + request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
-					+ "/registerEmail?code='>" +memBean.getEmailCode()+ "這裡驗證<br><p> 7-1 CINEMA團隊敬上</p>" + "</body></html>", true);// 正文
+					+ "/registerEmail?code="+memBean.getEmailCode()+"'>"+ "請點此連結驗證信箱</a></h4><br> <h3><p> 7-1 CINEMA 團隊 </p></h3>" + "</body></html>", true);// 正文
 		
 		
 		} catch (MessagingException e) {
