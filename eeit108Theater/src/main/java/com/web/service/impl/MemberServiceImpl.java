@@ -170,7 +170,7 @@ public class MemberServiceImpl implements MemberService{
 			
 			helper.setFrom("eeit108sevenminusone@gmail.com");// 發件人
 			helper.setTo(memBean.getEmail());// 收件人
-			helper.setSubject("<重要> 7-1 CINEMA影城  會員認證信");// 主題
+			helper.setSubject("7-1 CINEMA影城  會員認證信");// 主題
 			helper.setText("<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><body>"
 					+ "<h3>親愛的會員 " + memBean.getName()+ " 您好" + "</h3><br><h4>感謝您註冊本網站會員 </h4> " + "<h4><a href='" + request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
