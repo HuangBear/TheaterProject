@@ -119,6 +119,15 @@ public class ProductDaoImpl implements ProductDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<ProductBean> getAllUnavailableProducts() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p  WHERE p.available = :false ORDER BY p.type";
+		List<ProductBean> pb = session.createQuery(hql).setParameter("false", Boolean.FALSE).getResultList();
+		return pb;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<ProductBean> getProductsByType(String type) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.type = :type";
@@ -134,5 +143,6 @@ public class ProductDaoImpl implements ProductDao {
 		List<ProductBean> pb = session.createQuery(hql).setParameter("version", "%" + version + "%").getResultList();
 		return pb;
 	}
+
 
 }

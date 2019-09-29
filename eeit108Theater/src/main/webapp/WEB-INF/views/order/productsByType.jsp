@@ -33,7 +33,16 @@
 <script>
 	//var ticketCnt = parseInt("0");
 	const maxTicket = parseInt("10");
+	var ticketCnt = 0;
 	$(function() {
+		$.each($(".ticket"), function() {
+			ticketCnt += parseInt($(this).val());
+		});
+		$("#ticketCnt").val(ticketCnt);
+		if (parseInt($("#ticketCnt").val()) >= 1) {
+			$("#btn-submit").removeClass("disabled");
+			$("#btn-submit").prop("disabled", false);
+		}
 		$("#tabs").tabs();
 		$("td>input").spinner({
 			spin : function(event, ui) {
@@ -48,8 +57,6 @@
 		});
 
 		$(".item").change(function() {
-			//console.log($(this).attr("id"));
-			//console.log($(this).val());
 			var pname = $(this).attr("id");
 			var pquantity = $(this).val();
 			$.ajax({
@@ -67,36 +74,34 @@
 		$(".ticket").change(function() {
 			var id = "#" + $(this).attr("id");
 			var newCnt = parseInt($(this).val());
-			var ticketCnt = 0;
+			ticketCnt = 0;
 			$.each($(".ticket"), function() {
 				ticketCnt += parseInt($(this).val());
 			});
-			console.log("ticketCnt = " + ticketCnt);
-			console.log("this id = " + id);
-			console.log("this value = " + $(id).val());
-			console.log(newCnt);
+			$("#ticketCnt").val(ticketCnt);
 			if (ticketCnt > maxTicket) {
 				alert("上限10");
 				newCnt = maxTicket - (ticketCnt - newCnt);
-				console.log("from " + $(id).val());
+				$("#ticketCnt").val(maxTicket);
+				//console.log("from " + $(id).val());
 				$(id).val(newCnt);
-				console.log("change to " + $(id).val());
+				//console.log("change to " + $(id).val());
 				var pname = $(this).attr("id");
 				var pquantity = $(this).val();
+				var ticketCnt = $("#ticketCnt").val();
 				$.ajax({
 					url : "<c:url value='/order/orderList'/>",
 					data : {
 						name : pname,
-						quantity : pquantity
+						quantity : pquantity,
+						ticketCnt : ticketCnt
 					},
 					type : "POST",
 					success : function(data) {
 						$("#orderItems").html(data);
 					}
 				});
-				$("#ticketCnt").val(maxTicket);
-			} else {
-				$("#ticketCnt").val(ticketCnt);
+				
 			}
 			if (parseInt($("#ticketCnt").val()) >= 1) {
 				$("#btn-submit").removeClass("disabled");
@@ -127,19 +132,30 @@
 								<table class="table border">
 									<thead>
 										<tr style="text-align: center" class="table-secondary">
-											<th scope="col">會員資料</th>
+											<th scope="col">會員</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Member Name: ${LoginOK.name}</td>
-										</tr>
-										<tr>
-											<td>Member Email: ${LoginOK.email}</td>
-										</tr>
-										<tr>
-											<td>Member Id: ${LoginOK.memberId}</td>
-										</tr>
+										<c:if test="${empty LoginOK}">
+											<tr style="text-align: center">
+												<td>尚未登入</td>
+											</tr>
+											<tr style="text-align: center">
+												<td>
+													<a href="<c:url value='/memberservice'/>">
+														<button type="button">登入</button>
+													</a>
+												</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty LoginOK}">
+											<tr>
+												<td>Hi: ${LoginOK.name}</td>
+											</tr>
+											<tr>
+												<td>帳號: ${LoginOK.email}</td>
+											</tr>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -151,9 +167,9 @@
 										</tr>
 									</thead>
 									<tbody id="orderItems">
-										<tr>
-											<td>primary</td>
-										</tr>
+										<!-- 										<tr> -->
+										<!-- 											<td>primary</td> -->
+										<!-- 										</tr> -->
 										<c:forEach var='item' items="${order.orderItems}">
 											<tr>
 												<td>
@@ -176,23 +192,31 @@
 						</div>
 						<div class="col-md-8 order-md-1 order-sm-2">
 							<div id="movie-info" class="row mb-3">
-								
+
 								<div class="col-md-2 col-xs-4">
-									<span>電影分級</span>
+									<div>電影分級</div>
+									<div>${order.timeTable.movie.rating}</div>
 								</div>
 								<div class="col-md-6 h2 col-xs-8">
-									電影名稱 ${order.timeTable.movieName}
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
+									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
 								</div>
 								<div class="col-md-4 col-xs-12">
-									<div>時間 ${order.timeTable.startTime}</div>
+									<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 									<div>影廳 ${order.timeTable.theater}</div>
 								</div>
 							</div>
 							<div id="tabs">
 								<ul>
-									<li><a href="#tabs-1">票種</a></li>
-									<li><a href="#tabs-2">食物</a></li>
-									<li><a href="#tabs-3">飲料</a></li>
+									<li>
+										<a href="#tabs-1">票種</a>
+									</li>
+									<li>
+										<a href="#tabs-2">食物</a>
+									</li>
+									<li>
+										<a href="#tabs-3">飲料</a>
+									</li>
 								</ul>
 								<div id="tabs-1">
 									<table class="table">
@@ -209,18 +233,32 @@
 													<td>${ticket.name}</td>
 													<td>$ ${ticket.price}</td>
 													<td>
-														<select class="item ticket custom-select" id="${ticket.name}" name="${ticket.name}">
-															<option value="0" selected>0</option>
-															<c:forEach var="index" begin="1" end="10">
-																<option value="${index}">${index}</option>
-															</c:forEach>
-														</select>
+														<c:if test="${not empty order.itemsMap[ticket.name]}">
+															<select class="ticket item custom-select" id="${ticket.name}" name="${ticket.name}">
+																<c:forEach var="index" begin="0" end="10">
+																	<c:if test="${order.itemsMap[ticket.name].quantity == index}">
+																		<option value="${index}" selected>${index}</option>
+																	</c:if>
+																	<c:if test="${order.itemsMap[ticket.name].quantity != index}">
+																		<option value="${index}">${index}</option>
+																	</c:if>
+																</c:forEach>
+															</select>
+														</c:if>
+														<c:if test="${empty order.itemsMap[ticket.name]}">
+															<select class="ticket item custom-select" id="${ticket.name}" name="${ticket.name}">
+																<option value="0" selected>0</option>
+																<c:forEach var="index" begin="1" end="10">
+																	<option value="${index}">${index}</option>
+																</c:forEach>
+															</select>
+														</c:if>
 													</td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
-									<input type="text" class="" id="ticketCnt" name="ticketCnt" hidden="true"/>
+									<input type="text" class="" id="ticketCnt" name="ticketCnt" hidden="true" />
 								</div>
 								<div id="tabs-2">
 									<table class="table">
@@ -232,17 +270,37 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="food" items="${foods}">
+											<c:forEach var="item" items="${foods}">
 												<tr>
-													<td>${food.name}</td>
-													<td>$ ${food.price}</td>
+													<td>${item.name}</td>
+													<td>$ ${item.price}</td>
 													<td>
-														<select class="item custom-select" id="${food.name}" name="${food.name}">
-															<option value="0" selected>0</option>
-															<c:forEach var="index" begin="1" end="10">
-																<option value="${index}">${index}</option>
-															</c:forEach>
-														</select>
+														<c:if test="${not empty order.itemsMap[ticket.name]}">
+															<select class="item custom-select" id="${item.name}" name="${item.name}">
+																<c:forEach var="index" begin="0" end="10">
+																	<c:if test="${order.itemsMap[item.name].quantity == index}">
+																		<option value="${index}" selected>${index}</option>
+																	</c:if>
+																	<c:if test="${order.itemsMap[item.name].quantity != index}">
+																		<option value="${index}">${index}</option>
+																	</c:if>
+																</c:forEach>
+															</select>
+														</c:if>
+														<c:if test="${empty order.itemsMap[item.name]}">
+															<select class="item custom-select" id="${item.name}" name="${item.name}">
+																<option value="0" selected>0</option>
+																<c:forEach var="index" begin="1" end="10">
+																	<option value="${index}">${index}</option>
+																</c:forEach>
+															</select>
+														</c:if>
+														<%-- 														<select class="item custom-select" id="${food.name}" name="${food.name}"> --%>
+														<!-- 															<option value="0" selected>0</option> -->
+														<%-- 															<c:forEach var="index" begin="1" end="10"> --%>
+														<%-- 																<option value="${index}">${index}</option> --%>
+														<%-- 															</c:forEach> --%>
+														<!-- 														</select> -->
 													</td>
 												</tr>
 											</c:forEach>
@@ -259,18 +317,37 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="drink" items="${drinks}">
+											<c:forEach var="item" items="${drinks}">
 												<tr>
-													<td>${drink.name}</td>
-													<td>$ ${drink.price}</td>
+													<td>${item.name}</td>
+													<td>$ ${item.price}</td>
 													<td>
-														<%-- 												<input class="item" id="${drink.name}" name="${drink.name}"> --%>
-														<select class="item custom-select" id="${drink.name}" name="${drink.name}">
-															<option value="0" selected>0</option>
-															<c:forEach var="index" begin="1" end="10">
-																<option value="${index}">${index}</option>
-															</c:forEach>
-														</select>
+														<c:if test="${not empty order.itemsMap[ticket.name]}">
+															<select class="item custom-select" id="${item.name}" name="${item.name}">
+																<c:forEach var="index" begin="0" end="10">
+																	<c:if test="${order.itemsMap[item.name].quantity == index}">
+																		<option value="${index}" selected>${index}</option>
+																	</c:if>
+																	<c:if test="${order.itemsMap[item.name].quantity != index}">
+																		<option value="${index}">${index}</option>
+																	</c:if>
+																</c:forEach>
+															</select>
+														</c:if>
+														<c:if test="${empty order.itemsMap[item.name]}">
+															<select class="item custom-select" id="${item.name}" name="${item.name}">
+																<option value="0" selected>0</option>
+																<c:forEach var="index" begin="1" end="10">
+																	<option value="${index}">${index}</option>
+																</c:forEach>
+															</select>
+														</c:if>
+														<%-- 														<select class="item custom-select" id="${drink.name}" name="${drink.name}"> --%>
+														<!-- 															<option value="0" selected>0</option> -->
+														<%-- 															<c:forEach var="index" begin="1" end="10"> --%>
+														<%-- 																<option value="${index}">${index}</option> --%>
+														<%-- 															</c:forEach> --%>
+														<!-- 														</select> -->
 													</td>
 												</tr>
 											</c:forEach>
@@ -280,18 +357,22 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" hidden>
 						<div>
-							<label for="rowCnt"></label> <input type="text" id="rowCnt" name="rowCnt" value="15">
+							<label for="rowCnt"></label>
+							<input type="text" id="rowCnt" name="rowCnt" value="15">
 						</div>
 						<div>
-							<label for="aZoneCnt"></label> <input type="text" id="aZoneCnt" name="aZoneCnt" value="5">
+							<label for="aZoneCnt"></label>
+							<input type="text" id="aZoneCnt" name="aZoneCnt" value="5">
 						</div>
 						<div>
-							<label for="bZoneCnt"></label> <input type="text" id="bZoneCnt" name="bZoneCnt" value="15">
+							<label for="bZoneCnt"></label>
+							<input type="text" id="bZoneCnt" name="bZoneCnt" value="15">
 						</div>
 						<div>
-							<label for="zoneNum"></label> <select id="zoneNum" name="zoneNum">
+							<label for="zoneNum"></label>
+							<select id="zoneNum" name="zoneNum">
 								<option value="2">2</option>
 								<option value="3">3</option>
 							</select>
@@ -300,7 +381,7 @@
 					</div>
 					<div class="row mt-5">
 						<div class="col-md-12">
-							<input id="btn-submit" class="btn float-right disabled" type="submit" value="Submit" disabled>
+							<input id="btn-submit" class="btn float-right disabled" type="submit" value="下一步" disabled>
 						</div>
 					</div>
 				</form>
@@ -310,7 +391,7 @@
 		<!-- Footer -->
 		<jsp:include page="../footer.jsp" />
 	</div>
-<%-- 	<script src="<c:url value='/assets/js/jquery.min.js'/>"></script> --%>
+	<%-- 	<script src="<c:url value='/assets/js/jquery.min.js'/>"></script> --%>
 	<script src="<c:url value='/assets/js/jquery.dropotron.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/jquery.scrolly.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/jquery.scrollex.min.js'/>"></script>

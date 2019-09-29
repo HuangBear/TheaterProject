@@ -18,10 +18,10 @@
 		<div class="card-header">7-1 Cinema 新增商品</div>
 		<div class="card-body">
 			<form id="newProduct" method="POST" action="<c:url value='/product/addProduct'/>">
-
+				<p style="color: red">${errMsg.save}</p>
 				<div class="form-group">
 					<div class="form-label-group">
-						<input id="name" name="name" type="text" class="form-control" placeholder="name" required="required" autofocus="autofocus"/>
+						<input id="name" name="name" type="text" class="form-control" placeholder="name" required="required" autofocus="autofocus" />
 						<label for="name">商品名稱</label>
 						<p style="color: red">${errMsg.name}</p>
 					</div>
@@ -72,7 +72,7 @@
 </script>
 
 <script>
-	$("#newProduct").submit(function(event){
+	$("#newProduct").submit(function(event) {
 		console.log("to preventDefault");
 		event.preventDefault();
 		console.log("preventDefault success");
@@ -81,13 +81,13 @@
 			url : "<c:url value='/product/addProduct'/>",
 			type : "POST",
 			data : productData,
-			datatype :"json",
+			datatype : "json",
 			contentType : false,
-			processData: false,
-			success: function(data){
+			processData : false,
+			success : function(data) {
 				$("#pageItems").html(data);
 			},
-			error: function(){
+			error : function() {
 				$("#pageItems").html("ajax new product gg");
 			}
 		});

@@ -177,7 +177,7 @@
 							</div>
 						</div>
 						<footer> 
-							<a href="ticketing" class="button">立即訂票</a>
+							<a href="ticketing_${movie.no}" class="button">立即訂票</a>
 						</footer>
 						</section>
 					</div>

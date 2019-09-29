@@ -2,9 +2,7 @@ package com.web.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -55,6 +54,12 @@ public class OrderBean implements Serializable {
 	@OrderBy("row_X, column_Y")
 	private List<SeatBean> seats = new ArrayList<SeatBean>();// U, O2M
 
+	@Transient
+	private Map<String,OrderItemBean> itemsMap = new HashMap<>();
+	
+	@Transient
+	private Integer ticketCnt = 0;
+	
 	public OrderBean() {
 		super();
 	}
@@ -176,6 +181,14 @@ public class OrderBean implements Serializable {
 		this.paid = paid;
 	}
 
+	public Map<String, OrderItemBean> getItemsMap() {
+		return itemsMap;
+	}
+
+	public void setItemsMap(Map<String, OrderItemBean> itemsMap) {
+		this.itemsMap = itemsMap;
+	}
+
 	public void calTotalPrice() {
 		double sum = 0;
 		if (this.orderItems == null || this.orderItems.size() == 0) {
@@ -268,5 +281,13 @@ public class OrderBean implements Serializable {
 	
 	public int getSeatCnt() {
 		return this.getSeats().size();
+	}
+
+	public Integer getTicketCnt() {
+		return ticketCnt;
+	}
+
+	public void setTicketCnt(Integer ticketCnt) {
+		this.ticketCnt = ticketCnt;
 	}
 }

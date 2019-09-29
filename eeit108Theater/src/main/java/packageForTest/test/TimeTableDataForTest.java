@@ -22,7 +22,7 @@ public class TimeTableDataForTest {
 			tx = session.beginTransaction();
 			TimeTableBean tb = new TimeTableBean();
 			tb.setAvailable(true);
-			tb.setStartTime(new Date(30, 9, 10, 12, 20));
+			//tb.setStartTime(new Date(30, 9, 10, 12, 20));
 			//tb.setEndTime(new Date(29, 9, 10, 14, 20));
 			tb.setBreakTime(30);
 			tb.setTheater("B廳");

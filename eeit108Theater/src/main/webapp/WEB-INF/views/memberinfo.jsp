@@ -160,9 +160,10 @@
 								<input type="text" id="text" size="53" />
 								<input id="sendmsg" type="button" value="送出" />
 							</div>
-						</section> 
-					</article>
-					</div>
+							</section> 
+							</article>
+						</div>
+
 
 <!-- 			    ---------------------------------------------------------- -->
 						<div id="memberEdit" style="display:none">
