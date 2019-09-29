@@ -67,21 +67,24 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public int setSeatToOrder(OrderBean ob, String[] seats) {
+		System.out.println("===setSeatToOrderBegin");
 		int tid = ob.getTimeTable().getNo();
 		System.out.println("tid = " + tid);
 		List<SeatBean> list = new ArrayList<>();
+		ob.setSeats(list); // refresh seatList in order
 		for (String rowCol : seats) {
 			String row = rowCol.substring(0, 1);
-			System.out.println("row = " + row);
+			System.out.print("row = " + row);
 			Integer col = Integer.valueOf(rowCol.substring(1));
-			System.out.println("col = " + col);
-			if (sdao.getSeat(tid, row, col) != null) {
+			System.out.println(", col = " + col);
+			if (sdao.getSeat(tid, row, col) != null) { // if user-chosen seats has already been in the database, user
+														// should choose the seats again.
+				System.err.println(" Already been ordered: (tid, row, col) = (" + tid + ", " + row + ", " + col + ")");
 				return -1;
 			}
 			SeatBean sb = new SeatBean(tid, row, col);
 			list.add(sb);
 		}
-		ob.setSeats(list);
 		System.out.println("===setSeatToOrder Result:\n" + list);
 		return seats.length;
 	}
