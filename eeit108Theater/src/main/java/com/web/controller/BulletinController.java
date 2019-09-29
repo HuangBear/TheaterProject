@@ -56,6 +56,7 @@ public class BulletinController {
 //		String fn = req.getParameter("fn");
 //		String url = "";
 //		if(fn!=null) {url="#+fn;}
+		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
 	}
@@ -65,6 +66,7 @@ public class BulletinController {
 	public String other2bulletin_add(Model model) {
 		System.out.println("other2bulletin_add");
 		BulletinBean bb = new BulletinBean();
+		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("bulletinBean", bb);
 		return Root + "bulletin_add";
 	}
@@ -78,6 +80,7 @@ public class BulletinController {
 		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 		model.addAttribute("bulletinBean", bb);
 		model.addAttribute("sameBulletinBean", list);
+		model.addAttribute("updatedTime", new Date());
 		return Root + "bulletin_edit";
 	}
 
@@ -120,6 +123,16 @@ public class BulletinController {
 		byte[] image = blob.getBytes(1, (int) blob.length());
 		System.out.println("JSON.toJSONString(image)=" + JSON.toJSONString(image));
 		return JSON.toJSONString(image);
+	}
+
+	// AJAX Find title
+	@RequestMapping(value = "/ajaxTitle", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String ajaxTitleFunction(Integer no) throws Exception {
+		System.out.println("ajaxTitleFunction");
+		String str = service.getBulletinBeanById(no).getTitle();
+		System.out.println("str" + str);
+		return str;
 	}
 
 	// AJAX Find context
@@ -194,6 +207,7 @@ public class BulletinController {
 		// 如果沒有default圖片，else要打開
 		System.out.println("ErrMsg=" + req.getAttribute("ErrMsg"));
 		if (!errorMessage.isEmpty()) {
+			model.addAttribute("updatedTime", new Date());
 			model.addAttribute("bulletinBean", bb);
 			return Root + "bulletin_add";
 		} else {
@@ -205,6 +219,7 @@ public class BulletinController {
 			bb.setBortingId(employeeId + "_" + now.toString());
 			bb.setPostTime(now);
 			service.insertNewBulletin(bb);
+			model.addAttribute("updatedTime", new Date());
 			return "redirect:/" + Root + "bulletin_all";
 		}
 	}
@@ -294,6 +309,7 @@ public class BulletinController {
 			List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 			model.addAttribute("bulletinBean", bb);
 			model.addAttribute("sameBulletinBean", list);
+			model.addAttribute("updatedTime", new Date());
 			return Root + "bulletin_edit";
 		} else {
 			if (bet) {
@@ -303,11 +319,13 @@ public class BulletinController {
 				List<BulletinBean> list = service.getSameBulletinByBortingId(no);
 				model.addAttribute("bulletinBean", bb);
 				model.addAttribute("sameBulletinBean", list);
+				model.addAttribute("updatedTime", new Date());
 				return Root + "bulletin_edit";
 			} else {
 				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
 				service.insertNewBulletin(bb);
 				System.out.println("資料已修改");
+				model.addAttribute("updatedTime", new Date());
 				return "redirect:/" + Root + "bulletin_all";
 			}
 		}
@@ -320,6 +338,7 @@ public class BulletinController {
 		int deleteReturn = service.updateBulletinBeanById(no, false);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料刪除");
 		System.out.println("資料已刪除，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
+		req.setAttribute("updatedTime", new Date());
 		return "forward:/" + Root + "bulletin_all";
 
 	}
@@ -331,6 +350,7 @@ public class BulletinController {
 		int deleteReturn = service.updateBulletinBeanById(no, true);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料復原");
 		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
+		req.setAttribute("updatedTime", new Date());
 		return "forward:/" + Root + "bulletin_all";
 	}
 

@@ -8,17 +8,6 @@
 	display: none;
 }
 
-.shade {
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	background: black;
-	opacity: 0.6;
-	z-index: 100;
-}
-
 .add-model {
 	position: fixed;
 	height: 300px;
@@ -86,29 +75,90 @@
 		}
 	});
 
-	//	img effect
-	$("img[name=add_host]").mouseover(
-			function() {
-				var str = $(this).attr("src");
-				var name = str.substring(str.lastIndexOf("/") + 1);
-				var file_name = name.substring(0, name.length - 4);
-				var attachment_name = str.substring(str.lastIndexOf(".") + 1);
-				var new_str = "${pageContext.request.contextPath}/images/icons/backstage/bulletin/"
-						+ file_name + "_." + attachment_name;
-				$(this).attr("src", new_str);
-			});
-	$("img[name=add_host]").mouseout(
-			function() {
-				var str = $(this).attr("src");
-				var name = str.substring(str.lastIndexOf("/") + 1);
-				var file_name = name.substring(0, name.length - 5);
-				var photo_type = str.substring(str.lastIndexOf(".") + 1);
-				var new_str = "${pageContext.request.contextPath}/images/icons/backstage/bulletin/"
-						+ file_name + "." + photo_type;
-				$(this).attr("src", new_str);
-			});
+	//	context	imgbox button
+	$("[name='context_box']").click(function() {
+		var str = $(this).attr("id");
+		// 			var str1 = str.substring(0, 11);
+		// 			var targete = $("." + str1);
+		// 			$(targete).removeClass('hide');
+		var inputId = str.substring(str.lastIndexOf("_") + 1);
+		$.ajax({
+			type : 'post',
+			data : {
+				"no" : inputId
+			}, //参数
+			dataType : 'json',
+			url : " <c:url value='/admin/ajaxImg' />",
+			success : function(data) {
+				//将图片的Base64编码设置给src
+				$("#ImagePic").attr("src", "data:image/png;base64," + data);
+			},
+			error : function(data) {
+				alert('AJAX圖片讀取失敗！');
+			}
+		});
 
-	//	    discount by jQuery
+		$.ajax({
+			type : 'post',
+			data : {
+				"no" : inputId
+			}, //参数
+			dataType : 'text',
+			url : " <c:url value='/admin/ajaxTitle' />",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(data) {
+				//将图片的Base64编码设置给src
+				$(".AjaxTitle").text(data);
+			},
+			error : function(data) {
+				alert('AJAX標題讀取失敗！');
+			}
+		});
+
+		$.ajax({
+			type : 'post',
+			data : {
+				"no" : inputId
+			}, //参数
+			dataType : 'text',
+			url : " <c:url value='/admin/ajaxContext' />",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(data) {
+				//将图片的Base64编码设置给src
+				$(".AjaxContext").text(data);
+			},
+			error : function(data) {
+				alert('AJAX內文讀取失敗！');
+			}
+		});
+
+	});
+
+	//	img effect
+	$(function() {
+		$("img[name=img_effect]").mouseover(
+				function() {
+					var str = $(this).attr("src");
+					var name = str.substring(str.lastIndexOf("/") + 1);
+					var file_name = name.substring(0, name.length - 4);
+					var attachment_name = str.substring(str.lastIndexOf(".") + 1);
+					var new_str = "${pageContext.request.contextPath}/images/icons/backstage/bulletin/"
+							+ file_name + "_." + attachment_name;
+					$(this).attr("src", new_str);
+				});
+		$("img[name=img_effect]").mouseout(
+				function() {
+					var str = $(this).attr("src");
+					var name = str.substring(str.lastIndexOf("/") + 1);
+					var file_name = name.substring(0, name.length - 5);
+					var photo_type = str.substring(str.lastIndexOf(".") + 1);
+					var new_str = "${pageContext.request.contextPath}/images/icons/backstage/bulletin/"
+							+ file_name + "." + photo_type;
+					$(this).attr("src", new_str);
+				});
+	});
+
+	//discount show box
 	$(document).ready(function() {
 		$("input[type='radio']").click(function() {
 			var i = $(this).attr("value");
@@ -148,16 +198,8 @@
 			heightStyle : "content"
 		});
 	});
-	//accordion
-	$(function() {
-		$("[name='add_host']").click(function() {
-			var str = $(this).attr("id");
-			var targete = $("." + str);
-			$(targete).removeClass('hide');
-		});
-	});
 
-	//edit loading discount show box
+	//edit loading radio_discount show box
 	$(function() {
 		var str = '${bulletinBean.discount}';
 		// 		alert(str);
@@ -166,12 +208,20 @@
 			// 			alert("1");
 			var i = "discount1";
 			var o = "discountP";
+			var buy = '${bulletinBean.discountPriceBuy}';
+			var free = '${bulletinBean.discountPriceFree}';
+			$("#discountTickBuy").val(buy);
+			$("#discountTickFree").val(free);
 			break;
 
 		case "2":
 			// 			alert("2");
 			var i = "discount2";
 			var o = "discountT";
+			var buy = '${bulletinBean.discountTickBuy}';
+			var free = '${bulletinBean.discountTickFree}';
+			$("#discountTickBuy").val(buy);
+			$("#discountTickFree").val(free);
 			break;
 
 		default:
@@ -180,16 +230,11 @@
 			break;
 		}
 		document.getElementById(i).setAttribute("checked", "checked");
-		if (str != 0) {
-			var targete = $("." + o);
-			// 				$(".hide").not(targete).css("visibility", "hidden");
-			// 				$(targete).css("visibility", "visible");
-			$(".hide").not(targete).hide();
-			$(targete).show();
-		} else {
-
-		}
-
+		var targete = $("." + o);
+		// 				$(".hide").not(targete).css("visibility", "hidden");
+		// 				$(targete).css("visibility", "visible");
+		$(".hide").not(targete).hide();
+		$(targete).show();
 	});
 
 	//form back button
@@ -205,6 +250,7 @@
 		});
 	});
 
+	//form submit button
 	$("#bulletinBean").submit(function(event) {
 		console.log("to preventDefault");
 		event.preventDefault();
@@ -226,15 +272,21 @@
 		});
 	});
 
-	$(function() {
-		$("[name|=back]").click(function() {
-			var str = $(this).attr("id");
-			var targete = $("." + str);
-			$(targete).addClass('hide');
-		});
-	});
-</script>
-<!-- <script src="/js/script.js"></script> -->
+	// 	$(function() {
+	// 		$("[name|=back]").click(function() {
+	// 			var str = $(this).attr("id");
+	// 			var targete = $("." + str);
+	// 			$(targete).addClass('hide');
+	// 		});
+	// 	});
+
+	if (${ErrMsg.changeMsg!= null}) {
+		$("a.hide").trigger("click")
+	}
+	</script>
+
+
+
 
 
 <!-- Breadcrumbs-->
@@ -253,15 +305,35 @@
 
 	<div class="card-body">
 		<div class="table-responsive">
-			<!-- load視窗 -->
-			<c:if test="${ErrMsg.changeMsg!=null}">
-				<div class="change add-model">
-					<div>${ErrMsg.changeMsg}</div>
-					<div>
-						<input id="change" type="button" value="返回" name="back" class="btn btn-info">
+			<a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
+			<!-- load 視窗 -->
+			<%-- 			<c:if test="${ErrMsg.changeMsg!=null}"> --%>
+
+			<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">${ErrMsg.changeMsg}</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+						</div>
 					</div>
 				</div>
-			</c:if>
+			</div>
+
+
+			<!-- 				<div class="change add-model"> -->
+			<%-- 					<div>${ErrMsg.changeMsg}</div> --%>
+			<!-- 					<div> -->
+			<!-- 						<input id="change" type="button" value="返回" name="back" class="btn btn-info"> -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
+			<%-- 			</c:if> --%>
 
 
 			<div id="accordion">
@@ -270,26 +342,26 @@
 					<form method='POST' id="bulletinBean" action="<c:url value='/admin/bulletin_edit/edit'/>" enctype="multipart/form-data">
 						<div class="form-row mb-3 mt-1">
 							<div class="col-md-2">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.no}">
-										<input type="hidden" name="no" value="${bulletinBean.no}">
-									</c:when>
-									<c:when test="${!empty param.no}">
-										<input type="hidden" name="no" value="${param.no}">
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.no}"> --%>
+								<input type="hidden" name="no" value="${bulletinBean.no}">
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.no}"> --%>
+								<%-- 										<input type="hidden" name="no" value="${param.no}"> --%>
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 								<label for="title">標題:</label>
 							</div>
 							<div class="col-md-6">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.title}">
-										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
-											class="form-control">
-									</c:when>
-									<c:when test="${!empty param.title}">
-										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${param.title}" class="form-control">
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.title}"> --%>
+								<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
+									class="form-control">
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.title}"> --%>
+								<%-- 										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${param.title}" class="form-control"> --%>
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 							</div>
 							<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 						</div>
@@ -299,14 +371,14 @@
 								<label class="context">公告內容:</label>
 							</div>
 							<div class="col-md-6">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.context}">
-										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
-									</c:when>
-									<c:when test="${!empty param.context}">
-										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${param.context}</textarea>
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.context}"> --%>
+								<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.context}"> --%>
+								<%-- 										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${param.context}</textarea> --%>
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 
 
 							</div>
@@ -321,27 +393,27 @@
 								<label for="from">開始</label>
 							</div>
 							<div class="col-md-2">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.startDate}">
-										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" />
-									</c:when>
-									<c:when test="${!empty param.startDate}">
-										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${param.startDate}" />
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.startDate}"> --%>
+								<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" />
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.startDate}"> --%>
+								<%-- 										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${param.startDate}" /> --%>
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 							</div>
 							<div class="col-md-1">
 								<label for="to">結束</label>
 							</div>
 							<div class="col-md-2">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.endDate}">
-										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
-									</c:when>
-									<c:when test="${!empty param.endDate}">
-										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${param.endDate}" />
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.endDate}"> --%>
+								<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.endDate}"> --%>
+								<%-- 										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${param.endDate}" /> --%>
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 							</div>
 							<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 
@@ -370,16 +442,16 @@
 							</div>
 
 							<div class="col-md-2  discountP hide">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.discountPriceBuy}">
-										<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${bulletinBean.discountPriceBuy}"
-											class="form-control" />
-									</c:when>
-									<c:when test="${!empty param.discountPriceBuy}">
-										<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${param.discountPriceBuy}"
-											class="form-control" />
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.discountPriceBuy}"> --%>
+								<input min="1" max="9999" maxlength="4" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額"
+									value="${bulletinBean.discountPriceBuy}" class="form-control" />
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.discountPriceBuy}"> --%>
+								<%-- 										<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${param.discountPriceBuy}" --%>
+								<!-- 											class="form-control" /> -->
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 							</div>
 
 							<div class="col-md-1  discountP hide">
@@ -387,16 +459,16 @@
 							</div>
 
 							<div class="col-md-2  discountP hide">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.discountPriceFree}">
-										<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" value="${bulletinBean.discountPriceFree}"
-											class="form-control" />
-									</c:when>
-									<c:when test="${!empty param.discountPriceFree}">
-										<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" value="${param.discountPriceFree}"
-											class="form-control" />
-									</c:when>
-								</c:choose>
+								<%-- 								<c:choose> --%>
+								<%-- 									<c:when test="${!empty bulletinBean.discountPriceFree}"> --%>
+								<input min="1" max="9999" maxlength="4" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額"
+									value="${bulletinBean.discountPriceFree}" class="form-control" />
+								<%-- 									</c:when> --%>
+								<%-- 									<c:when test="${!empty param.discountPriceFree}"> --%>
+								<%-- 										<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" value="${param.discountPriceFree}" --%>
+								<!-- 											class="form-control" /> -->
+								<%-- 									</c:when> --%>
+								<%-- 								</c:choose> --%>
 							</div>
 						</div>
 
@@ -413,18 +485,11 @@
 							</div>
 
 							<div class=" col-md-2  discountT hide">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.discountTickBuy}">
-										<select class="custom-select " id="discountTickBuy" name="discountTickBuy" value="${bulletinBean.discountTickBuy}">
-									</c:when>
-									<c:when test="${!empty param.discountTickBuy}">
-										<select class="custom-select " id="discountTickBuy" name="discountTickBuy" value="${param.discountTickBuy}">
-									</c:when>
-								</c:choose>
-								<option value="0">購買票數</option>
-								<c:forEach begin="1" end="10" var="inputTB">
-									<option value="${inputTB}">${inputTB}</option>
-								</c:forEach>
+								<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
+									<option value="0">購買票數</option>
+									<c:forEach begin="1" end="5" var="inputTB">
+										<option value="${inputTB}">${inputTB}</option>
+									</c:forEach>
 								</select>
 							</div>
 
@@ -433,18 +498,11 @@
 							</div>
 
 							<div class=" col-md-2  discountT hide">
-								<c:choose>
-									<c:when test="${!empty bulletinBean.discountTickFree}">
-										<select class="custom-select " id="discountTickFree" name="discountTickFree" value="${bulletinBean.discountTickFree}">
-									</c:when>
-									<c:when test="${!empty param.discountTickFree}">
-										<select class="custom-select " id="discountTickFree" name="discountTickFree" value="${param.discountTickFree}">
-									</c:when>
-								</c:choose>
-								<option value="0">贈送票數</option>
-								<c:forEach begin="1" end="5" var="inputTF">
-									<option value="${inputTF}">${inputTF}</option>
-								</c:forEach>
+								<select class="custom-select " id="discountTickFree" name="discountTickFree">
+									<option value="0">贈送票數</option>
+									<c:forEach begin="1" end="4" var="inputTF">
+										<option value="${inputTF}">${inputTF}</option>
+									</c:forEach>
 								</select>
 
 							</div>
@@ -483,10 +541,15 @@
 							<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
 								<thead>
 									<tr>
-										<th scope="col" class="col-1">#</th>
-										<th scope="col" class="col-5">標題</th>
-										<th scope="col" class="col-3" colspan="2">優惠方案</th>
-										<th scope="col" class="col-3">詳情</th>
+										<th scope="col" width="5%">#</th>
+										<th scope="col" width="30%">標題</th>
+										<th scope="col" width="10%">起始</th>
+										<th scope="col" width="10%">結束</th>
+										<th scope="col" width="10%">公告人</th>
+										<th scope="col" width="20%" colspan="2">優惠方案</th>
+										<th scope="col" width="5%">詳情</th>
+										<th scope="col" width="5%"></th>
+										<th scope="col" width="5%"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -494,22 +557,54 @@
 										<tr>
 											<c:if test="${sb.available}">
 												<td class="hide">${sb.no}</td>
-												<td>${i.index}</td>
+												<th scope="row">${i.index+1}</th>
 												<td>${sb.title}</td>
+												<td>${sb.startDate}</td>
+												<td>${sb.endDate}</td>
+												<td>${sb.employee.no}</td>
 												<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
 												<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-												<td><img name="add_host" id="unavai_cont_${sb.no}" width="20px"
+												<td><img name="img_effect" data-toggle="modal" data-target="#div_unavai_cont_${sb.no}" width="30px"
 													src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
+												<td></td>
+												<td></td>
 											</c:if>
 										</tr>
-										<div class="unavai_cont_${sb.no} add-model hide">
-											<div>${sb.context}
-												<img id="showPhoto" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" />
-											</div>
-											<div>
-												<input id="unavai_cont_${sb.no}" type="button" value="返回" name="back" class=" btn btn-danger">
+										<div class="modal fade" id="div_unavai_cont_${sb.no}" tabindex="-1" role="dialog" aria-labelledby="div_unavai_cont_${sb.no}}Title" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="div_unavai_cont_${sb.no}Title">公告修改</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<div>
+															<h4>${sb.title}</h4>
+														</div>
+														<div>
+															<h5>${sb.context}</h5>
+														</div>
+														<img id="showPhoto" width="250" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" />
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+													</div>
+												</div>
 											</div>
 										</div>
+
+
+
+										<%-- 										<div class="unavai_cont_${sb.no} add-model hide"> --%>
+										<%-- 											<div>${sb.context} --%>
+										<%-- 												<img id="showPhoto" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" /> --%>
+										<!-- 											</div> -->
+										<!-- 											<div> -->
+										<%-- 												<input id="unavai_cont_${sb.no}" type="button" value="返回" name="back" class=" btn btn-danger"> --%>
+										<!-- 											</div> -->
+										<!-- 										</div> -->
 									</c:forEach>
 								</tbody>
 							</table>
@@ -521,6 +616,6 @@
 
 		</div>
 	</div>
-	<div class="card-footer small text-muted">Updated at 00:00 PM</div>
+	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
 
 </div>

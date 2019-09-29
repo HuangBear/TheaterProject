@@ -4,31 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <style type="text/css">
 .hide {
-	/* 	visibility: hidden; */
 	display: none;
-}
-
-.shade {
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	background: black;
-	opacity: 0.6;
-	z-index: 100;
-}
-
-.add-model {
-	position: fixed;
-	height: 300px;
-	width: 400px;
-	top: 100px;
-	left: 50%;
-	z-index: 101;
-	border: 1px solid red;
-	background: white;
-	margin-left: -200px;
 }
 </style>
 
@@ -52,6 +28,7 @@
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
 <script>
+
 	//    Datepicker
 	$(function() {
 		var dateFormat = "yy-mm-dd", from = $("#from").datepicker({
@@ -132,6 +109,7 @@
 	$(function() {
 		$("#accordion").accordion({
 			heightStyle : "content"
+
 		});
 	});
 
@@ -150,7 +128,7 @@
 			$(targete).addClass('hide');
 		});
 	});
-
+	//一鍵輸入
 	$('#oneSet').click(function() {
 		$('#title').val('測試測試');
 		$('#context').val('測試測試測試測試測試測試測試');
@@ -181,6 +159,42 @@
 				$("#pageItems").html("ajax add bulletin gg");
 			}
 		});
+	});
+
+	//add reload radio_discount show box
+	$(function() {
+		var str = '${bulletinBean.discount}';
+		// 		alert(str);
+		switch (str) {
+		case "1":
+			// 			alert("1");
+			var i = "discount1";
+			var o = "discountP";
+			var buy = '${bulletinBean.discountPriceBuy}';
+			var free = '${bulletinBean.discountPriceFree}';
+			$("#discountTickBuy").val(buy);
+			$("#discountTickFree").val(free);
+			break;
+
+		case "2":
+			// 			alert("2");
+			var i = "discount2";
+			var o = "discountT";
+			var buy = '${bulletinBean.discountTickBuy}';
+			var free = '${bulletinBean.discountTickFree}';
+			$("#discountTickBuy").val(buy);
+			$("#discountTickFree").val(free);
+			break;
+
+		default:
+			// 			alert("0");
+			var i = "discount0";
+			break;
+		}
+		document.getElementById(i).setAttribute("checked", "checked");
+		var targete = $("." + o);
+		$(".hide").not(targete).hide();
+		$(targete).show();
 	});
 </script>
 
@@ -221,7 +235,8 @@
 								<label for="title">標題:</label>
 							</div>
 							<div class="col-md-6">
-								<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${param.title}" class="form-control">
+								<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
+									class="form-control">
 							</div>
 							<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 						</div>
@@ -231,7 +246,7 @@
 								<label class="context">公告內容:</label>
 							</div>
 							<div class="col-md-6">
-								<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${param.context}</textarea>
+								<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
 							</div>
 							<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 						</div>
@@ -244,13 +259,13 @@
 								<label for="from">開始</label>
 							</div>
 							<div class="col-md-2">
-								<input type="text" id="from" name="from" class="form-control" id="startDate" />
+								<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" />
 							</div>
 							<div class="col-md-1">
 								<label for="to">結束</label>
 							</div>
 							<div class="col-md-2">
-								<input type="text" id="to" name="to" class="form-control" id="endDate" />
+								<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
 							</div>
 							<!-- 							<div> -->
 							<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
@@ -269,8 +284,8 @@
 						<div class="form-row">
 							<div class="col-md-2 mb-1 mt-1">
 								<div class="custom-control custom-radio">
-									<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label"
-										for="discount1">現金折扣</label> <a style="color: red;">${ErrMsg.discountP}</a>
+									<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label" for="discount1">現金折扣</label>
+									<a style="color: red;">${ErrMsg.discountP}</a>
 								</div>
 							</div>
 
@@ -280,7 +295,7 @@
 							</div>
 
 							<div class="col-md-2  discountP hide">
-								<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${param.discountPriceBuy}"
+								<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${bulletinBean.discountPriceBuy}"
 									class="form-control" />
 							</div>
 
@@ -290,15 +305,15 @@
 
 							<div class="col-md-2  discountP hide">
 								<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" maxlength="4"
-									value="${param.discountPriceFree}" class="form-control" />
+									value="${bulletinBean.discountPriceFree}" class="form-control" />
 							</div>
 						</div>
 
 						<div class="form-row mb-3 mt-1">
 							<div class="col-md-2 ">
 								<div class="custom-control custom-radio">
-									<input type="radio" class="custom-control-input" id="discount2" name="discount"  value="2" /> <label class="custom-control-label"
-										for="discount2">票券折扣</label> <a style="color: red;">${ErrMsg.discountT}</a>
+									<input type="radio" class="custom-control-input" id="discount2" name="discount" value="2" /> <label class="custom-control-label" for="discount2">票券折扣</label>
+									<a style="color: red;">${ErrMsg.discountT}</a>
 								</div>
 							</div>
 
@@ -307,9 +322,9 @@
 							</div>
 
 							<div class=" col-md-2  discountT hide">
-								<select class="custom-select " id="discountTickBuy" name="discountTickBuy" value="${param.discountTickBuy}">
+								<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
 									<option value="0">購買票數</option>
-									<c:forEach begin="1" end="10" var="inputTB">
+									<c:forEach begin="1" end="5" var="inputTB">
 										<option value="${inputTB}">${inputTB}</option>
 									</c:forEach>
 								</select>
@@ -320,12 +335,13 @@
 							</div>
 
 							<div class=" col-md-2  discountT hide">
-								<select class="custom-select " id="discountTickFree" name="discountTickFree" value="${param.discountTickFree}">
+								<select class="custom-select " id="discountTickFree" name="discountTickFree">
 									<option value="0">贈送票數</option>
-									<c:forEach begin="1" end="5" var="inputTF">
+									<c:forEach begin="1" end="4" var="inputTF">
 										<option value="${inputTF}">${inputTF}</option>
 									</c:forEach>
 								</select>
+
 
 							</div>
 						</div>
@@ -357,7 +373,7 @@
 						</div>
 						<div class="form-row mb-3 justfy-content-center">
 							<div class="col-md-2 ">
-								<input id="oneSet" type="button" value="一鍵輸入" class='btn btn-primary'>
+								<input id="oneSet" type="button" value="一鍵輸入" class='btn btn-secondary'>
 							</div>
 							<div class="col-md-2 ">
 								<input id="btnAdd" type='submit' value="新增公告" class='btn btn-primary'>
@@ -371,7 +387,7 @@
 
 		</div>
 	</div>
-	<div class="card-footer small text-muted">Updated at 00:00 PM</div>
+	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
 
 </div>
 
