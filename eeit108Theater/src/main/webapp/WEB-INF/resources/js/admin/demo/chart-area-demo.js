@@ -4,10 +4,16 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
+var Today=new Date();
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 12", "Mar 13"],
+    labels: [(Today.getMonth()+1) + " 月 " + (Today.getDate()-5) + " 日",
+    	(Today.getMonth()+1) + " 月 " + (Today.getDate()-4) + " 日",
+    	(Today.getMonth()+1) + " 月 " + (Today.getDate()-3) + " 日",
+    	(Today.getMonth()+1) + " 月 " + (Today.getDate()-2) + " 日",
+    	(Today.getMonth()+1) + " 月 " + (Today.getDate()-1) + " 日",
+    	(Today.getMonth()+1) + " 月 " + Today.getDate() + " 日(本日)"],
     datasets: [{
       label: "Sessions",
       lineTension: 0.3,
@@ -20,7 +26,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "rgba(2,117,216,1)",
       pointHitRadius: 50,
       pointBorderWidth: 2,
-      data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984, 38451],
+      data: [0, 3, 2, 1, 7, 2],
     }],
   },
   options: {
@@ -39,7 +45,7 @@ var myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 40000,
+          max: 10,
           maxTicksLimit: 5
         },
         gridLines: {

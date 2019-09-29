@@ -65,20 +65,22 @@ public class OrderController {
 	@RequestMapping("/showProducts")
 	public String showProductByType(Model model, HttpSession session, HttpServletRequest req) {
 		System.err.println("====showProductByType Start====");
-		String orderStage = (String) session.getAttribute("orderStage");
-		if (orderStage == null || !orderStage.equals("seat")) { // if user not from seat
-			session.removeAttribute("order");
-			session.setAttribute("orderStage", "product");
+		String tid = req.getParameter("time");
+		if (tid == null || tid.trim().equals("")) {
+			System.err.println("Lack of Time Table Id");
+			throw new NullPointerException("Lack of Time Table Id");
+			// Exception due to lack of time table id.
 		}
 		OrderBean ob = (OrderBean) session.getAttribute("order");
-		if (ob == null) { // if user not from seat
-			ob = new OrderBean(true);
-			String tid = req.getParameter("time");
-			if (tid == null || tid.trim().equals("")) {
-				System.err.println("Lack of Time Table Id");
-				throw new NullPointerException("Lack of Time Table Id");
-				// Exception due to lack of time table id.
+		if (ob == null || !ob.getTimeTable().getNo().equals(Integer.valueOf(tid))) { // if user not from seat
+			if (ob == null)
+				System.out.println("its null order");
+			else {
+				System.out.println(ob.getTimeTable().getNo() + " vs " + Integer.valueOf(tid));
+
 			}
+			System.out.println("set an new order");
+			ob = new OrderBean(true);
 			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(tid)));
 			session.setAttribute("order", ob);
 		}
@@ -86,12 +88,6 @@ public class OrderController {
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
 		System.err.println("====showProductByType END====");
-		return pac + "productsByType";
-	}
-
-	@RequestMapping("/reChooseProducts")
-	public String showProductWithOrder() {
-
 		return pac + "productsByType";
 	}
 
@@ -134,8 +130,7 @@ public class OrderController {
 			itemsMap.put(oib.getItemName(), oib);
 		}
 		ob.calTotalPrice();
-		if (req.getParameter("ticketCnt") != null)
-			ob.setTicketCnt(Integer.parseInt(req.getParameter("ticketCnt")));
+		ob.setTicketCnt(Integer.parseInt(req.getParameter("ticketCnt")));
 		System.out.println(ob.getOrderItemString());
 		System.out.println(orderList);
 		System.err.println("====orderList END====");
@@ -147,10 +142,12 @@ public class OrderController {
 	 * 
 	 */
 	@RequestMapping("/seat")
-	public String showSeat(Model model, HttpSession session, HttpServletRequest req) {
+	public String showSeat(Model model, HttpSession session) {
 		System.err.println("====showSeat Start====");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
-		session.setAttribute("orderStage", "seat");
+		if (ob.getTicketCnt() == null || ob.getTicketCnt() == 0) { // 禁止透過改前頁網址的方式執行此方法
+			return "forward:/" + pac + "showProducts?time=" + ob.getTimeTable().getNo();
+		}
 		System.out.println(ob.getOrderItemString());
 		List<SeatBean> seatList = pServ.getSeatsByTimeTable(ob.getTimeTable().getNo());
 		Map<String, Boolean> soldSeats = new HashMap<>();
@@ -161,16 +158,16 @@ public class OrderController {
 			}
 		}
 
-		int rowCnt = Integer.valueOf(req.getParameter("rowCnt"));
-		int aZoneCnt = Integer.valueOf(req.getParameter("aZoneCnt"));
-		int bZoneCnt = Integer.valueOf(req.getParameter("bZoneCnt"));
-		int zoneNum = Integer.valueOf(req.getParameter("zoneNum"));
-		// model.addAttribute("sideBar", this.getSideBar(rowCnt));
+		int rowCnt = 15;
+		int aZoneCnt = 5;
+		int bZoneCnt = 15;
+		int zoneNum = 2;
+//		int rowCnt = Integer.valueOf(req.getParameter("rowCnt"));
+//		int aZoneCnt = Integer.valueOf(req.getParameter("aZoneCnt"));
+//		int bZoneCnt = Integer.valueOf(req.getParameter("bZoneCnt"));
+//		int zoneNum = Integer.valueOf(req.getParameter("zoneNum"));
 		String s = this.getSeatTable(rowCnt, aZoneCnt, bZoneCnt, zoneNum, soldSeats);
 		model.addAttribute("seatTable", s);
-//		if (req.getAttribute("seatSoldErr") == null) {
-//			model.addAttribute("ticketCnt", req.getParameter("ticketCnt"));
-//		}
 		System.out.println(s);
 		System.err.println("====showSeat END====");
 		return pac + "seat";
@@ -184,17 +181,17 @@ public class OrderController {
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		ob.sortOrderItem("ticket", "drink");
 		ob.calTotalPrice();
+		// to set the chosen seats into order; if return value = -1, the
+		// chosen seats has been ordered already
+		System.out.println(seats);
 		if (oServ.setSeatToOrder(ob, seats) == -1) {
 			System.err.println("=== Selected seats has been sold already ===");
-//			req.setAttribute("ticketCnt", seats.length);
 			req.setAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
 			System.err.println("====showOrder FORWARD TO showSeat====");
-			return "forward: /seat";
+			return "forward:/" + pac + "seat";
 		}
+		System.out.println("set seats success");
 		model.addAttribute("orderItems", ob.getOrderItems());
-		// model.addAttribute("seats", seats);
-//		session.setAttribute("ticketCnt", req.getParameter("ticketCnt"));
-
 		System.err.println("====showOrder END====");
 		return pac + "orderItems";
 	}

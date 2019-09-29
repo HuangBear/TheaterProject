@@ -17,5 +17,6 @@ public interface MemberService {
 	 public Boolean checkMemberEmail(String email);
 	 public Integer save(MemberBean empBean);
 	 public MemberBean checkEmailPassword(String email, String password);
+	 void updateMemberStatus(MemberBean memBean);
 	
 }

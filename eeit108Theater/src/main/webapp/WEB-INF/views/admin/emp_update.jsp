@@ -49,7 +49,7 @@
       	<div class="form-group">
             <div class="form-label-group">
               <form:input type="text" id="phoneNum" class="form-control" 
-              value="${eb.phoneNum}" required="required" path="phoneNum"/>
+              value="${eb.phoneNum}"  path="phoneNum"/>
               <label for="phoneNum">員工電話</label>
             </div>
           </div>
@@ -115,8 +115,9 @@
             </div>
           </div>
           
-          
-          <button type="submit" class="btn btn-primary">送出</button>
+<!--           <button type="submit"  class=" btn btn-primary">送出</button> -->
+        
+          <button type="submit"  class=" btn btn-primary">送出</button>
           <button type="reset" class="btn btn-primary">重填</button><br><hr>
           <button type="button" id="oneSet"  class="btn btn-success">一鍵填入</button>
 

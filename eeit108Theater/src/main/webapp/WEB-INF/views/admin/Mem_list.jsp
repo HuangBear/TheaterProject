@@ -123,7 +123,7 @@
 		var pk = $(this).attr("id");
 		//var pquantity = $(this).val();
 		$.ajax({
-			url : "<c:url value='/admin/updateEMP'/>",
+			url : "<c:url value='/admin/updateMem'/>",
 			data : {
 				pk : pk,
 			//quantity : pquantity

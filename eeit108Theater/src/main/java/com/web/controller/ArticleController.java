@@ -47,8 +47,8 @@ public class ArticleController {
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
-		session = request.getSession();
-		session.setAttribute("movie", no);
+		MovieBean mb = service.getMovieByNo(no);
+		model.addAttribute("Movie", mb);
 		return "Articles";
 	}
 
@@ -429,11 +429,17 @@ public class ArticleController {
 	public List<String> getTagList() {
 		return service.getAllTags();
 	}
+	
+	@RequestMapping("/admin/emp_Forum")
+	public String EmpForum(Model model) {
+		List<ArticleBean> list = service.getAllArticles();
+		model.addAttribute("Articles", list);
+		return "emp_Forum";
+	}
 
 	@InitBinder
 	public void whiteListing(WebDataBinder binder) {
 		binder.setAllowedFields("author"
-				, "ForumId"
 				, "tag"
 				, "title"
 				, "content"

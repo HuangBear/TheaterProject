@@ -17,6 +17,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.web.config.WebSocketConfigurator;
+
 @ServerEndpoint(value = "/websocket.do", configurator = WebSocketConfigurator.class)
 public class WebSocketNoHTTP {
 	static Set<Session> users = Collections.synchronizedSet(new HashSet<Session>());
@@ -57,7 +59,7 @@ public class WebSocketNoHTTP {
 				userSession.getBasicRemote().sendText(msgPackage);
 			}
 		} catch (IOException e) {
-			System.out.println("IOException好吵");
+			System.out.println("IOException");
 		}
 	}
 
@@ -85,18 +87,18 @@ public class WebSocketNoHTTP {
 				iterator.next().getBasicRemote().sendText(msgPackage);
 			}
 		} catch (IOException e) {
-			System.out.println("IOException好吵");
+			System.out.println("IOException");
 		}
 	}
 
 	@OnClose
 	public void handleClose(Session userSession) {
-		System.out.println("WebSocket強關才叫我..");
+		System.out.println("WebSocket Close");
 		users.remove(userSession);
 		try {
 			userSession.close();
 		} catch (IOException e) {
-			System.out.println("IOException好吵");
+			System.out.println("IOException");
 		}
 	}
 

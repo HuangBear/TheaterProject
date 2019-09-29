@@ -15,9 +15,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.resource.VersionResourceResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Configuration
@@ -101,5 +103,12 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		resolver.setDefaultViews(views);
 
 		return resolver;
+	}
+	@Bean
+	public ViewResolver pdfViewResolver() {
+		ResourceBundleViewResolver pdfView = new ResourceBundleViewResolver();
+		pdfView.setBasename("views");
+		pdfView.setOrder(1);
+		return pdfView;
 	}
 }

@@ -244,6 +244,7 @@ public class OrderBean implements Serializable {
 		List<OrderItemBean> list = this.orderItems;
 		int fstIndex = 0;
 		int i = 0;
+		//when the type from index item to last item are all the type which should set behind the list, the loop cannot end.
 		while (i < list.size()) {
 			String type = list.get(i).getType();
 			if (type.equals(last)) {
@@ -251,12 +252,16 @@ public class OrderBean implements Serializable {
 					break;
 				OrderItemBean temp = list.remove(i);
 				list.add(temp);
+				if(list.get(i).getType().equals(last))
+					i++;
+				continue;
 			} else if (type.equals(first)) {
 				OrderItemBean temp = list.get(i);
 				list.set(i, list.get(fstIndex));
 				list.set(fstIndex, temp);
 				fstIndex++;
 				i++;
+				continue;
 			} else {
 				i++;
 			}

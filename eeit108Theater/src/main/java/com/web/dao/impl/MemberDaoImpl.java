@@ -23,7 +23,9 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public int saveMember(MemberBean member) {
+		System.out.println("Going to Register for one member!");
 		Session session = factory.getCurrentSession();
+		
 		return (int)session.save(member);
 	}
 

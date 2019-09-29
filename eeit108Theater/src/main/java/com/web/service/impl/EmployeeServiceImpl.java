@@ -134,6 +134,28 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeDao.getEmployeeByEmail(email);
 	}
 
+	@Override
+	public EmployeeBean findByEmployeeName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String checkEmpPermission(EmployeeBean empBean) {
+		int permissionNum=empBean.getPermission();
+		String position=null;
+		if(permissionNum==1) {
+			position="一般員工";
+		}else if(permissionNum==2) {
+			position="影城經理";
+		}else if(permissionNum==3) {
+			position="影城主管";
+		}else {
+			position="無職位";
+		}
+		return position;
+	}
+
 	
 
 	

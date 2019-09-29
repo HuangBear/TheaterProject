@@ -116,7 +116,7 @@
 						<c:forEach var='reply' items='${Article.replys}'>
 							<div
 								style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
-								<p>${reply.author.name}回覆時間:${Article.postTime}</p>
+								<p>${reply.author.name} 回覆時間:${Article.postTime}</p>
 							</div>
 							<c:choose>
 								<c:when test="${reply.available==true}">

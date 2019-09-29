@@ -23,7 +23,7 @@
             	7-1 Cinema員工清單</div>
           <div class="card-body">
             <div class="table-responsive">
-          
+          <em>${error}</em>
               
             <c:if test='${not empty employees}'>
 			<c:forEach var='emp' varStatus='vs' items='${employees}'>
@@ -93,7 +93,8 @@
             </div>
           </div>
           <div class="card-footer small text-muted">Updated  at ${now}</div>
-          <a href="/EmpPDF">pdf</a>
+          <a href="<c:url value='/admin/EmpPDF.pdf'/>">pdf</a>
+          			
         </div>
 
 
