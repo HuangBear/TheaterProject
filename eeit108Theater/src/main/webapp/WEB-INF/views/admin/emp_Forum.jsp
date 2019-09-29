@@ -25,8 +25,8 @@
             <div class="table-responsive">
           
               
-            <c:if test='${not empty movies}'>
-			<c:forEach var='movie' varStatus='vs' items='${movies}'>
+            <c:if test='${not empty Articles}'>
+			<c:forEach var='article' varStatus='vs' items='${Articles}'>
 			<c:if test ='${vs.first}'>
 				<c:out value="<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>" escapeXml='false'/>
 				<c:out value=" <thead><tr><th>編號</th><th>Title</th>
