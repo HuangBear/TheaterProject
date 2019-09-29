@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.MemberDao;
-
 import com.web.entity.MemberBean;
 
 @Repository
@@ -142,5 +141,30 @@ public class MemberDaoImpl implements MemberDao {
 		//return (List<EmployeeBean>)query.getResultList();
 		return result;
 	}
+	
+	@Override
+	public int activeUser(String emailCode) {
+		
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MemberBean set emailActiveStatus = 1 WHERE emailCode= :emailCode";
+		int mmb = 0;
+		mmb = session.createQuery(hql)
+				.setParameter("emailCode", emailCode)
+				.executeUpdate();
+		System.out.println("hash="+emailCode);
+		System.out.println("mmb="+mmb);
+		
+		return mmb;
+	}
 
+	@Override
+	public MemberBean findMemberByCode(String code) {
+		MemberBean mb= null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MemberBean e WHERE e.emailCode = :emailCode";
+		
+		mb=(MemberBean)session.createQuery(hql)
+				.setParameter("emailCode", code).uniqueResult();
+		return mb;
+	}
 }
