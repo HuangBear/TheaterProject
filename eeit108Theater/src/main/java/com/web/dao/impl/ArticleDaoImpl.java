@@ -78,7 +78,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getAllTags() {
-	    String hql = "SELECT DISTINCT b.tag FROM ArticleBean b";
+	    String hql = "SELECT DISTINCT b.tag FROM TagBean b";
 	    Session session = factory.getCurrentSession();
 	    List<String> list = new ArrayList<>();
 	    list = session.createQuery(hql).getResultList();
@@ -166,10 +166,9 @@ public class ArticleDaoImpl implements ArticleDao {
 	
 	@Override
 	public MovieBean getMovieByNo(int movieNo) {
-		MovieBean mb = null;
-	    Session session = factory.getCurrentSession();
-	    mb = session.get(MovieBean.class, movieNo);
-	    return mb;
+		Session session = factory.getCurrentSession();
+		MovieBean mb = session.get(MovieBean.class, movieNo);
+		return mb;
 	}	
 	@Override
 	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article) {

@@ -46,6 +46,9 @@
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
+		<a style="font-size: 40px">
+		${Movie.movieName}
+		</a>
 		<div class="forum">
 			<c:choose>
 				<c:when test="${empty LoginOK}">
