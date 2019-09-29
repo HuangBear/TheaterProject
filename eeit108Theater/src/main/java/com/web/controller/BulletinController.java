@@ -48,6 +48,12 @@ public class BulletinController {
 
 	final String Root = "admin/";
 
+	@RequestMapping(value = "/just_try", method = RequestMethod.GET)
+	public String just_try(Model model, HttpServletRequest req) {
+		System.out.println("just_try");
+		return Root + "just_try";
+	}
+
 	// other2bulletin_all
 	@RequestMapping(value = "/bulletin_all", method = RequestMethod.GET)
 	public String other2bulletin_all(Model model, HttpServletRequest req) {
