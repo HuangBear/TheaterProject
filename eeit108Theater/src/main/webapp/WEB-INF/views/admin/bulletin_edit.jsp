@@ -18,6 +18,10 @@
 	background: white;
 	margin-left: -200px;
 }
+
+.myMOUSE {
+	cursor: pointer;
+}
 </style>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -121,6 +125,7 @@
 	$(function() {
 		$("img[name=img_effect]").mouseover(
 				function() {
+					$(this).addClass("myMOUSE");
 					var str = $(this).attr("src");
 					var name = str.substring(str.lastIndexOf("/") + 1);
 					var file_name = name.substring(0, name.length - 4);
@@ -131,6 +136,7 @@
 				});
 		$("img[name=img_effect]").mouseout(
 				function() {
+					$(this).removeClass("myMOUSE");
 					var str = $(this).attr("src");
 					var name = str.substring(str.lastIndexOf("/") + 1);
 					var file_name = name.substring(0, name.length - 5);

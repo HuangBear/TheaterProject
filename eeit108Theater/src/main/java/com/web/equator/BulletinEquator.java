@@ -35,8 +35,7 @@ public class BulletinEquator {
 		} else if (!equator.isEquals(obb.getDiscountTickFree(), bb.getDiscountTickFree())) {
 			System.out.println("getDiscountTickFree=false");
 			return false;
-		} else if (!equator.isEquals(obb.getEmployee().getEmployeeId(),
-				bb.getEmployee().getEmployeeId())) {
+		} else if (!equator.isEquals(obb.getEmployee().getNo(), bb.getEmployeeId())) {
 			System.out.println("getEmployee().getEmployeeId()=false");
 			return false;
 		} else if (!equator.isEquals(obb.getEndDate(), bb.getEndDate())) {

@@ -380,6 +380,28 @@
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
 
 </div>
-
+<script>
+	if (${ErrMsg.changeMsg != null}) {
+		$("a.hide").trigger("click")
+	}
+</script>
+<!-- load 視窗 -->
+<a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
+<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">${ErrMsg.changeMsg}</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 

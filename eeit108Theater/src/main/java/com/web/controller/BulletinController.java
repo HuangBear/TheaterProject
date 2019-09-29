@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.web.entity.BulletinBean;
+import com.web.entity.EmployeeBean;
 import com.web.equator.BulletinEquator;
 import com.web.service.BulletinService;
 
@@ -56,12 +58,16 @@ public class BulletinController {
 
 	// other2bulletin_all
 	@RequestMapping(value = "/bulletin_all", method = RequestMethod.GET)
-	public String other2bulletin_all(Model model, HttpServletRequest req) {
+	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
 		List<List<BulletinBean>> list = service.getStatsBulletin();
-//		String fn = req.getParameter("fn");
-//		String url = "";
-//		if(fn!=null) {url="#+fn;}
+
+		// permission
+//		Integer permission = getPermission(session);
+//		if (permission < obb.getEmployee().getPermission() || no != obb.getEmployee().getNo()) {
+//			errorMessage.put("permission", "您的權限不足");
+//		}
+
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
@@ -70,6 +76,7 @@ public class BulletinController {
 	// other2bulletin_add
 	@RequestMapping(value = "/bulletin_add", method = RequestMethod.GET)
 	public String other2bulletin_add(Model model) {
+
 		System.out.println("other2bulletin_add");
 		BulletinBean bb = new BulletinBean();
 		model.addAttribute("updatedTime", new Date());
@@ -77,17 +84,200 @@ public class BulletinController {
 		return Root + "bulletin_add";
 	}
 
-	// edit_bulletin_all2bulletin_add
-	@RequestMapping(value = "/bulletin_all/edit", method = RequestMethod.GET)
-	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
-		System.out.println("edit_bulletin_all2bulletin_add");
-		Integer no = Integer.valueOf(req.getParameter("no"));
-		BulletinBean bb = service.getBulletinBeanById(no);
-		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
-		model.addAttribute("bulletinBean", bb);
-		model.addAttribute("sameBulletinBean", list);
-		model.addAttribute("updatedTime", new Date());
-		return Root + "bulletin_edit";
+	// post_bulletin_add2bulletin_all
+	@RequestMapping(value = "/bulletin_add/add", method = RequestMethod.POST)
+	public String post_bulletin_add2bulletin_all(HttpSession session, Model model,
+			HttpServletRequest req, RedirectAttributes redirectAttributes)
+			throws IOException, SQLException {
+		System.out.println("post_bulletin_add2bulletin_all");
+		BulletinBean bb = new BulletinBean();
+		HashMap<String, String> errorMessage = new HashMap<>();
+		req.setAttribute("ErrMsg", errorMessage);
+		System.out.println("hello");
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		// 標題
+		testTitle(bb, req, errorMessage);
+		// 內容
+		testContext(bb, req, errorMessage);
+		// 日期
+		testDate(bb, req, errorMessage);
+		// 折扣
+		testDiscount(bb, req, errorMessage);
+		// 判斷權限
+		Integer permission = getPermission(session);
+		if (permission <= 1) {
+			errorMessage.put("changeMsg", "權限不足!!無法發布公告!!");
+		}
+
+		// 圖片存資料庫
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+		MultipartFile bulletinImage = multipartRequest.getFile("bulletinImage");
+		String originalFilename = bulletinImage.getOriginalFilename();
+		System.out.println(originalFilename);
+		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
+		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
+		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+
+		url = context.getRealPath(url);
+		byte[] b = bulletinImage.getBytes();
+
+		if (bulletinImage != null && !bulletinImage.isEmpty()) {
+			bb.setFileName(originalFilename);
+			System.out.println("photoType=" + photoType);
+			if (photoType.equals("jpg") || photoType.equals("jpeg") || photoType.equals("png")) {
+				try {
+					b = bulletinImage.getBytes();
+					Blob blob = new SerialBlob(b);
+					bb.setCoverImage(blob);
+					System.out.println("insertBlob=" + blob);
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+					throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+				}
+			} else {
+				errorMessage.put("photo", "請上傳jpeg/jpg/png");
+			}
+		} else {
+			bb.setFileName(imgFilename);
+			System.out.println("imgFilename=" + imgFilename);
+			Blob blob = SystemUtils2018.fileToBlob(url);
+			bb.setCoverImage(blob);
+			System.out.println("insertBlob=" + blob);
+		}
+
+		System.out.println("ErrMsg=" + req.getAttribute("ErrMsg"));
+		if (!errorMessage.isEmpty()) {
+			model.addAttribute("updatedTime", new Date());
+			model.addAttribute("bulletinBean", bb);
+			return Root + "bulletin_add";
+		} else {
+			Date now = new Date();
+			redirectAttributes.addFlashAttribute("changeMsg", "公告新增成功");
+			System.out.println("公告新增成功");
+			// 找id
+			Integer no = getEmployeeId(session);
+			bb.setEmployeeId(no);
+			bb.setBortingId(no + "_" + now.toString());
+			bb.setPostTime(now);
+			service.insertNewBulletin(bb);
+			model.addAttribute("updatedTime", new Date());
+			return "redirect:/" + Root + "bulletin_all";
+
+		}
+	}
+
+	// edit_bulletin_edit2bulletin_all
+	@RequestMapping(value = "/bulletin_edit/edit", method = RequestMethod.POST)
+	public String edit_bulletin_edit2bulletin_all(HttpSession session, Model model,
+			HttpServletRequest req, RedirectAttributes redirectAttributes)
+			throws IOException, SQLException, ParseException {
+		System.out.println("edit_bulletin_edit2bulletin_all");
+		BulletinBean bb = new BulletinBean();
+		HashMap<String, String> errorMessage = new HashMap<>();
+		req.setAttribute("ErrMsg", errorMessage);
+		System.out.println("hello");
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		// 標題
+		testTitle(bb, req, errorMessage);
+		// 內容
+		testContext(bb, req, errorMessage);
+		// 日期
+		testDate(bb, req, errorMessage);
+		// 折扣
+		testDiscount(bb, req, errorMessage);
+		// 找id
+		Integer no = getEmployeeId(session);
+		bb.setEmployeeId(no);
+		// obb
+		BulletinBean obb = service.getBulletinBeanById(no);
+
+		// 圖片存資料庫
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+		MultipartFile bulletinImage = multipartRequest.getFile("bulletinImage");
+		String originalFilename = bulletinImage.getOriginalFilename();
+		System.out.println(originalFilename);
+		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
+		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
+		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+		url = context.getRealPath(url);
+		byte[] b = bulletinImage.getBytes();
+//		System.out.println("byte[] b =" + b);
+//		System.out.println("getBulletinImage=" + bb.getBulletinImage());
+//		System.out.println("originalFilename=" + originalFilename);
+//		System.out.println("bb.getNo()=" + bb.getNo());
+
+		Integer flag = null;
+		if (originalFilename != null && !originalFilename.isEmpty()) {
+			System.out.println(photoType);
+			if (photoType.equals("jpg") || photoType.equals("jpeg") || photoType.equals("png")) {
+				bb.setFileName(originalFilename);
+				b = bulletinImage.getBytes();
+				Blob blob = new SerialBlob(b);
+				bb.setCoverImage(blob);
+				flag = 1;
+				System.out.println(flag);
+				System.out.println("editBlob=" + blob);
+			} else {
+				errorMessage.put("photo", "請上傳jpeg/jpg/png");
+			}
+
+		} else {
+			bb.setCoverImage(obb.getCoverImage());
+			bb.setFileName(obb.getFileName());
+			System.out.println("Bean加入原始圖片");
+		}
+		// 補齊資料
+		bb.setBortingId(obb.getBortingId());
+		bb.setPostTime(obb.getPostTime());
+		bb.setCountNum(obb.getCountNum() + 1);
+
+		System.out.println("bb.getCoverImage()=" + bb.getCoverImage());
+		System.out.println("obb.getCoverImage()=" + obb.getCoverImage());
+		System.out.println("判断属性是否完全相等");
+		System.out.println("(obb.getCoverImage() == bb.getCoverImage())="
+				+ (obb.getCoverImage() == bb.getCoverImage()));
+
+		// 判断属性是否完全相等
+		BulletinEquator et = new BulletinEquator();
+		boolean bet = et.BEquator(bb, obb);
+		System.out.println("BEquator(bb, obb)=" + bet);
+		System.out.println("ErrMsg=" + req.getAttribute("ErrMsg"));
+
+		// 存入
+		if (!errorMessage.isEmpty()) {
+			System.out.println("資料輸入有錯誤，網頁跳回");
+			bb.setNo(no);
+			List<BulletinBean> list = service.getSameBulletinByBortingId(no);
+			model.addAttribute("bulletinBean", bb);
+			model.addAttribute("sameBulletinBean", list);
+			model.addAttribute("updatedTime", new Date());
+			return Root + "bulletin_edit";
+		} else {
+			if (bet) {
+				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
+				System.out.println("資料未修改，網頁跳回");
+				bb = service.getBulletinBeanById(no);
+				List<BulletinBean> list = service.getSameBulletinByBortingId(no);
+				model.addAttribute("bulletinBean", bb);
+				model.addAttribute("sameBulletinBean", list);
+				model.addAttribute("updatedTime", new Date());
+				return Root + "bulletin_edit";
+			} else {
+				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
+				service.insertNewBulletin(bb);
+				System.out.println("資料已修改");
+				model.addAttribute("updatedTime", new Date());
+				return "redirect:/" + Root + "bulletin_all";
+			}
+		}
 	}
 
 	// find picture
@@ -151,191 +341,17 @@ public class BulletinController {
 		return str;
 	}
 
-	// post_bulletin_add2bulletin_all
-	@RequestMapping(value = "/bulletin_add/add", method = RequestMethod.POST)
-	public String post_bulletin_add2bulletin_all(Model model, HttpServletRequest req,
-			RedirectAttributes redirectAttributes) throws IOException, SQLException {
-		System.out.println("post_bulletin_add2bulletin_all");
-		BulletinBean bb = new BulletinBean();
-		HashMap<String, String> errorMessage = new HashMap<>();
-		req.setAttribute("ErrMsg", errorMessage);
-		System.out.println("hello");
-		try {
-			req.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		// 標題
-		testTitle(bb, req, errorMessage);
-		// 內容
-		testContext(bb, req, errorMessage);
-		// 日期
-		testDate(bb, req, errorMessage);
-		// 折扣
-		testDiscount(bb, req, errorMessage);
-		// 圖片存資料庫
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
-		MultipartFile bulletinImage = multipartRequest.getFile("bulletinImage");
-		String originalFilename = bulletinImage.getOriginalFilename();
-		System.out.println(originalFilename);
-		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
-		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
-		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-
-		url = context.getRealPath(url);
-		byte[] b = bulletinImage.getBytes();
-		// 如果沒有default圖片，if要打開
-//		if (photoType.equals("jpg") || photoType.equals("jpeg") || photoType.equals("png")) {
-		// 如果沒有default圖片，if要打開
-		if (bulletinImage != null && !bulletinImage.isEmpty()) {
-			bb.setFileName(originalFilename);
-			System.out.println("photoType=" + photoType);
-			try {
-				b = bulletinImage.getBytes();
-				Blob blob = new SerialBlob(b);
-				bb.setCoverImage(blob);
-				System.out.println("insertBlob=" + blob);
-			} catch (IOException | SQLException e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
-			}
-		} else {
-			bb.setFileName(imgFilename);
-			System.out.println("imgFilename=" + imgFilename);
-			Blob blob = SystemUtils2018.fileToBlob(url);
-			bb.setCoverImage(blob);
-			System.out.println("insertBlob=" + blob);
-		}
-		// 如果沒有default圖片，else要打開
-//		} else {
-//			errorMessage.put("photo", "請上傳jpeg/jpg/png");
-//		}
-		// 如果沒有default圖片，else要打開
-		System.out.println("ErrMsg=" + req.getAttribute("ErrMsg"));
-		if (!errorMessage.isEmpty()) {
-			model.addAttribute("updatedTime", new Date());
-			model.addAttribute("bulletinBean", bb);
-			return Root + "bulletin_add";
-		} else {
-			Date now = new Date();
-//			redirectAttributes.addAttribute("changeMsg", "新增成功");
-			redirectAttributes.addFlashAttribute("changeMsg", "新增成功");
-			System.out.println("新增成功");
-			Integer employeeId = Integer.valueOf(req.getParameter("employeeId"));
-			bb.setEmployeeId(employeeId);
-			bb.setBortingId(employeeId + "_" + now.toString());
-			bb.setPostTime(now);
-			service.insertNewBulletin(bb);
-			model.addAttribute("updatedTime", new Date());
-			return "redirect:/" + Root + "bulletin_all";
-		}
-	}
-
-	// edit_bulletin_edit2bulletin_all
-	@RequestMapping(value = "/bulletin_edit/edit", method = RequestMethod.POST)
-	public String edit_bulletin_edit2bulletin_all(Model model, HttpServletRequest req,
-			RedirectAttributes redirectAttributes)
-			throws IOException, SQLException, ParseException {
-		System.out.println("edit_bulletin_edit2bulletin_all");
-		BulletinBean bb = new BulletinBean();
-		HashMap<String, String> errorMessage = new HashMap<>();
-		req.setAttribute("ErrMsg", errorMessage);
-		System.out.println("hello");
-		try {
-			req.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		// 標題
-		testTitle(bb, req, errorMessage);
-		// 內容
-		testContext(bb, req, errorMessage);
-		// 日期
-		testDate(bb, req, errorMessage);
-		// 折扣
-		testDiscount(bb, req, errorMessage);
-		// 圖片存資料庫
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
-		MultipartFile bulletinImage = multipartRequest.getFile("bulletinImage");
-		String originalFilename = bulletinImage.getOriginalFilename();
-		System.out.println(originalFilename);
-		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
-		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
-		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-		url = context.getRealPath(url);
-		byte[] b = bulletinImage.getBytes();
+	// edit_bulletin_all2bulletin_add
+	@RequestMapping(value = "/bulletin_all/edit", method = RequestMethod.GET)
+	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
+		System.out.println("edit_bulletin_all2bulletin_add");
 		Integer no = Integer.valueOf(req.getParameter("no"));
-		System.out.println(no);
-//		System.out.println("byte[] b =" + b);
-//		System.out.println("getBulletinImage=" + bb.getBulletinImage());
-//		System.out.println("originalFilename=" + originalFilename);
-//		System.out.println("bb.getNo()=" + bb.getNo());
-		BulletinBean obb = service.getBulletinBeanById(no);
-		Integer flag = null;
-		if (originalFilename != null && !originalFilename.isEmpty()) {
-			System.out.println(photoType);
-			if (photoType.equals("jpg") || photoType.equals("jpeg") || photoType.equals("png")) {
-				bb.setFileName(originalFilename);
-				b = bulletinImage.getBytes();
-				Blob blob = new SerialBlob(b);
-				bb.setCoverImage(blob);
-				flag = 1;
-				System.out.println(flag);
-				System.out.println("editBlob=" + blob);
-			} else {
-				errorMessage.put("photo", "請上傳jpeg/jpg/png");
-			}
-
-		} else {
-			bb.setCoverImage(obb.getCoverImage());
-			bb.setFileName(obb.getFileName());
-			System.out.println("Bean加入原始圖片");
-		}
-		// 補齊資料
-		bb.setBortingId(obb.getBortingId());
-		bb.setPostTime(obb.getPostTime());
-		bb.setCountNum(obb.getCountNum() + 1);
-//		Integer.valueOf(req.getAttribute("employeeId"));
-		bb.setEmployee(obb.getEmployee());
-		bb.setEmployeeId(Integer.valueOf(req.getParameter("employeeId")));
-		// 判断属性是否完全相等
-		System.out.println("bb.getCoverImage()=" + bb.getCoverImage());
-		System.out.println("obb.getCoverImage()=" + obb.getCoverImage());
-		System.out.println("判断属性是否完全相等");
-		System.out.println("(obb.getCoverImage() == bb.getCoverImage())="
-				+ (obb.getCoverImage() == bb.getCoverImage()));
-		BulletinEquator et = new BulletinEquator();
-		boolean bet = et.BEquator(bb, obb);
-		System.out.println("BEquator(bb, obb)=" + bet);
-		System.out.println("ErrMsg=" + req.getAttribute("ErrMsg"));
-
-		// 存入
-		if (!errorMessage.isEmpty()) {
-			System.out.println("資料輸入有錯誤，網頁跳回");
-			bb.setNo(no);
-			List<BulletinBean> list = service.getSameBulletinByBortingId(no);
-			model.addAttribute("bulletinBean", bb);
-			model.addAttribute("sameBulletinBean", list);
-			model.addAttribute("updatedTime", new Date());
-			return Root + "bulletin_edit";
-		} else {
-			if (bet) {
-				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
-				System.out.println("資料未修改，網頁跳回");
-				bb = service.getBulletinBeanById(no);
-				List<BulletinBean> list = service.getSameBulletinByBortingId(no);
-				model.addAttribute("bulletinBean", bb);
-				model.addAttribute("sameBulletinBean", list);
-				model.addAttribute("updatedTime", new Date());
-				return Root + "bulletin_edit";
-			} else {
-				redirectAttributes.addFlashAttribute("changeMsg", "資料修改成功");
-				service.insertNewBulletin(bb);
-				System.out.println("資料已修改");
-				model.addAttribute("updatedTime", new Date());
-				return "redirect:/" + Root + "bulletin_all";
-			}
-		}
+		BulletinBean bb = service.getBulletinBeanById(no);
+		List<BulletinBean> list = service.getSameBulletinByBortingId(no);
+		model.addAttribute("bulletinBean", bb);
+		model.addAttribute("sameBulletinBean", list);
+		model.addAttribute("updatedTime", new Date());
+		return Root + "bulletin_edit";
 	}
 
 	// deleteSstatus
@@ -354,9 +370,9 @@ public class BulletinController {
 	@RequestMapping(value = "/bulletin_all/restore")
 	public String restoreSstatus(HttpServletRequest req, RedirectAttributes redirectAttributes) {
 		Integer no = Integer.valueOf(req.getParameter("no"));
-		int deleteReturn = service.updateBulletinBeanById(no, true);
+		int restoreSstatus = service.updateBulletinBeanById(no, true);
 		redirectAttributes.addFlashAttribute("changeMsg", "資料復原");
-		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + deleteReturn + "筆資料");
+		System.out.println("資料已復原，總共處理相同bortingId=" + no + " 的 " + restoreSstatus + "筆資料");
 		req.setAttribute("updatedTime", new Date());
 		return "forward:/" + Root + "bulletin_all";
 	}
@@ -493,5 +509,27 @@ public class BulletinController {
 		System.out.println("bb.getDiscountPriceFree()=" + bb.getDiscountPriceFree());
 		System.out.println("bb.getDiscountTickBuy()=" + bb.getDiscountTickBuy());
 		System.out.println("bb.getDiscountTickFree()=" + bb.getDiscountTickFree());
+	}
+
+//find id
+	public Integer getEmployeeId(HttpSession session) {
+		EmployeeBean employeeBean = (EmployeeBean) session.getAttribute("employeeBean1");
+		Integer no = employeeBean.getNo();
+		System.out.println(no);
+		return no;
+	}
+
+	// find permission
+	public Integer getPermission(HttpSession session) {
+		EmployeeBean employeeBean = (EmployeeBean) session.getAttribute("employeeBean1");
+		Integer permission = employeeBean.getPermission();
+		System.out.println(permission);
+		return permission;
+	}
+
+	// 判斷權限
+	public void permission(BulletinBean bb, HttpSession session, HttpServletRequest req,
+			HashMap<String, String> errorMessage) {
+//		session.getAttribute(name);
 	}
 }
