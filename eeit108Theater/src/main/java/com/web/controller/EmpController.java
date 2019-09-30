@@ -117,6 +117,7 @@ public class EmpController {
 		model.addAttribute("position", position);
 		model.addAttribute("now", new Date());
 		
+		session.setAttribute("positionsession",position);
 		session.setAttribute("employeeBean1",eb1);
 		session.setAttribute("empName", eb1.getName());
 		return "admin/empIndexA";
