@@ -150,4 +150,11 @@ public class ArticleServiceImpl implements ArticleService {
 		return dao.getMemberList();
 	}
     
+    @Transactional
+    @Override
+	public List<MovieBean> getAllMovies() {
+		return dao.getAllMovies();
+	}
+    
+    
 }

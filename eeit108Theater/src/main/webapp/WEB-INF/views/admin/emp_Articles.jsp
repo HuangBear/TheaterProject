@@ -78,7 +78,7 @@
 						<td>${article.dislikeCount}</td>
 						<td>${article.available}</td>
 						<td>
-							
+
 								<fieldset>
 									<c:choose>
 										<c:when test="${article.available==true}">
@@ -95,7 +95,6 @@
 										</c:when>
 									</c:choose>
 								</fieldset>
-							
 						</td>
 
 

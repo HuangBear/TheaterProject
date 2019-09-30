@@ -33,5 +33,6 @@ public interface ArticleService {
 	LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article);
 	List<MemberBean>  getMemberList();
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
+	List<MovieBean> getAllMovies();
 
 }
