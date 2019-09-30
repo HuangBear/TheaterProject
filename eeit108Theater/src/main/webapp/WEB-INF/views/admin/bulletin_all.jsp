@@ -7,6 +7,10 @@
 .hide {
 	display: none;
 }
+
+.myMOUSE {
+	cursor: pointer;
+}
 </style>
 
 <script>
@@ -92,6 +96,7 @@
 		//	context	img effect with JavaScript
 		$("img[name=context_box]").mouseover(
 				function() {
+					$(this).addClass("myMOUSE");
 					var str = $(this).attr("src");
 					var name = str.substring(str.lastIndexOf("/") + 1);
 					var file_name = name.substring(0, name.length - 4);
@@ -102,6 +107,7 @@
 				});
 		$("img[name=context_box]").mouseout(
 				function() {
+					$(this).removeClass("myMOUSE");
 					var str = $(this).attr("src");
 					var name = str.substring(str.lastIndexOf("/") + 1);
 					var file_name = name.substring(0, name.length - 5);
@@ -118,6 +124,7 @@
 		//	img effect
 		$("img[name=img_effect]").mouseover(
 				function() {
+					$(this).addClass("myMOUSE");
 					var str = $(this).attr("src");
 					var name = str.substring(str.lastIndexOf("/") + 1);
 					var file_name = name.substring(0, name.length - 4);
@@ -128,6 +135,7 @@
 				});
 		$("img[name=img_effect]").mouseout(
 				function() {
+					$(this).removeClass("myMOUSE");
 					var str = $(this).attr("src");
 					var name = str.substring(str.lastIndexOf("/") + 1);
 					var file_name = name.substring(0, name.length - 5);
@@ -226,24 +234,24 @@
 		$("a.hide").trigger("click")
 	}
 </script>
-	<!-- load 視窗 -->
-	<a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
-	<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">${changeMsg}</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
-				</div>
+<!-- load 視窗 -->
+<a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
+<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">${changeMsg}</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
 			</div>
 		</div>
 	</div>
+</div>
 <!-- 詳情 -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -278,7 +286,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="div_stat_edit_${sb.no}Title">公告修改</h5>
+					<h5 class="modal-title" id="div_stat_edit_${sb.no}Title">修改公告</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -287,8 +295,8 @@
 					<h4>確定要對"${sb.title}"編輯?</h4>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="stat_edit_${sb.no}" name="edit" data-dismiss="modal">確定編輯</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回歷史公告</button>
+					<button type="button" class="btn btn-primary" id="stat_edit_${sb.no}" name="edit" data-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -298,7 +306,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="div_stat_dele_${sb.no}Title">公告刪除</h5>
+					<h5 class="modal-title" id="div_stat_dele_${sb.no}Title">刪除公告</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -307,8 +315,8 @@
 					<h4>確定對"${sb.title}"刪除?</h4>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="stat_dele_${sb.no}" name="deleteSstatus" data-dismiss="modal">確定刪除</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回歷史公告</button>
+					<button type="button" class="btn btn-primary" id="stat_dele_${sb.no}" name="deleteSstatus" data-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -324,7 +332,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="div_unstat_edit_${sb.no}Title">公告修改</h5>
+					<h5 class="modal-title" id="div_unstat_edit_${sb.no}Title">修改公告</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -333,8 +341,8 @@
 					<h4>確定要對"${sb.title}"編輯?</h4>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="unstat_edit_${sb.no}" name="edit" data-dismiss="modal">確定編輯</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回歷史公告</button>
+					<button type="button" class="btn btn-primary" id="unstat_edit_${sb.no}" name="edit" data-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -344,7 +352,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="div_unstat_dele_${sb.no}Title">公告刪除</h5>
+					<h5 class="modal-title" id="div_unstat_dele_${sb.no}Title">刪除公告</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -353,8 +361,8 @@
 					<h4>確定對"${sb.title}"刪除?</h4>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="unstat_dele_${sb.no}" name="deleteSstatus" data-dismiss="modal">確定刪除</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回歷史公告</button>
+					<button type="button" class="btn btn-primary" id="unstat_dele_${sb.no}" name="deleteSstatus" data-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -378,8 +386,8 @@
 					<h4>確定對"${sb.title}"恢復?</h4>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="unavai_dele_${sb.no}" name="restore" data-dismiss="modal">確定刪除</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">返回歷史公告</button>
+					<button type="button" class="btn btn-primary" id="unavai_dele_${sb.no}" name="restore" data-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -442,11 +450,18 @@
 									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-									<td><img name="img_effect" data-toggle="modal" data-target="#div_stat_edit_${sb.no}" width="30px"
-										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
-									<td><img name="img_effect" data-toggle="modal" data-target="#div_stat_dele_${sb.no}" width="30px"
-										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
-								</tr>
+									<c:choose>
+										<c:when test="${(sb.employee.no eq employeeBean1.no) or (employeeBean1.permission gt sb.employee.permission)}">
+											<td><img name="img_effect" data-toggle="modal" data-target="#div_stat_edit_${sb.no}" width="30px"
+												src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+											<td><img name="img_effect" data-toggle="modal" data-target="#div_stat_dele_${sb.no}" width="30px"
+												src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -481,11 +496,18 @@
 										${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-
-									<td><img name="img_effect" data-toggle="modal" data-target="#div_unstat_edit_${sb.no}" width="30px"
-										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
-									<td><img name="img_effect" data-toggle="modal" data-target="#div_unstat_dele_${sb.no}" width="30px"
-										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+									<c:choose>
+										<c:when test="${(sb.employee.no eq employeeBean1.no) or (employeeBean1.permission gt sb.employee.permission)}">
+											<td><img name="img_effect" data-toggle="modal" data-target="#div_unstat_edit_${sb.no}" width="30px"
+												src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/edit.png"></td>
+											<td><img name="img_effect" data-toggle="modal" data-target="#div_unstat_dele_${sb.no}" width="30px"
+												src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/dele.png"></td>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -504,7 +526,7 @@
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%"></th>
-								<th scope="col" width="5%">刪除</th>
+								<th scope="col" width="5%">恢復</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -521,8 +543,17 @@
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<td></td>
-									<td><img name="img_effect" data-toggle="modal" data-target="#div_unavai_dele_${sb.no}" width="30px"
-										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
+									<c:choose>
+										<c:when test="${(sb.employee.no eq employeeBean1.no) or (employeeBean1.permission gt sb.employee.permission)}">
+											<td><img name="img_effect" data-toggle="modal" data-target="#div_unavai_dele_${sb.no}" width="30px"
+												src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/undo.png"></td>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
+
+
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -64,6 +64,11 @@
           <span>商品清單</span></a>
         </li>
          <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="just_try">
+          <i class="fa fa-table fa-plus-square"></i>
+          <span>串接功能</span></a>
+        </li>
+         <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="WebSocket">
           <i class="fa fa-cog" aria-hidden="true"></i>
           <span>即時客服</span></a>
