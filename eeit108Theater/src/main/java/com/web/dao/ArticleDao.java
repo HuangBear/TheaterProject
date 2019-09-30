@@ -42,6 +42,7 @@ public interface ArticleDao {
 	
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
 
-	
+	List<MovieBean> getAllMovies();
+
 
 }
