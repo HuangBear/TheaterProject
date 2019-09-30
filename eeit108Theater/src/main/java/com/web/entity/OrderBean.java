@@ -18,6 +18,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * @author f8286
+ *
+ */
 @Entity
 @Table(name = "Orders", uniqueConstraints = { @UniqueConstraint(columnNames = { "orderId" }) })
 public class OrderBean implements Serializable {
@@ -222,6 +226,10 @@ public class OrderBean implements Serializable {
 				&& Objects.equals(timeTable, other.timeTable) && Objects.equals(totalPrice, other.totalPrice);
 	}
 
+	/**
+	 * Order item string for EcPay
+	 * @return 電影票 x n# 餐點 x n
+	 */	 
 	public String getOrderItemString() {
 		int ticketCnt = 0, foodCnt = 0;
 		int ticketSum = 0, foodSum = 0;
@@ -240,10 +248,11 @@ public class OrderBean implements Serializable {
 		return "電影票 x " + ticketCnt + " = " + ticketSum + " 元#餐點 x " + foodCnt + " = " + foodSum + " 元";
 	}
 
-	public void sortOrderItem(String first, String last) {
+	public void sortOrderItem(String first,String last) {
 		List<OrderItemBean> list = this.orderItems;
 		int fstIndex = 0;
 		int i = 0;
+		OrderItemBean firstLastType = null;
 		//when the type from index item to last item are all the type which should set behind the list, the loop cannot end.
 		while (i < list.size()) {
 			String type = list.get(i).getType();
@@ -252,8 +261,12 @@ public class OrderBean implements Serializable {
 					break;
 				OrderItemBean temp = list.remove(i);
 				list.add(temp);
-				if(list.get(i).getType().equals(last))
-					i++;
+				if(firstLastType == null) {
+					firstLastType = list.get(i);
+				} else {
+					if(list.get(i).equals(firstLastType))
+						break;
+				}
 				continue;
 			} else if (type.equals(first)) {
 				OrderItemBean temp = list.get(i);
@@ -275,11 +288,23 @@ public class OrderBean implements Serializable {
 		}
 		return seats;
 	}
-	
+	/** Seats String for display
+	 * @return Z1, Z2, Z3
+	 * */	
 	public String getSeatsString() {
 		String result = "";
 		for(String seat : this.getSeatsList()) {
 			result += ", " + seat;
+		}
+		return result.substring(1);
+	}
+	/** All of Order Items' detail, separated by '#'
+	 * @return something $MMM x N#something2 $YYY x N#
+	 * */	
+	public String getOrderItemsDetail() {
+		String result = "";
+		for(OrderItemBean oib : this.orderItems) {
+			result +=  "#" + oib.getDetail();
 		}
 		return result.substring(1);
 	}
