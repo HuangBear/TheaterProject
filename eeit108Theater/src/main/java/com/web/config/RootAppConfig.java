@@ -11,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -28,10 +27,12 @@ public class RootAppConfig {
 	@Bean
 	public DataSource dataSource() {
 		ComboPooledDataSource ds = new ComboPooledDataSource();
-		try (InputStream input = getClass().getClassLoader().getResourceAsStream("dataSourceConfig.properties")) {
+		try (InputStream input = getClass().getClassLoader()
+				.getResourceAsStream("dataSourceConfig.properties")) {
 			Properties prop = new Properties();
 			if (input == null)
-				System.out.println("=====請自OneDrive下載dataSourceConfig.properties放在src/main/resources內，並修改其中的user & password以對應己身電腦之資料庫=====");
+				System.out.println(
+						"=====請自OneDrive下載dataSourceConfig.properties放在src/main/resources內，並修改其中的user & password以對應己身電腦之資料庫=====");
 			prop.load(input);
 			ds.setUser(prop.getProperty("ds.user"));
 			ds.setPassword(prop.getProperty("ds.password"));
@@ -42,7 +43,8 @@ public class RootAppConfig {
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {
-			System.out.println("=====請自OneDrive下載dataSourceConfig.properties放在src/main/resources內，並修改其中的user & password以對應己身電腦之資料庫=====");
+			System.out.println(
+					"=====請自OneDrive下載dataSourceConfig.properties放在src/main/resources內，並修改其中的user & password以對應己身電腦之資料庫=====");
 			e1.printStackTrace();
 		}
 		return ds;
@@ -52,7 +54,7 @@ public class RootAppConfig {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setDataSource(dataSource());
-		factory.setPackagesToScan(new String[] { "com.web" , "ecpay"});
+		factory.setPackagesToScan(new String[] { "com.web", "ecpay" });
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
