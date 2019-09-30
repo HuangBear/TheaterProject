@@ -39,4 +39,8 @@ public interface MemberDao {
 	List<MemberBean> getAllAvailable();
 	
 	Object getPermissionByMemberEmail(String email);
+
+	int activeUser(String emailCode);
+
+	MemberBean findMemberByCode(String code);
 }

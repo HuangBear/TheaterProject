@@ -2,6 +2,8 @@ package com.web.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.web.entity.MemberBean;
 
 public interface MemberService {
@@ -18,5 +20,7 @@ public interface MemberService {
 	 public Integer save(MemberBean empBean);
 	 public MemberBean checkEmailPassword(String email, String password);
 	 void updateMemberStatus(MemberBean memBean);
-	
+	 public void emailValidate(MemberBean memBean, HttpServletRequest request);
+	 void activeUser(String emailCode);
+	 MemberBean findMemberByCode(String code);
 }
