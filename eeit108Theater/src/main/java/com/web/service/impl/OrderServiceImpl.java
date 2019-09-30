@@ -61,8 +61,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderBean getOrderByNo(Integer orderNo) {
-		// TODO Auto-generated method stub
-		return null;
+		OrderBean ob = odao.getOrderByNo(orderNo);
+		cancelLazy(ob);
+		return ob;
 	}
 
 	@Override
@@ -136,6 +137,13 @@ public class OrderServiceImpl implements OrderService {
 
 	private void cancelLazy(TimeTableBean tb) {
 		tb.getMovie().getAvailable();
+	}
+
+	@Override
+	public OrderBean getOrderById(String orderId) {
+		OrderBean ob = odao.getOrderById(orderId);
+		cancelLazy(ob);
+		return ob;
 	}
 
 }

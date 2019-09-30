@@ -1,5 +1,7 @@
 package com.web.controller;
 
+import java.io.File;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -7,10 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +44,13 @@ public class OrderController {
 	MovieService mServ;
 	@Autowired
 	OrderService oServ;
+	@Autowired
+	JavaMailSender mailSender;
+	@Autowired
+	ServletContext context;
 
 	final String pac = "order/";
+	final static String OFFICIAL_EMAIL = "eeit108sevenminusone@gmail.com";
 
 	@RequestMapping("/allPro") // test for all products
 	public String showAllProduct(Model model) {
@@ -46,18 +58,7 @@ public class OrderController {
 		return pac + "allProducts";
 	}
 
-	// 已經接上時刻表
-//	@RequestMapping({ "", "/" }) // 未來交給時刻表提供相關訊息
-//	public String orderBegin(Model model, HttpSession session, HttpServletRequest req) {
-//
-//		System.err.println("====orderBegin Start====");
-////		MemberBean mb = pServ.getMemberByNo(1);
-//		System.out.println("====MemberBean Got");
-//		session.removeAttribute("order");
-////		session.setAttribute("LoginOK", mb);
-//		System.err.println("====orderBegin END====");
-//		return pac + "start";
-//	}
+
 
 	/*
 	 * 建立一筆order於httpSession，並將所選擇的時刻表塞入order中。 自資料庫取得商品清單，並在前台顯示 ，供使用者選擇
@@ -186,7 +187,7 @@ public class OrderController {
 		System.out.println(seats);
 		if (oServ.setSeatToOrder(ob, seats) == -1) {
 			System.err.println("=== Selected seats has been sold already ===");
-			req.setAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
+			model.addAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
 			System.err.println("====showOrder FORWARD TO showSeat====");
 			return "forward:/" + pac + "seat";
 		}
@@ -222,9 +223,15 @@ public class OrderController {
 		if (obHash > 0) {
 			sec = (char) ('N' + (obHash % 13));
 		}
-		String tradeNo = String.valueOf(fst) + String.valueOf(sec) + Math.abs(obHash);
+		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + Long.toHexString(obHash)).substring(0, 9);
 		ob.setOrderId(tradeNo);
-
+		try {
+			oServ.saveOrder(ob);
+		} catch (Exception e) {
+			System.err.println("Error when save the order, orderId = " + ob.getOrderId());
+			model.addAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
+			return "forward:/" + pac + "seat";
+		}
 		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath(); // http:localhost:XXXX/eeit108Theater
 		// EcPay Begin
 		// EcPay對各項method都有簡單註解說明，可以將滑鼠移動到方法上查看
@@ -243,13 +250,13 @@ public class OrderController {
 														// redirect至此，並附帶交易結果相關資訊
 		obj.setNeedExtraPaidInfo("N"); // Y/N = True/False
 		obj.setRedeem("N"); // 紅利 Y/N = True/False
-
 		String form = all.aioCheckOut(obj, null); // null for no invoice
 		// all.aioCheckOut會根據前面設定好的參數產生一個html表格的字串，
 		// 裡面的各種input都已經設定好了，並且會自動submit，
 		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
 		// EcPay End
 		System.out.println("form =\n" + form);
+		session.removeAttribute("order");
 		model.addAttribute("ecpayForm", form);
 		return pac + "ecpay";
 	}
@@ -425,5 +432,111 @@ public class OrderController {
 		}
 
 		return colNow;
+	}
+	
+	// Email test
+	private String sendEmail(OrderBean ob) throws MessagingException{
+		if(ob == null)
+			throw new NullPointerException("the order to send email is null");
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		String builder = "<html>" +
+				"<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>" +
+				"<body>" + 
+					"<div align='center' style='font-family: Arial, Helvetica, sans-serif'>" + 
+							"<table cellpadding='5px' style='width: 50%;line-height: 35px; min-width: 350px; ; border-radius: 10px; white-space: nowrap;'>" + 
+								"<thead align='center'>" + 
+									"<tr>" + 
+										"<td colspan='2'>" + 
+											"<div><img src='cid:logoImg' style='width: 100%;border-radius: 5px;'></div>" + 
+										"</td>" + 
+									"</tr>" + 
+									"<tr>" + 
+										"<th colspan='2'>" + 
+											"<div style='margin-bottom: 5px'>親愛的顧客您好，以下為本次購票資訊</div>" + 
+										"</th>" + 
+									"</tr>" + 
+									"<tr>" + 
+										"<th colspan='2'>" + 
+											"<div style='background-color: lightgray;border-radius: 5px;padding-top: 2.5px;padding-bottom: 2.5px'> 訂單資料</div>" + 
+										"</th>" + 
+									"</tr>" + 
+								"</thead>" + 
+								"<tbody style='text-align:left;'>"+
+									"<tr>"+
+										"<th style='width:50%'>"+
+											"訂單編號"+
+										"</th>"+
+										"<th style='width:50%'>"+
+											"#tradeNo"+
+										"</th>"+
+									"</tr>"+
+									"<tr>"+
+											"<th>"+
+												"電影"+
+											"</th>"+
+											"<td>"+
+												"#movieName"+
+											"</td>"+
+									"</tr>"+
+									"<tr>"+
+										"<th>"+
+											"場次"+
+										"</th>"+
+										"<td>"+
+											"#timeTable"+
+										"</td>"+
+									"</tr>"+
+									"<tr>"+
+										"<th>"+
+											"座位"+
+										"</th>"+
+										"<td>"+
+											"#seat"+
+										"</td>"+
+									"</tr>"+
+									"<tr>"+
+										"<th>"+
+											"商品清單"+
+										"</th>"+
+											"<td>"+
+											"#orderList"+
+										"</td>"+
+									"</tr>"+
+									"<tr>"+
+										"<th>"+
+											"總計"+
+										"</th>"+
+										"<td>"+
+											"#total"+
+										"</td>"+
+									"</tr>"+							
+								"</tbody>"+
+								"<tfoot>"+
+									"<tr>"+
+										"<td colspan='2'>"+
+											"<div style='text-align:center;color:cornflowerblue'><b>7-1CINEMA</b></div>"+
+										"</td>"+
+									"</tr>"+
+								"</tfoot>" +
+							"</table>" + 
+					"</div>" + 
+				"</body>" + 
+				"</html>";
+		builder = builder.replace("#tradeNo", ob.getOrderId());
+		builder = builder.replace("#movieName", ob.getTimeTable().getMovieName());
+		builder = builder.replace("#timeTable", ob.getTimeTable().getStartDate() + " " + ob.getTimeTable().getStartTime());
+		builder = builder.replace("#seat", ob.getSeatsString());
+		builder = builder.replace("#orderList", ob.getOrderItemsDetail()); //to fix
+		builder = builder.replace("#total", (ob.getTotalPrice()).toString());
+		builder = builder.replace("#", "<br>");
+		helper.setFrom(OrderController.OFFICIAL_EMAIL);
+		helper.setTo(ob.getOwnerEmail());
+		helper.setSubject("this is the second email sent from eeit108Theater by Bear");
+		helper.setText(builder,	true);
+		helper.addInline("logoImg", new File(context.getRealPath("/WEB-INF/resources/images/frontend/cinema.jpg")));
+//		helper.setText("<h1>就是要打中文</h1>", true);
+		mailSender.send(message);
+		return pac + "mailTest";
 	}
 }
