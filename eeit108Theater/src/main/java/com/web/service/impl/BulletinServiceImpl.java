@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.web.dao.BulletinDao;
 import com.web.entity.BulletinBean;
+import com.web.service.BulletinService;
 
 @Service
-public class BulletinServiceImpl {
+public class BulletinServiceImpl implements BulletinService {
 	@Autowired
 	BulletinDao dao;
 
+	@Override
 	@Transactional
 	public List<List<BulletinBean>> getStatsBulletin() {
 
@@ -37,6 +39,7 @@ public class BulletinServiceImpl {
 		return statusBulletin;
 	}
 
+	@Override
 	@Test
 	@Transactional
 	public BulletinBean getDiscount(String date) {
@@ -44,23 +47,27 @@ public class BulletinServiceImpl {
 		return null;
 	}
 
+	@Override
 	@Transactional
 	public void insertNewBulletin(BulletinBean bb) {
 		dao.insertBulletin(bb);
 	}
 
+	@Override
 	@Transactional
 	public BulletinBean getBulletinBeanById(Integer no) {
 		BulletinBean bb = dao.getBulletinById(no);
 		return bb;
 	}
 
+	@Override
 	@Transactional
 	public int updateBulletinBeanById(Integer id, Boolean bo) {
 		int deleteReturn = dao.updateBulletindByBortingId(id, bo);
 		return deleteReturn;
 	}
 
+	@Override
 	@Transactional
 	public List<BulletinBean> getSameBulletinByBortingId(Integer no) {
 		List<BulletinBean> sameBulletinBeans = dao.getSameBulletinByBortingId(no);
@@ -69,6 +76,7 @@ public class BulletinServiceImpl {
 	}
 
 // 準備程式
+	@Override
 	public void switchImg(List<BulletinBean> bb) {
 		for (BulletinBean eb : bb) {
 			Integer discount = eb.getDiscount();
