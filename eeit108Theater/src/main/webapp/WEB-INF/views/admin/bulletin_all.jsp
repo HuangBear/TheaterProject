@@ -463,6 +463,18 @@
 										</c:otherwise>
 									</c:choose>
 							</c:forEach>
+							<tr>
+								<th scope="col" width="5%">#</th>
+								<th scope="col" width="25%">標題</th>
+								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="10%">開始時間</th>
+								<th scope="col" width="10%">結束時間</th>
+								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="15%">優惠方案</th>
+								<th scope="col" width="5%">詳情</th>
+								<th scope="col" width="5%">修改</th>
+								<th scope="col" width="5%">刪除</th>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -510,6 +522,18 @@
 									</c:choose>
 								</tr>
 							</c:forEach>
+							<tr>
+								<th scope="col" width="5%">#</th>
+								<th scope="col" width="25%">標題</th>
+								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="10%">開始時間</th>
+								<th scope="col" width="10%">結束時間</th>
+								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="15%">優惠方案</th>
+								<th scope="col" width="5%">詳情</th>
+								<th scope="col" width="5%">修改</th>
+								<th scope="col" width="5%">刪除</th>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -530,7 +554,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var='sb' items='${statusBulletin[2]}' varStatus="i">
+							<c:forEach var='sb' items='${statusBulletin[2]}' varStatus="i" end="5">
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
@@ -552,12 +576,23 @@
 											<td></td>
 										</c:otherwise>
 									</c:choose>
-
-
 								</tr>
 							</c:forEach>
+							<tr>
+								<th scope="col" width="5%">#</th>
+								<th scope="col" width="25%">標題</th>
+								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="10%">開始時間</th>
+								<th scope="col" width="10%">結束時間</th>
+								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="15%">優惠方案</th>
+								<th scope="col" width="5%">詳情</th>
+								<th scope="col" width="5%"></th>
+								<th scope="col" width="5%">恢復</th>
+							</tr>
 						</tbody>
 					</table>
+					<samp style="float: right;">已刪除公告區只顯示 10 筆資料</samp>
 				</div>
 			</div>
 
