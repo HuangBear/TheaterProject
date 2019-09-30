@@ -215,170 +215,163 @@
 
 	<div class="card-body">
 		<div class="table-responsive">
-			<div id="accordion">
-				<h3>新增公告</h3>
-				<div>
-					<form method='POST' id="bulletinBean" action="<c:url value='/admin/bulletin_add/add'/>" enctype="multipart/form-data">
 
-						<div class="form-row mb-3 mt-1">
-							<div class="col-md-2">
-								<label for="title">標題:</label>
-							</div>
-							<div class="col-md-6">
-								<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
-									class="form-control">
-							</div>
-							<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
-						</div>
+			<div class="accordion" id="accordionExample">
+				<div class="card">
+					<div class="card-header " id="headingOne">
+						<h2 class="mb-0">
+							<a class="btn btn-link"  aria-expanded="true" aria-controls="collapseOne">
+								新增公告</a>
+						</h2>
+					</div>
+					<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="card-body">
+							<form method='POST' id="bulletinBean" action="<c:url value='/admin/bulletin_add/add'/>" enctype="multipart/form-data">
 
-						<div class="form-row mb-3">
-							<div class="col-md-2">
-								<label class="context">公告內容:</label>
-							</div>
-							<div class="col-md-6">
-								<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
-							</div>
-							<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
-						</div>
-
-						<div class="form-row mb-3">
-							<div class="col-md-2">
-								<label>公告有效時間</label>
-							</div>
-							<div class="col-md-1">
-								<label for="from">開始</label>
-							</div>
-							<div class="col-md-2">
-								<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" />
-							</div>
-							<div class="col-md-1">
-								<label for="to">結束</label>
-							</div>
-							<div class="col-md-2">
-								<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
-							</div>
-							<!-- 							<div> -->
-							<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
-							<!-- 							</div> -->
-						</div>
-
-
-						<div class="form-row">
-							<div class="col-md-2 mb-1 mt-1">
-								<div class="custom-control custom-radio">
-									<input type="radio" class="custom-control-input" id="discount0" name="discount" checked="checked" value="0"> <label
-										class="custom-control-label" for="discount0">單純公告，無任何優惠</label>
+								<div class="form-row mb-3 mt-1">
+									<div class="col-md-2">
+										<label for="title">標題:</label>
+									</div>
+									<div class="col-md-6">
+										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
+											class="form-control">
+									</div>
+									<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 								</div>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="col-md-2 mb-1 mt-1">
-								<div class="custom-control custom-radio">
-									<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label" for="discount1">現金折扣</label>
-									<a style="color: red;">${ErrMsg.discountP}</a>
+
+								<div class="form-row mb-3">
+									<div class="col-md-2">
+										<label class="context">公告內容:</label>
+									</div>
+									<div class="col-md-6">
+										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
+									</div>
+									<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 								</div>
-							</div>
 
-
-							<div class="col-md-1  discountP hide">
-								<label for="discountPriceBuy">滿</label>
-							</div>
-
-							<div class="col-md-2  discountP hide">
-								<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${bulletinBean.discountPriceBuy}"
-									class="form-control" />
-							</div>
-
-							<div class="col-md-1  discountP hide">
-								<label for="discountPriceFree">送</label>
-							</div>
-
-							<div class="col-md-2  discountP hide">
-								<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" maxlength="4"
-									value="${bulletinBean.discountPriceFree}" class="form-control" />
-							</div>
-						</div>
-
-						<div class="form-row mb-3 mt-1">
-							<div class="col-md-2 ">
-								<div class="custom-control custom-radio">
-									<input type="radio" class="custom-control-input" id="discount2" name="discount" value="2" /> <label class="custom-control-label" for="discount2">票券折扣</label>
-									<a style="color: red;">${ErrMsg.discountT}</a>
+								<div class="form-row mb-3">
+									<div class="col-md-2">
+										<label>公告有效時間</label>
+									</div>
+									<div class="col-md-1">
+										<label for="from">開始</label>
+									</div>
+									<div class="col-md-2">
+										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" />
+									</div>
+									<div class="col-md-1">
+										<label for="to">結束</label>
+									</div>
+									<div class="col-md-2">
+										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
+									</div>
+									<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 								</div>
-							</div>
-
-							<div class=" col-md-1  discountT hide">
-								<label for="discountTickBuy">買</label>
-							</div>
-
-							<div class=" col-md-2  discountT hide">
-								<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
-									<option value="0">購買票數</option>
-									<c:forEach begin="1" end="5" var="inputTB">
-										<option value="${inputTB}">${inputTB}</option>
-									</c:forEach>
-								</select>
-							</div>
-
-							<div class=" col-md-1  discountT hide">
-								<label for="discountTickFree">送</label>
-							</div>
-
-							<div class=" col-md-2  discountT hide">
-								<select class="custom-select " id="discountTickFree" name="discountTickFree">
-									<option value="0">贈送票數</option>
-									<c:forEach begin="1" end="4" var="inputTF">
-										<option value="${inputTF}">${inputTF}</option>
-									</c:forEach>
-								</select>
 
 
-							</div>
-						</div>
-
-						<input id="employeeId" name="employeeId" type="hidden" value="${employeeBean1.no}" />
-
-						<div class="form-row">
-							<div class="col-md-2 ">
-								<label for="bulletinImage">活動圖檔</label>
-							</div>
-							<div class="col-md-6 mb-3">
-								<div class="custom-file">
-									<input type="file" class="custom-file-input" id="bulletinImage" name="bulletinImage"> <label class="custom-file-label" for="bulletinImage">只支援jpg/png/jpeg。使用者不上傳時會有預設圖片</label>
-									<a style="color: red;">${ErrMsg.photo}</a>
+								<div class="form-row">
+									<div class="col-md-2 mb-1 mt-1">
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input" id="discount0" name="discount" checked="checked" value="0"> <label
+												class="custom-control-label" for="discount0">單純公告，無任何優惠</label>
+										</div>
+									</div>
 								</div>
-							</div>
+								<div class="form-row">
+									<div class="col-md-2 mb-1 mt-1">
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label" for="discount1">現金折扣</label>
+											<a style="color: red;">${ErrMsg.discountP}</a>
+										</div>
+									</div>
+
+
+									<div class="col-md-1  discountP hide">
+										<label for="discountPriceBuy">滿</label>
+									</div>
+
+									<div class="col-md-2  discountP hide">
+										<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" maxlength="4"
+											value="${bulletinBean.discountPriceBuy}" class="form-control" />
+									</div>
+
+									<div class="col-md-1  discountP hide">
+										<label for="discountPriceFree">送</label>
+									</div>
+
+									<div class="col-md-2  discountP hide">
+										<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" maxlength="4"
+											value="${bulletinBean.discountPriceFree}" class="form-control" />
+									</div>
+								</div>
+
+								<div class="form-row mb-3 mt-1">
+									<div class="col-md-2 ">
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input" id="discount2" name="discount" value="2" /> <label class="custom-control-label" for="discount2">票券折扣</label>
+											<a style="color: red;">${ErrMsg.discountT}</a>
+										</div>
+									</div>
+
+									<div class=" col-md-1  discountT hide">
+										<label for="discountTickBuy">買</label>
+									</div>
+
+									<div class=" col-md-2  discountT hide">
+										<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
+											<option value="0">購買票數</option>
+											<c:forEach begin="1" end="5" var="inputTB">
+												<option value="${inputTB}">${inputTB}</option>
+											</c:forEach>
+										</select>
+									</div>
+
+									<div class=" col-md-1  discountT hide">
+										<label for="discountTickFree">送</label>
+									</div>
+
+									<div class=" col-md-2  discountT hide">
+										<select class="custom-select " id="discountTickFree" name="discountTickFree">
+											<option value="0">贈送票數</option>
+											<c:forEach begin="1" end="4" var="inputTF">
+												<option value="${inputTF}">${inputTF}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="col-md-2 ">
+										<label for="bulletinImage">活動圖檔</label>
+									</div>
+									<div class="col-md-6 mb-3">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="bulletinImage" name="bulletinImage"> <label class="custom-file-label" for="bulletinImage">只支援jpg/png/jpeg。使用者不上傳時會有預設圖片</label>
+											<a style="color: red;">${ErrMsg.photo}</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- button -->
+								<div class="form-row mb-3">
+									<img id="showPhoto" />
+								</div>
+								<div class="form-row mb-3 justfy-content-center">
+									<div class="col-md-2 ">
+										<input id="oneSet" type="button" value="一鍵輸入" class='btn btn-secondary'>
+									</div>
+									<div class="col-md-2 ">
+										<input id="btnAdd" type='submit' value="新增公告" class='btn btn-primary'>
+									</div>
+								</div>
+							</form>
 						</div>
-
-
-						<!-- 						<div> -->
-						<%-- 							<input id="bulletinImage" style="border-radius: 5px" type="file" name="bulletinImage" /> <label>文宣上傳</label> <a style="color: red;">${ErrMsg.photo}</a> --%>
-
-						<!-- 						</div> -->
-
-						<!-- button -->
-
-						<div class="form-row mb-3">
-							<img id="showPhoto" />
-						</div>
-						<div class="form-row mb-3 justfy-content-center">
-							<div class="col-md-2 ">
-								<input id="oneSet" type="button" value="一鍵輸入" class='btn btn-secondary'>
-							</div>
-							<div class="col-md-2 ">
-								<input id="btnAdd" type='submit' value="新增公告" class='btn btn-primary'>
-							</div>
-						</div>
-					</form>
-
+					</div>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
-
 </div>
 <script>
 	if (${ErrMsg.changeMsg != null}) {
