@@ -5,7 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +26,9 @@ public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	MemberDao memberDao;
+
+	@Autowired
+	JavaMailSender mailSender;
 	
 	@Override
 	public void insertMember(MemberBean memBean) {
@@ -151,6 +160,40 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		return mb;
+	}
+
+	@Override
+	public void emailValidate(MemberBean memBean, HttpServletRequest request) {
+		MimeMessage message = mailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			
+			helper.setFrom("eeit108sevenminusone@gmail.com");// 發件人
+			helper.setTo(memBean.getEmail());// 收件人
+			helper.setSubject("7-1 CINEMA影城  會員認證信");// 主題
+			helper.setText("<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><body>"
+					+ "<h3>親愛的會員 " + memBean.getName()+ " 您好" + "</h3><br><h4>感謝您註冊本網站會員 </h4> " + "<h4><a href='" + request.getScheme() + "://"
+					+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
+					+ "/registerEmail?code="+memBean.getEmailCode()+"'>"+ "請點此連結驗證信箱</a></h4><br> <h3><p> 7-1 CINEMA 團隊 </p></h3>" + "</body></html>", true);// 正文
+		
+		
+		} catch (MessagingException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		mailSender.send(message);
+		System.out.println("發送完成");
+	}
+	
+	@Override
+	public void activeUser(String emailCode) {
+		memberDao.activeUser(emailCode);
+	}
+
+	@Override
+	public MemberBean findMemberByCode(String code) {
+		// TODO Auto-generated method stub
+		return memberDao.findMemberByCode(code);
 	}
 
 }

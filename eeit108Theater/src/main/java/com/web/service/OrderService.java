@@ -19,6 +19,8 @@ public interface OrderService {
 	int continueAll();
 
 	OrderBean getOrderByNo(Integer orderNo);
+	
+	OrderBean getOrderById(String orderId);
 
 	int setSeatToOrder(OrderBean ob, String[] seats);
 

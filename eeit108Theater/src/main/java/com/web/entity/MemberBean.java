@@ -55,6 +55,9 @@ public class MemberBean implements Serializable{
 	private String aboutMe;
 	@JsonIgnore
 	private String googleUrl;
+	@JsonIgnore
+	private String emailCode;
+	private Boolean emailActiveStatus;
 	private Boolean commentPermission;
 	private Integer banCounter;	
 	@NotNull
@@ -222,6 +225,22 @@ public class MemberBean implements Serializable{
 
 	public void setGoogleUrl(String googleUrl) {
 		this.googleUrl = googleUrl;
+	}
+
+	public String getEmailCode() {
+		return emailCode;
+	}
+
+	public void setEmailCode(String emailCode) {
+		this.emailCode = emailCode;
+	}
+
+	public Boolean getEmailActiveStatus() {
+		return emailActiveStatus;
+	}
+
+	public void setEmailActiveStatus(Boolean emailActiveStatus) {
+		this.emailActiveStatus = emailActiveStatus;
 	}
 	
 	

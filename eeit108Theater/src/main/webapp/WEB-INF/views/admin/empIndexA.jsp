@@ -54,8 +54,6 @@
 <script src="js/admin/demo/chart-area-demo.js"></script>
 <script>
 
-
-
 	$(function() {
 		$(".itemTag").click(function() {
 			
@@ -77,16 +75,6 @@
 	});
 </script>
 
-<!-- Custom fonts for this template-->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-
-<!-- Page level plugin CSS-->
-<link href="vendor/datatables/dataTables.bootstrap4.css"
-	rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="css/admin/sb-admin.css" rel="stylesheet">
 
 </head>
 
@@ -114,24 +102,7 @@
 
 			<div class="container-fluid" id="pageItems">
 				
-<!-- 				<p></p> -->
-<!-- 					<span>首頁文章 放置處</span> -->
-<!-- 					<div class="container-fluid">	 -->
-<!-- 					<div class="card mb-3"> -->
-<!--               		 <div class="card-header"> -->
-<!--                 	<i class="fas fa-chart-area"></i>新註冊會員人數 -->
-<!--                </div> -->
-                         
-<!--                <div class="card-body"> -->
-<%--              		<canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
-<!--                </div> -->
-<%--               <div class="card-footer small text-muted">Updated ${now}</div> --%>
-<!--               </div> -->
-<!-- 		      </div> -->
-				
-<!-- 				<p> -->
-<%-- 					<span>${error}</span> --%>
-<!-- 				</p> -->
+
 		
 
 
@@ -151,12 +122,6 @@
 	<jsp:include page="/WEB-INF/views/admin/Footer.jsp" />
 	
 
-	
-	
-	
-
-
-	
 </body>
 	<script>
 	window.onload=function (){
@@ -194,5 +159,5 @@
 			});
 		}
  </script>
- <script src="js/admin/demo/chart-area-demo.js"></script>
+ 
 </html>

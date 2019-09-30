@@ -185,4 +185,12 @@ public class ArticleDaoImpl implements ArticleDao {
 	    return list;
 	}
 	
+	@Override
+	public List<MovieBean> getAllMovies() {
+		String hql = "FROM MovieBean";
+		Session session = factory.getCurrentSession();
+		List<MovieBean> list = session.createQuery(hql).getResultList();
+		return list;
+	}
+	
 }

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -73,5 +75,22 @@ public class RootAppConfig {
 		properties.put("default_batch_fetch_size", 10);
 		properties.put("hibernate.hbm2ddl.auto", "update");
 		return properties;
+	}
+	
+	private Properties javaMailProperties() {
+		Properties properties = new Properties();
+		properties.put("mail.smtp.auth", Boolean.TRUE);
+		properties.put("mail.smtp.starttls.enable", Boolean.TRUE);
+		return properties;
+	}
+	@Bean
+	public JavaMailSender javaMailSender() {
+		JavaMailSenderImpl sender = new JavaMailSenderImpl();
+		sender.setHost("smtp.gmail.com");
+		sender.setUsername("eeit108sevenminusone@gmail.com");
+		sender.setPassword("SevenMinus1");
+		sender.setPort(587);
+		sender.setJavaMailProperties(javaMailProperties());
+		return sender;
 	}
 }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -209,90 +210,17 @@ input::placeholder{
 		<!-- Carousel -->
 		<section class="carousel">
 		<div class="reel">
-
-			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie1.jpg" alt="" /></a> 
-				<header><h3><strong><a href="#">第九分局</a></strong></h3></header>
-					<p>THE 9TH PRECINCT<br>
-						2019-08-29
+			<c:forEach var = 'releasedMovie' items = '${releasedMovies}'>
+				<article>
+					<a href = '#' class = 'image featured'>
+						<img src = "<c:url value = '/getPicture/${releasedMovie.no}'/>" alt = '' style = "width: 336px; height: 480px;">
+					</a>
+					<header><h3><strong><a href = '#'>${releasedMovie.movieName}</a></strong></h3></header>
+					<p>${releasedMovie.engMovieName}<br>
+						<fmt:formatDate value="${releasedMovie.openingDate}" pattern='yyyy-MM-dd' />
 					</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie2.jpg" alt="" /></a> 
-				<header><h3><strong><a href="#">極限逃生</a></strong></h3></header>
-					<p>EXIT<br>
-						2019-08-30
-					</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie3.jpg" alt="" /></a> 
-				<header><h3><strong><a href="#">你願意嫁給我老公嗎？</a></strong></h3></header>
-					<p>AFTER THE WEDDING<br>
-						2019-08-30
-					</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie4.jpg" alt="" /></a> 
-				<header><h3><strong><a href="#">亂世佳人</a></strong></h3></header>
-					<p>GONE WITH THE WIND<br>
-						2019-08-30
-					</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie5.jpg" alt="" /></a> 
-				<header><h3><strong><a href="#">航海王：奪寶爭霸戰</a></strong></h3></header>
-					<p>ONE PIECE STAMPEDE<br>
-						2019-08-21
-					</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/frontend/movie6.jpg" alt="" /></a> 
-				<header><h3><strong><a href="#">下半場</a></strong></h3></header>
-					<p> WE ARE CHAMPIONS<br>
-						2019-08-23
-					</p>
-			</article>
-
-			<!--  <article> <a href="#" class="image featured"><img
-				src="images/pic02.jpg" alt="" /></a> <header>
-			<h3>
-				<a href="#">Fermentum sagittis proin</a>
-			</h3>
-			</header>
-			<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/pic03.jpg" alt="" /></a> <header>
-			<h3>
-				<a href="#">Sed quis rhoncus placerat</a>
-			</h3>
-			</header>
-			<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/pic04.jpg" alt="" /></a> <header>
-			<h3>
-				<a href="#">Ultrices urna sit lobortis</a>
-			</h3>
-			</header>
-			<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-			</article>
-
-			<article> <a href="#" class="image featured"><img
-				src="images/pic05.jpg" alt="" /></a> <header>
-			<h3>
-				<a href="#">Varius magnis sollicitudin</a>
-			</h3>
-			</header>
-			<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-			</article>-->
+				</article>
+			</c:forEach>		
 
 		</div>
 		</section>
