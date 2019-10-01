@@ -184,7 +184,7 @@ public class MemberServiceImpl implements MemberService{
 										"</tr>" + 
 										"<tr>" + 
 											"<th colspan='2'>" + 
-												"<div style='margin-bottom: 5px'>親愛的顧客您好，感謝您註冊本網站會員</div>" + 
+												"<div style='margin-bottom: 5px'>親愛的顧客您好，感謝您註冊7-1CINEMA影城會員</div>" + 
 											"</th>" + 
 										"</tr>" + 
 										"<tr>" + 
