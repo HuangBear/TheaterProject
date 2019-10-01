@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
     <ul class="sidebar navbar-nav">
         <li class="nav-item active">
@@ -68,12 +69,13 @@
           <i class="fa fa-table fa-plus-square"></i>
           <span>串接功能</span></a>
         </li>
+         <sec:authorize access="hasAuthority('1') or hasAuthority('2')">
          <li class="nav-item">
         <a class="itemTag nav-link" href="#" id="WebSocket">
           <i class="fa fa-cog" aria-hidden="true"></i>
           <span>即時客服</span></a>
         </li>
-		
+		</sec:authorize>
 
     </ul>
 

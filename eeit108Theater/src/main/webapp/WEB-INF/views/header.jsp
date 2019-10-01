@@ -6,9 +6,8 @@
 <!-- Nav -->
 <style>
 	.foo1:hover{color:gold;}
-	#prfilePic {border-radius: 50%;
-				width:50px;
-				height:50px}
+	#prfilePic {border-radius: 80%;
+				}
     
 
 </style>

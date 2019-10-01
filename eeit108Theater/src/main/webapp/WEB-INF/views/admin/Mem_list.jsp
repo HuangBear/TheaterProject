@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <!-- Breadcrumbs-->
 
 <ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="#">Home</a></li>
+	<li class="breadcrumb-item"><a href="empIndexA">Home</a></li>
 	<li class="breadcrumb-item active">empTable</li>
 </ol>
 
@@ -29,8 +29,8 @@
 				<c:forEach var='mem' varStatus='vs' items='${members}'>
 					<c:if test='${vs.first }'>
 
-						<table class='table table-bordered' id='dataTable' width='100%'
-							cellspacing='0'>
+						<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+							
 							<thead>
 								<tr>
 									<th>會員編號</th>
@@ -41,8 +41,10 @@
 									<th>password</th>
 									<th>狀態</th>
 									<th>發言狀態</th>
+								    <sec:authorize access="hasAuthority('2')">	
 									<th>管理</th>
 									<th>禁言</th>
+								    </sec:authorize>	
 								</tr>
 							</thead>
 
@@ -56,14 +58,16 @@
 									<th>password</th>
 									<th>狀態</th>
 									<th>發言狀態</th>
+									<sec:authorize access="hasAuthority('2')">	
 									<th>管理</th>
 									<th>禁言</th>
+									</sec:authorize>	
 								</tr>
 							</tfoot>
 
 							<tbody>
 
-								</c:if>
+					</c:if>
 
 								<tr>
 									<td>${mem.no}</td>
@@ -75,8 +79,8 @@
 
 									<c:choose>
 										<c:when test="${mem.available == true}">
-											<td>一般會員</td>" 
-						</c:when>
+											<td>一般會員</td> 
+									</c:when>
 
 										<c:otherwise>
 											<td>停權會員</td>
@@ -92,16 +96,17 @@
 										</c:when>
 
 									</c:choose>
-
+									<sec:authorize access="hasAuthority('2')">	
 									<td>
 										<button class="itemTag2 btn btn-info" id="${mem.no}">
 											管理會員</button>
-										<p>
+										
 									</td>
 
 									<td><button class='btn btn-danger'
-											onclick='javascrtpt:window.location.href="EmpResign?pk=${mem.no}"'>禁言</button></td>
-
+											onclick='javascrtpt:window.location.href="BanMember?pk=${mem.no}"'>禁言</button>
+									</td>
+									</sec:authorize>
 
 								</tr>
 								<c:if test='${vs.last }'>

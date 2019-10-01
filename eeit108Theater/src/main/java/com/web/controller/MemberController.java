@@ -64,7 +64,7 @@ public class MemberController {
 		System.out.println("googlemember info:"+email+" "+name);
 		MemberBean GoogleMember=new MemberBean();
 		if (service.checkMemberEmail(email)) {
-			System.out.println("此Google會員已有資料");
+			System.out.println("此Google會員已有會員資料");
 			GoogleMember =service.findMemberByEmail(email);
 			session.setAttribute("LoginOK", GoogleMember);
 			if(GoogleMember == null) {
@@ -111,12 +111,17 @@ public class MemberController {
 			String SecurityPwd =SecurityCipher.encryptString(memberBean.getPassword());
 			memberBean.setPassword(SecurityPwd);
 			
-			redirectAttributes.addFlashAttribute("name", memberBean.getName());
-			redirectAttributes.addFlashAttribute("welcome", "註冊成功，請至信箱收信認證");
-			session.setAttribute("EM", memberBean.getEmail());
-			
+
+			try {
 			service.save(memberBean);
 			service.emailValidate(memberBean,request);
+			}catch (Exception e) {
+				redirectAttributes.addFlashAttribute("error", "註冊失敗，該身分證已經有人使用，或是未輸入必須欄位");
+				return "redirect:/memberservice";
+				
+			}
+			redirectAttributes.addFlashAttribute("name", memberBean.getName());
+			redirectAttributes.addFlashAttribute("welcome", "註冊成功，請至信箱收信認證");
 			
 			return "redirect:/memberservice";
 		} else {
@@ -246,7 +251,14 @@ public class MemberController {
 			}
 		
 		MemberBean LoginMB = null;
-		LoginMB = service.checkEmailPassword(memberBean.getEmail(), memberBean.getPassword());
+		MemberBean memberBeanGoogle = service.findMemberByEmail(memberBean.getEmail());
+		
+		if(memberBeanGoogle.getGoogleUrl()!=null) {
+			redirectAttributes.addFlashAttribute("error", "此帳號已使用Google登入認證，請按Google登入");
+			return "redirect:/memberservice";
+		}else {
+		
+			LoginMB = service.checkEmailPassword(memberBean.getEmail(), memberBean.getPassword());
 		if (LoginMB != null && LoginMB.getEmailActiveStatus() == true) {
 			session.setAttribute("memberName", LoginMB.getName());
 			session.setAttribute("memberId", LoginMB.getMemberId());
@@ -263,6 +275,8 @@ public class MemberController {
 			redirectAttributes.addFlashAttribute("error", "登錄失敗，帳號或密碼錯誤");
 		return "redirect:/memberservice";
 		}
+		
+	}
 		
 	
 
