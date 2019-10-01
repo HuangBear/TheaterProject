@@ -61,7 +61,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10">
-									<form:input id="noString" readonly="true" path="noString"
+									<form:input id="rnoString" readonly="true" path="rnoString"
 										value='${ReplyBean.rnoString}' type='hidden'
 										class='form:input-large' />
 								</div>

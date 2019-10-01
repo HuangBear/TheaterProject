@@ -64,7 +64,7 @@
 		var no = $(this).attr("id");
 		//var pquantity = $(this).val();
 		$.ajax({
-			url : "<c:url value='/admin/empIndexA'/>",
+			url : "<c:url value='/admin/emp_Forum'/>",
 			type : "GET",
 			success : function(data) {
 				$("#pageItems").html(data);

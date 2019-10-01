@@ -29,6 +29,7 @@ public class ArticleBean implements Serializable {
 	@Column(name = "article_no")
 	private Integer no;	
 	private Boolean available;
+	private Boolean report;
 	private String title;
 	private String content;
 	private String tag;
@@ -53,7 +54,9 @@ public class ArticleBean implements Serializable {
 	
 	@OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
 	private Set<ReplyBean> replys;
-	//private String  	companyName;
+	
+	@OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
+	private Set<ReportBean> reports;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_author_id")
@@ -147,11 +150,25 @@ public class ArticleBean implements Serializable {
 		this.available = available;
 	}
 	
+	public Boolean getReport() {
+		return report;
+	}
+	public void setReport(Boolean report) {
+		this.report = report;
+	}
+	
 	public Set<ReplyBean> getReplys() {
 		return replys;
 	}
 	public void setReplys(Set<ReplyBean> replys) {
 		this.replys = replys;
+	}
+	
+	public Set<ReportBean> getReports() {
+		return reports;
+	}
+	public void setReports(Set<ReportBean> reports) {
+		this.reports = reports;
 	}
 	public String getTag() {
 		return tag;

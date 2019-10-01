@@ -15,6 +15,7 @@ import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
+import com.web.entity.ReportBean;
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
 	@Autowired
@@ -155,6 +156,13 @@ public class ArticleDaoImpl implements ArticleDao {
 	public void editReply(ReplyBean reply) {
 	    Session session = factory.getCurrentSession();
 	    session.update(reply);
+	}
+	@Override
+	public void addReport(ReportBean rb) {
+		System.out.println("確認位置");
+	    Session session = factory.getCurrentSession();
+	    session.save(rb);
+	    System.out.println("確認位置");
 	}
 	@Override
 	public MemberBean getMemberById(int memberId) {
