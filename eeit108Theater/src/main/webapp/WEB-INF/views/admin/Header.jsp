@@ -8,11 +8,11 @@
  <a class="navbar-brand" href="empIndexA">
     <img src="images/admin/716logo.png" alt="Logo" style="width:40px;">
   </a>
-    <a class="navbar-brand mr-1" href="empIndexA">7-1 Cinema 後台管理</a>
+    <a class="navbar-brand mr-1" href="empIndexA">7-1 Cinema 影城管理系統</a>
 
-    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-      <i class="fas fa-bars"></i>
-    </button>
+<!--     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#"> -->
+<!--       <i class="fas fa-bars"></i> -->
+<!--     </button> -->
 
     <!-- Navbar Search 站內搜尋功能-->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
