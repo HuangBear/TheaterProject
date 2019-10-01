@@ -29,11 +29,20 @@
 			<c:forEach var='emp' varStatus='vs' items='${employees}'>
 			<c:if test ='${vs.first }'>
 				<c:out value="<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>" escapeXml='false'/>
-				<c:out value=" <thead><tr><th>員工編號</th><th>姓名</th>
-				<th>員工ID</th><th>員工email</th><th>員工電話</th>
-				<th>password</th><th>薪資</th><th>職等</th><th>工作狀態</th><th>更新</th>
-				<th>離職</th>
-				</tr> </thead>
+				<c:out value=" 
+				<thead><tr>
+				<th width='5%'>員工編號</th>
+				<th width='8%'>姓名</th>
+				<th width='10%'>員工ID</th>
+				<th width='15%'>員工email</th>
+				<th width='5%'>員工電話</th>
+				<th width='15%'>password</th>
+				<th width='5%'>薪資</th>
+				<th width='6%'>職等</th>
+				<th width='5%'>工作狀態</th>
+				<th width='5%'>更新</th>
+				<th width='5%'>離職</th>
+				</tr></thead>
 				<tfoot><tr><th>員工編號</th><th>姓名</th>
 				<th>員工ID</th><th>員工email</th><th>員工電話</th>
 				<th>password</th><th>薪資</th><th>職等</th><th>工作狀態</th><th>更新</th>

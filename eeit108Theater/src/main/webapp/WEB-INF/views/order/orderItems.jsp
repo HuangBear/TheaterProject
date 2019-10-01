@@ -50,9 +50,7 @@
 			<div class="container" style="width: 80%">
 				<div class="row">
 					<div class="col-md-4 order-md-2 order-sm-1">
-						<form action="">
-							<jsp:include page="orderSidebar.jsp" />
-						</form>
+						<jsp:include page="orderSidebar.jsp" />
 					</div>
 					<div class="col-md-8 order-md-1 order-sm-2">
 						<div id="movie-info" class="row mb-2">
@@ -76,16 +74,8 @@
 								</div>
 							</div>
 							<div class="col-md-6 h3 col-xs-8">
-								<div>
-									(
-									<c:out value="${order.timeTable.version}" />
-									) ${order.timeTable.movieName}
-								</div>
-								<div>
-									(
-									<c:out value="${order.timeTable.version}" />
-									) ${order.timeTable.movie.engMovieName}
-								</div>
+								<div><c:out value="(${order.timeTable.version})" /> ${order.timeTable.movieName}</div>
+								<div style="opacity: 0.6;"><c:out value="(${order.timeTable.version})" /> ${order.timeTable.movie.engMovieName}</div>
 							</div>
 							<div class="col-md-4 col-xs-12">
 								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
@@ -94,29 +84,29 @@
 							</div>
 						</div>
 						<div style="color: white; background-color: grey;" class="my-3 py-2">
-							<div class="h2" style="text-align: center">訂單明細</div>
-							<p style="text-align: center">請再次確認以下商品名稱、價格及數量</p>
+							<div class="h2" style="text-align: center">確認訂單內容</div>
+							<p style="text-align: center">請再次確認所選座位及以下商品名稱、價格及數量</p>
 						</div>
 						<div>
 							<table class="table border px-10">
 								<thead>
 									<tr style="text-align: center" class="table-secondary">
-										<th>Order List</th>
+										<th>購物清單</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody class="orderItems">
 									<c:forEach var='item' items="${order.orderItems}">
 										<tr>
 											<td>
 												<div>${item.itemName}</div>
-												<div class="float-right">${item.unitPrice}X${item.quantity}=${item.sumPrice}</div>
+												<div class="float-right">${item.priceDetail}</div>
 											</td>
 										</tr>
 									</c:forEach>
 									<tr>
 										<td>
 											<div>
-												<b>Total</b>
+												<b>總計</b>
 											</div>
 											<div class="float-right">
 												<b>${order.totalPrice}</b>

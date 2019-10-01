@@ -95,6 +95,9 @@ form label {
 						$("#btn-submit").prop("disabled", true);
 					}
 				});
+		$("#btn-submit").click(function(){
+			$("#seatForm").submit();
+		});
 
 	});
 </script>
@@ -110,12 +113,12 @@ form label {
 		<!-- Main -->
 		<div class="wrapper style1">
 			<div class="container">
-				<form action="<c:url value='/order/makeOrder'/>" method="POST">
 					<div class="row">
 						<div class="col-md-4 order-md-2 order-sm-1">
 							<jsp:include page="orderSidebar.jsp"/>
 						</div>
 						<div class="col-md-8 order-md-1 order-sm-2">
+						<form id="seatForm" action="<c:url value='/order/makeOrder'/>" method="POST">
 							<div id="movie-info" class="row mb-3">
 								<div class="col-md-2 col-xs-4">
 									<div class="border rounded overflow-hidden">
@@ -137,8 +140,8 @@ form label {
 									</div>
 								</div>
 								<div class="col-md-6 h3 col-xs-8">
-									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
-									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
+									<div><c:out value="(${order.timeTable.version})" /> ${order.timeTable.movieName}</div>
+									<div style="opacity: 0.6;"><c:out value="(${order.timeTable.version})" /> ${order.timeTable.movie.engMovieName}</div>
 								</div>
 								<div class="col-md-4 col-xs-12">
 									<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
@@ -147,7 +150,9 @@ form label {
 							</div>
 							<div style="color: white; background-color: grey;">
 								<div class="h2" style="text-align: center">選擇座位</div>
-								<c:if test="${not empty seatSoldErr}"><p style="text-align: center; color: red;">${seatSoldErr}</p></c:if>
+								<c:if test="${not empty seatSoldErr}">
+									<p style="text-align: center; color: red;">${seatSoldErr}</p>
+								</c:if>
 								<p style="text-align: center">請選擇${order.ticketCnt}個座位</p>
 							</div>
 							<div class="overflow-auto">
@@ -166,17 +171,17 @@ form label {
                     </div> -->
 								</div>
 							</div>
-						</div>
+						</form>
 					</div>
+				</div>
 					<div class="row justify-content-between mt-5">
 						<div class="col-md-auto col-12-mobile">
 							<a href="<c:url value='/order/showProducts?time=${order.timeTable.no}'/>"><button class="btn btn-secondary previous" type="button">上一步</button></a>
 						</div>
 						<div class="col-md-auto col-12-mobile">
-							<input id="btn-submit" class="btn disabled" type="submit" value="下一步" disabled>
+							<input id="btn-submit" class="btn disabled" type="button" value="下一步" disabled>
 						</div>
 					</div>
-				</form>
 			</div>
 		</div>
 

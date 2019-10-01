@@ -20,10 +20,10 @@
 		
 			<textarea id="talkarea"
 				style="font-size: 1em; resize: none; color: black;"
-				readonly="readonly" rows="20em" cols=190%></textarea>
+				readonly="readonly" rows="20em" cols=90%></textarea>
 			<hr />
-			<input type="text" id="talktext" size=180% style="color: black" /><input
-				id="sendmsg" style="color: black" type="button" value="送出" />
+			<input type="text" id="talktext" size=80% style="color: black" />
+			<input id="sendmsg" style="color: black" type="button" value="送出" />
 
 
 	</div>

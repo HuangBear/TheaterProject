@@ -32,6 +32,7 @@ import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
+import com.web.entity.ReportBean;
 import com.web.service.ArticleService;
 
 @Controller
@@ -74,11 +75,11 @@ public class ArticleController {
 		LikeOrDislikeBean lb = new LikeOrDislikeBean();
 		String NoS =Integer.toString(ab.getNo());
 		lb.setArticleNoString(NoS);
-		rb.getArticle().setNoString(NoS);
+		
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
-		model.addAttribute("Reply", rb);
+		
 		return "Article";
 	}
 	
@@ -213,6 +214,7 @@ public class ArticleController {
 		}
 		ab.setLikeCount(0);
 		ab.setDislikeCount(0);
+		ab.setReport(false);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		ab.setAuthor(new MemberBean(AuthorS));
 		int MovieS = Integer.parseInt(request.getParameter("movie"));
@@ -289,6 +291,7 @@ public class ArticleController {
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
+		ab.setReport(ab.getReport());
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
@@ -397,8 +400,8 @@ public class ArticleController {
 		}
 		
 		System.out.println("==postString=="+request.getParameter("postTimeString"));
-		System.out.println("==postString=="+request.getParameter("noString"));
-		int NoS = Integer.parseInt(request.getParameter("noString"));
+		System.out.println("==postString=="+request.getParameter("rnoString"));
+		int NoS = Integer.parseInt(request.getParameter("rnoString"));
 		rb.setNo(NoS);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		rb.setAuthor(new MemberBean(AuthorS));
@@ -428,6 +431,71 @@ public class ArticleController {
 	@ModelAttribute("tagList")
 	public List<String> getTagList() {
 		return service.getAllTags();
+	}
+	
+	@RequestMapping(value = "/addReport", method = RequestMethod.GET)
+	public String getAddReportForm(@RequestParam("id") Integer no, Model model) {
+		ArticleBean ab = service.getArticleById(no);
+		ReportBean rb = new ReportBean();
+		
+		String NoS =Integer.toString(ab.getNo());
+		ab.setNoString(NoS);
+		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("ReportBean", rb);
+		return "addReport";
+	}
+	
+	@RequestMapping(value = "/addReport", method = RequestMethod.POST)
+	public String processAddReportForm(@ModelAttribute("ReportBean") ReportBean rb,@RequestParam("id") Integer no, 
+		      BindingResult result, HttpServletRequest request,HttpSession session ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("==postString=="+request.getParameter("postTimeString"));
+		System.out.println("==postString=="+request.getParameter("noString"));
+		ArticleBean ab = service.getArticleById(no);
+		MemberBean mb=(MemberBean)session.getAttribute("LoginOK");
+		int AuthorSS=mb.getNo();
+		rb.setArticle(new ArticleBean(no));
+//		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		rb.setAuthor(new MemberBean(AuthorSS));
+//		rb.setAuthor(new MemberBean(rb.));
+		rb.setPostTime(new Date());
+		ab.setNo(ab.getNo());
+		ab.setAvailable(ab.getAvailable());
+		ab.setTitle(ab.getTitle());
+		ab.setContent(ab.getContent());
+		ab.setTag(ab.getTag());
+		ab.setPostTime(ab.getPostTime());
+		ab.setLikeCount(ab.getLikeCount());
+		ab.setDislikeCount(ab.getDislikeCount());
+		ab.setAuthor(ab.getAuthor());
+		ab.setMovie(ab.getMovie());
+		ab.setReport(true);
+		System.out.println("article=" + rb.getArticle());
+		System.out.println("content=" + rb.getContent());
+		System.out.println("postTime=" + rb.getPostTime());
+		
+		service.addReport(rb);
+		service.editArticle(ab);
+		String ArticleNoS =Integer.toString(ab.getNo());
+
+		if (!errorMessage.isEmpty())
+		{
+			return "addReport";
+		} else
+		{
+			return "redirect:/Article?id="+ArticleNoS;
+		}
+		
 	}
 	
 	@RequestMapping("/admin/emp_Forum")
@@ -461,11 +529,10 @@ public class ArticleController {
 	public String getLockArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		
 		ArticleBean ab = service.getArticleById(no);
-		
+
 		model.addAttribute("Article", ab);
 		
-		
-		
+
 		return "admin/LockArticle";
 	}
 	
@@ -500,6 +567,16 @@ public class ArticleController {
 
 		return "admin/empIndexA";
 	}
+	
+	@RequestMapping(value = "/admin/ReportArticle", method = RequestMethod.GET)
+	public String getReportArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		
+		ArticleBean ab = service.getArticleById(no);
+		model.addAttribute("Article", ab);
+
+		return "admin/ReportArticle";
+	}
+	
 
 	@InitBinder
 	public void whiteListing(WebDataBinder binder) {

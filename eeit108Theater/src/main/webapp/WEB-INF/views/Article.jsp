@@ -86,6 +86,16 @@
 									class="btn btn-primary btn-lg" style="font-size: 26px">回覆</a>
 							</c:when>
 						</c:choose>
+						<c:choose>
+							<c:when test="${empty LoginOK}">
+								<a href="<spring:url value='/memberservice' />"
+									class="btn btn-primary btn-lg" style="font-size: 26px">檢舉</a>
+							</c:when>
+							<c:when test="${!empty LoginOK}">
+								<a href="<spring:url value='/addReport?id=${Article.no}' />"
+									class="btn btn-primary btn-lg" style="font-size: 26px">檢舉</a>
+							</c:when>
+						</c:choose>
 					</p>
 					<form:form method='POST' modelAttribute="LikeOrDislikeBean"
 						class='form-horizontal' enctype="multipart/form-data">
@@ -116,7 +126,7 @@
 						<c:forEach var='reply' items='${Article.replys}'>
 							<div
 								style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
-								<p>${reply.author.name} 回覆時間:${Article.postTime}</p>
+								<p>${reply.author.name} 回覆時間:${reply.postTime}</p>
 							</div>
 							<c:choose>
 								<c:when test="${reply.available==true}">
@@ -128,7 +138,7 @@
 								<c:when test="${reply.available==false}">
 									<div
 										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-										<p>這篇回覆已經被鎖</p>
+										<p>這篇回覆已經被封鎖</p>
 									</div>
 								</c:when>
 							</c:choose>
@@ -156,7 +166,7 @@
 											value='${reply.rnoString=reply.no}' type='hidden'
 											class='form:input-large' />
 											<div class="form-group">
-												<button type="submit" name="lockbutton" value="lock">屏蔽</button>
+												<button type="submit" name="lockbutton" value="lock">封鎖</button>
 											</div>
 										</c:when>
 									</c:choose>

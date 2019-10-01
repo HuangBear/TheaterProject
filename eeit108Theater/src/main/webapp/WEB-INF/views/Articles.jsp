@@ -42,10 +42,11 @@
 </head>
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header">
+		<div id="header1">
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
+		<div class="wrapper style1" style="background-color:#f0f4f4;">
 		<a style="font-size: 40px">
 		${Movie.movieName}
 		</a>
@@ -63,6 +64,8 @@
 				</c:when>
 			</c:choose>
 		</div>
+		</div>
+		
 		<div class="wrapper style1">
 
 			<a></a>
