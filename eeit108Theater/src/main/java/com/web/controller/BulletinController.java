@@ -55,13 +55,6 @@ public class BulletinController {
 	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
 		List<List<BulletinBean>> list = service.getStatsBulletin();
-
-		// permission
-//		Integer permission = getPermission(session);
-//		if (permission < obb.getEmployee().getPermission() || no != obb.getEmployee().getNo()) {
-//			errorMessage.put("permission", "您的權限不足");
-//		}
-
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
