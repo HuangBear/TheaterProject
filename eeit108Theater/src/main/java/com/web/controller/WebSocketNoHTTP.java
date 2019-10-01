@@ -33,10 +33,10 @@ public class WebSocketNoHTTP {
 		userSession.getUserProperties().put("username", endpointConfig.getUserProperties().get("username"));
 		users.add(userSession);
 		try {
-			if (endpointConfig.getUserProperties().get("username").toString().indexOf("系統管理員") >= 0) {
+			if (endpointConfig.getUserProperties().get("username").toString().indexOf("影城經理") >= 0) {
 				msgPackage = buildJsonData("系統訊息", "系統管理員連線成功!");
 				userSession.getBasicRemote().sendText(msgPackage);
-			} else if (endpointConfig.getUserProperties().get("username").toString().indexOf("1") >= 0) {
+			} else if (endpointConfig.getUserProperties().get("username").toString().indexOf("一般員工") >= 0) {
 				msgPackage = buildJsonData("系統訊息", "客服人員連線成功!");
 				userSession.getBasicRemote().sendText(msgPackage);
 				if (recordmsg != null) {

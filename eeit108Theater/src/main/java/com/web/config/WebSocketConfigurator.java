@@ -43,9 +43,10 @@ public class WebSocketConfigurator extends ServerEndpointConfig.Configurator {
 			if ("EmployeeBean".equals(className)) {
 				EmployeeBean loginToken = (EmployeeBean) ((HttpSession) request.getHttpSession()).getAttribute("employeeBean1");
 				System.out.println(loginToken.getEmail());
-				
+				System.out.println(((HttpSession) request.getHttpSession()).getAttribute("positionsession"));
+				String position=(String) ((HttpSession) request.getHttpSession()).getAttribute("positionsession");
 				sec.getUserProperties().put("username",
-						"E" +  loginToken.getPermission()+  loginToken.getName());
+						"E" + "["+position+"]"+  loginToken.getName());
 			} else {
 				sec.getUserProperties().put("username", "E" + "訪客");
 			}
