@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <style>
 .hide {
@@ -10,6 +11,16 @@
 
 .myMOUSE {
 	cursor: pointer;
+}
+
+table {
+	table-layout: fixed;
+}
+
+.title_width {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 </style>
 
@@ -212,27 +223,22 @@
 		});
 	});
 
-	//postTime length
-	var $len = 11;
-	$(".postTime").each(function() {
-		if ($(this).text().length > $len) {
-			var $text = $(this).text().substring(0, $len - 1);
-			$(this).text($text);
-		}
-	});
 
 	//title length
-	var $len = 20;
-	$(".title").each(function() {
-		if ($(this).text().length > $len) {
-			var $text = $(this).text().substring(0, $len - 1) + "...";
-			$(this).text($text);
-		}
-	});
-	
+// 	$(function () {
+// 		var $len = 20;
+// 		$(".title").each(function() {
+// 			if ($(this).text().length > $len) {
+// 				var $text = $(this).text().substring(0, $len - 1) + "...";
+// 				$(this).text($text);
+// 			}
+// 		});
+		
+// 	});
+
 	if (${changeMsg != null}) {
 		$("a.hide").trigger("click")
-	}
+	};
 </script>
 <!-- load 視窗 -->
 <a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
@@ -442,8 +448,8 @@
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td class="title">${sb.title}</td>
-									<td class="postTime">${sb.postTime}</td>
+									<td class="title_width" >${sb.title}</td>
+									<td><fmt:formatDate value="${sb.postTime}" pattern='yyyy-MM-dd' /></td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
@@ -499,8 +505,8 @@
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td class="title">${sb.title}</td>
-									<td class="postTime">${sb.postTime}</td>
+									<td class="title_width" >${sb.title}</td>
+									<td><fmt:formatDate value="${sb.postTime}" pattern='yyyy-MM-dd' /></td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
@@ -558,8 +564,8 @@
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td class="title">${sb.title}</td>
-									<td class="postTime">${sb.postTime}</td>
+									<td class="title_width" >${sb.title}</td>
+									<td><fmt:formatDate value="${sb.postTime}" pattern='yyyy-MM-dd' /></td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>

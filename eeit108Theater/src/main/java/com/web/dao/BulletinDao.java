@@ -7,11 +7,11 @@ import com.web.entity.EmployeeBean;
 
 public interface BulletinDao {
 
-	List<BulletinBean> getExistenceBulletin();
+	List<BulletinBean> getExistenceBulletin(String targete);
 
-	List<BulletinBean> getExpiredBulletin();
+	List<BulletinBean> getExpiredBulletin(String targete);
 
-	List<BulletinBean> getDeadBulletin();
+	List<BulletinBean> getDeadBulletin(String targete);
 
 	List<BulletinBean> getSameBulletinByBortingId(Integer no);
 
