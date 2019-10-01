@@ -33,17 +33,17 @@
 							
 							<thead>
 								<tr>
-									<th>會員編號</th>
-									<th>姓名</th>
-									<th>會員ID</th>
-									<th>會員email</th>
-									<th>會員電話</th>
-									<th>password</th>
-									<th>狀態</th>
-									<th>發言狀態</th>
+									<th width='5%'>會員編號</th>
+									<th width='10%'>姓名</th>
+									<th width='10%'>會員ID</th>
+									<th width='15%'>會員email</th>
+									<th width='10%'>會員電話</th>
+									<th width='15%'>password</th>
+									<th width='5%'>狀態</th>
+									<th width='5%'>發言狀態</th>
 								    <sec:authorize access="hasAuthority('2')">	
-									<th>管理</th>
-									<th>禁言</th>
+									<th width='8%'>管理</th>
+									<th width='5%'>禁言</th>
 								    </sec:authorize>	
 								</tr>
 							</thead>
