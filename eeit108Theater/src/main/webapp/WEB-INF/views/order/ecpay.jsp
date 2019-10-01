@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>前往綠界支付</title>
 </head>
 <body>
-	<p>即將跳轉至綠界支付頁面</p>
+	<p>即將前往綠界支付頁面</p>
 	${ecpayForm}
 </body>
 </html>

@@ -223,7 +223,7 @@
 												<br>
 												<dt>
 												<c:forEach var = 'StartTime' items = '${times[j]}'>
-													<dd class = 'dtdd foo'><a href = '#'>${StartTime.startTime}</a></dd>
+													<dd class = 'dtdd foo'><a href = "<c:url value='/order/showProducts?time=${StartTime.no}'/>">${StartTime.startTime}</a></dd>
 												</c:forEach>
 												<br>
 												<br>

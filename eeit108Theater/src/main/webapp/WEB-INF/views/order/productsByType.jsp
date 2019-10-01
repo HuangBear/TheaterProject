@@ -4,22 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> -->
 <title>Products By Type</title>
 <link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/css/order/bootstrap.min.css'/>" crossorigin="anonymous">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
 
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" -->
-<!-- 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" /> --%>
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 
 <style>
-.previous{
+.previous {
 	padding: 0.65em 3em;
-	border-radius : 0.5em;
+	border-radius: 0.5em;
 }
 </style>
 <noscript>
@@ -29,15 +23,10 @@
 <script src="<c:url value='/js/order/jquery-ui.min.js'/>"></script>
 <script src="<c:url value='/js/order/popper.min.js'/>" crossorigin="anonymous"></script>
 <script src="<c:url value='/js/order/bootstrap.min.js'/>" crossorigin="anonymous"></script>
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" -->
-<!-- 	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" -->
-<!-- 	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
 <script>
-	//var ticketCnt = parseInt("0");
 	const maxTicket = parseInt("10");
 	var ticketCnt = 0;
+	var chosenDiscount = ${empty chosenDiscount? 0 : chosenDiscount.no};
 	$(function() {
 		$.each($(".ticket"), function() {
 			ticketCnt += parseInt($(this).val());
@@ -120,6 +109,19 @@
 				$("#btn-submit").prop("disabled", true);
 			}
 		});
+		$("#discount"+chosenDiscount).prop("select", true);
+		$("#chosenDiscount").change(function(){
+			$.ajax({
+				url : "<c:url value='/order/calDiscount'/>",
+				data : {
+					chosenDiscount : $("#chosenDiscount").val()
+				},
+				type : "POST",
+				success : function(data){
+					$("#orderItems").html(data);
+				}
+			});
+		});
 	});
 </script>
 </head>
@@ -137,32 +139,56 @@
 					<div class="row">
 						<div class="col-md-4 order-md-2 order-sm-1">
 							<div>
-								<table class="table border">
+								<table class="table border" style="text-align: center">
 									<thead>
-										<tr style="text-align: center" class="table-secondary">
+										<tr class="table-secondary">
 											<th scope="col">會員</th>
 										</tr>
 									</thead>
 									<tbody>
+										<%-- 									if no login --%>
 										<c:if test="${empty LoginOK}">
-											<tr style="text-align: center">
-												<td>尚未登入</td>
+											<tr>
+												<td>
+													<div>尚未登入</div>
+													<div style="opacity: 0.6;">
+														趕快加入/登入會員<br>來享有會員專屬優惠吧！
+													</div>
+												</td>
 											</tr>
-											<tr style="text-align: center">
+											<tr>
 												<td>
 													<a href="<c:url value='/memberservice'/>">
-														<button type="button">登入</button>
+														<button type="button">登入/註冊</button>
 													</a>
 												</td>
 											</tr>
 										</c:if>
+										<%-- 									if login --%>
 										<c:if test="${not empty LoginOK}">
-											<tr>
-												<td>Hi: ${LoginOK.name}</td>
+											<tr style="text-align: left">
+												<td id="LoginOK">您好: ${LoginOK.name}</td>
 											</tr>
-											<tr>
-												<td>帳號: ${LoginOK.email}</td>
-											</tr>
+
+											<%-- 									if no available discount --%>
+											<c:if test="${empty discounts}">
+												<tr>
+													<td style="opacity: 0.6;">現在尚無優惠</td>
+												</tr>
+											</c:if>
+											<%-- 									if there are available discounts --%>
+											<c:if test="${not empty discounts}">
+												<tr>
+													<td>
+														<select id="chosenDiscount" name="chosenDiscount">
+															<option id="discount0" value="0" selected>無</option>
+															<c:forEach var="discount" items="${discounts}">
+																<option id="discount${discount.no}" value="${discount.no}">${discount.pay}${discount.discountTickBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTickFree}${discount.discountPriceFree}</option>
+															</c:forEach>
+														</select>
+													</td>
+												</tr>
+											</c:if>
 										</c:if>
 									</tbody>
 								</table>
@@ -175,9 +201,6 @@
 										</tr>
 									</thead>
 									<tbody id="orderItems">
-										<!-- 										<tr> -->
-										<!-- 											<td>primary</td> -->
-										<!-- 										</tr> -->
 										<c:forEach var='item' items="${order.orderItems}">
 											<tr>
 												<td>
@@ -412,7 +435,9 @@
 					</div>
 					<div class="row justify-content-between mt-5">
 						<div class="col-md-auto col-12-mobile">
-							<a href="<c:url value='/order/cancel'/>"><button id="previous" class="btn btn-danger previous" type="button">取消</button></a>
+							<a href="<c:url value='/order/cancel'/>">
+								<button id="previous" class="btn btn-danger previous" type="button">取消</button>
+							</a>
 						</div>
 						<div class="col-md-auto col-12-mobile">
 							<input id="btn-submit" class="btn disabled" type="submit" value="下一步" disabled>
