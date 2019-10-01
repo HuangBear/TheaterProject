@@ -33,7 +33,7 @@
 	margin: auto;
 }
 </style>
-<title>addReply</title>
+<title>addReport</title>
 </head>
 <body>
 	<div id="page-wrapper">
@@ -46,22 +46,15 @@
 			<div class="container">
 				<article id="main" class="special">
 					<h2>
-						<a href="#">add Reply</a>
+						<a href="#">add Report</a>
 					</h2>
-					<form:form method='POST' modelAttribute="ReplyBean"
+					<form:form method='POST' modelAttribute="ReportBean"
 						class='form-horizontal' enctype="multipart/form-data">
 						<fieldset>
-<!-- 							<div class="form-group"> -->
-<!-- 								<div class="col-lg-10"> -->
-<%-- 									<form:input id="articleString" readonly="true" --%>
-<%-- 										path="articleString" value='${ArticleBean.noString}' --%>
-<%-- 										type='hidden' class='form:input-large' /> --%>
-<!-- 								</div> -->
-<!-- 							</div> -->
 
 							<div class="form-group">
 								<label class="control-label col-lg-2 col-lg-4" for='content'>
-									<a>Content</a>
+									<a>檢舉原因</a>
 								</label>
 								<div class="col-lg-10">
 									<form:textarea id="content" path="content" cols="80" rows="20"
@@ -69,8 +62,8 @@
 								</div>
 							</div>
 
-							<form:input id="author" path="author" readonly="true"
-								value='${LoginOK.no}' type='hidden' class='form:input-large' />
+<%-- 							<form:input id="author" name="author" path="author" readonly="true" --%>
+<%--   								value='${LoginOK.no}' type='hidden' class='form:input-large' />   --%>
 
 							<div class="form-group">
 								<div class='col-lg-offset-2 col-lg-2'>

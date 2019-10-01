@@ -1837,8 +1837,8 @@ header .icon.circled {
 /* Wrapper */
 .wrapper {
 	background: #fff;
-	margin: 0 0 2em 0;
-	padding: 6em 0 6em 0;
+	margin: 0 0 1em 0;     /*margin: 0 0 2em 0;*/
+	padding: 4em 0 1em 0;     /*padding: 6em 0 6em 0;*/
 }
 
 .wrapper.style2 {
@@ -2062,9 +2062,9 @@ body.homepage.is-preload #header:after {
 
 #nav>ul>li.login {
 	padding-top: 3em;
-	padding-right: 225px;
+	padding-right: 225px;     /*padding-right: 225px;*/
 	border: 0;
-	width: 18%;
+	width: 5%;     /*width: 18%;*/
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -2083,12 +2083,13 @@ body.homepage.is-preload #header:after {
 }
 
 #nav>ul>li.login>a {
-	position: absolute;
+	position: absolute;     /*position: absolute;*/
 	top: 50%;
 	bottom: 0;
-	right: 50%;
+	     /*right: 50%;*/
 	margin: auto;
-	padding-top: 10px;
+	padding-top: 0;     /*padding-top: 10px;*/
+	padding-left:25px;
 	font-size: 18px;
 }
 
@@ -2098,8 +2099,8 @@ body.homepage.is-preload #header:after {
 	top: 0;
 	bottom: 0;
 	left: -5%;
-	margin: auto;
-	padding-top: 20px;
+	margin: auto;     /*margin: auto;*/
+	padding-top: 0;     /*padding-top: 20px;*/
 }
 
 #nav>ul>li>a.nav_logo {

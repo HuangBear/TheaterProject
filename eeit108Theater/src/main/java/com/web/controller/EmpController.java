@@ -114,9 +114,10 @@ public class EmpController {
 		model.addAttribute("empEmail", empEmail);
 		EmployeeBean eb1 = service.findByEmail(empEmail);
 		String position=service.checkEmpPermission(eb1);
-		model.addAttribute("position", position);
-		model.addAttribute("now", new Date());
+		session.setAttribute("position", position);
+		session.setAttribute("now", new Date());
 		
+		session.setAttribute("positionsession",position);
 		session.setAttribute("employeeBean1",eb1);
 		session.setAttribute("empName", eb1.getName());
 		return "admin/empIndexA";

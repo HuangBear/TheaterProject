@@ -48,7 +48,7 @@
 			
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			
-			<a class="forgot" href="#">Forgot your email or password?</a>
+<!-- 			<a class="forgot" href="#">Forgot your email or password?</a> -->
 		</form>
 	</div>
 	<script src="js/logA/jquery.min.js"></script>
