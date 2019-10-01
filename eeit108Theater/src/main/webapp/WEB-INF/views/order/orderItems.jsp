@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +10,11 @@
 <link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
 <style>
-.previous{
+.previous {
 	padding: 0.65em 3em;
-	border-radius : 0.5em;
+	border-radius: 0.5em;
 }
+
 .form-control[readonly] {
 	background: white;
 	opacity: 0.6;
@@ -34,12 +34,13 @@
 <script>
 	$(function() {
 		$("#tab").tabs();
+		$("#sidebarOrderList").html("");
 	});
 </script>
 </head>
 <body class="right-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header">
+		<div id="header1">
 			<!-- Header -->
 			<jsp:include page="../header.jsp" />
 
@@ -49,96 +50,63 @@
 			<div class="container" style="width: 80%">
 				<div class="row">
 					<div class="col-md-4 order-md-2 order-sm-1">
-						<div>
-							<table class="table border">
-								<thead>
-									<tr style="text-align: center" class="table-secondary">
-										<th>會員</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:if test="${empty LoginOK}">
-										<tr style="text-align: center">
-											<td>尚未登入</td>
-										</tr>
-										<tr style="text-align: center">
-											<td>
-												<a href="<c:url value='/memberservice'/>">
-													<button type="button">登入</button>
-												</a>
-											</td>
-										</tr>
-									</c:if>
-									<c:if test="${not empty LoginOK}">
-										<tr>
-											<td>Hi: ${LoginOK.name}</td>
-										</tr>
-										<tr>
-											<td>帳號: ${LoginOK.email}</td>
-										</tr>
-									</c:if>
-								</tbody>
-
-							</table>
-						</div>
+						<jsp:include page="orderSidebar.jsp" />
 					</div>
 					<div class="col-md-8 order-md-1 order-sm-2">
 						<div id="movie-info" class="row mb-2">
 							<div class="col-md-2 col-xs-4">
 								<div class="border rounded overflow-hidden">
-										<c:choose>
-											<c:when test="${order.timeTable.movie.rating == '普遍級'}">
-												<div style="text-align: center; color: white" class="bg-success">G 0+</div>
-											</c:when>
-											<c:when test="${order.timeTable.movie.rating == '保護級'}">
-												<div style="text-align: center; color: white" class="bg-primary">P 6+</div>
-											</c:when>
-											<c:when test="${order.timeTable.movie.rating == '輔導級'}">
-												<div style="text-align: center; color: white" class="bg-warning">PG 12+</div>
-											</c:when>
-											<c:when test="${order.timeTable.movie.rating == '限制級'}">
-												<div style="text-align: center; color: white" class="bg-warning">R 18+</div>
-											</c:when>
-										</c:choose>
-										<div style="text-align: center;">${order.timeTable.movie.rating}</div>
-									</div>
+									<c:choose>
+										<c:when test="${order.timeTable.movie.rating == '普遍級'}">
+											<div style="text-align: center; color: white" class="bg-success">G 0+</div>
+										</c:when>
+										<c:when test="${order.timeTable.movie.rating == '保護級'}">
+											<div style="text-align: center; color: white" class="bg-primary">P 6+</div>
+										</c:when>
+										<c:when test="${order.timeTable.movie.rating == '輔導級'}">
+											<div style="text-align: center; color: white" class="bg-warning">PG 12+</div>
+										</c:when>
+										<c:when test="${order.timeTable.movie.rating == '限制級'}">
+											<div style="text-align: center; color: white" class="bg-warning">R 18+</div>
+										</c:when>
+									</c:choose>
+									<div style="text-align: center;">${order.timeTable.movie.rating}</div>
+								</div>
 							</div>
 							<div class="col-md-6 h3 col-xs-8">
-								<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
-								<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
+								<div><c:out value="(${order.timeTable.version})" /> ${order.timeTable.movieName}</div>
+								<div style="opacity: 0.6;"><c:out value="(${order.timeTable.version})" /> ${order.timeTable.movie.engMovieName}</div>
 							</div>
 							<div class="col-md-4 col-xs-12">
 								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
 								<div>影廳 ${order.timeTable.theater}</div>
-								<div>
-									座位 ${order.seatsString}
-								</div>
+								<div>座位 ${order.seatsString}</div>
 							</div>
 						</div>
 						<div style="color: white; background-color: grey;" class="my-3 py-2">
-							<div class="h2" style="text-align: center">訂單明細</div>
-							<p style="text-align: center">請再次確認以下商品名稱、價格及數量</p>
+							<div class="h2" style="text-align: center">確認訂單內容</div>
+							<p style="text-align: center">請再次確認所選座位及以下商品名稱、價格及數量</p>
 						</div>
 						<div>
 							<table class="table border px-10">
 								<thead>
 									<tr style="text-align: center" class="table-secondary">
-										<th>Order List</th>
+										<th>購物清單</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody class="orderItems">
 									<c:forEach var='item' items="${order.orderItems}">
 										<tr>
 											<td>
 												<div>${item.itemName}</div>
-												<div class="float-right">${item.unitPrice}X${item.quantity}=${item.sumPrice}</div>
+												<div class="float-right">${item.priceDetail}</div>
 											</td>
 										</tr>
 									</c:forEach>
 									<tr>
 										<td>
 											<div>
-												<b>Total</b>
+												<b>總計</b>
 											</div>
 											<div class="float-right">
 												<b>${order.totalPrice}</b>
@@ -233,7 +201,9 @@
 				</div>
 				<div class="row justify-content-between mt-5">
 					<div class="col-md-auto col-12-mobile">
-						<a href="<c:url value='/order/seat'/>"><button class="btn btn-secondary previous" type="button">上一步</button></a>
+						<a href="<c:url value='/order/seat'/>">
+							<button class="btn btn-secondary previous" type="button">上一步</button>
+						</a>
 					</div>
 					<div class="col-md-auto col-12-mobile">
 						<button class="btn-danger rounded">取消</button>
