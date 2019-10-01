@@ -102,7 +102,7 @@ form label {
 
 <body class="right-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header">
+		<div id="header1">
 			<!-- Header -->
 			<jsp:include page="../header.jsp" />
 
@@ -113,66 +113,7 @@ form label {
 				<form action="<c:url value='/order/makeOrder'/>" method="POST">
 					<div class="row">
 						<div class="col-md-4 order-md-2 order-sm-1">
-							<div>
-								<table class="table border">
-									<thead>
-										<tr style="text-align: center" class="table-secondary">
-											<th>Member Info</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:if test="${empty LoginOK}">
-											<tr style="text-align: center">
-												<td>尚未登入</td>
-											</tr>
-											<tr style="text-align: center">
-												<td>
-													<a href="<c:url value='/memberservice'/>">
-														<button type="button">登入</button>
-													</a>
-												</td>
-											</tr>
-										</c:if>
-										<c:if test="${not empty LoginOK}">
-											<tr>
-												<td>Hi： ${LoginOK.name}</td>
-											</tr>
-											<tr>
-												<td>帳號： ${LoginOK.email}</td>
-											</tr>
-										</c:if>
-
-									</tbody>
-
-								</table>
-							</div>
-							<div class="mt-5">
-								<table class="table border">
-									<thead>
-										<tr style="text-align: center" class="table-secondary">
-											<th>Order List</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var='item' items="${order.orderItems}">
-											<tr>
-												<td>
-													<div>${item.itemName}</div>
-													<div class="float-right">${item.unitPrice}X${item.quantity}=${item.unitPrice * item.quantity}</div>
-												</td>
-											</tr>
-										</c:forEach>
-										<tr>
-											<td>
-												<div>
-													<b>Total</b>
-												</div>
-												<div class="float-right">${order.totalPrice}</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+							<jsp:include page="orderSidebar.jsp"/>
 						</div>
 						<div class="col-md-8 order-md-1 order-sm-2">
 							<div id="movie-info" class="row mb-3">
