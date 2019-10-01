@@ -9,10 +9,12 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
 import com.web.entity.OrderBean;
 import com.web.service.EmailService;
 
+@Service
 public class EmailServiceImpl implements EmailService {
 
 	@Autowired
