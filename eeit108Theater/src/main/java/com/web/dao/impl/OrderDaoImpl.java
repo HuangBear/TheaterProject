@@ -16,7 +16,8 @@ public class OrderDaoImpl implements OrderDao {
 	SessionFactory factory;
 
 	public Boolean isExist(Integer orderNo) {
-		if (factory.getCurrentSession().get(OrderBean.class, orderNo) == null)
+		String hql = "FROM OrderBean o WHERE o.no = :ono";
+		if (factory.getCurrentSession().createQuery(hql).setParameter("ono", orderNo).uniqueResult() == null)
 			return false;
 		return true;
 	}
@@ -45,8 +46,6 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public int updateOrder(OrderBean order) {
-		if (!isExist(order.getNo()))
-			return 0;
 		factory.getCurrentSession().update(order);
 		return 1;
 	}

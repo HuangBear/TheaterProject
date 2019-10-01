@@ -1,9 +1,9 @@
 package com.web.controller;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.web.entity.BulletinBean;
 import com.web.entity.MemberBean;
 import com.web.entity.OrderBean;
 import com.web.entity.OrderItemBean;
 import com.web.entity.SeatBean;
+import com.web.service.BulletinService;
 import com.web.service.MovieService;
 import com.web.service.OrderService;
 import com.web.service.ProductService;
@@ -45,6 +47,8 @@ public class OrderController {
 	@Autowired
 	OrderService oServ;
 	@Autowired
+	BulletinService bServ;
+	@Autowired
 	JavaMailSender mailSender;
 	@Autowired
 	ServletContext context;
@@ -60,7 +64,7 @@ public class OrderController {
 
 
 
-	/*
+	/**
 	 * 建立一筆order於httpSession，並將所選擇的時刻表塞入order中。 自資料庫取得商品清單，並在前台顯示 ，供使用者選擇
 	 */
 	@RequestMapping("/showProducts")
@@ -88,11 +92,19 @@ public class OrderController {
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		List<BulletinBean> discounts = bServ.getDiscount(sdf.format(new Date()));
+		if(discounts == null)
+			System.out.println("there is no available discounts");
+		else {
+			System.out.println("there are " + discounts.size() + " discounts");			
+			session.setAttribute("discounts", discounts);
+		}
 		System.err.println("====showProductByType END====");
 		return pac + "productsByType";
 	}
 
-	/*
+	/**
 	 * 針對使用者每次選擇的商品種類及數量，做訂單中購物清單的即時更新。 直接更新Order中的OrderItems內容以及totalPrice
 	 */
 	@RequestMapping("/orderList")
@@ -138,7 +150,7 @@ public class OrderController {
 		return pac + "orderList";
 	}
 
-	/*
+	/**
 	 * 依據order中的timeTable資訊，去向資料庫取得現在選擇之場次之座位現況。 依據order中的timeTable資訊，產生對應的影廳座位表。
 	 * 
 	 */
@@ -196,7 +208,19 @@ public class OrderController {
 		System.err.println("====showOrder END====");
 		return pac + "orderItems";
 	}
-
+	
+	/**Cancel an order, and make user go to ticketing
+	 * 
+	 * @param session HttpSession
+	 * @return ticketing page
+	 */
+	@RequestMapping("/cancel")
+	private String cancelOrder(HttpSession session) {
+		session.removeAttribute("order");
+		session.removeAttribute("discounts");
+		return "ticketing_1";
+	}
+	
 	@RequestMapping(value = "/pay")
 	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model, HttpServletRequest req) {
 		System.out.println("type = " + idType);
@@ -223,10 +247,11 @@ public class OrderController {
 		if (obHash > 0) {
 			sec = (char) ('N' + (obHash % 13));
 		}
-		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + Long.toHexString(obHash)).substring(0, 9);
+		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + Long.toHexString(obHash)).substring(0, 9).toUpperCase();
 		ob.setOrderId(tradeNo);
 		try {
 			oServ.saveOrder(ob);
+			System.out.println("save order success in payByEcPay");
 		} catch (Exception e) {
 			System.err.println("Error when save the order, orderId = " + ob.getOrderId());
 			model.addAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
@@ -246,8 +271,7 @@ public class OrderController {
 		// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
 		// 可以在交易結束後觀察底下對應requestMapping的method -- receive
 		// 的system.err.println並不會出現在console中，藉此得知該方法並沒有被呼叫 -> 沒收到請求
-		obj.setOrderResultURL(base + "/order/result"); // EcPay會在付款結束後，將USER
-														// redirect至此，並附帶交易結果相關資訊
+		obj.setOrderResultURL(base + "/order/result"); // EcPay會在付款結束後，將USER redirect至此，並附帶交易結果相關資訊
 		obj.setNeedExtraPaidInfo("N"); // Y/N = True/False
 		obj.setRedeem("N"); // 紅利 Y/N = True/False
 		String form = all.aioCheckOut(obj, null); // null for no invoice
@@ -255,11 +279,13 @@ public class OrderController {
 		// 裡面的各種input都已經設定好了，並且會自動submit，
 		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
 		// EcPay End
-		System.out.println("form =\n" + form);
 		session.removeAttribute("order");
+		System.out.println("form =\n" + form);
 		model.addAttribute("ecpayForm", form);
 		return pac + "ecpay";
 	}
+	
+	
 
 	@RequestMapping("/receive") // this method may not be called, because, so far, the server is localhost
 	public String receive(HttpServletRequest req) {
@@ -278,7 +304,7 @@ public class OrderController {
 	}
 
 	@RequestMapping("/result")
-	public String result(HttpServletRequest req, Model model, HttpSession session) {
+	public String result(HttpServletRequest req, Model model) {
 		System.err.println("=====CLIENT BACK From EcPay=====");
 		Map<String, String[]> map = req.getParameterMap();
 
@@ -298,7 +324,7 @@ public class OrderController {
 		}
 
 		// to accomplish the order
-		OrderBean ob = (OrderBean) session.getAttribute("order");
+		OrderBean ob = oServ.getOrderById(map.get("MerchantTradeNo")[0]);
 		if (ob == null) {
 			model.addAttribute("rtnMsg", new String[] { "OOOOOOOOPS, ORDER IS GONE!!!" });
 			System.err.println("!!=====Result Fail=====!!");
@@ -310,13 +336,22 @@ public class OrderController {
 			System.out.println("RtnCode =" + returnCode);
 			model.addAttribute("rtnMsg", map.get("RtnMsg"));
 			ob.setSeats(null);
-			oServ.saveOrder(ob);
-			System.err.println("!!=====Result Fail=====!!");
-			return pac + "fail";
+			System.err.println("!!=====Pay Fail=====!!");
+		} else {
+			System.out.println("pay success");
+			ob.setPaid(true);
 		}
-
-		ob.setPaid(true);
-		oServ.saveOrder(ob);
+		if(oServ.updateOrder(ob) > 0) {
+			System.out.println("update success");
+			try {
+				sendEmail(ob);
+				System.out.println("send email success");
+			} catch (MessagingException e) {
+				e.printStackTrace();
+				System.out.println("send email fail");
+			}
+		}
+		model.addAttribute("order", ob);
 		System.err.println("=====Result END=====");
 		return pac + "result";
 	}
@@ -382,7 +417,7 @@ public class OrderController {
 		System.err.println("=====GuestSearch END=====");
 		return pac + "guestDetail";
 	}
-
+	
 	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> soldSeats) {
 		StringBuilder s = new StringBuilder(65536);
 		char row = 'A';
@@ -434,10 +469,12 @@ public class OrderController {
 		return colNow;
 	}
 	
-	// Email test
+	// Email
 	private String sendEmail(OrderBean ob) throws MessagingException{
 		if(ob == null)
 			throw new NullPointerException("the order to send email is null");
+		if(ob.getOwnerEmail() == null || ob.getOwnerEmail().length() == 0)
+			throw new MessagingException("Illegal email address");
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 		String builder = "<html>" +
@@ -524,7 +561,7 @@ public class OrderController {
 				"</body>" + 
 				"</html>";
 		builder = builder.replace("#tradeNo", ob.getOrderId());
-		builder = builder.replace("#movieName", ob.getTimeTable().getMovieName());
+		builder = builder.replace("#movieName", "(" + ob.getTimeTable().getVersion() + ") " + ob.getTimeTable().getMovieName());
 		builder = builder.replace("#timeTable", ob.getTimeTable().getStartDate() + " " + ob.getTimeTable().getStartTime());
 		builder = builder.replace("#seat", ob.getSeatsString());
 		builder = builder.replace("#orderList", ob.getOrderItemsDetail()); //to fix
@@ -532,7 +569,7 @@ public class OrderController {
 		builder = builder.replace("#", "<br>");
 		helper.setFrom(OrderController.OFFICIAL_EMAIL);
 		helper.setTo(ob.getOwnerEmail());
-		helper.setSubject("this is the second email sent from eeit108Theater by Bear");
+		helper.setSubject("7-1 CINEMA 線上購票確認信");
 		helper.setText(builder,	true);
 		helper.addInline("logoImg", new File(context.getRealPath("/WEB-INF/resources/images/frontend/cinema.jpg")));
 //		helper.setText("<h1>就是要打中文</h1>", true);

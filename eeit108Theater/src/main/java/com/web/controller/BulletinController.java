@@ -50,24 +50,11 @@ public class BulletinController {
 
 	final String Root = "admin/";
 
-	@RequestMapping(value = "/just_try", method = RequestMethod.GET)
-	public String just_try(Model model, HttpServletRequest req) {
-		System.out.println("just_try");
-		return Root + "just_try";
-	}
-
 	// other2bulletin_all
 	@RequestMapping(value = "/bulletin_all", method = RequestMethod.GET)
 	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
 		List<List<BulletinBean>> list = service.getStatsBulletin();
-
-		// permission
-//		Integer permission = getPermission(session);
-//		if (permission < obb.getEmployee().getPermission() || no != obb.getEmployee().getNo()) {
-//			errorMessage.put("permission", "您的權限不足");
-//		}
-
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
@@ -159,9 +146,9 @@ public class BulletinController {
 			redirectAttributes.addFlashAttribute("changeMsg", "公告新增成功");
 			System.out.println("公告新增成功");
 			// 找id
-			Integer no = getEmployeeId(session);
-			bb.setEmployeeId(no);
-			bb.setBortingId(no + "_" + now.toString());
+			Integer emp_no = getEmployeeId(session);
+			bb.setEmployeeId(emp_no);
+			bb.setBortingId(emp_no + "_" + now.toString());
 			bb.setPostTime(now);
 			service.insertNewBulletin(bb);
 			model.addAttribute("updatedTime", new Date());
@@ -185,6 +172,7 @@ public class BulletinController {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
+
 		// 標題
 		testTitle(bb, req, errorMessage);
 		// 內容
@@ -194,10 +182,15 @@ public class BulletinController {
 		// 折扣
 		testDiscount(bb, req, errorMessage);
 		// 找id
-		Integer no = getEmployeeId(session);
-		bb.setEmployeeId(no);
+		Integer emp_no = getEmployeeId(session);
+		bb.setEmployeeId(emp_no);
+
 		// obb
-		BulletinBean obb = service.getBulletinBeanById(no);
+
+		Integer bulletin_no = Integer.valueOf(req.getParameter("no"));
+		BulletinBean obb = service.getBulletinBeanById(bulletin_no);
+		System.out.println(obb.getTitle());
+		System.out.println("bb.getNo()=" + bb.getNo());
 
 		// 圖片存資料庫
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
@@ -209,11 +202,11 @@ public class BulletinController {
 		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 		url = context.getRealPath(url);
 		byte[] b = bulletinImage.getBytes();
-//		System.out.println("byte[] b =" + b);
-//		System.out.println("getBulletinImage=" + bb.getBulletinImage());
-//		System.out.println("originalFilename=" + originalFilename);
-//		System.out.println("bb.getNo()=" + bb.getNo());
+		System.out.println("byte[] b =" + b);
+		System.out.println("getBulletinImage=" + bb.getBulletinImage());
+		System.out.println("originalFilename=" + originalFilename);
 
+		// 判斷是否上傳
 		Integer flag = null;
 		if (originalFilename != null && !originalFilename.isEmpty()) {
 			System.out.println(photoType);
@@ -228,7 +221,6 @@ public class BulletinController {
 			} else {
 				errorMessage.put("photo", "請上傳jpeg/jpg/png");
 			}
-
 		} else {
 			bb.setCoverImage(obb.getCoverImage());
 			bb.setFileName(obb.getFileName());
@@ -254,8 +246,8 @@ public class BulletinController {
 		// 存入
 		if (!errorMessage.isEmpty()) {
 			System.out.println("資料輸入有錯誤，網頁跳回");
-			bb.setNo(no);
-			List<BulletinBean> list = service.getSameBulletinByBortingId(no);
+			bb.setNo(bulletin_no);
+			List<BulletinBean> list = service.getSameBulletinByBortingId(bulletin_no);
 			model.addAttribute("bulletinBean", bb);
 			model.addAttribute("sameBulletinBean", list);
 			model.addAttribute("updatedTime", new Date());
@@ -264,8 +256,8 @@ public class BulletinController {
 			if (bet) {
 				errorMessage.put("changeMsg", "未修改任何資料，如不修改請點選'取消編輯'");
 				System.out.println("資料未修改，網頁跳回");
-				bb = service.getBulletinBeanById(no);
-				List<BulletinBean> list = service.getSameBulletinByBortingId(no);
+				bb = service.getBulletinBeanById(bulletin_no);
+				List<BulletinBean> list = service.getSameBulletinByBortingId(bulletin_no);
 				model.addAttribute("bulletinBean", bb);
 				model.addAttribute("sameBulletinBean", list);
 				model.addAttribute("updatedTime", new Date());
@@ -388,7 +380,6 @@ public class BulletinController {
 		}
 		bb.setTitle(title);
 		System.out.println("title=" + title);
-		System.out.println("title.length=" + title.trim().length());
 	}
 
 	// 內容
@@ -401,7 +392,6 @@ public class BulletinController {
 		}
 		bb.setContext(context);
 		System.out.println("context=" + context);
-		System.out.println("context.length=" + context.trim().length());
 	}
 
 	// 日期
@@ -441,11 +431,11 @@ public class BulletinController {
 			HashMap<String, String> errorMessage) {
 		Integer discount, discountPriceBuy, discountPriceFree, discountTickBuy, discountTickFree;
 		discount = Integer.valueOf(req.getParameter("discount"));
-		System.out.println(req.getParameter("discount"));
-		System.out.println(req.getParameter("discountPriceBuy"));
-		System.out.println(req.getParameter("discountPriceFree"));
-		System.out.println(req.getParameter("discountTickBuy"));
-		System.out.println(req.getParameter("discountTickFree"));
+//		System.out.println("discount=" + req.getParameter("discount"));
+//		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
+//		System.out.println("discountPriceFree" + req.getParameter("discountPriceFree"));
+//		System.out.println("discountTickBuy" + req.getParameter("discountTickBuy"));
+//		System.out.println("discountTickFree" + req.getParameter("discountTickFree"));
 
 		switch (discount)
 		{
@@ -511,25 +501,20 @@ public class BulletinController {
 		System.out.println("bb.getDiscountTickFree()=" + bb.getDiscountTickFree());
 	}
 
-//find id
+	// find id
 	public Integer getEmployeeId(HttpSession session) {
 		EmployeeBean employeeBean = (EmployeeBean) session.getAttribute("employeeBean1");
-		Integer no = employeeBean.getNo();
-		System.out.println(no);
-		return no;
+		Integer emp_no = employeeBean.getNo();
+		System.out.println("userId=" + emp_no);
+		return emp_no;
 	}
 
 	// find permission
 	public Integer getPermission(HttpSession session) {
 		EmployeeBean employeeBean = (EmployeeBean) session.getAttribute("employeeBean1");
 		Integer permission = employeeBean.getPermission();
-		System.out.println(permission);
+		System.out.println("permission" + permission);
 		return permission;
 	}
 
-	// 判斷權限
-	public void permission(BulletinBean bb, HttpSession session, HttpServletRequest req,
-			HashMap<String, String> errorMessage) {
-//		session.getAttribute(name);
-	}
 }

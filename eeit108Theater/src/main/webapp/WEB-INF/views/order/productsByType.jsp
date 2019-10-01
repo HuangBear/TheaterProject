@@ -4,22 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> -->
 <title>Products By Type</title>
 <link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/css/order/bootstrap.min.css'/>" crossorigin="anonymous">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
 
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" -->
-<!-- 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" /> --%>
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 
 <style>
-.previous{
+.previous {
 	padding: 0.65em 3em;
-	border-radius : 0.5em;
+	border-radius: 0.5em;
 }
 </style>
 <noscript>
@@ -29,13 +23,7 @@
 <script src="<c:url value='/js/order/jquery-ui.min.js'/>"></script>
 <script src="<c:url value='/js/order/popper.min.js'/>" crossorigin="anonymous"></script>
 <script src="<c:url value='/js/order/bootstrap.min.js'/>" crossorigin="anonymous"></script>
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" -->
-<!-- 	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" -->
-<!-- 	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
 <script>
-	//var ticketCnt = parseInt("0");
 	const maxTicket = parseInt("10");
 	var ticketCnt = 0;
 	$(function() {
@@ -120,12 +108,13 @@
 				$("#btn-submit").prop("disabled", true);
 			}
 		});
+		
 	});
 </script>
 </head>
 <body class="right-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header">
+		<div id="header1">
 			<!-- Header -->
 			<jsp:include page="../header.jsp" />
 
@@ -136,67 +125,7 @@
 				<form action="<c:url value='/order/seat'/>" method="POST">
 					<div class="row">
 						<div class="col-md-4 order-md-2 order-sm-1">
-							<div>
-								<table class="table border">
-									<thead>
-										<tr style="text-align: center" class="table-secondary">
-											<th scope="col">會員</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:if test="${empty LoginOK}">
-											<tr style="text-align: center">
-												<td>尚未登入</td>
-											</tr>
-											<tr style="text-align: center">
-												<td>
-													<a href="<c:url value='/memberservice'/>">
-														<button type="button">登入</button>
-													</a>
-												</td>
-											</tr>
-										</c:if>
-										<c:if test="${not empty LoginOK}">
-											<tr>
-												<td>Hi: ${LoginOK.name}</td>
-											</tr>
-											<tr>
-												<td>帳號: ${LoginOK.email}</td>
-											</tr>
-										</c:if>
-									</tbody>
-								</table>
-							</div>
-							<div class="mt-5">
-								<table class="table border" id="orderList">
-									<thead>
-										<tr style="text-align: center" class="table-secondary">
-											<th>Order List</th>
-										</tr>
-									</thead>
-									<tbody id="orderItems">
-										<!-- 										<tr> -->
-										<!-- 											<td>primary</td> -->
-										<!-- 										</tr> -->
-										<c:forEach var='item' items="${order.orderItems}">
-											<tr>
-												<td>
-													<div>${item.itemName}</div>
-													<div class="float-right">${item.unitPrice}x${item.quantity}=${item.sumPrice}</div>
-												</td>
-											</tr>
-										</c:forEach>
-										<tr>
-											<td>
-												<div>
-													<strong>Total</strong>
-												</div>
-												<div class="float-right">${order.totalPrice == null ? 0:order.totalPrice}</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+							<jsp:include page="orderSidebar.jsp"/>
 						</div>
 						<div class="col-md-8 order-md-1 order-sm-2">
 							<div id="movie-info" class="row mb-3">
@@ -306,7 +235,7 @@
 													<td>${item.name}</td>
 													<td>$ ${item.price}</td>
 													<td>
-														<c:if test="${not empty order.itemsMap[ticket.name]}">
+														<c:if test="${not empty order.itemsMap[item.name]}">
 															<select class="item custom-select" id="${item.name}" name="${item.name}">
 																<c:forEach var="index" begin="0" end="10">
 																	<c:if test="${order.itemsMap[item.name].quantity == index}">
@@ -353,7 +282,7 @@
 													<td>${item.name}</td>
 													<td>$ ${item.price}</td>
 													<td>
-														<c:if test="${not empty order.itemsMap[ticket.name]}">
+														<c:if test="${not empty order.itemsMap[item.name]}">
 															<select class="item custom-select" id="${item.name}" name="${item.name}">
 																<c:forEach var="index" begin="0" end="10">
 																	<c:if test="${order.itemsMap[item.name].quantity == index}">
@@ -412,7 +341,9 @@
 					</div>
 					<div class="row justify-content-between mt-5">
 						<div class="col-md-auto col-12-mobile">
-							<a href="<c:url value='/order/cancel'/>"><button id="previous" class="btn btn-danger previous" type="button">取消</button></a>
+							<a href="<c:url value='/order/cancel'/>">
+								<button id="previous" class="btn btn-danger previous" type="button">取消</button>
+							</a>
 						</div>
 						<div class="col-md-auto col-12-mobile">
 							<input id="btn-submit" class="btn disabled" type="submit" value="下一步" disabled>

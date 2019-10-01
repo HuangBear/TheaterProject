@@ -431,10 +431,74 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/admin/emp_Forum")
-	public String EmpForum(Model model) {
+	public String getEmpForum(Model model,HttpServletRequest request,HttpSession session) {
+		
 		List<ArticleBean> list = service.getAllArticles();
+		List<MovieBean> moviesForumList = service.getAllMovies();
+		
 		model.addAttribute("Articles", list);
-		return "emp_Forum";
+		model.addAttribute("Movies", moviesForumList);
+		
+		
+		return "admin/emp_Forum";
+	}
+	
+	@RequestMapping(value = "/admin/emp_Articles", method = RequestMethod.GET)
+	public String getEmpArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		
+		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<MovieBean> moviesForumList = service.getAllMovies();
+		model.addAttribute("Articles", list);
+		model.addAttribute("Movies", moviesForumList);
+		
+		
+		return "admin/emp_Articles";
+	}
+	
+	
+	
+	@RequestMapping(value = "/admin/LockArticle", method = RequestMethod.GET)
+	public String getLockArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		
+		ArticleBean ab = service.getArticleById(no);
+		
+		model.addAttribute("Article", ab);
+		
+		
+		
+		return "admin/LockArticle";
+	}
+	
+	@RequestMapping(value = "/admin/LockArticle", method = RequestMethod.POST)
+	public String postLockArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		String LockButton = request.getParameter("lockbutton");
+		ArticleBean ab = service.getArticleById(no);
+			
+		if ("lock".equals(LockButton) && ab.getAvailable()==true) {
+			ab.setNo(ab.getNo());
+			ab.setTitle(ab.getTitle());
+            ab.setAvailable(false);
+            ab.setContent(ab.getContent());
+            ab.setPostTime(ab.getPostTime());
+            ab.setTag(ab.getTag());
+            ab.setLikeCount(ab.getLikeCount());
+            ab.setDislikeCount(ab.getDislikeCount());
+            System.out.println("檢查數值" + ab.getNo());
+            service.editArticle(ab);
+        } else if ("lock".equals(LockButton) && ab.getAvailable()==false) {
+        	ab.setNo(ab.getNo());
+			ab.setTitle(ab.getTitle());
+            ab.setAvailable(true);
+            ab.setContent(ab.getContent());
+            ab.setPostTime(ab.getPostTime());
+            ab.setTag(ab.getTag());
+            ab.setLikeCount(ab.getLikeCount());
+            ab.setDislikeCount(ab.getDislikeCount());
+            System.out.println("檢查數值" + ab.getNo());
+            service.editArticle(ab);
+        }
+
+		return "admin/empIndexA";
 	}
 
 	@InitBinder

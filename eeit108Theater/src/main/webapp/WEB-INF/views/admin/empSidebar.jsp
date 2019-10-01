@@ -65,9 +65,9 @@
           <span>商品清單</span></a>
         </li>
          <li class="nav-item">
-        <a class="itemTag nav-link" href="#" id="just_try">
+        <a class="itemTag nav-link" href="#" id="charts">
           <i class="fa fa-table fa-plus-square"></i>
-          <span>串接功能</span></a>
+          <span>圖表輸出</span></a>
         </li>
          <sec:authorize access="hasAuthority('1') or hasAuthority('2')">
          <li class="nav-item">

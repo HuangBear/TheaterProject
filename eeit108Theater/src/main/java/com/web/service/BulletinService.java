@@ -8,7 +8,7 @@ public interface BulletinService {
 
 	List<List<BulletinBean>> getStatsBulletin();
 
-	BulletinBean getDiscount(String date);
+	List<BulletinBean> getDiscount(String date);
 
 	void insertNewBulletin(BulletinBean bb);
 

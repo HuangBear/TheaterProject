@@ -42,9 +42,10 @@ public class BulletinServiceImpl implements BulletinService {
 	@Override
 	@Test
 	@Transactional
-	public BulletinBean getDiscount(String date) {
-		dao.getDiscount(date);
-		return null;
+	public List<BulletinBean> getDiscount(String date) {
+		List<BulletinBean> discount = dao.getDiscount(date);
+		switchImg(discount);
+		return discount;
 	}
 
 	@Override
