@@ -120,4 +120,12 @@ public class OrderItemBean implements Serializable{
 	public String getDetail() {
 		return this.itemName+ " $" + this.unitPrice +" x "+ this.quantity;
 	}
+	
+	/**OrderItem detail String
+	 * ($unitPrice x quantity = sumPrice)
+	 * @return $unitPrice x quantity = sumPrice
+	 */
+	public String getPriceDetail() {
+		return "$" + this.unitPrice +" x "+ this.quantity + " = " + this.sumPrice;
+	}
 }

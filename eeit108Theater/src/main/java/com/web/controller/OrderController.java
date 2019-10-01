@@ -30,6 +30,7 @@ import com.web.entity.OrderBean;
 import com.web.entity.OrderItemBean;
 import com.web.entity.SeatBean;
 import com.web.service.BulletinService;
+import com.web.service.EmailService;
 import com.web.service.MovieService;
 import com.web.service.OrderService;
 import com.web.service.ProductService;
@@ -49,7 +50,7 @@ public class OrderController {
 	@Autowired
 	BulletinService bServ;
 	@Autowired
-	JavaMailSender mailSender;
+	EmailService emailServ;
 	@Autowired
 	ServletContext context;
 
@@ -92,8 +93,10 @@ public class OrderController {
 		model.addAttribute("foods", pServ.getProductsByType("food"));
 		model.addAttribute("drinks", pServ.getProductsByType("drink"));
 		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		List<BulletinBean> discounts = bServ.getDiscount(sdf.format(new Date()));
+		String timeTableDate = ob.getTimeTable().getStartDate();
+		System.out.println("start date = " + timeTableDate);
+
+		List<BulletinBean> discounts = bServ.getDiscount(timeTableDate);
 		if(discounts == null)
 			System.out.println("there is no available discounts");
 		else {
@@ -104,6 +107,18 @@ public class OrderController {
 		return pac + "productsByType";
 	}
 
+	@RequestMapping("/calDiscount")
+	public String calDiscount(@RequestParam("chosenDiscount") Integer discountId ,HttpSession session) {
+		System.out.println(discountId);
+		if(discountId == 0) {
+			session.removeAttribute("chosenDiscount");
+		}else {
+			BulletinBean b = bServ.getBulletinBeanById(discountId);
+			session.setAttribute("chosenDiscount", b);			
+		}
+		return "forward:/" + pac + "orderList";
+	}
+	
 	/**
 	 * 針對使用者每次選擇的商品種類及數量，做訂單中購物清單的即時更新。 直接更新Order中的OrderItems內容以及totalPrice
 	 */
@@ -114,36 +129,46 @@ public class OrderController {
 		List<OrderItemBean> orderList = ob.getOrderItems();
 		Map<String, OrderItemBean> itemsMap = new HashMap<>();
 		ob.setItemsMap(itemsMap);
-		System.out.println("orderList size = " + orderList.size());
 		String name = req.getParameter("name");
-		Integer quantity = Integer.valueOf(req.getParameter("quantity"));
-		boolean exist = false;
-		int index = 0;
-		for (int i = 0; i < orderList.size(); i++) {
-			if (orderList.get(i).getItemName().equals(name)) {
-				exist = true;
-				index = i;
-				break;
+		if(name != null) { //to update orderItem status
+			Integer quantity = Integer.valueOf(req.getParameter("quantity"));
+			boolean exist = false;
+			int index = 0;
+			for (int i = 0; i < orderList.size(); i++) {
+				if (orderList.get(i).getItemName().equals(name)) {
+					exist = true;
+					index = i;
+					break;
+				}
+			}
+			if (exist) {
+				if (quantity == 0)
+					orderList.remove(index);
+				else {
+					orderList.get(index).setQuantity(quantity);
+					orderList.get(index).calSumPrice();
+				}
+			} else {
+				OrderItemBean oib = new OrderItemBean(pServ.getProductByName(name));
+				oib.setQuantity(quantity);
+				oib.calSumPrice();
+				orderList.add(oib);
+			}
+			ob.setTicketCnt(Integer.parseInt(req.getParameter("ticketCnt")));
+		}
+		BulletinBean b = (BulletinBean) session.getAttribute("chosenDiscount");
+		if(b != null) {
+			if(b.getDiscountPriceBuy() != null) {
+				
+			} else {
+				
 			}
 		}
-		if (exist) {
-			if (quantity == 0)
-				orderList.remove(index);
-			else {
-				orderList.get(index).setQuantity(quantity);
-				orderList.get(index).calSumPrice();
-			}
-		} else {
-			OrderItemBean oib = new OrderItemBean(pServ.getProductByName(name));
-			oib.setQuantity(quantity);
-			oib.calSumPrice();
-			orderList.add(oib);
-		}
+		
 		for (OrderItemBean oib : orderList) {
 			itemsMap.put(oib.getItemName(), oib);
 		}
 		ob.calTotalPrice();
-		ob.setTicketCnt(Integer.parseInt(req.getParameter("ticketCnt")));
 		System.out.println(ob.getOrderItemString());
 		System.out.println(orderList);
 		System.err.println("====orderList END====");
@@ -204,11 +229,15 @@ public class OrderController {
 			return "forward:/" + pac + "seat";
 		}
 		System.out.println("set seats success");
-		model.addAttribute("orderItems", ob.getOrderItems());
+		//model.addAttribute("orderItems", ob.getOrderItems());
 		System.err.println("====showOrder END====");
-		return pac + "orderItems";
+		return "redirect:/" + pac + "confirmOrder";
 	}
 	
+	@RequestMapping("/confirmOrder")
+	public String confirmOrder() {	
+		return pac+"orderItems";
+	}
 	/**Cancel an order, and make user go to ticketing
 	 * 
 	 * @param session HttpSession
@@ -344,7 +373,7 @@ public class OrderController {
 		if(oServ.updateOrder(ob) > 0) {
 			System.out.println("update success");
 			try {
-				sendEmail(ob);
+				emailServ.sendEmail(ob);
 				System.out.println("send email success");
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -469,111 +498,111 @@ public class OrderController {
 		return colNow;
 	}
 	
-	// Email
-	private String sendEmail(OrderBean ob) throws MessagingException{
-		if(ob == null)
-			throw new NullPointerException("the order to send email is null");
-		if(ob.getOwnerEmail() == null || ob.getOwnerEmail().length() == 0)
-			throw new MessagingException("Illegal email address");
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-		String builder = "<html>" +
-				"<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>" +
-				"<body>" + 
-					"<div align='center' style='font-family: Arial, Helvetica, sans-serif'>" + 
-							"<table cellpadding='5px' style='width: 50%;line-height: 35px; min-width: 350px; ; border-radius: 10px; white-space: nowrap;'>" + 
-								"<thead align='center'>" + 
-									"<tr>" + 
-										"<td colspan='2'>" + 
-											"<div><img src='cid:logoImg' style='width: 100%;border-radius: 5px;'></div>" + 
-										"</td>" + 
-									"</tr>" + 
-									"<tr>" + 
-										"<th colspan='2'>" + 
-											"<div style='margin-bottom: 5px'>親愛的顧客您好，以下為本次購票資訊</div>" + 
-										"</th>" + 
-									"</tr>" + 
-									"<tr>" + 
-										"<th colspan='2'>" + 
-											"<div style='background-color: lightgray;border-radius: 5px;padding-top: 2.5px;padding-bottom: 2.5px'> 訂單資料</div>" + 
-										"</th>" + 
-									"</tr>" + 
-								"</thead>" + 
-								"<tbody style='text-align:left;'>"+
-									"<tr>"+
-										"<th style='width:50%'>"+
-											"訂單編號"+
-										"</th>"+
-										"<th style='width:50%'>"+
-											"#tradeNo"+
-										"</th>"+
-									"</tr>"+
-									"<tr>"+
-											"<th>"+
-												"電影"+
-											"</th>"+
-											"<td>"+
-												"#movieName"+
-											"</td>"+
-									"</tr>"+
-									"<tr>"+
-										"<th>"+
-											"場次"+
-										"</th>"+
-										"<td>"+
-											"#timeTable"+
-										"</td>"+
-									"</tr>"+
-									"<tr>"+
-										"<th>"+
-											"座位"+
-										"</th>"+
-										"<td>"+
-											"#seat"+
-										"</td>"+
-									"</tr>"+
-									"<tr>"+
-										"<th>"+
-											"商品清單"+
-										"</th>"+
-											"<td>"+
-											"#orderList"+
-										"</td>"+
-									"</tr>"+
-									"<tr>"+
-										"<th>"+
-											"總計"+
-										"</th>"+
-										"<td>"+
-											"#total"+
-										"</td>"+
-									"</tr>"+							
-								"</tbody>"+
-								"<tfoot>"+
-									"<tr>"+
-										"<td colspan='2'>"+
-											"<div style='text-align:center;color:cornflowerblue'><b>7-1CINEMA</b></div>"+
-										"</td>"+
-									"</tr>"+
-								"</tfoot>" +
-							"</table>" + 
-					"</div>" + 
-				"</body>" + 
-				"</html>";
-		builder = builder.replace("#tradeNo", ob.getOrderId());
-		builder = builder.replace("#movieName", "(" + ob.getTimeTable().getVersion() + ") " + ob.getTimeTable().getMovieName());
-		builder = builder.replace("#timeTable", ob.getTimeTable().getStartDate() + " " + ob.getTimeTable().getStartTime());
-		builder = builder.replace("#seat", ob.getSeatsString());
-		builder = builder.replace("#orderList", ob.getOrderItemsDetail()); //to fix
-		builder = builder.replace("#total", (ob.getTotalPrice()).toString());
-		builder = builder.replace("#", "<br>");
-		helper.setFrom(OrderController.OFFICIAL_EMAIL);
-		helper.setTo(ob.getOwnerEmail());
-		helper.setSubject("7-1 CINEMA 線上購票確認信");
-		helper.setText(builder,	true);
-		helper.addInline("logoImg", new File(context.getRealPath("/WEB-INF/resources/images/frontend/cinema.jpg")));
-//		helper.setText("<h1>就是要打中文</h1>", true);
-		mailSender.send(message);
-		return pac + "mailTest";
-	}
+//	// Email
+//	private String sendEmail(OrderBean ob) throws MessagingException{
+//		if(ob == null)
+//			throw new NullPointerException("the order to send email is null");
+//		if(ob.getOwnerEmail() == null || ob.getOwnerEmail().length() == 0)
+//			throw new MessagingException("Illegal email address");
+//		MimeMessage message = mailSender.createMimeMessage();
+//		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+//		String builder = "<html>" +
+//				"<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>" +
+//				"<body>" + 
+//					"<div align='center' style='font-family: Arial, Helvetica, sans-serif'>" + 
+//							"<table cellpadding='5px' style='width: 50%;line-height: 35px; min-width: 350px; ; border-radius: 10px; white-space: nowrap;'>" + 
+//								"<thead align='center'>" + 
+//									"<tr>" + 
+//										"<td colspan='2'>" + 
+//											"<div><img src='cid:logoImg' style='width: 100%;border-radius: 5px;'></div>" + 
+//										"</td>" + 
+//									"</tr>" + 
+//									"<tr>" + 
+//										"<th colspan='2'>" + 
+//											"<div style='margin-bottom: 5px'>親愛的顧客您好，以下為本次購票資訊</div>" + 
+//										"</th>" + 
+//									"</tr>" + 
+//									"<tr>" + 
+//										"<th colspan='2'>" + 
+//											"<div style='background-color: lightgray;border-radius: 5px;padding-top: 2.5px;padding-bottom: 2.5px'> 訂單資料</div>" + 
+//										"</th>" + 
+//									"</tr>" + 
+//								"</thead>" + 
+//								"<tbody style='text-align:left;'>"+
+//									"<tr>"+
+//										"<th style='width:50%'>"+
+//											"訂單編號"+
+//										"</th>"+
+//										"<th style='width:50%'>"+
+//											"#tradeNo"+
+//										"</th>"+
+//									"</tr>"+
+//									"<tr>"+
+//											"<th>"+
+//												"電影"+
+//											"</th>"+
+//											"<td>"+
+//												"#movieName"+
+//											"</td>"+
+//									"</tr>"+
+//									"<tr>"+
+//										"<th>"+
+//											"場次"+
+//										"</th>"+
+//										"<td>"+
+//											"#timeTable"+
+//										"</td>"+
+//									"</tr>"+
+//									"<tr>"+
+//										"<th>"+
+//											"座位"+
+//										"</th>"+
+//										"<td>"+
+//											"#seat"+
+//										"</td>"+
+//									"</tr>"+
+//									"<tr>"+
+//										"<th>"+
+//											"商品清單"+
+//										"</th>"+
+//											"<td>"+
+//											"#orderList"+
+//										"</td>"+
+//									"</tr>"+
+//									"<tr>"+
+//										"<th>"+
+//											"總計"+
+//										"</th>"+
+//										"<td>"+
+//											"#total"+
+//										"</td>"+
+//									"</tr>"+							
+//								"</tbody>"+
+//								"<tfoot>"+
+//									"<tr>"+
+//										"<td colspan='2'>"+
+//											"<div style='text-align:center;color:cornflowerblue'><b>7-1CINEMA</b></div>"+
+//										"</td>"+
+//									"</tr>"+
+//								"</tfoot>" +
+//							"</table>" + 
+//					"</div>" + 
+//				"</body>" + 
+//				"</html>";
+//		builder = builder.replace("#tradeNo", ob.getOrderId());
+//		builder = builder.replace("#movieName", "(" + ob.getTimeTable().getVersion() + ") " + ob.getTimeTable().getMovieName());
+//		builder = builder.replace("#timeTable", ob.getTimeTable().getStartDate() + " " + ob.getTimeTable().getStartTime());
+//		builder = builder.replace("#seat", ob.getSeatsString());
+//		builder = builder.replace("#orderList", ob.getOrderItemsDetail()); //to fix
+//		builder = builder.replace("#total", (ob.getTotalPrice()).toString());
+//		builder = builder.replace("#", "<br>");
+//		helper.setFrom(OrderController.OFFICIAL_EMAIL);
+//		helper.setTo(ob.getOwnerEmail());
+//		helper.setSubject("7-1 CINEMA 線上購票確認信");
+//		helper.setText(builder,	true);
+//		helper.addInline("logoImg", new File(context.getRealPath("/WEB-INF/resources/images/frontend/cinema.jpg")));
+////		helper.setText("<h1>就是要打中文</h1>", true);
+//		mailSender.send(message);
+//		return pac + "mailTest";
+//	}
 }
