@@ -7,6 +7,7 @@ import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
+import com.web.entity.ReportBean;
 
 public interface ArticleService {
 	List<ArticleBean>  getAllArticles(); 
@@ -21,10 +22,11 @@ public interface ArticleService {
 	public ReplyBean getReplyByArticleId(int no);
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article);
 	
-	void  addArticle(ArticleBean article);
-	void  editArticle(ArticleBean article);
-	void  addReply(ReplyBean reply);
-	void  editReply(ReplyBean reply);
+	void addArticle(ArticleBean article);
+	void editArticle(ArticleBean article);
+	void addReply(ReplyBean reply);
+	void editReply(ReplyBean reply);
+	void addReport(ReportBean rb);
 	void addGp(LikeOrDislikeBean likeOrDislike);
 	void updateGp(LikeOrDislikeBean likeOrDislike);
 	MemberBean  getMemberById(int memberId);
@@ -34,5 +36,6 @@ public interface ArticleService {
 	List<MemberBean>  getMemberList();
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
 	List<MovieBean> getAllMovies();
+	
 
 }

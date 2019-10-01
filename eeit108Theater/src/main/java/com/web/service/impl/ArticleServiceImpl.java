@@ -15,6 +15,7 @@ import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
+import com.web.entity.ReportBean;
 import com.web.service.ArticleService;
 
 @Service
@@ -111,6 +112,12 @@ public class ArticleServiceImpl implements ArticleService {
 			System.out.println("insert null");
 		}
 		
+	}
+    
+    @Transactional
+	@Override
+	public void addReport(ReportBean rb) {
+		dao.addReport(rb);
 	}
     
     @Transactional
