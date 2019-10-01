@@ -4,15 +4,15 @@
 	<tr>
 		<td>
 			<div>${item.itemName}</div>
-			<div class="float-right">${item.unitPrice} x ${item.quantity} = ${item.sumPrice}</div>
+			<div class="float-right">${item.priceDetail}</div>
 		</td>
 	</tr>
 </c:forEach>
 <tr>
 	<td>
 		<div>
-			<b>Total</b>
+			<b>總計</b>
 		</div>
-		<div class="float-right">${order.totalPrice}</div>
+		<div class="float-right"><b>${order.totalPrice}</b></div>
 	</td>
 </tr>
