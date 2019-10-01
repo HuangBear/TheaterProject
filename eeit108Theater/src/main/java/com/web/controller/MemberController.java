@@ -384,6 +384,7 @@ public class MemberController {
 			mb = service.findMemberByCode(code);
 			System.out.println(mb.getEmail());
 			service.activeUser(mb.getEmailCode());
+		redirectAttributes.addFlashAttribute("name", "會員 "+mb.getName()+" ");
 		redirectAttributes.addFlashAttribute("welcome", "驗證成功，歡迎登入");
 		return "redirect:/memberservice";
 	}
