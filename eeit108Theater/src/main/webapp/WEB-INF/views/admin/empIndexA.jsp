@@ -76,7 +76,14 @@
 	});
 </script>
 
-
+<style type="text/css">
+.demo-bg{
+    background: url(images/logA/rsz_rows-red-seats-theater_1.jpg) no-repeat;
+    background-size: cover;
+    
+    position: relative;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -85,7 +92,7 @@
 	<!-- -------------------------------------------以上Header---------------------------------------------- -->
 
 	<!-- 內文區 -->
-	<div id="wrapper">
+	<div id="wrapper" >
 
 		<!-- 插入Sidebar -->
 
@@ -93,7 +100,7 @@
 
 		<!-- 內文修飾照片一張 -->
 
-		<div id="content-wrapper">
+		<div id="content-wrapper" class="demo-bg">
 			<div class="container-fluid">
 				<div
 					style="height: 200px; background-image: url(images/admin/CINEMA01_1.jpg); background-position: center; background-size: cover;"></div>
