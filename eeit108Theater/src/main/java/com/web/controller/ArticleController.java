@@ -34,7 +34,6 @@ import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.entity.ReportBean;
-import com.web.entity.SysArticleBean;
 import com.web.service.ArticleService;
 
 @Controller

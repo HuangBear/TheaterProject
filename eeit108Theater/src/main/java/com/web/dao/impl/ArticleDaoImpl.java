@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.web.dao.ArticleDao;
 import com.web.entity.ArticleBean;
-import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
@@ -33,6 +32,17 @@ public class ArticleDaoImpl implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
+	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie order by no desc";
+	    Session session = null;
+	    List<ArticleBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ArticleBean> getArticlesByMovieNo2(int movieNo) {
 	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie";
 	    Session session = null;
 	    List<ArticleBean> list = new ArrayList<>();
@@ -40,6 +50,17 @@ public class ArticleDaoImpl implements ArticleDao {
 	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
 	    return list;
 	}
+	
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<SysArticleBean> getSysArticlesByMovieNo(int movieNo) {
+//	    String hql = "FROM SysArticleBean bb WHERE bb.movie.no = :movie";
+//	    Session session = null;
+//	    List<SysArticleBean> list = new ArrayList<>();
+//	    session = factory.getCurrentSession();
+//	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
+//	    return list;
+//	}
 	
 	@Override
 	public List<ReplyBean> getAllReplys() {
@@ -53,11 +74,11 @@ public class ArticleDaoImpl implements ArticleDao {
 	
 	@Override
 	public List<ReplyBean> getReplysByArticle(int article) {
-	    String hql = "FROM ReplyBean rb WHERE rb.article.no = :article";
+	    String hql = "FROM ReplyBean rb WHERE rb.article.no = :article order by no asc";
 	    Session session = null;
 	    List<ReplyBean> list = new ArrayList<>();
 	    session = factory.getCurrentSession();
-	    list = session.createQuery(hql).getResultList();
+	    list = session.createQuery(hql).setParameter("article", article).list();
 	    return list;
 	}
 	
@@ -85,6 +106,16 @@ public class ArticleDaoImpl implements ArticleDao {
 	    list = session.createQuery(hql).getResultList();
 	    return list;
 	}
+	
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<String> getAllSysTags() {
+//	    String hql = "SELECT DISTINCT b.tag FROM SysTagBean b";
+//	    Session session = factory.getCurrentSession();
+//	    List<String> list = new ArrayList<>();
+//	    list = session.createQuery(hql).getResultList();
+//	    return list;
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -117,6 +148,13 @@ public class ArticleDaoImpl implements ArticleDao {
 		return ab;
 	}
 	
+//	@Override
+//	public SysArticleBean getSysArticleById(int no) {
+//		Session session = factory.getCurrentSession();
+//		SysArticleBean ab = session.get(SysArticleBean.class, no);
+//		return ab;
+//	}
+	
 	@Override
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
 		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
@@ -147,6 +185,11 @@ public class ArticleDaoImpl implements ArticleDao {
 	    Session session = factory.getCurrentSession();
 	    session.update(article);
 	}
+//	@Override
+//	public void addSysArticle(SysArticleBean article) {
+//	    Session session = factory.getCurrentSession();
+//	    session.save(article);
+//	}
 	@Override
 	public void addReply(ReplyBean reply) {
 	    Session session = factory.getCurrentSession();
@@ -159,10 +202,10 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 	@Override
 	public void addReport(ReportBean rb) {
-		System.out.println("確認位置");
+		
 	    Session session = factory.getCurrentSession();
 	    session.save(rb);
-	    System.out.println("確認位置");
+	    
 	}
 	@Override
 	public MemberBean getMemberById(int memberId) {
