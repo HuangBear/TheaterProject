@@ -9,13 +9,13 @@
  <title>7-1Cinema - 404 Error</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/admin/sb-admin.css" rel="stylesheet">
+  <link href="admin/css/admin/sb-admin.css" rel="stylesheet">
 
 </head>
 <body>
@@ -38,7 +38,8 @@
           <a href="javascript:history.back()">回上一頁</a>
           	或是
           <a href="index">回到7-1CINEMA首頁</a>.</p>
-		  <img src="<c:url value='/images/frontend/BEAR.png' />" width="350px">
+		  <img src="<c:url value='/images/frontend/BEAR.png' />" width="350px"><br>
+		  <p class="lead">.......console寫什麼
       </div>
       <!-- /.container-fluid -->
 
@@ -60,12 +61,12 @@
 </body>
 
  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="admin/vendor/jquery/jquery.min.js"></script>
+  <script src="admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
+  <script src="admin/js/admin/sb-admin.min.js"></script>
 </html>
