@@ -261,7 +261,23 @@
 		});
 	});
 
+	//postTime length
+	var $len = 11;
+	$(".postTime").each(function() {
+		if ($(this).text().length > $len) {
+			var $text = $(this).text().substring(0, $len - 1);
+			$(this).text($text);
+		}
+	});
 
+	//title length
+	var $len = 20;
+	$(".title").each(function() {
+		if ($(this).text().length > $len) {
+			var $text = $(this).text().substring(0, $len - 1) + "...";
+			$(this).text($text);
+		}
+	});
 	if (${ErrMsg.changeMsg != null}) {
 		$("a.hide").trigger("click")
 	}
@@ -507,9 +523,10 @@
 										<thead>
 											<tr>
 												<th scope="col" width="5%">#</th>
-												<th scope="col" width="30%">標題</th>
-												<th scope="col" width="10%">起始</th>
-												<th scope="col" width="10%">結束</th>
+												<th scope="col" width="25%">標題</th>
+												<th scope="col" width="10%">發布時間</th>
+												<th scope="col" width="10%">開始時間</th>
+												<th scope="col" width="10%">結束時間</th>
 												<th scope="col" width="10%">公告人</th>
 												<th scope="col" width="20%" colspan="2">優惠方案</th>
 												<th scope="col" width="5%">詳情</th>
@@ -523,7 +540,8 @@
 													<c:if test="${sb.available}">
 														<td class="hide">${sb.no}</td>
 														<th scope="row">${i.index+1}</th>
-														<td>${sb.title}</td>
+														<td class="title">${sb.title}</td>
+														<td class="postTime">${sb.postTime}</td>
 														<td>${sb.startDate}</td>
 														<td>${sb.endDate}</td>
 														<td>${sb.employee.no}</td>

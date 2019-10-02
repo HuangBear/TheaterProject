@@ -118,7 +118,7 @@
 </head>
 <body class="no-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header">
+		<div id="header1">
 			<!-- Header -->
 			<jsp:include page="../header.jsp" />
 		</div>

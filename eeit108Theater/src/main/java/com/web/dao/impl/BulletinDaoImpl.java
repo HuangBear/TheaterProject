@@ -20,32 +20,41 @@ public class BulletinDaoImpl implements BulletinDao {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getExistenceBulletin() {
+	public List<BulletinBean> getExistenceBulletin(String targete) {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
-		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate > getdate() and bb.available =true group by bb.bortingId) order by b.no DESC ")
-				.list();
+		StringBuilder sb = new StringBuilder();
+		sb.append("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean "
+				+ "bb WHERE bb.bortingId = b.bortingId and bb.endDate > getdate() and bb.available ="
+				+ "true group by bb.bortingId) order by b.").append(targete).append(" DESC");
+//		String in = "b." + targete;
+//		System.out.println(in);
+		list = session.createQuery(sb.toString()).list();
 		return list;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getExpiredBulletin() {
+	public List<BulletinBean> getExpiredBulletin(String targete) {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
-		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate < getdate() and bb.available =true group by bb.bortingId) order by b.no DESC ")
-				.list();
+		StringBuilder sb = new StringBuilder();
+		sb.append("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from "
+				+ "BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.endDate "
+				+ "< getdate() and bb.available =true group by bb.bortingId) " + "order by b.")
+				.append(targete).append(" DESC");
+		list = session.createQuery(sb.toString()).list();
 		return list;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getDeadBulletin() {
+	public List<BulletinBean> getDeadBulletin(String targete) {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
-		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.available = 0 group by bb.bortingId) order by b.no DESC ")
-				.list();
+		StringBuilder sb = new StringBuilder();
+		sb.append("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from "
+				+ "BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.available = 0 "
+				+ "group by bb.bortingId) order by b.").append(targete).append(" DESC");
+		list = session.createQuery(sb.toString()).list();
 		return list;
 	}
 

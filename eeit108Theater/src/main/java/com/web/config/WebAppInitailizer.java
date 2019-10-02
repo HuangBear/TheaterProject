@@ -1,6 +1,7 @@
 package com.web.config;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletRegistration;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
@@ -32,4 +33,10 @@ public class WebAppInitailizer extends AbstractAnnotationConfigDispatcherServlet
 		HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
 		return new Filter[] { characterEncodingFilter, hiddenHttpMethodFilter };
 	}
+	
+	 @Override
+	    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+	        boolean done = registration.setInitParameter("throwExceptionIfNoHandlerFound", "true"); // -> true
+	        if(!done) throw new RuntimeException();
+	    }
 }

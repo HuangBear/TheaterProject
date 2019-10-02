@@ -19,8 +19,8 @@
 
 		<property name="hibernate.current_session_context_class">thread</property>
 		<!-- 定義程式交易管理的類型，本範例使用JDBC Transaction -->
-<!-- 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property> -->
-        <property name="hibernate.transaction.coordinator_class">jdbc</property>
+		<!-- <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property> -->
+		<property name="hibernate.transaction.coordinator_class">jdbc</property>
 		<!-- hibernate 相關效能設定 -->
 		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
 		<property name="connection_pool_size">8</property>
@@ -37,7 +37,9 @@
 		<mapping class="com.web.entity.TimeTableBean"></mapping>
 		<mapping class="com.web.entity.BulletinBean"></mapping>
 		<mapping class="com.web.entity.ReplyBean"></mapping>
+		<mapping class="com.web.entity.ReportBean"></mapping>
 		<mapping class="com.web.entity.LikeOrDislikeBean"></mapping>
+		<mapping class="com.web.entity.ReportBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>

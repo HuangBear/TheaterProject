@@ -14,16 +14,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.web.entity.BulletinBean;
 import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
+import com.web.service.BulletinService;
 import com.web.service.MovieService;
 import com.web.service.TimeTableService;
 
 @Controller
 public class _Controller {
-	
+
 	@Autowired
 	MovieService movieService;
+
+	@Autowired
+	BulletinService bulletinService;
+  
 	@Autowired
 	TimeTableService time_service;
 	
@@ -39,8 +45,11 @@ public class _Controller {
 			model.addAttribute("day" + i, sdf.format(date));
 			date = tomorrow(date);
 		}
+		List<BulletinBean> bulletin = bulletinService.getExistenceBulletin("startDate");
+		model.addAttribute("BulletinBean", bulletin);
 		return "index";
 	}
+  
 	@RequestMapping("/getVersion")
 	@ResponseBody
 	public List<TimeTableBean> index1(Model model, String movieName) {

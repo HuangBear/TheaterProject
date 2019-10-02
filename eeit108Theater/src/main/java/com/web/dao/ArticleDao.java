@@ -8,6 +8,7 @@ import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
+import com.web.entity.ReportBean;
 import com.web.entity.MemberBean;
 
 public interface ArticleDao {
@@ -33,6 +34,7 @@ public interface ArticleDao {
 	void editArticle(ArticleBean article);
 	void addReply(ReplyBean reply);
 	void editReply(ReplyBean reply);
+	void addReport(ReportBean rb);
 	void addGp(LikeOrDislikeBean likeOrDislike);
 	void updateGp(LikeOrDislikeBean likeOrDislike);
 	
@@ -43,6 +45,8 @@ public interface ArticleDao {
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
 
 	List<MovieBean> getAllMovies();
+
+	
 
 
 }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,8 +25,8 @@
 	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link href="vendor/datatables/dataTables.bootstrap4.css"
-	rel="stylesheet">
+<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+	
 
 <!-- Custom styles for this template-->
 <link href="css/admin/sb-admin.css" rel="stylesheet">
@@ -43,15 +44,18 @@
 
 <!-- Page level plugin JavaScript-->
 <script src="vendor/chart.js/Chart.min.js"></script>
-<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script type="application/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script src="vendor/datatables/jquery.dataTables.js"></script> -->
 <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="js/admin/sb-admin.min.js"></script>
-
+ 
 <!-- Demo scripts for this page-->
-<script src="js/admin/demo/datatables-demo.js"></script>
-<script src="js/admin/demo/chart-area-demo.js"></script>
+<!--   <script src="js/admin/demo/datatables-demo.js"></script> -->
+<!--   <script src="js/admin/demo/chart-area-demo.js"></script> -->
+
+
 <script>
 
 	$(function() {
@@ -75,7 +79,14 @@
 	});
 </script>
 
-
+<style type="text/css">
+.demo-bg{
+    background: url(images/logA/rsz_rows-red-seats-theater_1.jpg) no-repeat;
+    background-size: cover;
+    
+    position: relative;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -84,7 +95,7 @@
 	<!-- -------------------------------------------以上Header---------------------------------------------- -->
 
 	<!-- 內文區 -->
-	<div id="wrapper">
+	<div id="wrapper" >
 
 		<!-- 插入Sidebar -->
 
@@ -92,7 +103,7 @@
 
 		<!-- 內文修飾照片一張 -->
 
-		<div id="content-wrapper">
+		<div id="content-wrapper" class="demo-bg">
 			<div class="container-fluid">
 				<div
 					style="height: 200px; background-image: url(images/admin/CINEMA01_1.jpg); background-position: center; background-size: cover;"></div>

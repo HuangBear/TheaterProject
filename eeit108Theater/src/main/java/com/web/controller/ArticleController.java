@@ -28,10 +28,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.entity.ArticleBean;
+import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
+import com.web.entity.ReportBean;
+import com.web.entity.SysArticleBean;
 import com.web.service.ArticleService;
 
 @Controller
@@ -46,7 +49,9 @@ public class ArticleController {
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+//		List<SysArticleBean> Syslist = service.getSysArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
+//		model.addAttribute("SysArticles", Syslist);
 		MovieBean mb = service.getMovieByNo(no);
 		model.addAttribute("Movie", mb);
 		return "Articles";
@@ -74,11 +79,11 @@ public class ArticleController {
 		LikeOrDislikeBean lb = new LikeOrDislikeBean();
 		String NoS =Integer.toString(ab.getNo());
 		lb.setArticleNoString(NoS);
-		rb.getArticle().setNoString(NoS);
+		
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
-		model.addAttribute("Reply", rb);
+		
 		return "Article";
 	}
 	
@@ -179,13 +184,24 @@ public class ArticleController {
 		String NoS =Integer.toString(no);
 		return "redirect:/Article?id="+NoS;
 		}
+	
+//	@RequestMapping(value = "/SysArticle", method = RequestMethod.GET)
+//	public String getSysArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
+//		session = request.getSession();
+//		
+//		model.addAttribute("SysArticle", service.getSysArticleById(no));
+//		
+//		return "SysArticle";
+//	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String getAddNewArticleForm(Model model,HttpServletRequest request,HttpSession session) {
+	public String getAddNewArticleForm(@RequestParam("id") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
+		MovieBean mb = service.getMovieByNo(no);
 		
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("MovieBean", mb);
 		return "addArticle";
 	}
 	
@@ -213,6 +229,7 @@ public class ArticleController {
 		}
 		ab.setLikeCount(0);
 		ab.setDislikeCount(0);
+		ab.setReport(false);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		ab.setAuthor(new MemberBean(AuthorS));
 		int MovieS = Integer.parseInt(request.getParameter("movie"));
@@ -231,6 +248,55 @@ public class ArticleController {
 		}
 		
 	}
+	
+//	@RequestMapping(value = "/admin/addSysArticle", method = RequestMethod.GET)
+//	public String getAddNewSysArticleForm(Model model,HttpServletRequest request,HttpSession session) {
+//		session = request.getSession();
+//		SysArticleBean sb = new SysArticleBean();
+//		
+//		model.addAttribute("SysArticleBean", sb);
+//		return "addSysArticle";
+//	}
+//	
+//	@RequestMapping(value = "/admin/addSysArticle", method = RequestMethod.POST)
+//	public String processAddNewSysArticleForm(@ModelAttribute("SysArticleBean") SysArticleBean ab, 
+//		      BindingResult result, HttpServletRequest request ) throws ParseException {
+//		
+//		HashMap<String, String> errorMessage = new HashMap<>();
+//		request.setAttribute("ErrMsg", errorMessage);
+//		try
+//		{
+//			request.setCharacterEncoding("UTF-8");
+//		} catch (UnsupportedEncodingException e1)
+//		{
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
+//		{
+//			errorMessage.put("titleNull", "請輸入標題");
+//		} else if (ab.getTitle().length() > 30)
+//		{
+//			errorMessage.put("titleOver", "字數超過30字");
+//		}
+//		int AuthorS = Integer.parseInt(request.getParameter("author"));
+//		ab.setAuthor(new EmployeeBean(AuthorS));
+//		int MovieS = Integer.parseInt(request.getParameter("movie"));
+//		ab.setMovie(new MovieBean(MovieS));
+//		ab.setAvailable(true);
+//		ab.setPostTime(new Date());
+//		service.addSysArticle(ab);
+//		
+//		if (!errorMessage.isEmpty())
+//		{
+//			return "addSysArticle";
+//		} else
+//		{
+//			return "redirect:/admin/empIndexA";
+//		}
+//		
+//	}
 
 
 	
@@ -289,6 +355,7 @@ public class ArticleController {
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
+		ab.setReport(ab.getReport());
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
@@ -329,7 +396,7 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value = "/addReply", method = RequestMethod.POST)
-	public String processAddReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
+	public String processAddReplyForm(@RequestParam("id") Integer no,@ModelAttribute("ReplyBean") ReplyBean rb, 
 		      BindingResult result, HttpServletRequest request ) throws ParseException{
 		System.err.println("==============");
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -342,11 +409,11 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+		ArticleBean ab = service.getArticleById(no);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
 		System.out.println("==postString==="+request.getParameter("noString"));
-		int articleNoS = Integer.parseInt(request.getParameter("articleString"));
-		rb.setArticle(new ArticleBean(articleNoS));
+		
+		rb.setArticle(ab);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		rb.setAuthor(new MemberBean(AuthorS));
 		rb.setAvailable(true);
@@ -397,8 +464,8 @@ public class ArticleController {
 		}
 		
 		System.out.println("==postString=="+request.getParameter("postTimeString"));
-		System.out.println("==postString=="+request.getParameter("noString"));
-		int NoS = Integer.parseInt(request.getParameter("noString"));
+		System.out.println("==postString=="+request.getParameter("rnoString"));
+		int NoS = Integer.parseInt(request.getParameter("rnoString"));
 		rb.setNo(NoS);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		rb.setAuthor(new MemberBean(AuthorS));
@@ -430,6 +497,76 @@ public class ArticleController {
 		return service.getAllTags();
 	}
 	
+//	@ModelAttribute("systagList")
+//	public List<String> getSysTagList() {
+//		return service.getAllSysTags();
+//	}
+	
+	@RequestMapping(value = "/addReport", method = RequestMethod.GET)
+	public String getAddReportForm(@RequestParam("id") Integer no, Model model) {
+		ArticleBean ab = service.getArticleById(no);
+		ReportBean rb = new ReportBean();
+		
+		String NoS =Integer.toString(ab.getNo());
+		ab.setNoString(NoS);
+		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("ReportBean", rb);
+		return "addReport";
+	}
+	
+	@RequestMapping(value = "/addReport", method = RequestMethod.POST)
+	public String processAddReportForm(@ModelAttribute("ReportBean") ReportBean rb,@RequestParam("id") Integer no, 
+		      BindingResult result, HttpServletRequest request,HttpSession session ) throws ParseException{
+		System.err.println("==============");
+		HashMap<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrMsg", errorMessage);
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("==postString=="+request.getParameter("postTimeString"));
+		System.out.println("==postString=="+request.getParameter("noString"));
+		ArticleBean ab = service.getArticleById(no);
+		MemberBean mb=(MemberBean)session.getAttribute("LoginOK");
+		int AuthorSS=mb.getNo();
+		rb.setArticle(new ArticleBean(no));
+//		int AuthorS = Integer.parseInt(request.getParameter("author"));
+		rb.setAuthor(new MemberBean(AuthorSS));
+//		rb.setAuthor(new MemberBean(rb.));
+		rb.setPostTime(new Date());
+		ab.setNo(ab.getNo());
+		ab.setAvailable(ab.getAvailable());
+		ab.setTitle(ab.getTitle());
+		ab.setContent(ab.getContent());
+		ab.setTag(ab.getTag());
+		ab.setPostTime(ab.getPostTime());
+		ab.setLikeCount(ab.getLikeCount());
+		ab.setDislikeCount(ab.getDislikeCount());
+		ab.setAuthor(ab.getAuthor());
+		ab.setMovie(ab.getMovie());
+		ab.setReport(true);
+		System.out.println("article=" + rb.getArticle());
+		System.out.println("content=" + rb.getContent());
+		System.out.println("postTime=" + rb.getPostTime());
+		
+		service.addReport(rb);
+		service.editArticle(ab);
+		String ArticleNoS =Integer.toString(ab.getNo());
+
+		if (!errorMessage.isEmpty())
+		{
+			return "addReport";
+		} else
+		{
+			return "redirect:/Article?id="+ArticleNoS;
+		}
+		
+	}
+	
 	@RequestMapping("/admin/emp_Forum")
 	public String getEmpForum(Model model,HttpServletRequest request,HttpSession session) {
 		
@@ -455,26 +592,37 @@ public class ArticleController {
 		return "admin/emp_Articles";
 	}
 	
+	@RequestMapping(value = "/reArticles", method = RequestMethod.POST)
+	public String getReArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		
+		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<MovieBean> moviesForumList = service.getAllMovies();
+		model.addAttribute("Articles", list);
+		model.addAttribute("Movies", moviesForumList);
+		
+		
+		return "admin/emp_Articles";
+	}
 	
 	
 	@RequestMapping(value = "/admin/LockArticle", method = RequestMethod.GET)
 	public String getLockArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		
 		ArticleBean ab = service.getArticleById(no);
-		
+
 		model.addAttribute("Article", ab);
 		
-		
-		
+
 		return "admin/LockArticle";
 	}
 	
 	@RequestMapping(value = "/admin/LockArticle", method = RequestMethod.POST)
 	public String postLockArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		String LockButton = request.getParameter("lockbutton");
+		String cancelButton = request.getParameter("cancelbutton");
 		ArticleBean ab = service.getArticleById(no);
 			
-		if ("lock".equals(LockButton) && ab.getAvailable()==true) {
+		if ("lock".equals(LockButton)&&ab.getAvailable()==true) {
 			ab.setNo(ab.getNo());
 			ab.setTitle(ab.getTitle());
             ab.setAvailable(false);
@@ -485,7 +633,7 @@ public class ArticleController {
             ab.setDislikeCount(ab.getDislikeCount());
             System.out.println("檢查數值" + ab.getNo());
             service.editArticle(ab);
-        } else if ("lock".equals(LockButton) && ab.getAvailable()==false) {
+        } else if ("lock".equals(LockButton)&&ab.getAvailable()==false) {
         	ab.setNo(ab.getNo());
 			ab.setTitle(ab.getTitle());
             ab.setAvailable(true);
@@ -498,8 +646,18 @@ public class ArticleController {
             service.editArticle(ab);
         }
 
-		return "admin/empIndexA";
+		return "forward:/reArticles";
 	}
+	
+	@RequestMapping(value = "/admin/ReportArticle", method = RequestMethod.GET)
+	public String getReportArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		
+		ArticleBean ab = service.getArticleById(no);
+		model.addAttribute("Article", ab);
+
+		return "admin/ReportArticle";
+	}
+	
 
 	@InitBinder
 	public void whiteListing(WebDataBinder binder) {
