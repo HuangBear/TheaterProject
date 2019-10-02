@@ -207,7 +207,6 @@
 										<dd class = "dtdd foo" id = 'fourth'>${day4}</dd>
 										<dd class = "dtdd foo" id = 'fifth'>${day5}</dd>														
 								</dt>
-
 <%-- 									<fmt:formatDate value="${startTime}" pattern='MM-dd' /> --%>
 
 							</div> 

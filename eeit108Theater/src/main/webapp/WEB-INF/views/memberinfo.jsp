@@ -134,7 +134,7 @@
 								    <p>註冊時間：${LoginOK.registerTime}</p>
 						
 						</header> 
-						   <a href="#" class="image featured"><img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}" alt="" width="200px"/></a>
+						   <img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"  width="400px"/>
 						 
 					
 						

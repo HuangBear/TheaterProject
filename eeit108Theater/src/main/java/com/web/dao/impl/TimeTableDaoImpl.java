@@ -159,6 +159,31 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mstartDate", startDate).setParameter("mversion", version).setParameter("mmovieName", movieName).getResultList();
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getVersionByMovieName(String movieName) {
+		String hql = "SELECT DISTINCT t.version FROM TimeTableBean t WHERE t.movieName = :mname";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mname", movieName).getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getTimeByDateAndVersionAndMovie(String startDate, String version, String movieName) {
+		String hql = "SELECT t.startTime FROM TimeTableBean t WHERE t.startDate = :mstartDate and t.version = :mversion and t.movieName = :mmovieName";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mstartDate", startDate).setParameter("mversion", version).setParameter("mmovieName", movieName).getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TimeTableBean> getTimeNoByDateAndVersionAndMovieAndTime(String startDate, String version,
+			String movieName, String startTime) {
+		String hql = "SELECT t.no FROM TimeTableBean t WHERE t.startDate = :mstartDate and t.version = :mversion and t.movieName = :mmovieName and t.startTime = :mstartTime";
+		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mstartDate", startDate).setParameter("mversion", version).setParameter("mmovieName", movieName).setParameter("mstartTime", startTime).getResultList();
+		return list;
+	}
 	
 }
 

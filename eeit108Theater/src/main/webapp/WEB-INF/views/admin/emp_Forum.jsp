@@ -15,15 +15,24 @@
 
 
 <!-- DataTables Example -->
-<div id="tabs-1">
-	<table class="tbst">
-		<tbody style="text-align: left;">
-			<c:forEach var='Movie' items='${Movies}'>
-				<button class="editBtn btn btn-info" id="${Movie.no}"
-					style="font-size: 24px">${Movie.no}.${Movie.movieName}</button>
-			</c:forEach>
-		</tbody>
-	</table>
+<div class="card mb-3">
+	<div class="card-header">
+		<i class="fas fa-table"></i> 討論版
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<div id="tabs-1">
+				<table class="tbst">
+					<tbody style="text-align: left;">
+						<c:forEach var='Movie' items='${Movies}'>
+							<button class="editBtn btn btn-info" id="${Movie.no}"
+								style="font-size: 24px">${Movie.no}.${Movie.movieName}</button>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="card mb-3">
 	<div class="card-header">
@@ -80,7 +89,7 @@
 						<td>${article.likeCount}</td>
 						<td>${article.dislikeCount}</td>
 						<td>
-						<fieldset>
+							<fieldset>
 								<c:choose>
 									<c:when test="${article.available==true}">
 
@@ -185,7 +194,7 @@
 			}
 		});
 	});
-	
+
 	$(".reportBtn").click(function() {
 
 		var no = $(this).attr("id");

@@ -58,7 +58,6 @@ public class MovieDaoImpl implements MovieDao{
 		String hql = "FROM MovieBean m WHERE m.movieName = :name";
 		MovieBean mb = (MovieBean) session.createQuery(hql).setParameter("name", name).uniqueResult();
 		return mb;
-		
 	}
 
 	@Override
