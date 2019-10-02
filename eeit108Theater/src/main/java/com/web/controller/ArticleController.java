@@ -75,12 +75,13 @@ public class ArticleController {
 	public String getArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
 		session = request.getSession();
 		ArticleBean ab = service.getArticleById(no);
-		ReplyBean rb = service.getReplyById(no);
+		List<ReplyBean> list = service.getReplysByArticle(no);
 		LikeOrDislikeBean lb = new LikeOrDislikeBean();
 		String NoS =Integer.toString(ab.getNo());
 		lb.setArticleNoString(NoS);
 		
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("Replys", list);
 		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
 		
@@ -423,7 +424,7 @@ public class ArticleController {
 		System.out.println("postTime=" + rb.getPostTime());
 		
 		service.addReply(rb);
-		String ArticleNoS =request.getParameter("articleString");
+		String ArticleNoS =Integer.toString(ab.getNo());
 
 		if (!errorMessage.isEmpty())
 		{
