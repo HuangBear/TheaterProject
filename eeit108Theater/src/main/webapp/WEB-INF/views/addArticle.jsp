@@ -51,9 +51,9 @@
 						<fieldset>
 
 							<form:input id="author" path="author" readonly="true"
-								value='${LoginOK.no}' type='hidden' class='form:input-large' />
+								value='${LoginOK.no}' type='text' class='form:input-large' />
 							<form:input id="movie" path="movie" readonly="true"
-								value='${movie}' type='hidden' class='form:input-large' />
+								value='${MovieBean.no}' type='text' class='form:input-large' />
 							<div class="form-group">
 								<label class="control-label col-lg-2 col-lg-4" for='title'>
 									<a>Title</a>

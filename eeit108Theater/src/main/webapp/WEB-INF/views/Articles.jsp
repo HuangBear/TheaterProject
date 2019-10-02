@@ -58,7 +58,7 @@
 					<br>
 				</c:when>
 				<c:when test="${!empty LoginOK}">
-					<a href="<spring:url value='/add' />"
+					<a href="<spring:url value='/add?id=${Movie.no}' />"
 						class="btn btn-primary btn-lg" style="font-size: 26px;">發文</a>
 					<br>
 				</c:when>
