@@ -1,13 +1,13 @@
-TRUE|A優惠-試營運|滿三千送三百|2019-06-03|2019-08-02|2019-06-02|1|3000|300|||data/bulletin/images/1.png|2_Thu Sep 15 01:31:23 CST 2019
-TRUE|D優惠-試營運|滿兩千送兩百|2019-08-03|2019-10-02|2019-08-02|1|2000|200|||data/bulletin/images/2.png|2_Thu Sep 22 02:31:23 CST 2019
-TRUE|G優惠-慶開幕|滿千送百|2019-10-03|2019-12-02|2019-10-02|1|1000|100|||data/bulletin/images/3.png|2_Thu Sep 29 04:31:23 CST 2019
-TRUE|J優惠-慶開幕|滿五百送一百|2019-12-03|2020-02-02|2019-12-02|1|500|100|||data/bulletin/images/4.png|2_Thu Oct  06 05:31:23 CST 2019
-TRUE|B優惠-試營運|買五送一|2019-06-04|2019-08-03|2019-06-03|2|||5|1|data/bulletin/images/5.png|2_Thu Sep 16 01:31:23 CST 2019
-TRUE|E優惠-試營運|買三送一|2019-08-04|2019-10-03|2019-08-03|2|||3|1|data/bulletin/images/6.png|2_Thu Sep 23 02:31:23 CST 2019
-TRUE|H優惠-慶開幕|買二送一|2019-10-04|2019-12-03|2019-10-03|2|||2|1|data/bulletin/images/7.png|2_Thu Sep 30 04:31:23 CST 2019
-TRUE|K優惠-慶開幕|買一送一|2019-12-04|2020-02-03|2019-12-03|2|||1|1|data/bulletin/images/8.png|2_Thu Oct 07 05:31:23 CST 2019
-TRUE|C公告-倒數3周||2019-06-02|2019-08-01|2019-06-01|0|||||data/bulletin/images/9.png|2_Thu Sep 17 01:31:23 CST 2019
-TRUE|F公告-倒數2周|畢業專題整合中|2019-08-02|2019-10-01|2019-08-01|0|||||data/bulletin/images/10.png|2_Thu Sep 24 02:31:23 CST 2019
-TRUE|I公告-倒數1周|畢業專題整合中|2019-10-02|2019-12-01|2019-10-01|0|||||data/bulletin/images/11.png|2_Thu Oct 01 04:31:23 CST 2019
-TRUE|L公告-176 CINEMA 開幕啦|歡慶EEIT108畢業|2019-12-02|2020-02-01|2019-12-01|0|||||data/bulletin/images/12.png|2_Thu Oct 08 05:31:23 CST 2019
-TRUE|716由來|我們組別本來是7個人，途中有一個同學中離，且那個人又是班上的班代，為了紀念他，所以組名才叫7-1|2019-10-09|2019-11-09|2019-10-08|0|||||data/bulletin/images/716.jpg|2_Thu Sep 14 01:31:23 CST 2019
+TRUE|B優惠-試營運|滿三千送三百|2019-06-23|2019-08-22|2019-06-20|1|||3000|300|data/bulletin/images/1.png|2_Thu Jun 20 00:00:00 CST 2019
+TRUE|E優惠-試營運|滿兩千送兩百|2019-08-23|2019-10-22|2019-08-20|1|||2000|200|data/bulletin/images/2.png|2_Tue Aug 20 00:00:01 CST 2019
+TRUE|H優惠-慶開幕|滿千送百|2019-10-23|2019-12-22|2019-10-20|1|||1000|100|data/bulletin/images/3.png|2_Sun Oct 20 00:00:02 CST 2019
+TRUE|k優惠-慶開幕|滿五百送一百|2019-12-23|2020-02-22|2019-12-20|1|||500|100|data/bulletin/images/4.png|2_Fri Dec 20 00:00:03 CST 2019
+TRUE|C優惠-試營運|買五送一|2019-07-13|2019-09-12|2019-07-10|2|5|1|||data/bulletin/images/5.png|2_Wed Jul 10 00:00:04 CST 2019
+TRUE|F優惠-試營運|買三送一|2019-09-13|2019-11-12|2019-09-10|2|3|1|||data/bulletin/images/6.png|2_Tue Sep 10 00:00:05 CST 2019
+TRUE|I優惠-慶開幕|買二送一|2019-11-13|2020-01-12|2019-11-10|2|2|1|||data/bulletin/images/7.png|2_Sun Nov 10 00:00:06 CST 2019
+TRUE|l優惠-慶開幕|買一送一|2020-01-13|2020-03-12|2020-01-10|2|1|1|||data/bulletin/images/8.png|2_Fri Jan 10 00:00:07 CST 2019
+TRUE|A公告-倒數3周|畢業專題整合中|2019-06-04|2019-08-03|2019-06-01|0|||||data/bulletin/images/9.png|2_Sat Jun 1 00:00:08 CST 2019
+TRUE|D公告-倒數2周|畢業專題整合中|2019-08-04|2019-10-03|2019-08-01|0|||||data/bulletin/images/10.png|2_Thu Aug 1 00:00:09 CST 2019
+TRUE|G公告-倒數1周|畢業專題整合中|2019-10-04|2019-12-03|2019-10-01|0|||||data/bulletin/images/11.png|2_Tue Oct 1 00:00:10 CST 2019
+TRUE|J公告-176 CINEMA 開幕啦|716 CINEMA 開幕啦|2019-12-04|2020-02-03|2019-12-01|0|||||data/bulletin/images/12.png|2_Sun Dec 1 00:00:11 CST 2019
+TRUE|716由來|我們組別本來是7個人，途中有一個同學中離，且那個人又是班上的班代，為了紀念他，所以組名才叫7-1|2019-10-04|2019-12-03|2019-10-01|0|||||data/bulletin/images/716.jpg|2_Sat Oct 1 00:00:12 CST 2019

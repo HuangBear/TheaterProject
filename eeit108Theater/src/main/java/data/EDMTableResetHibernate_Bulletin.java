@@ -66,10 +66,6 @@ public class EDMTableResetHibernate_Bulletin {
 							token[9].equals("") ? null : Integer.valueOf(token[9]));
 					bulletin.setDiscountPriceFree(
 							token[10].equals("") ? null : Integer.valueOf(token[10]));
-//					bulletin.setDiscountTickBuy(Integer.valueOf(token[7]));
-//					bulletin.setDiscountTickFree(Integer.valueOf(token[8]));
-//					bulletin.setDiscountPriceBuy(Integer.valueOf(token[9]));
-//					bulletin.setDiscountPriceFree(Integer.valueOf(token[10]));
 					EmployeeBean employee = session.get(EmployeeBean.class, 2);
 					bulletin.setEmployee(employee);
 					Blob sb = SystemUtils2018.fileToBlob(token[11]);
