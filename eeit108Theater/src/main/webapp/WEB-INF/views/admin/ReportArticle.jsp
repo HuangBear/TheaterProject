@@ -48,7 +48,7 @@
 				<c:forEach var='report' items='${Article.reports}'>
 					<div
 						style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
-						<p>${report.author.name}回覆時間:${report.postTime}</p>
+						<p>${report.author.name}檢舉時間:${report.postTime}</p>
 					</div>
 					<div
 						style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
