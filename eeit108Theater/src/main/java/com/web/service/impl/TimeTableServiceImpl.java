@@ -118,6 +118,22 @@ public class TimeTableServiceImpl implements TimeTableService{
 	@Override
 	public List<String> getTheatersByMovieName(String movieName) {
 		return dao.getTheatersByMovieName(movieName);
+	}
+
+	@Override
+	public List<TimeTableBean> getVersionByMovieName(String movieName) {
+		return dao.getVersionByMovieName(movieName);
+	}
+
+	@Override
+	public List<TimeTableBean> getTimeByDateAndVersionAndMovie(String startDate, String version, String movieName) {
+		return dao.getTimeByDateAndVersionAndMovie(startDate, version, movieName);
+	}
+
+	@Override
+	public List<TimeTableBean> getTimeNoByDateAndVersionAndMovieAndTime(String startDate, String version,
+			String movieName, String startTime) {
+		return dao.getTimeNoByDateAndVersionAndMovieAndTime(startDate, version, movieName, startTime);
 	}	 
 	
 }

@@ -13,10 +13,12 @@ public interface MovieService {
 	MovieBean updateMovie(MovieBean movie);
 	// query
 	MovieBean getMovieById(Integer no);
+	MovieBean getMovieByName(String name);
 	//by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
 	List<MovieBean> getReleasedMovies();
 	List<MovieBean> getComingMovies();
 	List<MovieBean> getAllMovies();
 	List<MovieBean> getOffMovies();
+	
 }

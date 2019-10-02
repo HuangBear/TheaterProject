@@ -25,6 +25,8 @@ public interface TimeTableDao {
 	
 	List<TimeTableBean> getTimeTableBeanByMovieName(String movieName);
 	
+	List<TimeTableBean> getVersionByMovieName(String movieName);
+	
 	List<TimeTableBean> getTheaterByMovieName(String movieName);
 
 	List<TimeTableBean> getTimeTablesByMovie(String movieName);
@@ -42,4 +44,8 @@ public interface TimeTableDao {
 	List<String> getTheatersByMovieName(String movieName);
 	
 	List<TimeTableBean> getStartTimeByDateAndVersionAndMovie(String startDate, String version, String movieName);
+	
+	List<TimeTableBean> getTimeByDateAndVersionAndMovie(String startDate, String version, String movieName);
+	
+	List<TimeTableBean> getTimeNoByDateAndVersionAndMovieAndTime(String startDate, String version, String movieName, String startTime);
 }
