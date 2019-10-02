@@ -28,11 +28,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.entity.ArticleBean;
+import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.entity.ReportBean;
+import com.web.entity.SysArticleBean;
 import com.web.service.ArticleService;
 
 @Controller
@@ -47,7 +49,9 @@ public class ArticleController {
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<SysArticleBean> Syslist = service.getSysArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
+		model.addAttribute("SysArticles", Syslist);
 		MovieBean mb = service.getMovieByNo(no);
 		model.addAttribute("Movie", mb);
 		return "Articles";
@@ -180,13 +184,24 @@ public class ArticleController {
 		String NoS =Integer.toString(no);
 		return "redirect:/Article?id="+NoS;
 		}
+	
+//	@RequestMapping(value = "/SysArticle", method = RequestMethod.GET)
+//	public String getSysArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
+//		session = request.getSession();
+//		
+//		model.addAttribute("SysArticle", service.getSysArticleById(no));
+//		
+//		return "SysArticle";
+//	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String getAddNewArticleForm(Model model,HttpServletRequest request,HttpSession session) {
+	public String getAddNewArticleForm(@RequestParam("id") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
+		MovieBean mb = service.getMovieByNo(no);
 		
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("MovieBean", mb);
 		return "addArticle";
 	}
 	
@@ -233,6 +248,55 @@ public class ArticleController {
 		}
 		
 	}
+	
+//	@RequestMapping(value = "/admin/addSysArticle", method = RequestMethod.GET)
+//	public String getAddNewSysArticleForm(Model model,HttpServletRequest request,HttpSession session) {
+//		session = request.getSession();
+//		SysArticleBean sb = new SysArticleBean();
+//		
+//		model.addAttribute("SysArticleBean", sb);
+//		return "addSysArticle";
+//	}
+//	
+//	@RequestMapping(value = "/admin/addSysArticle", method = RequestMethod.POST)
+//	public String processAddNewSysArticleForm(@ModelAttribute("SysArticleBean") SysArticleBean ab, 
+//		      BindingResult result, HttpServletRequest request ) throws ParseException {
+//		
+//		HashMap<String, String> errorMessage = new HashMap<>();
+//		request.setAttribute("ErrMsg", errorMessage);
+//		try
+//		{
+//			request.setCharacterEncoding("UTF-8");
+//		} catch (UnsupportedEncodingException e1)
+//		{
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
+//		{
+//			errorMessage.put("titleNull", "請輸入標題");
+//		} else if (ab.getTitle().length() > 30)
+//		{
+//			errorMessage.put("titleOver", "字數超過30字");
+//		}
+//		int AuthorS = Integer.parseInt(request.getParameter("author"));
+//		ab.setAuthor(new EmployeeBean(AuthorS));
+//		int MovieS = Integer.parseInt(request.getParameter("movie"));
+//		ab.setMovie(new MovieBean(MovieS));
+//		ab.setAvailable(true);
+//		ab.setPostTime(new Date());
+//		service.addSysArticle(ab);
+//		
+//		if (!errorMessage.isEmpty())
+//		{
+//			return "addSysArticle";
+//		} else
+//		{
+//			return "redirect:/admin/empIndexA";
+//		}
+//		
+//	}
 
 
 	
@@ -431,6 +495,11 @@ public class ArticleController {
 	@ModelAttribute("tagList")
 	public List<String> getTagList() {
 		return service.getAllTags();
+	}
+	
+	@ModelAttribute("systagList")
+	public List<String> getSysTagList() {
+		return service.getAllSysTags();
 	}
 	
 	@RequestMapping(value = "/addReport", method = RequestMethod.GET)
