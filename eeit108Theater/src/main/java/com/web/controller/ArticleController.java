@@ -49,9 +49,9 @@ public class ArticleController {
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
-		List<SysArticleBean> Syslist = service.getSysArticlesByMovieNo(no);
+//		List<SysArticleBean> Syslist = service.getSysArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
-		model.addAttribute("SysArticles", Syslist);
+//		model.addAttribute("SysArticles", Syslist);
 		MovieBean mb = service.getMovieByNo(no);
 		model.addAttribute("Movie", mb);
 		return "Articles";
