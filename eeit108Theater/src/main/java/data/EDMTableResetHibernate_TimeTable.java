@@ -72,7 +72,8 @@ public class EDMTableResetHibernate_TimeTable {
 						time.setDuration(Integer.parseInt(token[4]));
 						time.setVersion(token[5]);
 						time.setTheater(token[6]);
-						time.setMovie(session.get(MovieBean.class, mdao.getMovieByName(token[1]).getNo()));
+//						time.setMovie(session.get(MovieBean.class, mdao.getMovieByName(token[1]).getNo()));
+						
 						time.setBreakTime(breakTime);
 						session.save(time);
 	
