@@ -497,10 +497,10 @@ public class ArticleController {
 		return service.getAllTags();
 	}
 	
-	@ModelAttribute("systagList")
-	public List<String> getSysTagList() {
-		return service.getAllSysTags();
-	}
+//	@ModelAttribute("systagList")
+//	public List<String> getSysTagList() {
+//		return service.getAllSysTags();
+//	}
 	
 	@RequestMapping(value = "/addReport", method = RequestMethod.GET)
 	public String getAddReportForm(@RequestParam("id") Integer no, Model model) {
