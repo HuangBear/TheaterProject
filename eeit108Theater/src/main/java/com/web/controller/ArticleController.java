@@ -396,7 +396,7 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value = "/addReply", method = RequestMethod.POST)
-	public String processAddReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
+	public String processAddReplyForm(@RequestParam("id") Integer no,@ModelAttribute("ReplyBean") ReplyBean rb, 
 		      BindingResult result, HttpServletRequest request ) throws ParseException{
 		System.err.println("==============");
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -409,11 +409,11 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+		ArticleBean ab = service.getArticleById(no);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
 		System.out.println("==postString==="+request.getParameter("noString"));
-		int articleNoS = Integer.parseInt(request.getParameter("articleString"));
-		rb.setArticle(new ArticleBean(articleNoS));
+		
+		rb.setArticle(ab);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		rb.setAuthor(new MemberBean(AuthorS));
 		rb.setAvailable(true);
@@ -592,6 +592,17 @@ public class ArticleController {
 		return "admin/emp_Articles";
 	}
 	
+	@RequestMapping(value = "/reArticles", method = RequestMethod.POST)
+	public String getReArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
+		
+		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<MovieBean> moviesForumList = service.getAllMovies();
+		model.addAttribute("Articles", list);
+		model.addAttribute("Movies", moviesForumList);
+		
+		
+		return "admin/emp_Articles";
+	}
 	
 	
 	@RequestMapping(value = "/admin/LockArticle", method = RequestMethod.GET)
@@ -608,9 +619,10 @@ public class ArticleController {
 	@RequestMapping(value = "/admin/LockArticle", method = RequestMethod.POST)
 	public String postLockArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		String LockButton = request.getParameter("lockbutton");
+		String cancelButton = request.getParameter("cancelbutton");
 		ArticleBean ab = service.getArticleById(no);
 			
-		if ("lock".equals(LockButton) && ab.getAvailable()==true) {
+		if ("lock".equals(LockButton)&&ab.getAvailable()==true) {
 			ab.setNo(ab.getNo());
 			ab.setTitle(ab.getTitle());
             ab.setAvailable(false);
@@ -621,7 +633,7 @@ public class ArticleController {
             ab.setDislikeCount(ab.getDislikeCount());
             System.out.println("檢查數值" + ab.getNo());
             service.editArticle(ab);
-        } else if ("lock".equals(LockButton) && ab.getAvailable()==false) {
+        } else if ("lock".equals(LockButton)&&ab.getAvailable()==false) {
         	ab.setNo(ab.getNo());
 			ab.setTitle(ab.getTitle());
             ab.setAvailable(true);
@@ -634,7 +646,7 @@ public class ArticleController {
             service.editArticle(ab);
         }
 
-		return "admin/empIndexA";
+		return "forward:/reArticles";
 	}
 	
 	@RequestMapping(value = "/admin/ReportArticle", method = RequestMethod.GET)

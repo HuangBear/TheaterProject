@@ -54,8 +54,8 @@
 <!-- 							<div class="form-group"> -->
 <!-- 								<div class="col-lg-10"> -->
 <%-- 									<form:input id="articleString" readonly="true" --%>
-<%-- 										path="articleString" value='${ArticleBean.noString}' --%>
-<%-- 										type='hidden' class='form:input-large' /> --%>
+<%--  										path="articleString" value='${ArticleBean.noString}'  --%>
+<%--  										type='hidden' class='form:input-large' />  --%>
 <!-- 								</div> -->
 <!-- 							</div> -->
 
