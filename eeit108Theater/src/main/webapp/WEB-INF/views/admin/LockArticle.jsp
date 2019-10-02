@@ -31,10 +31,10 @@
 								class='form:input-large' />
 
 							<div class="form-group">
-								<button class="btn btn-info" type="submit" name="lockbutton" value="lock" style="font-size: 30px">確認上鎖</button>
+								<button class="lockBtn btn btn-info" id="${Article.no}" type="submit" name="lockbutton" value="lock" style="font-size: 30px">確認上鎖</button>
 							</div>
 							<div class="form-group">
-								<button class="cancelBtn btn btn-info"  id="${Article.no}" style="font-size: 30px">取消</button>
+								<button class="cancelBtn btn btn-info" id="${Article.no}" type="submit" name="cancelbutton" value="cancel" style="font-size: 30px">取消</button>
 							</div>
 						</c:when>
 						<c:when test="${Article.available==false}">
@@ -44,10 +44,10 @@
 								class='form:input-large' />
 
 							<div class="form-group">
-								<button class="btn btn-info" type="submit" name="lockbutton" value="lock" style="font-size: 30px">確認解鎖</button>
+								<button class="lockBtn btn btn-info" id="${Article.no}" type="submit" name="lockbutton" value="lock" style="font-size: 30px">確認解鎖</button>
 							</div>
 							<div class="form-group">
-								<button class="cancelBtn btn btn-info"  id="${Article.no}" style="font-size: 30px">取消</button>
+								<button class="cancelBtn btn btn-info"  id="${Article.no}" type="submit" name="cancelbutton" value="cancel" style="font-size: 30px">取消</button>
 							</div>
 						</c:when>
 					</c:choose>
@@ -60,16 +60,69 @@
 
 <script>
 	$(".cancelBtn").click(function() {
+		console.log("to preventDefault");
+		event.preventDefault();
+		console.log("preventDefault success");
 
 		var no = $(this).attr("id");
+		var cancel = "cancel"
 		//var pquantity = $(this).val();
 		$.ajax({
-			url : "<c:url value='/admin/emp_Forum'/>",
-			type : "GET",
+			no : no,
+			url : "<c:url value='/admin/LockArticle'/>",
+			data : {
+				no : no,
+				cancelbutton : cancel,
+			//quantity : pquantity
+			},
+			type : "POST",
 			success : function(data) {
 				$("#pageItems").html(data);
 			}
 		});
 	});
+	
+	$(".lockBtn").click(function() {
+		console.log("to preventDefault");
+		event.preventDefault();
+		console.log("preventDefault success");
+
+		var no = $(this).attr("id");
+		var lock = "lock";
+		//var pquantity = $(this).val();
+		$.ajax({
+			url : "<c:url value='/admin/LockArticle'/>",
+			data : {
+				no : no,
+				lockbutton : lock,
+			//quantity : pquantity
+			},
+			type : "POST",
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
+	
+// 	$("#newProduct").submit(function(event) {
+// 		console.log("to preventDefault");
+// 		event.preventDefault();
+// 		console.log("preventDefault success");
+// 		var productData = new FormData(this);
+// 		$.ajax({
+// 			url : "<c:url value='/product/addProduct'/>",
+// 			type : "POST",
+// 			data : productData,
+// 			datatype : "json",
+// 			contentType : false,
+// 			processData : false,
+// 			success : function(data) {
+// 				$("#pageItems").html(data);
+// 			},
+// 			error : function() {
+// 				$("#pageItems").html("ajax new product gg");
+// 			}
+// 		});
+// 	});
 </script>
 
