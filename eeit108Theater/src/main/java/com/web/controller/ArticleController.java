@@ -75,12 +75,14 @@ public class ArticleController {
 	public String getArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
 		session = request.getSession();
 		ArticleBean ab = service.getArticleById(no);
+		ReplyBean rb = new ReplyBean();
 		List<ReplyBean> list = service.getReplysByArticle(no);
 		LikeOrDislikeBean lb = new LikeOrDislikeBean();
 		String NoS =Integer.toString(ab.getNo());
 		lb.setArticleNoString(NoS);
 		
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("Reply", rb);
 		model.addAttribute("Replys", list);
 		model.addAttribute("LikeOrDislikeBean", lb);
 		model.addAttribute("Article", service.getArticleById(no));
@@ -584,7 +586,7 @@ public class ArticleController {
 	@RequestMapping(value = "/admin/emp_Articles", method = RequestMethod.GET)
 	public String getEmpArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		
-		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<ArticleBean> list = service.getArticlesByMovieNo2(no);
 		List<MovieBean> moviesForumList = service.getAllMovies();
 		model.addAttribute("Articles", list);
 		model.addAttribute("Movies", moviesForumList);
@@ -596,7 +598,7 @@ public class ArticleController {
 	@RequestMapping(value = "/reArticles", method = RequestMethod.POST)
 	public String getReArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		
-		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<ArticleBean> list = service.getArticlesByMovieNo2(no);
 		List<MovieBean> moviesForumList = service.getAllMovies();
 		model.addAttribute("Articles", list);
 		model.addAttribute("Movies", moviesForumList);
