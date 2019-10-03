@@ -45,9 +45,19 @@
             <div class="form-label-group">
               <form:select   class="form-control" 
                required="required" path="available">
-              
-               <form:option value="0" >停權狀態</form:option>
-				<form:option value="1" selected="selected">正常狀態</form:option>
+               
+                <c:choose> 
+					<c:when test="${mem.available == true}">
+						<form:option value="0" >停權狀態</form:option>
+						<form:option value="1" selected="selected">正常狀態</form:option>
+					</c:when>
+					<c:otherwise>
+                 		<form:option value="0" selected="selected">停權狀態</form:option>
+						<form:option value="1" >正常狀態</form:option>
+            		</c:otherwise>
+				 </c:choose>
+				 
+               
 				
                </form:select>
                
@@ -59,8 +69,18 @@
               <form:select  class="form-control" 
                required="required" path="commentPermission">
              
-               <form:option value="0" >禁言中</form:option>
-				<form:option value="1" selected="selected">未禁言</form:option>			
+             	<c:choose> 
+					<c:when test="${mem.commentPermission == true}">
+						<form:option value="0" >禁言中</form:option>
+						<form:option value="1" selected="selected">未禁言</form:option>
+					</c:when>
+					<c:otherwise>
+                 		<form:option value="0" selected="selected">禁言中</form:option>
+						<form:option value="1" >未禁言</form:option>
+            		</c:otherwise>
+				 </c:choose>
+             
+		
                </form:select>
           </div>
           </div>

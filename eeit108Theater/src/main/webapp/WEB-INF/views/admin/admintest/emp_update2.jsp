@@ -28,7 +28,7 @@ float:right;
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/index_include3.jsp" />
+
 <div id="main">
 		<div class="container" style="width: 600px;">
 			<ol class="breadcrumb">
