@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
 import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
@@ -48,8 +49,10 @@ public class ArticleController {
 	public String list(Model model,@RequestParam("id") Integer no, HttpServletRequest request,HttpSession session) {
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
+		List<ArticleBean> toplist = service.getTopArticlesByMovieNo(no);
 //		List<SysArticleBean> Syslist = service.getSysArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
+		model.addAttribute("TopArticles", toplist);
 //		model.addAttribute("SysArticles", Syslist);
 		MovieBean mb = service.getMovieByNo(no);
 		model.addAttribute("Movie", mb);
@@ -229,6 +232,7 @@ public class ArticleController {
 		{
 			errorMessage.put("titleOver", "字數超過30字");
 		}
+		ATypeBean atb = service.getAT(1);
 		ab.setLikeCount(0);
 		ab.setDislikeCount(0);
 		ab.setReport(false);
@@ -238,6 +242,14 @@ public class ArticleController {
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
+		if(request.getParameter("typeString")==atb.getTypeName())
+		{
+			ab.setType(false);
+		} else if(request.getParameter("typeString")!=atb.getTypeName())
+		{
+			ab.setType(true);
+		}
+		
 		service.addArticle(ab);
 		String MovieNoS =Integer.toString(ab.getMovie().getNo());
 		
@@ -344,6 +356,7 @@ public class ArticleController {
 		{
 			errorMessage.put("titleOver", "字數超過30字");
 		}
+		ATypeBean atb = service.getAT(1);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
 		System.out.println("==postString==="+request.getParameter("noString"));
 		int NoS = Integer.parseInt(request.getParameter("noString"));
@@ -361,7 +374,13 @@ public class ArticleController {
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
-		
+		if(request.getParameter("typeString")==atb.getTypeName())
+		{
+			ab.setType(false);
+		} else if(request.getParameter("typeString")!=atb.getTypeName())
+		{
+			ab.setType(true);
+		}
 		
 		System.out.println("title=" + ab.getTitle());
 		System.out.println("title.length=" + ab.getTitle().length());
@@ -499,10 +518,15 @@ public class ArticleController {
 		return service.getAllTags();
 	}
 	
-//	@ModelAttribute("systagList")
-//	public List<String> getSysTagList() {
-//		return service.getAllSysTags();
-//	}
+	@ModelAttribute("systagList")
+	public List<String> getSysTagList() {
+		return service.getAllSysTags();
+	}
+	
+	@ModelAttribute("aTypeList")
+	public List<String> getATypeList() {
+		return service.getATypeList();
+	}
 	
 	@RequestMapping(value = "/addReport", method = RequestMethod.GET)
 	public String getAddReportForm(@RequestParam("id") Integer no, Model model) {
@@ -540,16 +564,7 @@ public class ArticleController {
 		rb.setAuthor(new MemberBean(AuthorSS));
 //		rb.setAuthor(new MemberBean(rb.));
 		rb.setPostTime(new Date());
-		ab.setNo(ab.getNo());
-		ab.setAvailable(ab.getAvailable());
-		ab.setTitle(ab.getTitle());
-		ab.setContent(ab.getContent());
-		ab.setTag(ab.getTag());
-		ab.setPostTime(ab.getPostTime());
-		ab.setLikeCount(ab.getLikeCount());
-		ab.setDislikeCount(ab.getDislikeCount());
-		ab.setAuthor(ab.getAuthor());
-		ab.setMovie(ab.getMovie());
+		
 		ab.setReport(true);
 		System.out.println("article=" + rb.getArticle());
 		System.out.println("content=" + rb.getContent());
@@ -623,29 +638,23 @@ public class ArticleController {
 		String LockButton = request.getParameter("lockbutton");
 		String cancelButton = request.getParameter("cancelbutton");
 		ArticleBean ab = service.getArticleById(no);
-			
+		MemberBean mb = service.getMemberById(ab.getAuthor().getNo());
 		if ("lock".equals(LockButton)&&ab.getAvailable()==true) {
-			ab.setNo(ab.getNo());
-			ab.setTitle(ab.getTitle());
+			
             ab.setAvailable(false);
-            ab.setContent(ab.getContent());
-            ab.setPostTime(ab.getPostTime());
-            ab.setTag(ab.getTag());
-            ab.setLikeCount(ab.getLikeCount());
-            ab.setDislikeCount(ab.getDislikeCount());
+            
+            mb.setBanCounter(mb.getBanCounter()+1);
             System.out.println("檢查數值" + ab.getNo());
             service.editArticle(ab);
+            service.editMember(mb);
         } else if ("lock".equals(LockButton)&&ab.getAvailable()==false) {
-        	ab.setNo(ab.getNo());
-			ab.setTitle(ab.getTitle());
+        	
             ab.setAvailable(true);
-            ab.setContent(ab.getContent());
-            ab.setPostTime(ab.getPostTime());
-            ab.setTag(ab.getTag());
-            ab.setLikeCount(ab.getLikeCount());
-            ab.setDislikeCount(ab.getDislikeCount());
+            
+            mb.setBanCounter(mb.getBanCounter()-1);
             System.out.println("檢查數值" + ab.getNo());
             service.editArticle(ab);
+            service.editMember(mb);
         }
 
 		return "forward:/reArticles";
