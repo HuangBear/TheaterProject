@@ -38,6 +38,8 @@ span {
 
 
 <script>
+
+
 	$(function() {
 		$("[name='bb']").click(function() {
 			var str = $(this).attr("id");
@@ -46,6 +48,11 @@ span {
 			$(".hide").not(targete).hide();
 			$(targete).show();
 		});
+	});
+	$(function() {
+		var str =${bulletin_no};
+		var id="#tn_" +str;
+		$(id).trigger("click");
 	});
 </script>
 </head>
@@ -64,9 +71,9 @@ span {
 						<hr class="first" />
 						<section>
 							<header>
-								<h2>
+								<h3>
 									<a>影城公告</a>
-								</h2>
+								</h3>
 							</header>
 							<div class="row gtr-50 mb-2 mt-3">
 								<c:forEach var='sb' items='${statusBulletin}' varStatus="i" >

@@ -116,14 +116,13 @@
 	});
 	//一鍵輸入
 	$('#oneSet').click(function() {
-		$('#title').val('測試測試');
-		$('#context').val('測試測試測試測試測試測試測試');
+		$('#title').val('開幕限時優惠');
+		$('#context').val('慶開幕，開幕優惠期間到716電影院看電影，兩人同行沒有優惠，五人同行還是沒有，不管來幾個都沒有!!!');
 		$('#from').val('2019-10-10');
 		$('#to').val('2019-11-11');
-		$('[name=disount]').val('2');
-		$('#discountTickBuy').val('7');
-		$('#discountTickFree').val('2');
-		$('#employeeId').val('2');
+		$('[name=disount]').val('0');
+		$('#discountTickBuy').val('');
+		$('#discountTickFree').val('');
 	});
 
 	$("#bulletinBean").submit(function(event) {
@@ -355,7 +354,7 @@
 									</form>
 								</div>
 								<div class="col-md-5">
-									<img id="showPhoto" />
+									<img id="showPhoto"  width="500px" />
 								</div>
 							</div>
 						</div>
