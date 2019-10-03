@@ -3,18 +3,18 @@ package com.web.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
 import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.entity.ReportBean;
-import com.web.entity.SysArticleBean;
 import com.web.entity.MemberBean;
 
 public interface ArticleDao {
 	
-	MemberBean  getMemberById(int memberId);
+	MemberBean getMemberById(int memberId);
 	
 	List<ArticleBean> getAllArticles();
 	
@@ -24,7 +24,7 @@ public interface ArticleDao {
 	List<MemberBean>  getMemberList();
 	
 	List<String>  getAllTags();
-//	List<String> getAllSysTags();
+	List<String> getAllSysTags();
 	List<ArticleBean>  getArticlesByTag(String Tag);
 	
 	public ArticleBean getArticleById(int no);
@@ -33,7 +33,7 @@ public interface ArticleDao {
 	public ReplyBean getReplyByArticleId(int article);
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article);
 	
-	void  addArticle(ArticleBean article);
+	void addArticle(ArticleBean article);
 	void editArticle(ArticleBean article);
 //	void addSysArticle(SysArticleBean article);
 	void addReply(ReplyBean reply);
@@ -41,6 +41,7 @@ public interface ArticleDao {
 	void addReport(ReportBean rb);
 	void addGp(LikeOrDislikeBean likeOrDislike);
 	void updateGp(LikeOrDislikeBean likeOrDislike);
+	void editMember(MemberBean member);
 	
 	MovieBean getMovieByNo(int movieNo);
 	LikeOrDislikeBean getLikeOrDislikeNo(int memberNo, int article);
@@ -51,6 +52,15 @@ public interface ArticleDao {
 	List<MovieBean> getAllMovies();
 
 	List<ArticleBean> getArticlesByMovieNo2(int movieNo);
+
+	List<ArticleBean> getTopArticlesByMovieNo(int movieNo);
+
+	List<String> getATypeList();
+
+	ATypeBean getAT(int no);
+	
+
+	
 
 //	List<SysArticleBean> getSysArticlesByMovieNo(int movieNo);
 

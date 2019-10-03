@@ -2,20 +2,20 @@ package com.web.service;
 
 import java.util.List;
 
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.entity.ReportBean;
-import com.web.entity.SysArticleBean;
 
 public interface ArticleService {
 	List<ArticleBean>  getAllArticles(); 
 	List<ReplyBean>  getAllReplys();
 	List<ReplyBean>  getReplysByArticle(int article);
 	List<String>  getAllTags();
-//	List<String> getAllSysTags();
+	List<String> getAllSysTags();
 
 	List<ArticleBean>  getArticlesByTag(String tag);
 	
@@ -33,6 +33,7 @@ public interface ArticleService {
 	void addReport(ReportBean rb);
 	void addGp(LikeOrDislikeBean likeOrDislike);
 	void updateGp(LikeOrDislikeBean likeOrDislike);
+	void editMember(MemberBean member);
 	MemberBean  getMemberById(int memberId);
 	MovieBean  getMovieByNo(int movieNo);
 	
@@ -42,6 +43,9 @@ public interface ArticleService {
 	List<MovieBean> getAllMovies();
 //	List<SysArticleBean> getSysArticlesByMovieNo(int movieNo);
 	List<ArticleBean> getArticlesByMovieNo2(int movieNo);
+	List<ArticleBean> getTopArticlesByMovieNo(int movieNo);
+	List<String> getATypeList();
+	ATypeBean getAT(int no);
 
 
 }

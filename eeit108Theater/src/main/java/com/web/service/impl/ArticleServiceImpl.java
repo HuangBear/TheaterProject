@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.dao.ArticleDao;
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
 import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
@@ -16,7 +17,6 @@ import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.ReplyBean;
 import com.web.entity.ReportBean;
-import com.web.entity.SysArticleBean;
 import com.web.service.ArticleService;
 
 @Service
@@ -34,6 +34,12 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
 		return dao.getArticlesByMovieNo(movieNo);
+	}
+    
+    @Transactional
+	@Override
+	public List<ArticleBean> getTopArticlesByMovieNo(int movieNo) {
+		return dao.getTopArticlesByMovieNo(movieNo);
 	}
     
     @Transactional
@@ -66,11 +72,17 @@ public class ArticleServiceImpl implements ArticleService {
 		return dao.getAllTags();
 	}
     
-//    @Transactional
-//	@Override
-//	public List<String> getAllSysTags() {
-//		return dao.getAllSysTags();
-//	}
+    @Transactional
+	@Override
+	public List<String> getAllSysTags() {
+		return dao.getAllSysTags();
+	}
+    
+    @Transactional
+	@Override
+	public List<String> getATypeList() {
+		return dao.getATypeList();
+	}
     
     @Transactional
 	@Override
@@ -172,6 +184,18 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Transactional
 	@Override
+	public void editMember(MemberBean member) {
+    	if( member !=null) {
+			dao.editMember(member);
+			
+		}else {
+			System.out.println("insert null");
+		}
+		
+	}
+    
+    @Transactional
+	@Override
 	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo,int article) {
 		return dao.getLikeOrDislikeNo(memberNo,article);
 	}
@@ -198,6 +222,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
 	public List<MovieBean> getAllMovies() {
 		return dao.getAllMovies();
+	}
+    
+    @Transactional
+	@Override
+    public ATypeBean getAT(int no){
+		return dao.getAT(no);
 	}
     
     
