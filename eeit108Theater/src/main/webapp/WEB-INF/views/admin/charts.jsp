@@ -19,69 +19,69 @@
 
 <script type="text/javascript">
 
-	google.charts.load("current", {
-		packages : [ "corechart" ]
-	});
+// 	google.charts.load("current", {
+// 		packages : [ "corechart" ]
+// 	});
 
-	google.charts.setOnLoadCallback(drawChart);
+// 	google.charts.setOnLoadCallback(drawChart);
 
-	function drawChart() {
+// 	function drawChart() {
 		
-	var data = google.visualization.arrayToDataTable([['Language', 'Speakers (in millions)'],
-		<c:forEach items="${buelltinPreMoon}" var="bPM" >
-			['${bPM.chartKey}', ${bPM.chartValue}],
-	 </c:forEach >
-		]);
+// 	var data = google.visualization.arrayToDataTable([['Language', 'Speakers (in millions)'],
+// 		<c:forEach items="${buelltinPreMoon}" var="bPM" >
+// 			['${bPM.chartKey}', ${bPM.chartValue}],
+// 	 </c:forEach >
+// 		]);
 
 		
-		var options = {
-			legend : 'none',
-			pieSliceText : 'label',
-			title : '每月公告',
-			pieStartAngle : 100,
-		};
+// 		var options = {
+// 			legend : 'none',
+// 			pieSliceText : 'label',
+// 			title : '每月公告',
+// 			pieStartAngle : 100,
+// 		};
 
-		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-		chart.draw(data, options);
-	}
+// 		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+// 		chart.draw(data, options);
+// 	}
 	
 	
-	// 		google.charts.load("current", {
-	// 			packages : [ "corechart" ]
-	// 		});
-	google.charts.setOnLoadCallback(drawChart1);
+// 	// 		google.charts.load("current", {
+// 	// 			packages : [ "corechart" ]
+// 	// 		});
+// 	google.charts.setOnLoadCallback(drawChart1);
 
-	function drawChart1() {
-		var data1 = google.visualization.arrayToDataTable([ [ 'Task', 'Hours per Day' ], [ 'Work', 11 ],
-				[ 'Eat', 2 ], [ 'Commute', 2 ], [ 'Watch TV', 2 ], [ 'Sleep', 7 ] ]);
+// 	function drawChart1() {
+// 		var data1 = google.visualization.arrayToDataTable([ [ 'Task', 'Hours per Day' ], [ 'Work', 11 ],
+// 				[ 'Eat', 2 ], [ 'Commute', 2 ], [ 'Watch TV', 2 ], [ 'Sleep', 7 ] ]);
 
-		var options1 = {
-			title : 'My Daily Activities',
-			is3D : true,
-		};
+// 		var options1 = {
+// 			title : 'My Daily Activities',
+// 			is3D : true,
+// 		};
 
-		var chart1 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-		chart1.draw(data1, options1);
-	}
+// 		var chart1 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+// 		chart1.draw(data1, options1);
+// 	}
 
-	google.charts.setOnLoadCallback(drawChart2);
+// 	google.charts.setOnLoadCallback(drawChart2);
 
-	function drawChart2() {
-		var data = google.visualization.arrayToDataTable([ [ 'Year', 'Sales', 'Expenses' ],
-				[ '2004', 1000, 400 ], [ '2005', 1170, 460 ], [ '2006', 660, 1120 ], [ '2007', 1030, 540 ] ]);
+// 	function drawChart2() {
+// 		var data = google.visualization.arrayToDataTable([ [ 'Year', 'Sales', 'Expenses' ],
+// 				[ '2004', 1000, 400 ], [ '2005', 1170, 460 ], [ '2006', 660, 1120 ], [ '2007', 1030, 540 ] ]);
 
-		var options = {
-			title : 'Company Performance',
-			curveType : 'function',
-			legend : {
-				position : 'bottom'
-			}
-		};
+// 		var options = {
+// 			title : 'Company Performance',
+// 			curveType : 'function',
+// 			legend : {
+// 				position : 'bottom'
+// 			}
+// 		};
 
-		var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+// 		var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
-		chart.draw(data, options);
-	}
+// 		chart.draw(data, options);
+// 	}
 
 	// Area Chart Example
 	var ctx = document.getElementById("myAreaChart");
@@ -89,12 +89,9 @@
 	var myLineChart = new Chart(ctx, {
 		type : 'line',
 		data : {
-			labels : [ (Today.getMonth() + 1) + " 月 " + (Today.getDate() - 5) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 4) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 3) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 2) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 1) + " 日",
-					(Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日(本日)" ],
+			labels : [ 	<c:forEach items="${buelltinPreMoon}" var="bPM" >
+			'${bPM.chartKey}' ,
+	 		</c:forEach > ],
 			datasets : [ {
 				label : "Sessions",
 				lineTension : 0.3,
@@ -107,7 +104,9 @@
 				pointHoverBackgroundColor : "rgba(2,117,216,1)",
 				pointHitRadius : 50,
 				pointBorderWidth : 2,
-				data : [ 0, 3, 2, 1, 7, 2 ],
+				data : [ <c:forEach items="${totalCount}" var="tc" >
+				'${tc}' ,
+		 		</c:forEach > ],
 			} ],
 		},
 		options : {
@@ -120,14 +119,14 @@
 						display : false
 					},
 					ticks : {
-						maxTicksLimit : 7
+// 						maxTicksLimit : 7
 					}
 				} ],
 				yAxes : [ {
 					ticks : {
 						min : 0,
-						max : 10,
-						maxTicksLimit : 5
+						max : 20,
+// 						maxTicksLimit : 5
 					},
 					gridLines : {
 						color : "rgba(0, 0, 0, .125)",
@@ -146,10 +145,10 @@
 	var myPieChart = new Chart(ctx, {
 	  type: 'pie',
 	  data: {
-	    labels: ["Blue", "Red", "Yellow", "Green"],
+	    labels: [ "純公告", "現金折扣", "票券折扣"],
 	    datasets: [{
-	      data: [20, 30, 10, 40],
-	      backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+	      data: [${discount0PreMoon}, ${discount1PreMoon}, ${discount2PreMoon}],
+	      backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
 	    }],
 	  },
 	});
@@ -163,7 +162,7 @@
 	    labels: [
 			<c:forEach items="${buelltinPreMoon}" var="bPM" >
 			'${bPM.chartKey}' ,
-	 </c:forEach >
+	 		</c:forEach >
 	       	
 	    	],
 	    datasets: [{
@@ -193,7 +192,7 @@
 	      yAxes: [{
 	        ticks: {
 	          min: 0,
-	          max: 5,
+	          max: 10,
 // 	          maxTicksLimit: 5
 	        },
 	        gridLines: {
@@ -234,16 +233,16 @@
 				<tr>
 
 					<td>
-						<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
-
+						<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas>
+<p>總公告數</p>
 					</td>
 					<td>
-						<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myBarChart" width="100%" height="50"></canvas> --%>
-
+						<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas>
+<p>每月公告數</p>
 					</td>
 					<td>
-						<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myPieChart" width="100%" height="100"></canvas> --%>
-
+						<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas> 
+<p>公告類型統計</p>
 					</td>
 
 					<td>

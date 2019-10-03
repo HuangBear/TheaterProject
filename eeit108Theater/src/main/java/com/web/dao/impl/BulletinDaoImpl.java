@@ -117,48 +117,34 @@ public class BulletinDaoImpl implements BulletinDao {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Integer getBuelltinPreMoon(String date) {
-		String frist = date + "-01 00:00:00";
-		String last = date + "-31 00:00:00";
+	public List<BulletinBean> getBuelltinPreMoon(String date) {
+		Session session = factory.getCurrentSession();
+		List<BulletinBean> list = new ArrayList<>();
+		String first = date + "-01 00:00:00";
+		String last = date + "-29 00:00:00";
 
-		Date fristDate = null, lastDate = null;
+		Date firstDate = null, lastDate = null;
 		SimpleDateFormat sdf = new SimpleDateFormat();
 		sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
 		try {
-			fristDate = sdf.parse(frist);
+			firstDate = sdf.parse(first);
 			lastDate = sdf.parse(last);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println(fristDate);
+		System.out.println(firstDate);
 		System.out.println(lastDate);
-		Session session = factory.getCurrentSession();
-		Object buelltinPreMoon = session
-				.createQuery("SELECT COUNT(*) FROM BulletinBean b WHERE b.countNum = "
-						+ "(select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = "
-						+ "b.bortingId and bb.postTime BETWEEN :fristDate and :lastDate)")
-				.setParameter("fristDate", fristDate).setParameter("lastDate", lastDate)
-				.uniqueResult();
-		int bPM = Integer.parseInt(buelltinPreMoon.toString());
-		System.out.println(bPM);
-		return bPM;
+
+		list = session
+				.createQuery("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) "
+						+ "from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.postTime "
+						+ "BETWEEN :fristDate and :lastDate)")
+				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
+		System.out.println(list);
+		return list;
 	}
 
-//	@Override
-	public Integer getBuelltinPreYear(String date) {
-		String fristDate = date + "-01-01";
-		String lastDate = date + "-12-31";
-		Session session = factory.getCurrentSession();
-		Object buelltinPreYear = session
-				.createQuery("SELECT COUNT(*) FROM BulletinBean b WHERE b.countNum = "
-						+ "(select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = "
-						+ "b.bortingId and bb.postTime BETWEEN :fristDate and :lastDate)")
-				.setParameter("fristDate", fristDate).setParameter("lastDate", lastDate)
-				.uniqueResult();
-		int bPY = Integer.parseInt(buelltinPreYear.toString());
-		System.out.println(bPY);
-		return bPY;
-	}
 }
