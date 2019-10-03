@@ -64,8 +64,8 @@ p {
 									</div>
 							</div>
 							<div class="col-md-7 h2 col-xs-8">
-									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movieName}</div>
-									<div>(<c:out value="${order.timeTable.version}"/>) ${order.timeTable.movie.engMovieName}</div>
+									<div><c:out value="(${order.timeTable.version})"/> ${order.timeTable.movieName}</div>
+									<div><c:out value="(${order.timeTable.version})"/> ${order.timeTable.movie.engMovieName}</div>
 								</div>
 							<div class="col-md-3 col-xs-12">
 								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>
@@ -120,7 +120,7 @@ p {
 											<div>商品明細</div>
 											<c:forEach var='item' items="${order.orderItems}">
 												<p>${item.itemName}</p>
-												<p style="text-align: right;">${item.unitPrice}X${item.quantity}=${item.sumPrice}</p>
+												<p style="text-align: right;">${item.priceDetail}</p>
 											</c:forEach>
 										</td>
 									</tr>
@@ -141,9 +141,6 @@ p {
 											</td>
 										</tr>
 									</c:if>
-
-
-
 								</tbody>
 							</table>
 						</div>

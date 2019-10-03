@@ -108,7 +108,7 @@
 									 
 								<dl><dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
 									 重填</form:button><br>	
-						    
+						        <button type="button" id="oneSet" >一鍵填入 會員:Azure</button>
 				
 								
 							</dd>
@@ -120,8 +120,9 @@
 								
 						</form:form>
 							
-								
-								<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
+								<center>
+								<div class="g-signin2" style="margin:auto;" data-onsuccess="onSignIn" id="myP"/>
+								</center>
 								 <form action="googleMember" id="myGoogleform" method="POST">
                  						<input type=hidden id=registGoogleName name="registGoogleName" value="">
                  						<input type=hidden id=registGoogleEmail name="registGoogleEmail" value="">
@@ -130,6 +131,7 @@
                 						
                  				</form>
                  				<button onclick="myFunction()" id="myO" style="visibility:hidden">Google Sign Out</button>
+                 				
 		
 			<script type="text/javascript">
 			function onSignIn(googleUser) {
@@ -139,7 +141,7 @@
 				  var name=profile.getName();
 				  var email=profile.getEmail();
 				
-				  document.getElementById("myO").style.visibility = "visible";
+				  //document.getElementById("myO").style.visibility = "visible";
 				  document.getElementById("myP").style.visibility = "hidden";
 				
 				  
@@ -151,6 +153,16 @@
 				
 			</script>
 			
+			<script>
+			$('#oneSet').click(function() {
+
+			$('#email').val('eeit10806@gmail.com');
+		
+			$('#password').val('Do!ng123');
+		
+			})
+			</script>
+		
 			<script>
 			function myFunction() {
 			document.getElementById("myO").style.visibility = "hidden";

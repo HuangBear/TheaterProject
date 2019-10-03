@@ -1,5 +1,6 @@
 package com.web.service.impl;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	JavaMailSender mailSender;
+	@Autowired
+	ServletContext context;
 	
 	@Override
 	public void insertMember(MemberBean memBean) {
@@ -152,14 +156,17 @@ public class MemberServiceImpl implements MemberService{
 		MemberBean mb=new MemberBean();
 		mb=null;
 		String ercryptPwd = SecurityCipher.encryptString(password);
-		List<MemberBean> list=memberDao.getAllMembers();
-		for(MemberBean memberBean:list) {
-			if(memberBean.getEmail().equals(email)&& memberBean.getPassword().equals(ercryptPwd)){
-				mb=memberBean;
-			}
+//		List<MemberBean> list=memberDao.getAllMembers();
+//		for(MemberBean memberBean:list) {
+//			if(memberBean.getEmail().equals(email)&& memberBean.getPassword().equals(ercryptPwd)){
+//				mb=memberBean;
+//			}
+//		}
+		mb=memberDao.checkMemberEmail(email);
+		if(mb!=null&&mb.getPassword().equals(ercryptPwd)) {
+			return mb;
 		}
-		
-		return mb;
+		return null;
 	}
 
 	@Override
@@ -167,15 +174,69 @@ public class MemberServiceImpl implements MemberService{
 		MimeMessage message = mailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-			
+			String builder = "<html>" +
+					"<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>" +
+					"<body>" + 
+						"<div align='center' style='font-family: Arial, Helvetica, sans-serif'>" + 
+								"<table cellpadding='5px' style='width: 50%;line-height: 35px; min-width: 350px; ; border-radius: 10px; white-space: nowrap;'>" + 
+									"<thead align='center'>" + 
+										"<tr>" + 
+											"<td colspan='2'>" + 
+												"<div><img src='cid:logoImg' style='width: 100%;border-radius: 5px;'></div>" + 
+											"</td>" + 
+										"</tr>" + 
+										"<tr>" + 
+											"<th colspan='2'>" + 
+												"<div style='margin-bottom: 5px'>親愛的顧客您好，感謝您註冊7-1CINEMA影城會員</div>" + 
+											"</th>" + 
+										"</tr>" + 
+										"<tr>" + 
+											"<th colspan='2'>" + 
+												"<div style='background-color: lightgray;border-radius: 5px;padding-top: 2.5px;padding-bottom: 2.5px'>信箱驗證信</div>" + 
+											"</th>" + 
+										"</tr>" + 
+									"</thead>" + 
+									"<tbody style='text-align:left;'>"+
+										"<tr>"+
+											"<th style='width:50%'>"+
+												"會員名稱 "+
+											"</th>"+
+											"<th style='width:50%'>"+
+											memBean.getName()+
+											"</th>"+
+										"</tr>"+
+										"<tr>"+
+												"<th>"+
+													"連結驗證"+
+												"</th>"+
+												"<td>"+
+												"<h4><a href='" + request.getScheme() + "://"
+												+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
+												+ "/registerEmail?code="+memBean.getEmailCode()+"'>"+ "點此連結驗證信箱</a></h4>"+
+												"</td>"+
+										"</tr>"+
+														
+									"</tbody>"+
+									"<tfoot>"+
+										"<tr>"+
+											"<td colspan='2'>"+
+												"<div style='text-align:center;color:cornflowerblue'><b>7-1CINEMA</b></div>"+
+											"</td>"+
+										"</tr>"+
+									"</tfoot>" +
+								"</table>" + 
+						"</div>" + 
+					"</body>" + 
+					"</html>";
 			helper.setFrom("eeit108sevenminusone@gmail.com");// 發件人
 			helper.setTo(memBean.getEmail());// 收件人
 			helper.setSubject("7-1 CINEMA影城  會員認證信");// 主題
-			helper.setText("<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><body>"
-					+ "<h3>親愛的會員 " + memBean.getName()+ " 您好" + "</h3><br><h4>感謝您註冊本網站會員 </h4> " + "<h4><a href='" + request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
-					+ "/registerEmail?code="+memBean.getEmailCode()+"'>"+ "請點此連結驗證信箱</a></h4><br> <h3><p> 7-1 CINEMA 團隊 </p></h3>" + "</body></html>", true);// 正文
-		
+//			helper.setText("<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><body>"
+//					+ "<h3>親愛的會員 " + memBean.getName()+ " 您好" + "</h3><br><h4>感謝您註冊本網站會員 </h4> " + "<h4><a href='" + request.getScheme() + "://"
+//					+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath()
+//					+ "/registerEmail?code="+memBean.getEmailCode()+"'>"+ "請點此連結驗證信箱</a></h4><br> <h3><p> 7-1 CINEMA 團隊 </p></h3>" + "</body></html>", true);// 正文
+			helper.setText(builder,	true);
+			helper.addInline("logoImg", new File(context.getRealPath("/WEB-INF/resources/images/frontend/cinema.jpg")));
 		
 		} catch (MessagingException e) {
 			System.out.println(e.getMessage());

@@ -7,11 +7,11 @@ import com.web.entity.EmployeeBean;
 
 public interface BulletinDao {
 
-	List<BulletinBean> getExistenceBulletin();
+	List<BulletinBean> getExistenceBulletin(String str, String targete);
 
-	List<BulletinBean> getExpiredBulletin();
+	List<BulletinBean> getExpiredBulletin(String targete);
 
-	List<BulletinBean> getDeadBulletin();
+	List<BulletinBean> getDeadBulletin(String targete);
 
 	List<BulletinBean> getSameBulletinByBortingId(Integer no);
 
@@ -24,5 +24,9 @@ public interface BulletinDao {
 	BulletinBean getBulletinById(Integer bulletin_no);
 
 	List<BulletinBean> getDiscount(String date);
+
+	Integer getBuelltinPreMoon(String date);
+
+	Integer getBuelltinPreYear(String date);
 
 }

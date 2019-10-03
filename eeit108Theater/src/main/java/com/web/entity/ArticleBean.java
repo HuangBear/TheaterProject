@@ -29,9 +29,11 @@ public class ArticleBean implements Serializable {
 	@Column(name = "article_no")
 	private Integer no;	
 	private Boolean available;
+	private Boolean report;
 	private String title;
 	private String content;
 	private String tag;
+	private Boolean type;
 	private Date postTime;
 	private Integer likeCount;
 	private Integer dislikeCount;
@@ -50,10 +52,14 @@ public class ArticleBean implements Serializable {
 	private String movieString;
 	@Transient
 	private String availableString;
+	@Transient
+	private String typeString;
 	
 	@OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
 	private Set<ReplyBean> replys;
-	//private String  	companyName;
+	
+	@OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
+	private Set<ReportBean> reports;
 
 	@ManyToOne
 	@JoinColumn(name = "fk_author_id")
@@ -71,7 +77,7 @@ public class ArticleBean implements Serializable {
 		this.no = no;
 	}
 	
-	public ArticleBean(Integer no, Boolean available, String title, String content, String tag, Date postTime,
+	public ArticleBean(Integer no, Boolean available, String title, String content, String tag, Boolean type, Date postTime,
 			Integer likeCount, Integer dislikeCount, String postTimeString, Set<ReplyBean> replys, MemberBean author,
 			MovieBean movie) {
 		super();
@@ -80,6 +86,7 @@ public class ArticleBean implements Serializable {
 		this.title = title;
 		this.content = content;
 		this.tag = tag;
+		this.type = type;
 		this.postTime = postTime;
 		this.likeCount = likeCount;
 		this.dislikeCount = dislikeCount;
@@ -147,11 +154,25 @@ public class ArticleBean implements Serializable {
 		this.available = available;
 	}
 	
+	public Boolean getReport() {
+		return report;
+	}
+	public void setReport(Boolean report) {
+		this.report = report;
+	}
+	
 	public Set<ReplyBean> getReplys() {
 		return replys;
 	}
 	public void setReplys(Set<ReplyBean> replys) {
 		this.replys = replys;
+	}
+	
+	public Set<ReportBean> getReports() {
+		return reports;
+	}
+	public void setReports(Set<ReportBean> reports) {
+		this.reports = reports;
 	}
 	public String getTag() {
 		return tag;
@@ -201,6 +222,18 @@ public class ArticleBean implements Serializable {
 	}
 	public void setMovieString(String movieString) {
 		this.movieString = movieString;
+	}
+	public String getTypeString() {
+		return typeString;
+	}
+	public void setTypeString(String typeString) {
+		this.typeString = typeString;
+	}
+	public Boolean getType() {
+		return type;
+	}
+	public void setType(Boolean type) {
+		this.type = type;
 	}
 	
 }

@@ -135,11 +135,12 @@
 </head>
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
-		<div id="header">
+		<div id="header1">
 			<!-- Header -->
 			<jsp:include page="header.jsp" />
 		</div>
 		<!-- Main -->
+		<div class="wrapper style1" style="background-color:#f0f4f4;">
 		<div id="B">
 			<center>
 				<table style="width:1440px;margin:auto;">				
@@ -165,6 +166,7 @@
 					
 
 			</center>		
+		</div>
 		</div>
 		<hr>
 

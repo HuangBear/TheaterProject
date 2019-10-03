@@ -51,13 +51,13 @@
 					<form:form method='POST' modelAttribute="ReplyBean"
 						class='form-horizontal' enctype="multipart/form-data">
 						<fieldset>
-							<div class="form-group">
-								<div class="col-lg-10">
-									<form:input id="articleString" readonly="true"
-										path="articleString" value='${ArticleBean.noString}'
-										type='hidden' class='form:input-large' />
-								</div>
-							</div>
+<!-- 							<div class="form-group"> -->
+<!-- 								<div class="col-lg-10"> -->
+<%-- 									<form:input id="articleString" readonly="true" --%>
+<%--  										path="articleString" value='${ArticleBean.noString}'  --%>
+<%--  										type='hidden' class='form:input-large' />  --%>
+<!-- 								</div> -->
+<!-- 							</div> -->
 
 							<div class="form-group">
 								<label class="control-label col-lg-2 col-lg-4" for='content'>
@@ -74,7 +74,7 @@
 
 							<div class="form-group">
 								<div class='col-lg-offset-2 col-lg-2'>
-									<input id="btnefit" type='submit' class='btn btn-primary'
+									<input id="btnedit" type='submit' class='btn btn-primary'
 										value="Submit" />
 								</div>
 							</div>

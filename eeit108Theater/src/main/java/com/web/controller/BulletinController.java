@@ -40,7 +40,7 @@ import com.web.service.BulletinService;
 import data.util.SystemUtils2018;
 
 @Controller
-@RequestMapping(value = "/admin")
+//@RequestMapping(value = "/admin")
 public class BulletinController {
 
 	@Autowired
@@ -50,25 +50,43 @@ public class BulletinController {
 
 	final String Root = "admin/";
 
+	// other2news
+	@RequestMapping(value = "/news", method = RequestMethod.GET)
+	public String other2news(HttpServletRequest req, Model model) {
+		System.out.println("other2news");
+		List<BulletinBean> list = service.getExistenceBulletin("startDate", "ASC");
+
+		Integer bulletin_no = (Integer) req.getAttribute("bulletin_no");
+		System.out.println("bulletin_no=1=" + bulletin_no);
+		if (bulletin_no == null) {
+			bulletin_no = list.get(0).getNo();
+		}
+		System.out.println("bulletin_no=2=" + bulletin_no);
+		model.addAttribute("statusBulletin", list);
+		model.addAttribute("bulletin_no", bulletin_no);
+		return "news";
+	}
+
+	// index2news
+	@RequestMapping(value = "/news/{bulletin_no}", method = RequestMethod.GET)
+	public String index2news(HttpServletRequest req, @PathVariable Integer bulletin_no) {
+		System.out.println("index2news");
+		req.setAttribute("bulletin_no", bulletin_no);
+		return "forward:/news";
+	}
+
 	// other2bulletin_all
-	@RequestMapping(value = "/bulletin_all", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/bulletin_all", method = RequestMethod.GET)
 	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
-		List<List<BulletinBean>> list = service.getStatsBulletin();
-
-		// permission
-//		Integer permission = getPermission(session);
-//		if (permission < obb.getEmployee().getPermission() || no != obb.getEmployee().getNo()) {
-//			errorMessage.put("permission", "您的權限不足");
-//		}
-
+		List<List<BulletinBean>> list = service.getStatsBulletin("startDate", "DESC");
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
 	}
 
 	// other2bulletin_add
-	@RequestMapping(value = "/bulletin_add", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/bulletin_add", method = RequestMethod.GET)
 	public String other2bulletin_add(Model model) {
 
 		System.out.println("other2bulletin_add");
@@ -79,7 +97,7 @@ public class BulletinController {
 	}
 
 	// post_bulletin_add2bulletin_all
-	@RequestMapping(value = "/bulletin_add/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/bulletin_add/add", method = RequestMethod.POST)
 	public String post_bulletin_add2bulletin_all(HttpSession session, Model model,
 			HttpServletRequest req, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException {
@@ -98,7 +116,7 @@ public class BulletinController {
 		// 內容
 		testContext(bb, req, errorMessage);
 		// 日期
-		testDate(bb, req, errorMessage);
+		testPostDate(bb, req, errorMessage);
 		// 折扣
 		testDiscount(bb, req, errorMessage);
 		// 判斷權限
@@ -165,7 +183,7 @@ public class BulletinController {
 	}
 
 	// edit_bulletin_edit2bulletin_all
-	@RequestMapping(value = "/bulletin_edit/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/bulletin_edit/edit", method = RequestMethod.POST)
 	public String edit_bulletin_edit2bulletin_all(HttpSession session, Model model,
 			HttpServletRequest req, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException, ParseException {
@@ -185,7 +203,7 @@ public class BulletinController {
 		// 內容
 		testContext(bb, req, errorMessage);
 		// 日期
-		testDate(bb, req, errorMessage);
+		testEditDate(bb, req, errorMessage);
 		// 折扣
 		testDiscount(bb, req, errorMessage);
 		// 找id
@@ -235,7 +253,7 @@ public class BulletinController {
 		}
 		// 補齊資料
 		bb.setBortingId(obb.getBortingId());
-		bb.setPostTime(obb.getPostTime());
+		bb.setPostTime(new Date());
 		bb.setCountNum(obb.getCountNum() + 1);
 
 		System.out.println("bb.getCoverImage()=" + bb.getCoverImage());
@@ -280,7 +298,8 @@ public class BulletinController {
 	}
 
 	// find picture
-	@RequestMapping(value = "/getBulletinPicture/{bulletin_no}", method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/getBulletinPicture/{bulletin_no}",
+			"/getBulletinPicture/{bulletin_no}" }, method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletRequest resp,
 			@PathVariable Integer bulletin_no) {
 		System.out.println("getPicture");
@@ -306,7 +325,7 @@ public class BulletinController {
 	}
 
 	// AJAX Find image
-	@RequestMapping(value = "/ajaxImg")
+	@RequestMapping(value = "/admin/ajaxImg")
 	@ResponseBody
 	public String ajaxImgFunction(Integer no) throws Exception {
 		System.out.println("ajaxImgFunction");
@@ -321,7 +340,7 @@ public class BulletinController {
 	}
 
 	// AJAX Find title
-	@RequestMapping(value = "/ajaxTitle", produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/admin/ajaxTitle", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String ajaxTitleFunction(Integer no) throws Exception {
 		System.out.println("ajaxTitleFunction");
@@ -331,7 +350,7 @@ public class BulletinController {
 	}
 
 	// AJAX Find context
-	@RequestMapping(value = "/ajaxContext", produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/admin/ajaxContext", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String ajaxContextFunction(Integer no) throws Exception {
 		System.out.println("ajaxContextFunction");
@@ -341,7 +360,7 @@ public class BulletinController {
 	}
 
 	// edit_bulletin_all2bulletin_add
-	@RequestMapping(value = "/bulletin_all/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/bulletin_all/edit", method = RequestMethod.GET)
 	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
 		System.out.println("edit_bulletin_all2bulletin_add");
 		Integer no = Integer.valueOf(req.getParameter("no"));
@@ -354,7 +373,7 @@ public class BulletinController {
 	}
 
 	// deleteSstatus
-	@RequestMapping(value = "/bulletin_all/deleteSstatus")
+	@RequestMapping(value = "/admin/bulletin_all/deleteSstatus")
 	public String deleteSstatus(HttpServletRequest req, RedirectAttributes redirectAttributes) {
 		Integer no = Integer.valueOf(req.getParameter("no"));
 		int deleteReturn = service.updateBulletinBeanById(no, false);
@@ -366,7 +385,7 @@ public class BulletinController {
 	}
 
 	// restoreSstatus
-	@RequestMapping(value = "/bulletin_all/restore")
+	@RequestMapping(value = "/admin/bulletin_all/restore")
 	public String restoreSstatus(HttpServletRequest req, RedirectAttributes redirectAttributes) {
 		Integer no = Integer.valueOf(req.getParameter("no"));
 		int restoreSstatus = service.updateBulletinBeanById(no, true);
@@ -401,8 +420,8 @@ public class BulletinController {
 		System.out.println("context=" + context);
 	}
 
-	// 日期
-	public void testDate(BulletinBean bb, HttpServletRequest req,
+	// Post 日期
+	public void testPostDate(BulletinBean bb, HttpServletRequest req,
 			HashMap<String, String> errorMessage) {
 		String from = req.getParameter("from");
 		String to = req.getParameter("to");
@@ -417,6 +436,34 @@ public class BulletinController {
 					errorMessage.put("datePassOver", "這位施主!你的開始日已經過去了!!");
 					System.out.println(sdf.parse(from).before(today));
 				} else if (sdf.parse(to).before(today)) {
+					errorMessage.put("datePassOver", "這位大大!你的結束日經過去了!!");
+					System.out.println(sdf.parse(to).before(today));
+				} else if (sdf.parse(from).after(sdf.parse(to))) {
+					errorMessage.put("datePassOver", "結束時間錯誤");
+				} else {
+					bb.setStartDate(from);
+					bb.setEndDate(to);
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("getStartDate=" + from);
+		System.out.println("getEndDate=" + to);
+	}
+
+	// Edit 日期
+	public void testEditDate(BulletinBean bb, HttpServletRequest req,
+			HashMap<String, String> errorMessage) {
+		String from = req.getParameter("from");
+		String to = req.getParameter("to");
+		if (to.length() == 0) {
+			errorMessage.put("dateChoice", "選擇結束日期");
+		} else {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date today = new Date();
+			try {
+				if (sdf.parse(to).before(today)) {
 					errorMessage.put("datePassOver", "這位大大!你的結束日經過去了!!");
 					System.out.println(sdf.parse(to).before(today));
 				} else if (sdf.parse(from).after(sdf.parse(to))) {

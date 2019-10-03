@@ -7,10 +7,11 @@
 
 <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Home</a>
+            <a href="empIndexA">Home</a>
           </li>
-          <li class="breadcrumb-item active">empTable</li>
+          <li class="breadcrumb-item active">即時客服系統</li>
         </ol>
+        <div class="container">
   <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
@@ -20,13 +21,14 @@
 		
 			<textarea id="talkarea"
 				style="font-size: 1em; resize: none; color: black;"
-				readonly="readonly" rows="20em" cols=190%></textarea>
+				readonly="readonly" rows="20em" cols=90%></textarea>
 			<hr />
-			<input type="text" id="talktext" size=180% style="color: black" /><input
-				id="sendmsg" style="color: black" type="button" value="送出" />
+			<input type="text" id="talktext" size=80% style="color: black" />
+			<input id="sendmsg" style="color: black" type="button" value="送出" />
 
 
 	</div>
+</div>
 </div>
 </div>
 <script>
