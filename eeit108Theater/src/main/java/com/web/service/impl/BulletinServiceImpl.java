@@ -31,10 +31,10 @@ public class BulletinServiceImpl implements BulletinService {
 		List<BulletinBean> getExistenceBulletin = dao.getExistenceBulletin(str, targete);
 		switchImg(getExistenceBulletin);
 
-		List<BulletinBean> getExpiredBulletin = dao.getExpiredBulletin(targete);
+		List<BulletinBean> getExpiredBulletin = dao.getExpiredBulletin(str);
 		switchImg(getExpiredBulletin);
 
-		List<BulletinBean> getDeadBulletin = dao.getDeadBulletin(targete);
+		List<BulletinBean> getDeadBulletin = dao.getDeadBulletin(str);
 		switchImg(getDeadBulletin);
 
 		List<List<BulletinBean>> statusBulletin = new ArrayList<>();
