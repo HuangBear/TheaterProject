@@ -156,14 +156,17 @@ public class MemberServiceImpl implements MemberService{
 		MemberBean mb=new MemberBean();
 		mb=null;
 		String ercryptPwd = SecurityCipher.encryptString(password);
-		List<MemberBean> list=memberDao.getAllMembers();
-		for(MemberBean memberBean:list) {
-			if(memberBean.getEmail().equals(email)&& memberBean.getPassword().equals(ercryptPwd)){
-				mb=memberBean;
-			}
+//		List<MemberBean> list=memberDao.getAllMembers();
+//		for(MemberBean memberBean:list) {
+//			if(memberBean.getEmail().equals(email)&& memberBean.getPassword().equals(ercryptPwd)){
+//				mb=memberBean;
+//			}
+//		}
+		mb=memberDao.checkMemberEmail(email);
+		if(mb!=null&&mb.getPassword().equals(ercryptPwd)) {
+			return mb;
 		}
-		
-		return mb;
+		return null;
 	}
 
 	@Override

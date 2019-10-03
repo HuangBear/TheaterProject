@@ -108,7 +108,7 @@
 									 
 								<dl><dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
 									 重填</form:button><br>	
-						        <button type="button" id="oneSet" >一鍵填入</button>
+						        <button type="button" id="oneSet" >一鍵填入 會員:Azure</button>
 				
 								
 							</dd>
@@ -141,7 +141,7 @@
 				  var name=profile.getName();
 				  var email=profile.getEmail();
 				
-				  document.getElementById("myO").style.visibility = "visible";
+				  //document.getElementById("myO").style.visibility = "visible";
 				  document.getElementById("myP").style.visibility = "hidden";
 				
 				  

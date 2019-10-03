@@ -130,9 +130,24 @@
 								    
 						
 						</header> 
-						   <img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"  width="400px"/>
-						 
-					
+						
+				<c:choose>
+					 <c:when test="${empty LoginOK.memberImage}">
+
+					<c:choose>
+						<c:when test="${empty LoginOK.googleUrl}">
+						<img  src="<c:url value='/images/frontend/loginicon.png' />" width="400px" ></c:when>
+						<c:when test="${!empty LoginOK.googleUrl}">
+						<img id="prfilePic" src="${LoginOK.googleUrl}"  width="400px"></c:when>
+					</c:choose>
+				
+					</c:when>
+				
+					<c:when test="${!empty LoginOK.memberImage}">
+
+					<img id="prfilePic" src="<c:url value='/getMemberPicture/${LoginOK.no}'/>" width="400px">
+					</c:when>
+				</c:choose>	
 						
 						<section> 
 						<header>

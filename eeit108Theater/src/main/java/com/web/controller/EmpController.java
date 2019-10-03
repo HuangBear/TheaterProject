@@ -110,6 +110,11 @@ public class EmpController {
 		
 		return "redirect:/admin/adminIndex";
 	}
+	@RequestMapping("admin")
+	public String EmpAdmin(Model model) {
+		
+		return "redirect:/admin/adminIndex";
+	}
 	@RequestMapping("admin/adminIndex")
 	public String EmpIndex(Model model, Principal principal,HttpServletRequest request) {
 		HttpSession session = request.getSession();
