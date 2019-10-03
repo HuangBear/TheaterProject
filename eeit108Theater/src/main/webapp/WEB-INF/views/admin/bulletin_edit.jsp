@@ -522,7 +522,7 @@
 									</form>
 								</div>
 								<div class="col-md-5">
-									<img id="showPhoto" class="btn btn-lg " width="500px" src="<c:url value='/admin/getBulletinPicture/${bulletinBean.no}' />" />
+									<img id="showPhoto"  width="500px" src="<c:url value='/admin/getBulletinPicture/${bulletinBean.no}' />" />
 								</div>
 							</div>
 						</div>

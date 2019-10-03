@@ -52,18 +52,34 @@ public class BulletinController {
 
 	// other2news
 	@RequestMapping(value = "/news", method = RequestMethod.GET)
-	public String other2news(Model model) {
+	public String other2news(HttpServletRequest req, Model model) {
 		System.out.println("other2news");
-		List<BulletinBean> list = service.getExistenceBulletin("startDate");
+		List<BulletinBean> list = service.getExistenceBulletin("startDate", "ASC");
+
+		Integer bulletin_no = (Integer) req.getAttribute("bulletin_no");
+		System.out.println("bulletin_no=1=" + bulletin_no);
+		if (bulletin_no == null) {
+			bulletin_no = list.get(0).getNo();
+		}
+		System.out.println("bulletin_no=2=" + bulletin_no);
 		model.addAttribute("statusBulletin", list);
+		model.addAttribute("bulletin_no", bulletin_no);
 		return "news";
+	}
+
+	// index2news
+	@RequestMapping(value = "/news/{bulletin_no}", method = RequestMethod.GET)
+	public String index2news(HttpServletRequest req, @PathVariable Integer bulletin_no) {
+		System.out.println("index2news");
+		req.setAttribute("bulletin_no", bulletin_no);
+		return "forward:/news";
 	}
 
 	// other2bulletin_all
 	@RequestMapping(value = "/admin/bulletin_all", method = RequestMethod.GET)
 	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
-		List<List<BulletinBean>> list = service.getStatsBulletin("startDate");
+		List<List<BulletinBean>> list = service.getStatsBulletin("startDate", "DESC");
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";

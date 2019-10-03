@@ -7,7 +7,7 @@ import com.web.entity.EmployeeBean;
 
 public interface BulletinDao {
 
-	List<BulletinBean> getExistenceBulletin(String targete);
+	List<BulletinBean> getExistenceBulletin(String str, String targete);
 
 	List<BulletinBean> getExpiredBulletin(String targete);
 

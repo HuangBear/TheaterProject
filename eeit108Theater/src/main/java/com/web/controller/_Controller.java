@@ -29,27 +29,27 @@ public class _Controller {
 
 	@Autowired
 	BulletinService bulletinService;
-  
+
 	@Autowired
 	TimeTableService time_service;
-	
+
 	@RequestMapping("/")
-	public String index(Model model)
-	{	
+	public String index(Model model) {
 		List<MovieBean> hello = new ArrayList<>();
 		hello = movieService.getReleasedMovies();
 		model.addAttribute("releasedMovies", hello);
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		for(int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= 5; i++) {
 			model.addAttribute("day" + i, sdf.format(date));
 			date = tomorrow(date);
 		}
-		List<BulletinBean> bulletin = bulletinService.getExistenceBulletin("startDate");
+		List<BulletinBean> bulletin = bulletinService.getExistenceBulletin("startDate", "ASC");
+		System.out.println(bulletin);
 		model.addAttribute("BulletinBean", bulletin);
 		return "index";
 	}
-  
+
 	@RequestMapping("/getVersion")
 	@ResponseBody
 	public List<TimeTableBean> index1(Model model, String movieName) {
@@ -57,26 +57,30 @@ public class _Controller {
 		System.out.println(list);
 		return list;
 	}
-	
+
 	@RequestMapping("/getStartTimes")
 	@ResponseBody
-	public List<TimeTableBean> index2 (Model model, String movieName, String Date, String version) {
-		List<TimeTableBean> list = time_service.getTimeByDateAndVersionAndMovie(Date, version, movieName);
+	public List<TimeTableBean> index2(Model model, String movieName, String Date, String version) {
+		List<TimeTableBean> list = time_service.getTimeByDateAndVersionAndMovie(Date, version,
+				movieName);
 		System.out.println(list);
 		return list;
 	}
+
 	@RequestMapping("/getTimeNo")
 	@ResponseBody
-	public List<TimeTableBean> index3 (String movieName, String Date, String version, String Time, HttpServletRequest request) {
-		List<TimeTableBean> list = time_service.getTimeNoByDateAndVersionAndMovieAndTime(Date, version, movieName, Time);
+	public List<TimeTableBean> index3(String movieName, String Date, String version, String Time,
+			HttpServletRequest request) {
+		List<TimeTableBean> list = time_service.getTimeNoByDateAndVersionAndMovieAndTime(Date,
+				version, movieName, Time);
 		System.out.println(list);
 		return list;
 	}
-	
+
 	public Date tomorrow(Date today) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(today);
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
-        return calendar.getTime();
-    }
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(today);
+		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+		return calendar.getTime();
+	}
 }
