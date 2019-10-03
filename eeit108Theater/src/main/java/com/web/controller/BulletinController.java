@@ -100,7 +100,7 @@ public class BulletinController {
 		// 內容
 		testContext(bb, req, errorMessage);
 		// 日期
-		testDate(bb, req, errorMessage);
+		testPostDate(bb, req, errorMessage);
 		// 折扣
 		testDiscount(bb, req, errorMessage);
 		// 判斷權限
@@ -187,7 +187,7 @@ public class BulletinController {
 		// 內容
 		testContext(bb, req, errorMessage);
 		// 日期
-		testDate(bb, req, errorMessage);
+		testEditDate(bb, req, errorMessage);
 		// 折扣
 		testDiscount(bb, req, errorMessage);
 		// 找id
@@ -404,8 +404,8 @@ public class BulletinController {
 		System.out.println("context=" + context);
 	}
 
-	// 日期
-	public void testDate(BulletinBean bb, HttpServletRequest req,
+	// Post 日期
+	public void testPostDate(BulletinBean bb, HttpServletRequest req,
 			HashMap<String, String> errorMessage) {
 		String from = req.getParameter("from");
 		String to = req.getParameter("to");
@@ -420,6 +420,34 @@ public class BulletinController {
 					errorMessage.put("datePassOver", "這位施主!你的開始日已經過去了!!");
 					System.out.println(sdf.parse(from).before(today));
 				} else if (sdf.parse(to).before(today)) {
+					errorMessage.put("datePassOver", "這位大大!你的結束日經過去了!!");
+					System.out.println(sdf.parse(to).before(today));
+				} else if (sdf.parse(from).after(sdf.parse(to))) {
+					errorMessage.put("datePassOver", "結束時間錯誤");
+				} else {
+					bb.setStartDate(from);
+					bb.setEndDate(to);
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("getStartDate=" + from);
+		System.out.println("getEndDate=" + to);
+	}
+
+	// Edit 日期
+	public void testEditDate(BulletinBean bb, HttpServletRequest req,
+			HashMap<String, String> errorMessage) {
+		String from = req.getParameter("from");
+		String to = req.getParameter("to");
+		if (to.length() == 0) {
+			errorMessage.put("dateChoice", "選擇結束日期");
+		} else {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date today = new Date();
+			try {
+				if (sdf.parse(to).before(today)) {
 					errorMessage.put("datePassOver", "這位大大!你的結束日經過去了!!");
 					System.out.println(sdf.parse(to).before(today));
 				} else if (sdf.parse(from).after(sdf.parse(to))) {

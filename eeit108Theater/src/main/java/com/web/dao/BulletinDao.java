@@ -25,4 +25,8 @@ public interface BulletinDao {
 
 	List<BulletinBean> getDiscount(String date);
 
+	Integer getBuelltinPreMoon(String date);
+
+	Integer getBuelltinPreYear(String date);
+
 }

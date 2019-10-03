@@ -38,7 +38,6 @@ span {
 
 
 <script>
-
 	$(function() {
 		$("[name='bb']").click(function() {
 			var str = $(this).attr("id");
@@ -83,13 +82,13 @@ span {
 					</div>
 
 					<c:forEach var='sb' items='${statusBulletin}' varStatus="i" end="15">
-						<div class="col-8 col-12-mobile imp-mobile hide" id="${sb.no}" name="n_${i.index+1 }">
+						<div class="col-8 col-12-mobile imp-mobile hide" id="${sb.no}" name="n_${i.index+1}">
 							<article id="main_${sb.no}">
 								<header>
 									<h2>
 										<a href="#">${sb.title }</a>
 									</h2>
-									<p>活動期間&ensp; :&ensp;${sb.startDate }&ensp;到&ensp;${sb.endDate }</p>
+									<p>活動期間&ensp; :&ensp;${sb.startDate }&ensp;到&ensp;${sb.endDate}</p>
 									<p>${sb.context }</p>
 								</header>
 								<img id="showPhoto_${sb.no}" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
