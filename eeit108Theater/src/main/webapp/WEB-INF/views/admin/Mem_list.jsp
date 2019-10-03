@@ -10,7 +10,7 @@
 
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="empIndexA">Home</a></li>
-	<li class="breadcrumb-item active">empTable</li>
+	<li class="breadcrumb-item active">會員清單</li>
 </ol>
 
 
@@ -37,13 +37,13 @@
 									<th width='10%'>姓名</th>
 									<th width='10%'>會員ID</th>
 									<th width='15%'>會員email</th>
-									<th width='10%'>會員電話</th>
-									<th width='15%'>password</th>
+									<th width='8%'>會員電話</th>
+									<th width='5%'>被BAN文章數</th>
 									<th width='5%'>狀態</th>
 									<th width='5%'>發言狀態</th>
-								    <sec:authorize access="hasAuthority('2')">	
+								    <sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
 									<th width='8%'>管理</th>
-									<th width='5%'>禁言</th>
+									
 								    </sec:authorize>	
 								</tr>
 							</thead>
@@ -55,12 +55,12 @@
 									<th>會員ID</th>
 									<th>會員email</th>
 									<th>會員電話</th>
-									<th>password</th>
+									<th>被BAN文章數</th>
 									<th>狀態</th>
 									<th>發言狀態</th>
-									<sec:authorize access="hasAuthority('2')">	
+									<sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
 									<th>管理</th>
-									<th>禁言</th>
+									
 									</sec:authorize>	
 								</tr>
 							</tfoot>
@@ -75,7 +75,7 @@
 									<td>${mem.memberId}</td>
 									<td>${mem.email}</td>
 									<td>${mem.phoneNum}</td>
-									<td>${mem.password}</td>
+									<td>${mem.banCounter}</td>
 
 									<c:choose>
 										<c:when test="${mem.available == true}">
@@ -96,16 +96,16 @@
 										</c:when>
 
 									</c:choose>
-									<sec:authorize access="hasAuthority('2')">	
+									<sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
 									<td>
 										<button class="itemTag2 btn btn-info" id="${mem.no}">
 											管理會員</button>
 										
 									</td>
 
-									<td><button class='btn btn-danger'
-											onclick='javascrtpt:window.location.href="BanMember?pk=${mem.no}"'>禁言</button>
-									</td>
+<!-- 									<td><button class='btn btn-danger' -->
+<%-- 											onclick='javascrtpt:window.location.href="BanMember?pk=${mem.no}"'>禁言</button> --%>
+<!-- 									</td> -->
 									</sec:authorize>
 
 								</tr>

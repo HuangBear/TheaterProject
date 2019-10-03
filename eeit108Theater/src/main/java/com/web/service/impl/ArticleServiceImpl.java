@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.dao.ArticleDao;
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
 import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
@@ -37,14 +38,50 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Transactional
 	@Override
+	public List<ArticleBean> getTopArticlesByMovieNo(int movieNo) {
+		return dao.getTopArticlesByMovieNo(movieNo);
+	}
+    
+    @Transactional
+	@Override
+	public List<ArticleBean> getArticlesByMovieNo2(int movieNo) {
+		return dao.getArticlesByMovieNo2(movieNo);
+	}
+    
+//    @Transactional
+//	@Override
+//	public List<SysArticleBean> getSysArticlesByMovieNo(int movieNo) {
+//		return dao.getSysArticlesByMovieNo(movieNo);
+//	}
+    
+    @Transactional
+	@Override
 	public List<ReplyBean> getAllReplys() {
 		return dao.getAllReplys();
 	}
     
     @Transactional
 	@Override
+    public List<ReplyBean> getReplysByArticle(int article) {
+		return dao.getReplysByArticle(article);
+	}
+    
+    @Transactional
+	@Override
 	public List<String> getAllTags() {
 		return dao.getAllTags();
+	}
+    
+    @Transactional
+	@Override
+	public List<String> getAllSysTags() {
+		return dao.getAllSysTags();
+	}
+    
+    @Transactional
+	@Override
+	public List<String> getATypeList() {
+		return dao.getATypeList();
 	}
     
     @Transactional
@@ -58,6 +95,12 @@ public class ArticleServiceImpl implements ArticleService {
 	public ArticleBean getArticleById(int no) {
 		return dao.getArticleById(no);
 	}
+    
+//    @Transactional
+//	@Override
+//	public SysArticleBean getSysArticleById(int no) {
+//		return dao.getSysArticleById(no);
+//	}
     
     @Transactional
 	@Override
@@ -94,6 +137,12 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		
 	}
+    
+//    @Transactional
+//	@Override
+//	public void addSysArticle(SysArticleBean article) {
+//		dao.addSysArticle(article);
+//	}
     
     @Transactional
 	@Override
@@ -135,6 +184,18 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Transactional
 	@Override
+	public void editMember(MemberBean member) {
+    	if( member !=null) {
+			dao.editMember(member);
+			
+		}else {
+			System.out.println("insert null");
+		}
+		
+	}
+    
+    @Transactional
+	@Override
 	public LikeOrDislikeBean getLikeOrDislikeNo(int memberNo,int article) {
 		return dao.getLikeOrDislikeNo(memberNo,article);
 	}
@@ -161,6 +222,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
 	public List<MovieBean> getAllMovies() {
 		return dao.getAllMovies();
+	}
+    
+    @Transactional
+	@Override
+    public ATypeBean getAT(int no){
+		return dao.getAT(no);
 	}
     
     

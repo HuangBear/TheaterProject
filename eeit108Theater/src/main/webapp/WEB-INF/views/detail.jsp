@@ -19,79 +19,105 @@
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
 <style>
-	.content {overflow: auto;
-              width: 30%;
-              padding-bottom: 0;
-              border:0;
-              border-top-left-radius: 20px;
-              border-top-right-radius: 20px;
-   		     }
-
+.content {
+	overflow: auto;
+	width: 30%;
+	padding-bottom: 0;
+	border: 0;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
 </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let gems = document.querySelectorAll("img.gem");
-            let gemsLen = gems.length;
-            var is_clicked = false;
-            var score = 0;
-            for (let i = 0; i < gemsLen; i++) {
-                gems[i].addEventListener("mouseover", function () {
-                    if (!is_clicked) {
-                        var j = i;
-                        while (j != -1) {
-                            document.getElementById(`gem${j}`).src = "images/frontend/D4.png";
-                            j--;
-                        }
-                    }
-                });
-                gems[i].addEventListener("mouseout", function () {
-                    if (!is_clicked) {
-                        document.getElementById(`gem${i}`).src = "images/frontend/D3.png";
-                    }
-                });
-                gems[i].addEventListener("click", function () {
-                    score = i + 1;
-                    if (is_clicked) {
-                        var m = i;
-                        var n = i + 1;
-                        for (m; m >= 0; m--) {
-                            document.getElementById(`gem${m}`).src = "images/frontend/D4.png";
-                        }
-                        for (n; n < 5; n++) {
-                            document.getElementById(`gem${n}`).src = "images/frontend/D3.png";
-                        }
-                    }
-                    is_clicked = true;
-                    document.getElementById(`idsc`).innerHTML = `${score}`;
-                });
-            }
-            document.getElementById("resetAll").addEventListener("click", function () {
-                score = 0;
-                is_clicked = false;
-                document.getElementById(`idsc`).innerHTML = `${score}`;
-                for (k = 0; k < 5; k++) {
+<script>
+	document
+			.addEventListener(
+					"DOMContentLoaded",
+					function() {
+						let gems = document.querySelectorAll("img.gem");
+						let gemsLen = gems.length;
+						var is_clicked = false;
+						var score = 0;
+						for (let i = 0; i < gemsLen; i++) {
+							gems[i]
+									.addEventListener(
+											"mouseover",
+											function() {
+												if (!is_clicked) {
+													var j = i;
+													while (j != -1) {
+														document
+																.getElementById(`gem${j}`).src = "images/frontend/D4.png";
+														j--;
+													}
+												}
+											});
+							gems[i]
+									.addEventListener(
+											"mouseout",
+											function() {
+												if (!is_clicked) {
+													document
+															.getElementById(`gem${i}`).src = "images/frontend/D3.png";
+												}
+											});
+							gems[i]
+									.addEventListener(
+											"click",
+											function() {
+												score = i + 1;
+												if (is_clicked) {
+													var m = i;
+													var n = i + 1;
+													for (m; m >= 0; m--) {
+														document
+																.getElementById(`gem${m}`).src = "images/frontend/D4.png";
+													}
+													for (n; n < 5; n++) {
+														document
+																.getElementById(`gem${n}`).src = "images/frontend/D3.png";
+													}
+												}
+												is_clicked = true;
+												document.getElementById(`idsc`).innerHTML = `${score}`;
+											});
+						}
+						document
+								.getElementById("resetAll")
+								.addEventListener(
+										"click",
+										function() {
+											score = 0;
+											is_clicked = false;
+											document.getElementById(`idsc`).innerHTML = `${score}`;
+											for (k = 0; k < 5; k++) {
 
-                    document.getElementById(`gem${k}`).src = "images/frontend/D3.png";
-                }
-            });
-            document.getElementById("submitAll").addEventListener("click", function () {
-                if (score == 0) {
-                    alert(`請評分後再送出。`)
-                } else {
-                    alert(`謝謝評分，您給的分數為${score}分。`)
-                }
-            });
-            document.getElementById("resetZone").addEventListener("mouseover", function () {
-                score = 0;
-                is_clicked = false;
-                document.getElementById(`idsc`).innerHTML = `${score}`;
-                for (k = 0; k < 5; k++) {
-                    document.getElementById(`gem${k}`).src = "images/frontend/D4.png";
-                }
-            });
-        });
-
-    </script>
+												document
+														.getElementById(`gem${k}`).src = "images/frontend/D3.png";
+											}
+										});
+						document.getElementById("submitAll").addEventListener(
+								"click", function() {
+									if (score == 0) {
+										alert(`請評分後再送出。`)
+									} else {
+										alert(`謝謝評分，您給的分數為${score}分。`)
+									}
+								});
+						document
+								.getElementById("resetZone")
+								.addEventListener(
+										"mouseover",
+										function() {
+											score = 0;
+											is_clicked = false;
+											document.getElementById(`idsc`).innerHTML = `${score}`;
+											for (k = 0; k < 5; k++) {
+												document
+														.getElementById(`gem${k}`).src = "images/frontend/D4.png";
+											}
+										});
+					});
+</script>
 </head>
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
@@ -106,199 +132,287 @@
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 						<hr class="first" />
-						
-						<section> 
-							<header><h3><a href="#">電影介紹</a></h3></header>
-						
-						<hr />
-						<div class="row gtr-50">
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/release.png"
-									alt="" /></a>
+
+						<section>
+							<header>
+								<h3>
+									<a href="#">電影介紹</a>
+								</h3>
+							</header>
+
+							<hr />
+							<div class="row gtr-50">
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/release.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#one">上映日期：</a>
+									</h4>
+									<p>Release Date</p>
+								</div>
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/cast.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#two">導演/主要演員：</a>
+									</h4>
+									<p>Cast</p>
+								</div>
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/filmlength.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#three">片長、類型：</a>
+									</h4>
+									<p>Film Length / Type</p>
+								</div>
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/trailer.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#four">預告片：</a>
+									</h4>
+									<p>Trailer</p>
+								</div>
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/introduction.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#five">劇情簡介：</a>
+									</h4>
+									<p>About The Story</p>
+								</div>
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/score.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#six">評分</a>
+									</h4>
+									<p>Score</p>
+								</div>
+								<div class="col-4">
+									<a href="#" class="image fit"><img
+										src="images/frontend/comment.png" alt="" /></a>
+								</div>
+								<div class="col-8">
+									<p>
+									<h4>
+										<a href="#seven">評論</a>
+									</h4>
+									<p>Comment</p>
+								</div>
 							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#one">上映日期：</a></h4>
-								<p>Release Date</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/cast.png"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#two">導演/主要演員：</a></h4>
-								<p>Cast</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/filmlength.png"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#three">片長、類型：</a></h4>
-								<p>Film Length / Type</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/trailer.png"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#four">預告片：</a></h4>
-								<p>Trailer</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/introduction.png"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#five">劇情簡介：</a></h4>
-								<p>About The Story</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/score.png"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#six">評分</a></h4>
-								<p>Score</p>
-							</div>
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/comment.png"
-									alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4><a href="#seven">評論</a></h4>
-								<p>Comment</p>
-							</div>
-						</div>
-						<footer> 
-							<a href="ticketing_${movie.no}" class="button">立即訂票</a>
-						</footer>
+							<footer>
+								<a href="ticketing_${movie.no}" class="button">立即訂票</a>
+							</footer>
 						</section>
 					</div>
-					
+
 					<!-- 電影介紹內容 -->
 					<div class="col-8 col-12-mobile imp-mobile" id="content">
-						<article id="main"> <header>
-						<h2>
-							<a>${movie.movieName}</a>
-						</h2>
-						<a href="ticketing" class="button">前往討論</a>
-						<p>${movie.engMovieName}</p>
-						</header> <a><img src="<c:url value = '/getPicture/${movie.no}'/>" alt="" style = 'width: 400px; height: 550px;' /></a>
-						
-						<section> <header>
-						<h3><a name="one">上映日期：</a></h3>
-						</header>
-						<p><fmt:formatDate pattern="yyyy-MM-dd"
-						value="${releasedMovie.openingDate}" /></p>
-						</section> 
-						
-						<section> <header>
-						<h3><a name="two">導演/主要演員：</a></h3>
-						</header>
-						<p>導演：${movie.directors}<br>
-						         演員：${movie.casts}</p>
-						</section>
-						
-						<section> <header>
-						<h3><a name="three">片長、類型：</a></h3>
-						</header>
-						<p>片長：${movie.duration}<br>
-							類型：${movie.genres}</p>
-						</section>
-						 
-						<section> <header>
-						<h3><a name="four">預告片：</a></h3>
-						</header>
-						<p><iframe width="640" height="360" src="${link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-						</section>
-						 
-						<section> <header>
-						<h3><a name="five">劇情簡介：</a></h3>
-						</header>
-						<p>${movie.introduction}</p>
-						</section>
-						 
-						<section> <header>
-						<h3><a name="six">評分：</a></h3>
-						</header>
-						<p>
-						<div class="content">
-                    		<article>
-                        		<form>
-                                <div>
-                                    <figure style="margin: auto; width:fit-content;">
-                                        <!-- <img class="" src="images/blank.png" width="50" height="100" id="resetZone"> -->
-                                        <img class="gem" src="images/D3.png" width="50" id="gem0">
-                                        <img class="gem" src="images/D3.png" width="50" id="gem1">
-                                        <img class="gem" src="images/D3.png" width="50" id="gem2">
-                                        <img class="gem" src="images/D3.png" width="50" id="gem3">
-                                        <img class="gem" src="images/D3.png" width="50" id="gem4">
-                                        <!-- <img class="" src="images/blank.png" width="50" height="100" id=""> -->
-                                    </figure>
-                                </div>                                
-                                <div>
-                                    <script>
-                                        <!--document.write(`<h2>鑽石 : <span id="idsc">0</span>倍 (全滿5倍)</h2>`)-->
-                                    </script>
-                                </div>
-                        		</form>
-                    		</article>
-            			</div>
-            			<div>
-                            <input type="submit" name="submit" id="submitAll" value="送出">
-                            <input type="reset" name="reset" id="resetAll" value="清除">
-                        </div>
-						</p>
-						</section>
-						 
-						<section> <header>
-						<h3><a name="seven">評論：</a></h3>
-						</header>
-						<p><textarea cols="100" rows="5"></textarea>
-							<input type="submit" value="送出">
-							<input type="reset" value="清除">
-						</p>
-						</section>
-						  
+						<article id="main">
+							<header>
+								<h2>
+									<a>${movie.movieName}</a>
+								</h2>
+								<a href="ticketing" class="button">前往討論</a>
+								<p>${movie.engMovieName}</p>
+							</header>
+							<a><img src="<c:url value = '/getPicture/${movie.no}'/>"
+								alt="" style='width: 400px; height: 550px;' /></a>
+
+							<section>
+								<header>
+									<h3>
+										<a name="one">上映日期：</a>
+									</h3>
+								</header>
+								<p>
+									<fmt:formatDate pattern="yyyy-MM-dd"
+										value="${movie.openingDate}" />
+								</p>
+							</section>
+
+							<section>
+								<header>
+									<h3>
+										<a name="two">導演/主要演員：</a>
+									</h3>
+								</header>
+								<p>
+									導演：${movie.directors}<br> 演員：${movie.casts}
+								</p>
+							</section>
+
+							<section>
+								<header>
+									<h3>
+										<a name="three">片長、類型：</a>
+									</h3>
+								</header>
+								<p>
+									片長：${movie.duration}<br> 類型：${movie.genres}
+								</p>
+							</section>
+
+							<section>
+								<header>
+									<h3>
+										<a name="four">預告片：</a>
+									</h3>
+								</header>
+								<p>
+									<iframe width="640" height="360" src="${link}" frameborder="0"
+										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+										allowfullscreen></iframe>
+								</p>
+							</section>
+
+							<section>
+								<header>
+									<h3>
+										<a name="five">劇情簡介：</a>
+									</h3>
+								</header>
+								<p>${movie.introduction}</p>
+							</section>
+
+							<section>
+								<header>
+									<h3>
+										<a name="six">評分：</a>
+									</h3>
+								</header>
+								<p>
+								<div class="content">
+									<article>
+										<form>
+											<div>
+												<figure style="margin: auto; width: fit-content;">
+													<!-- <img class="" src="images/blank.png" width="50" height="100" id="resetZone"> -->
+													<img class="gem" src="images/D3.png" width="50" id="gem0">
+													<img class="gem" src="images/D3.png" width="50" id="gem1">
+													<img class="gem" src="images/D3.png" width="50" id="gem2">
+													<img class="gem" src="images/D3.png" width="50" id="gem3">
+													<img class="gem" src="images/D3.png" width="50" id="gem4">
+													<!-- <img class="" src="images/blank.png" width="50" height="100" id=""> -->
+												</figure>
+											</div>
+											<div>
+												<script>
+												<!--document.write(`<h2>鑽石 : <span id="idsc">0</span>倍 (全滿5倍)</h2>`)-->
+													
+												</script>
+											</div>
+										</form>
+									</article>
+								</div>
+								<div>
+									<input type="submit" name="submit" id="submitAll" value="送出">
+									<input type="reset" name="reset" id="resetAll" value="清除">
+								</div>
+								</p>
+							</section>
+
+							<section>
+								<header>
+									<h3>
+										<a name="seven">評論：</a>
+									</h3>
+								</header>
+								<p>
+									<textarea cols="100" rows="5"></textarea>
+									<input type="submit" value="送出"> <input type="reset"
+										value="清除">
+								</p>
+							</section>
+
 						</article>
 					</div>
 				</div>
-				
-				<br><br><br>
-				<div><h3><a>其他人還看了：</a></h3></div>
+
+				<br> <br> <br>
+				<div>
+					<h3>
+						<a>其他人還看了：</a>
+					</h3>
+				</div>
 				<hr />
 				<br>
 				<div class="row">
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/now03.jpg" alt="" /></a>
-						<header><h3><a href="#">全面攻佔 3：天使救援</a></h3></header>
-							<p>ANGEL HAS FALLEN<br>
-								上映日期：2019/08/21</p>
+					<article class="col-4 col-12-mobile special">
+						<a href="#" class="image featured"><img
+							src="images/frontend/now03.jpg" alt="" /></a>
+						<header>
+							<h3>
+								<a href="#">全面攻佔 3：天使救援</a>
+							</h3>
+						</header>
+						<p>
+							ANGEL HAS FALLEN<br> 上映日期：2019/08/21
+						</p>
 					</article>
-					
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/now05.jpg" alt="" /></a>
-						<header><h3><a href="#">大叔之愛電影版</a></h3></header>
-							<p>OSSANS LOVE THE MOVIE <br>
-								上映日期：2019/09/06</p>
+
+					<article class="col-4 col-12-mobile special">
+						<a href="#" class="image featured"><img
+							src="images/frontend/now05.jpg" alt="" /></a>
+						<header>
+							<h3>
+								<a href="#">大叔之愛電影版</a>
+							</h3>
+						</header>
+						<p>
+							OSSANS LOVE THE MOVIE <br> 上映日期：2019/09/06
+						</p>
 					</article>
-					
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/movie5.jpg" alt="" /></a>
-						<header><h3><a href="#">航海王：奪寶爭霸戰</a></h3></header>
-							<p>ONE PIECE STAMPEDE<br>
-								上映日期：2019/08/21</p>
+
+					<article class="col-4 col-12-mobile special">
+						<a href="#" class="image featured"><img
+							src="images/frontend/movie5.jpg" alt="" /></a>
+						<header>
+							<h3>
+								<a href="#">航海王：奪寶爭霸戰</a>
+							</h3>
+						</header>
+						<p>
+							ONE PIECE STAMPEDE<br> 上映日期：2019/08/21
+						</p>
 					</article>
 				</div>
 			</div>
 
+		</div>
+
+		<div class="toast" role="alert" aria-live="assertive"
+			aria-atomic="true">
+			<div class="toast-header">
+				<img src="..." class="rounded mr-2" alt="..."> <strong
+					class="mr-auto">Bootstrap</strong> <small>11 mins ago</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body">Hello, world! This is a toast message.
+			</div>
 		</div>
 
 		<!-- Footer -->

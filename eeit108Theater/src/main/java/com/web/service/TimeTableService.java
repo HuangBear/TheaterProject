@@ -45,4 +45,10 @@ public interface TimeTableService {
 	List<TimeTableBean> getStartTimeByDateAndVersionAndMovie(String startDate, String version, String movieName);
 	
 	List<String> getTheatersByMovieName(String movieName);
+	
+	List<TimeTableBean> getVersionByMovieName(String movieName);
+	
+	List<TimeTableBean> getTimeByDateAndVersionAndMovie(String startDate, String version, String movieName);
+	
+	List<TimeTableBean> getTimeNoByDateAndVersionAndMovieAndTime(String startDate, String version, String movieName, String startTime);
 }

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.ArticleDao;
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
-import com.web.entity.EmployeeBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
@@ -33,6 +33,30 @@ public class ArticleDaoImpl implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
+	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie and bb.type =:type order by no desc";
+	    Boolean type = false;
+	    Session session = null;
+	    List<ArticleBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).setParameter("movie", movieNo).setParameter("type", type).list();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ArticleBean> getTopArticlesByMovieNo(int movieNo) {
+	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie and bb.type =:type";
+	    Boolean type = true;
+	    Session session = null;
+	    List<ArticleBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).setParameter("movie", movieNo).setParameter("type", type).list();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ArticleBean> getArticlesByMovieNo2(int movieNo) {
 	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie";
 	    Session session = null;
 	    List<ArticleBean> list = new ArrayList<>();
@@ -40,6 +64,17 @@ public class ArticleDaoImpl implements ArticleDao {
 	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
 	    return list;
 	}
+	
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<SysArticleBean> getSysArticlesByMovieNo(int movieNo) {
+//	    String hql = "FROM SysArticleBean bb WHERE bb.movie.no = :movie";
+//	    Session session = null;
+//	    List<SysArticleBean> list = new ArrayList<>();
+//	    session = factory.getCurrentSession();
+//	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
+//	    return list;
+//	}
 	
 	@Override
 	public List<ReplyBean> getAllReplys() {
@@ -53,11 +88,11 @@ public class ArticleDaoImpl implements ArticleDao {
 	
 	@Override
 	public List<ReplyBean> getReplysByArticle(int article) {
-	    String hql = "FROM ReplyBean rb WHERE rb.article.no = :article";
+	    String hql = "FROM ReplyBean rb WHERE rb.article.no = :article order by no asc";
 	    Session session = null;
 	    List<ReplyBean> list = new ArrayList<>();
 	    session = factory.getCurrentSession();
-	    list = session.createQuery(hql).getResultList();
+	    list = session.createQuery(hql).setParameter("article", article).list();
 	    return list;
 	}
 	
@@ -80,6 +115,26 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public List<String> getAllTags() {
 	    String hql = "SELECT DISTINCT b.tag FROM TagBean b";
+	    Session session = factory.getCurrentSession();
+	    List<String> list = new ArrayList<>();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAllSysTags() {
+	    String hql = "SELECT DISTINCT b.tag FROM SysTagBean b";
+	    Session session = factory.getCurrentSession();
+	    List<String> list = new ArrayList<>();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getATypeList() {
+	    String hql = "SELECT DISTINCT b.typeName FROM ATypeBean b";
 	    Session session = factory.getCurrentSession();
 	    List<String> list = new ArrayList<>();
 	    list = session.createQuery(hql).getResultList();
@@ -117,6 +172,13 @@ public class ArticleDaoImpl implements ArticleDao {
 		return ab;
 	}
 	
+//	@Override
+//	public SysArticleBean getSysArticleById(int no) {
+//		Session session = factory.getCurrentSession();
+//		SysArticleBean ab = session.get(SysArticleBean.class, no);
+//		return ab;
+//	}
+	
 	@Override
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article) {
 		String hql = "FROM LikeOrDislikeBean lb WHERE lb.member = :member and lb.article.no = :article";
@@ -147,6 +209,11 @@ public class ArticleDaoImpl implements ArticleDao {
 	    Session session = factory.getCurrentSession();
 	    session.update(article);
 	}
+//	@Override
+//	public void addSysArticle(SysArticleBean article) {
+//	    Session session = factory.getCurrentSession();
+//	    session.save(article);
+//	}
 	@Override
 	public void addReply(ReplyBean reply) {
 	    Session session = factory.getCurrentSession();
@@ -159,18 +226,25 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 	@Override
 	public void addReport(ReportBean rb) {
-		System.out.println("確認位置");
+		
 	    Session session = factory.getCurrentSession();
 	    session.save(rb);
-	    System.out.println("確認位置");
+	    
 	}
+	
+	@Override
+	public void editMember(MemberBean member) {
+	    Session session = factory.getCurrentSession();
+	    session.update(member);
+	}
+	
 	@Override
 	public MemberBean getMemberById(int memberId) {
 		MemberBean mb = null;
 	    Session session = factory.getCurrentSession();
 	    mb = session.get(MemberBean.class, memberId);
 	    return mb;
-	}	
+	}
 	
 	@Override
 	public MovieBean getMovieByNo(int movieNo) {
@@ -199,6 +273,13 @@ public class ArticleDaoImpl implements ArticleDao {
 		Session session = factory.getCurrentSession();
 		List<MovieBean> list = session.createQuery(hql).getResultList();
 		return list;
+	}
+	
+	@Override
+	public ATypeBean getAT(int no) {
+		Session session = factory.getCurrentSession();
+		ATypeBean atb = session.get(ATypeBean.class, no);
+		return atb;
 	}
 	
 }

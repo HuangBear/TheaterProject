@@ -72,5 +72,10 @@ public class MovieServiceImpl implements MovieService {
 	public List<MovieBean> getOffMovies() {
 		return dao.getOffMovies();
 	}
+
+	@Override
+	public MovieBean getMovieByName(String name) {
+		return dao.getMovieByName(name);
+	}
 	
 }

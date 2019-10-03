@@ -15,15 +15,24 @@
 
 
 <!-- DataTables Example -->
-<div id="tabs-1">
-	<table class="tbst">
-		<tbody style="text-align: left;">
-			<c:forEach var='Movie' items='${Movies}'>
-				<button class="editBtn btn btn-info" id="${Movie.no}"
-					style="font-size: 24px">${Movie.no}.${Movie.movieName}</button>
-			</c:forEach>
-		</tbody>
-	</table>
+<div class="card mb-3">
+	<div class="card-header">
+		<i class="fas fa-table"></i> 討論版
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<div id="tabs-1">
+				<table class="tbst">
+					<tbody style="text-align: left;">
+						<c:forEach var='Movie' items='${Movies}'>
+							<button class="editBtn btn btn-info" id="${Movie.no}"
+								style="font-size: 24px">${Movie.no}.${Movie.movieName}</button>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="card mb-3">
 	<div class="card-header">
@@ -80,7 +89,7 @@
 						<td>${article.likeCount}</td>
 						<td>${article.dislikeCount}</td>
 						<td>
-						<fieldset>
+							<fieldset>
 								<c:choose>
 									<c:when test="${article.available==true}">
 
@@ -90,7 +99,7 @@
 									</c:when>
 									<c:when test="${article.available==false}">
 
-										<button class="btn btn-info" id="${article.no}"
+										<button class="btn btn-danger" id="${article.no}"
 											style="font-size: 24px">已封鎖</button>
 
 									</c:when>
@@ -102,7 +111,7 @@
 								<c:choose>
 									<c:when test="${article.report==true}">
 
-										<button class="reportBtn btn btn-info" id="${article.no}"
+										<button class="reportBtn btn btn-danger" id="${article.no}"
 											style="font-size: 24px">有檢舉</button>
 
 									</c:when>
@@ -120,13 +129,13 @@
 								<c:choose>
 									<c:when test="${article.available==true}">
 
-										<button class="lockBtn btn btn-info" id="${article.no}"
+										<button class="lockBtn btn btn-danger" id="${article.no}"
 											style="font-size: 24px">上鎖</button>
 
 									</c:when>
 									<c:when test="${article.available==false}">
 
-										<button class="lockBtn btn btn-info" id="${article.no}"
+										<button class="lockBtn btn btn-danger" id="${article.no}"
 											style="font-size: 24px">解鎖</button>
 
 									</c:when>
@@ -185,7 +194,7 @@
 			}
 		});
 	});
-	
+
 	$(".reportBtn").click(function() {
 
 		var no = $(this).attr("id");

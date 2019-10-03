@@ -39,6 +39,7 @@ span {
 
 <script>
 
+
 	$(function() {
 		$("[name='bb']").click(function() {
 			var str = $(this).attr("id");
@@ -47,6 +48,11 @@ span {
 			$(".hide").not(targete).hide();
 			$(targete).show();
 		});
+	});
+	$(function() {
+		var str =${bulletin_no};
+		var id="#tn_" +str;
+		$(id).trigger("click");
 	});
 </script>
 </head>
@@ -65,9 +71,9 @@ span {
 						<hr class="first" />
 						<section>
 							<header>
-								<h2>
+								<h3>
 									<a>影城公告</a>
-								</h2>
+								</h3>
 							</header>
 							<div class="row gtr-50 mb-2 mt-3">
 								<c:forEach var='sb' items='${statusBulletin}' varStatus="i" >
@@ -83,55 +89,20 @@ span {
 					</div>
 
 					<c:forEach var='sb' items='${statusBulletin}' varStatus="i" end="15">
-						<div class="col-8 col-12-mobile imp-mobile hide" id="${sb.no}" name="n_${i.index+1 }">
+						<div class="col-8 col-12-mobile imp-mobile hide" id="${sb.no}" name="n_${i.index+1}">
 							<article id="main_${sb.no}">
 								<header>
 									<h2>
 										<a href="#">${sb.title }</a>
 									</h2>
-									<p>活動期間&ensp; :&ensp;${sb.startDate }&ensp;到&ensp;${sb.endDate }</p>
+									<p>活動期間&ensp; :&ensp;${sb.startDate }&ensp;到&ensp;${sb.endDate}</p>
 									<p>${sb.context }</p>
 								</header>
 								<img id="showPhoto_${sb.no}" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
 							</article>
 						</div>
 					</c:forEach>
-
-
 				</div>
-				<!-- 				<hr /> -->
-				<!-- 				<div class="row"> -->
-				<!-- 					<article class="col-4 col-12-mobile special"> -->
-				<!-- 						<a href="#" class="image featured"><img src="images/frontend/pic07.jpg" alt="" /></a> -->
-				<!-- 						<header> -->
-				<!-- 							<h3> -->
-				<!-- 								<a href="#">Gravida aliquam penatibus</a> -->
-				<!-- 							</h3> -->
-				<!-- 						</header> -->
-				<!-- 						<p>Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus cubilia ultrices -->
-				<!-- 							tempor sagittis. Nisl fermentum consequat integer interdum.</p> -->
-				<!-- 					</article> -->
-				<!-- 					<article class="col-4 col-12-mobile special"> -->
-				<!-- 						<a href="#" class="image featured"><img src="images/frontend/pic08.jpg" alt="" /></a> -->
-				<!-- 						<header> -->
-				<!-- 							<h3> -->
-				<!-- 								<a href="#">Sed quis rhoncus placerat</a> -->
-				<!-- 							</h3> -->
-				<!-- 						</header> -->
-				<!-- 						<p>Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus cubilia ultrices -->
-				<!-- 							tempor sagittis. Nisl fermentum consequat integer interdum.</p> -->
-				<!-- 					</article> -->
-				<!-- 					<article class="col-4 col-12-mobile special"> -->
-				<!-- 						<a href="#" class="image featured"><img src="images/frontend/pic09.jpg" alt="" /></a> -->
-				<!-- 						<header> -->
-				<!-- 							<h3> -->
-				<!-- 								<a href="#">Magna laoreet et aliquam</a> -->
-				<!-- 							</h3> -->
-				<!-- 						</header> -->
-				<!-- 						<p>Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus cubilia ultrices -->
-				<!-- 							tempor sagittis. Nisl fermentum consequat integer interdum.</p> -->
-				<!-- 					</article> -->
-				<!-- 				</div> -->
 			</div>
 		</div>
 	</div>

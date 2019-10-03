@@ -130,11 +130,12 @@
 					chosenDiscount : $("#chosenDiscount").val()
 				},
 				type : "POST",
-				success : function() {
-					console.log("cal success");
+				success : function(data) {
+					console.log("change discount success");
+					$(".orderItems").html(data);
 				},
 				error : function() {
-					console.log("cal fail");
+					console.log("change discount success");
 				}
 			});
 		});

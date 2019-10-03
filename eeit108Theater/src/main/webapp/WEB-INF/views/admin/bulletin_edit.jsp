@@ -30,26 +30,31 @@
 <script>
 	//    Datepicker
 	$(function() {
-		var dateFormat = "yy-mm-dd", from = $("#from").datepicker({
-			monthNamesShort : [ "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" ],
-			dayNamesMin : [ "日", "一", "二", "三", "四", "五", "六" ],
-			defaultDate : "+1d",
-			changeMonth : true,
-			numberOfMonths : 1,
-			dateFormat : "yy-mm-dd"
-		}).on("change", function() {
-			to.datepicker("option", "minDate", getDate(this));
-			console.log(this)
-		}), to = $("#to").datepicker({
+		var dateFormat = "yy-mm-dd";
+// 		from = $("#from").datepicker({
+// 			monthNamesShort : [ "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" ],
+// 			dayNamesMin : [ "日", "一", "二", "三", "四", "五", "六" ],
+// 			defaultDate : "+1d",
+// 			changeMonth : true,
+// 			numberOfMonths : 1,
+// 			dateFormat : "yy-mm-dd"
+// 		}).on("change",
+				
+// 				function() {
+// 			to.datepicker("option", "minDate", getDate(this));
+// 			console.log(this)
+// 		}), 
+		$("#to").datepicker({
 			monthNamesShort : [ "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" ],
 			dayNamesMin : [ "日", "一", "二", "三", "四", "五", "六" ],
 			defaultDate : "+1M",
 			changeMonth : true,
 			numberOfMonths : 1,
-			dateFormat : "yy-mm-dd"
-		}).on("change", function() {
-			from.datepicker("option", "maxDate", getDate(this));
+			dateFormat : "yy-mm-dd",
+			minDate : "${bulletinBean.startDate}"
 		});
+		//$("#to").datepicker("option","minDate",${bulletinBean.startDate});
+// 		alert("${bulletinBean.startDate}");
 
 		function getDate(element) {
 			var date;
@@ -293,310 +298,319 @@
 </ol>
 
 
-<!-- DataTables Example -->
+
 <div class="card mb-3">
 	<div class="card-header">
 		<i class="fas fa-table"></i> 7-1 Cinema發布公告
 	</div>
 
 	<div class="card-body">
+
 		<div class="table-responsive">
 			<div class="accordion" id="accordionExample">
+
 				<div class="card">
 					<div class="card-header " id="headingOne">
 						<h2 class="mb-0">
 							<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">編輯公告</button>
 						</h2>
 					</div>
+
 					<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 						<div class="card-body">
-							<form method='POST' id="bulletinBean" action="<c:url value='/admin/bulletin_edit/edit'/>" enctype="multipart/form-data">
-								<div class="form-row mb-3 mt-1">
-									<div class="col-md-2">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.no}"> --%>
-										<input type="hidden" name="no" value="${bulletinBean.no}">
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.no}"> --%>
-										<%-- 										<input type="hidden" name="no" value="${param.no}"> --%>
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
-										<label for="title">標題:</label>
-									</div>
-									<div class="col-md-6">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.title}"> --%>
-										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
-											class="form-control">
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.title}"> --%>
-										<%-- 										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${param.title}" class="form-control"> --%>
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
-									</div>
-									<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
-								</div>
 
-								<div class="form-row mb-3">
-									<div class="col-md-2">
-										<label class="context">公告內容:</label>
-									</div>
-									<div class="col-md-6">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.context}"> --%>
-										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.context}"> --%>
-										<%-- 										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${param.context}</textarea> --%>
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
+							<div class="row">
+								<div class="col-md-7">
 
-
-									</div>
-									<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
-								</div>
-
-								<div class="form-row mb-3">
-									<div class="col-md-2">
-										<label>公告有效時間</label>
-									</div>
-									<div class="col-md-1">
-										<label for="from">開始</label>
-									</div>
-									<div class="col-md-2">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.startDate}"> --%>
-										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" />
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.startDate}"> --%>
-										<%-- 										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${param.startDate}" /> --%>
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
-									</div>
-									<div class="col-md-1">
-										<label for="to">結束</label>
-									</div>
-									<div class="col-md-2">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.endDate}"> --%>
-										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.endDate}"> --%>
-										<%-- 										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${param.endDate}" /> --%>
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
-									</div>
-									<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
-
-								</div>
-
-
-								<div class="form-row">
-									<div class="col-md-2 mb-1 mt-1">
-										<div class="custom-control custom-radio">
-											<input type="radio" class="custom-control-input" id="discount0" name="discount" checked="checked" value="0"> <label
-												class="custom-control-label" for="discount0">單純公告，無任何優惠</label>
+									<form method='POST' id="bulletinBean" action="<c:url value='/admin/bulletin_edit/edit'/>" enctype="multipart/form-data">
+										<div class="form-row mb-5 mt-1">
+											<div class="col-md-2">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.no}"> --%>
+												<input type="hidden" name="no" value="${bulletinBean.no}">
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.no}"> --%>
+												<%-- 										<input type="hidden" name="no" value="${param.no}"> --%>
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+												<label for="title">標題:</label>
+											</div>
+											<div class="col-md-10">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.title}"> --%>
+												<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
+													class="form-control">
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.title}"> --%>
+												<%-- 										<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${param.title}" class="form-control"> --%>
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+											</div>
+											<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 										</div>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="col-md-2 mb-1 mt-1">
-										<div class="custom-control custom-radio">
-											<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label" for="discount1">現金折扣</label>
-											<a style="color: red;">${ErrMsg.discountP}</a>
+
+										<div class="form-row  mb-5 ">
+											<div class="col-md-2">
+												<label class="context">公告內容:</label>
+											</div>
+											<div class="col-md-10">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.context}"> --%>
+												<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.context}"> --%>
+												<%-- 										<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${param.context}</textarea> --%>
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+
+
+											</div>
+											<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 										</div>
-									</div>
 
+										<div class="form-row mb-5 ">
+											<div class="col-md-2">
+												<label>公告有效時間</label>
+											</div>
+											<div class="col-md-1">
+												<label for="from">開始</label>
+											</div>
+											<div class="col-md-4">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.startDate}"> --%>
+												<input type="text" id="from" name="from" class="form-control" id="startDate" value="${bulletinBean.startDate}" readonly>
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.startDate}"> --%>
+												<%-- 										<input type="text" id="from" name="from" class="form-control" id="startDate" value="${param.startDate}" /> --%>
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+											</div>
+											<div class="col-md-1">
+												<label for="to">結束</label>
+											</div>
+											<div class="col-md-4">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.endDate}"> --%>
+												<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.endDate}"> --%>
+												<%-- 										<input type="text" id="to" name="to" class="form-control" id="endDate" value="${param.endDate}" /> --%>
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+											</div>
+											<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 
-									<div class="col-md-1  discountP hide">
-										<label for="discountPriceBuy">滿</label>
-									</div>
-
-									<div class="col-md-2  discountP hide">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.discountPriceBuy}"> --%>
-										<input min="1" max="9999" maxlength="4" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額"
-											value="${bulletinBean.discountPriceBuy}" class="form-control" />
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.discountPriceBuy}"> --%>
-										<%-- 										<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${param.discountPriceBuy}" --%>
-										<!-- 											class="form-control" /> -->
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
-									</div>
-
-									<div class="col-md-1  discountP hide">
-										<label for="discountPriceFree">送</label>
-									</div>
-
-									<div class="col-md-2  discountP hide">
-										<%-- 								<c:choose> --%>
-										<%-- 									<c:when test="${!empty bulletinBean.discountPriceFree}"> --%>
-										<input min="1" max="9999" maxlength="4" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額"
-											value="${bulletinBean.discountPriceFree}" class="form-control" />
-										<%-- 									</c:when> --%>
-										<%-- 									<c:when test="${!empty param.discountPriceFree}"> --%>
-										<%-- 										<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" value="${param.discountPriceFree}" --%>
-										<!-- 											class="form-control" /> -->
-										<%-- 									</c:when> --%>
-										<%-- 								</c:choose> --%>
-									</div>
-								</div>
-
-								<div class="form-row mb-3 mt-1">
-									<div class="col-md-2 ">
-										<div class="custom-control custom-radio">
-											<input type="radio" class="custom-control-input" id="discount2" name="discount" value="2" /> <label class="custom-control-label" for="discount2">票券折扣</label>
-											<a style="color: red;">${ErrMsg.discountT}</a>
 										</div>
-									</div>
 
-									<div class=" col-md-1  discountT hide">
-										<label for="discountTickBuy">買</label>
-									</div>
 
-									<div class=" col-md-2  discountT hide">
-										<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
-											<option value="0">購買票數</option>
-											<c:forEach begin="1" end="5" var="inputTB">
-												<option value="${inputTB}">${inputTB}</option>
-											</c:forEach>
-										</select>
-									</div>
-
-									<div class=" col-md-1  discountT hide">
-										<label for="discountTickFree">送</label>
-									</div>
-
-									<div class=" col-md-2  discountT hide">
-										<select class="custom-select " id="discountTickFree" name="discountTickFree">
-											<option value="0">贈送票數</option>
-											<c:forEach begin="1" end="4" var="inputTF">
-												<option value="${inputTF}">${inputTF}</option>
-											</c:forEach>
-										</select>
-
-									</div>
-								</div>
-
-								<input id="employeeId" name="employeeId" type="hidden" value="${employeeBean1.no}" />
-
-								<div class="form-row">
-									<div class="col-md-2 ">
-										<label for="bulletinImage">活動圖檔</label>
-									</div>
-									<div class="col-md-6 mb-3">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="bulletinImage" name="bulletinImage"> <label class="custom-file-label" for="bulletinImage">只支援jpg/png/jpeg</label>
-											<a style="color: red;">${ErrMsg.photo}</a>
+										<div class="form-row  mb-5 mt-3 ">
+											<div class="col-md-5  ">
+												<div class="custom-control custom-radio">
+													<input type="radio" class="custom-control-input" id="discount0" name="discount" checked="checked" value="0"> <label
+														class="custom-control-label" for="discount0">單純公告，無任何優惠</label>
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
+										<div class="form-row mb-5">
+											<div class="col-md-2  ">
+												<div class="custom-control custom-radio">
+													<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label" for="discount1">現金折扣</label>
+													<a style="color: red;">${ErrMsg.discountP}</a>
+												</div>
+											</div>
+
+
+											<div class="col-md-1  discountP hide">
+												<label for="discountPriceBuy">滿</label>
+											</div>
+
+											<div class="col-md-4  discountP hide">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.discountPriceBuy}"> --%>
+												<input min="1" max="9999" maxlength="4" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額"
+													value="${bulletinBean.discountPriceBuy}" class="form-control" />
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.discountPriceBuy}"> --%>
+												<%-- 										<input min="1" max="9999" type="number" id="discountPriceBuy" name="discountPriceBuy" placeholder="消費金額" value="${param.discountPriceBuy}" --%>
+												<!-- 											class="form-control" /> -->
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+											</div>
+
+											<div class="col-md-1  discountP hide">
+												<label for="discountPriceFree">送</label>
+											</div>
+
+											<div class="col-md-4  discountP hide">
+												<%-- 								<c:choose> --%>
+												<%-- 									<c:when test="${!empty bulletinBean.discountPriceFree}"> --%>
+												<input min="1" max="9999" maxlength="4" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額"
+													value="${bulletinBean.discountPriceFree}" class="form-control" />
+												<%-- 									</c:when> --%>
+												<%-- 									<c:when test="${!empty param.discountPriceFree}"> --%>
+												<%-- 										<input min="1" max="9999" type="number" id="discountPriceFree" name="discountPriceFree" placeholder="折扣金額" value="${param.discountPriceFree}" --%>
+												<!-- 											class="form-control" /> -->
+												<%-- 									</c:when> --%>
+												<%-- 								</c:choose> --%>
+											</div>
+										</div>
+
+										<div class="form-row mb-5 ">
+											<div class="col-md-2 ">
+												<div class="custom-control custom-radio">
+													<input type="radio" class="custom-control-input" id="discount2" name="discount" value="2" /> <label class="custom-control-label" for="discount2">票券折扣</label>
+													<a style="color: red;">${ErrMsg.discountT}</a>
+												</div>
+											</div>
+
+											<div class=" col-md-1  discountT hide">
+												<label for="discountTickBuy">買</label>
+											</div>
+
+											<div class=" col-md-4  discountT hide">
+												<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
+													<option value="0">購買票數</option>
+													<c:forEach begin="1" end="5" var="inputTB">
+														<option value="${inputTB}">${inputTB}</option>
+													</c:forEach>
+												</select>
+											</div>
+
+											<div class=" col-md-1  discountT hide">
+												<label for="discountTickFree">送</label>
+											</div>
+
+											<div class=" col-md-4  discountT hide">
+												<select class="custom-select " id="discountTickFree" name="discountTickFree">
+													<option value="0">贈送票數</option>
+													<c:forEach begin="1" end="4" var="inputTF">
+														<option value="${inputTF}">${inputTF}</option>
+													</c:forEach>
+												</select>
+
+											</div>
+										</div>
+
+										<input id="employeeId" name="employeeId" type="hidden" value="${employeeBean1.no}" />
+
+										<div class="form-row mb-3 mt-3">
+											<div class="col-md-2 ">
+												<label for="bulletinImage">活動圖檔</label>
+											</div>
+											<div class="col-md-10 mb-3">
+												<div class="custom-file">
+													<input type="file" class="custom-file-input" id="bulletinImage" name="bulletinImage"> <label class="custom-file-label" for="bulletinImage">只支援jpg/png/jpeg</label>
+													<a style="color: red;">${ErrMsg.photo}</a>
+												</div>
+											</div>
+										</div>
+										<div class="form-row mb-3">
+											<div class="col-md-2 "></div>
+											<div class="col-md-10 ">
+
+												<div style="text-align: center">
+													<input id="btnEdit" type="submit" class='btn btn-info btn-lg  ' value="編輯送出"> 
+													<input id="btnReset" type="button"		class='btn btn-danger btn-lg' value="取消編輯">
+												</div>
+											</div>
+										</div>
 
 
 
-								<!-- button -->
-								<div>
-									<img id="showPhoto" src="<c:url value='/admin/getBulletinPicture/${bulletinBean.no}' />" />
+										<!-- button -->
+
+									</form>
 								</div>
-								<div>
-									<input id="btnEdit" type="submit" class='btn btn-info' value="編輯送出"> <input id="btnReset" type="button" class='btn btn-danger' value="取消編輯">
+								<div class="col-md-5">
+									<img id="showPhoto"  width="500px" src="<c:url value='/admin/getBulletinPicture/${bulletinBean.no}' />" />
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
-				</div>
-				<c:choose>
-					<c:when test="${!empty sameBulletinBean[1]}">
-						<div class="card">
-							<div class="card-header" id="headingTwo">
-								<h2 class="mb-0">
-									<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-										aria-controls="collapseTwo">歷史紀錄</button>
-								</h2>
-							</div>
+					<!-- 				!!! -->
+					<c:choose>
+						<c:when test="${!empty sameBulletinBean[1]}">
+							<div class="card">
+								<div class="card-header" id="headingTwo">
+									<h2 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+											aria-controls="collapseTwo">歷史紀錄</button>
+									</h2>
+								</div>
 
 
-							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-								<div class="card-body">
-									<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
-										<thead>
-											<tr>
-												<th scope="col" width="5%">#</th>
-												<th scope="col" width="25%">標題</th>
-												<th scope="col" width="10%">發布時間</th>
-												<th scope="col" width="10%">開始時間</th>
-												<th scope="col" width="10%">結束時間</th>
-												<th scope="col" width="10%">公告人</th>
-												<th scope="col" width="20%" colspan="2">優惠方案</th>
-												<th scope="col" width="5%">詳情</th>
-												<th scope="col" width="5%"></th>
-												<th scope="col" width="5%"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var='sb' items='${sameBulletinBean}' begin="1" varStatus="i">
+								<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+									<div class="card-body">
+										<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
+											<thead>
 												<tr>
-													<c:if test="${sb.available}">
-														<td class="hide">${sb.no}</td>
-														<th scope="row">${i.index+1}</th>
-														<td class="title">${sb.title}</td>
-														<td class="postTime">${sb.postTime}</td>
-														<td>${sb.startDate}</td>
-														<td>${sb.endDate}</td>
-														<td>${sb.employee.no}</td>
-														<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-														<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
-														<td><img name="img_effect" data-toggle="modal" data-target="#div_unavai_cont_${sb.no}" width="30px"
-															src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
-														<td></td>
-														<td></td>
-													</c:if>
+													<th scope="col" width="5%">#</th>
+													<th scope="col" width="25%">標題</th>
+													<th scope="col" width="10%">發布時間</th>
+													<th scope="col" width="10%">開始時間</th>
+													<th scope="col" width="10%">結束時間</th>
+													<th scope="col" width="10%">公告人</th>
+													<th scope="col" width="20%" colspan="2">優惠方案</th>
+													<th scope="col" width="5%">詳情</th>
+													<th scope="col" width="5%"></th>
+													<th scope="col" width="5%"></th>
 												</tr>
-												<div class="modal fade" id="div_unavai_cont_${sb.no}" tabindex="-1" role="dialog" aria-labelledby="div_unavai_cont_${sb.no}}Title"
-													aria-hidden="true">
-													<div class="modal-dialog modal-dialog-centered" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title" id="div_unavai_cont_${sb.no}Title">公告修改</h5>
-																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																	<span aria-hidden="true">&times;</span>
-																</button>
-															</div>
-															<div class="modal-body">
-																<div>
-																	<h4>${sb.title}</h4>
+											</thead>
+											<tbody>
+												<c:forEach var='sb' items='${sameBulletinBean}' begin="1" varStatus="i">
+													<tr>
+														<c:if test="${sb.available}">
+															<td class="hide">${sb.no}</td>
+															<th scope="row">${i.index+1}</th>
+															<td class="title">${sb.title}</td>
+															<td class="postTime">${sb.postTime}</td>
+															<td>${sb.startDate}</td>
+															<td>${sb.endDate}</td>
+															<td>${sb.employee.no}</td>
+															<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
+															<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+															<td><img name="img_effect" data-toggle="modal" data-target="#div_unavai_cont_${sb.no}" width="30px"
+																src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
+															<td></td>
+															<td></td>
+														</c:if>
+													</tr>
+													<div class="modal fade" id="div_unavai_cont_${sb.no}" tabindex="-1" role="dialog" aria-labelledby="div_unavai_cont_${sb.no}}Title"
+														aria-hidden="true">
+														<div class="modal-dialog modal-dialog-centered" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title" id="div_unavai_cont_${sb.no}Title">公告修改</h5>
+																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
 																</div>
-																<div>
-																	<h5>${sb.context}</h5>
+																<div class="modal-body">
+																	<div>
+																		<h4>${sb.title}</h4>
+																	</div>
+																	<div>
+																		<h5>${sb.context}</h5>
+																	</div>
+																	<img id="showPhoto" width="250" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" />
 																</div>
-																<img id="showPhoto" width="250" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" />
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+																
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
 
-
-
-												<%-- 										<div class="unavai_cont_${sb.no} add-model hide"> --%>
-												<%-- 											<div>${sb.context} --%>
-												<%-- 												<img id="showPhoto" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" /> --%>
-												<!-- 											</div> -->
-												<!-- 											<div> -->
-												<%-- 												<input id="unavai_cont_${sb.no}" type="button" value="返回" name="back" class=" btn btn-danger"> --%>
-												<!-- 											</div> -->
-												<!-- 										</div> -->
-											</c:forEach>
-										</tbody>
-									</table>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:when>
-				</c:choose>
+						</c:when>
+					</c:choose>
+				</div>
 			</div>
 		</div>
 		<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
@@ -620,3 +634,4 @@
 			</div>
 		</div>
 	</div>
+</div>

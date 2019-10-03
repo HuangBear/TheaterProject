@@ -189,7 +189,7 @@ public class MemberController {
 		String pwd = memberBean.getPassword();
 		String flag = request.getParameter("remember");
 		session = request.getSession();
-
+		System.out.println("memberLoginController start");
 		if (account == null || account.trim().length() == 0) {
 			errMsg += "1.*帳號必須輸入;";
 		} else {
@@ -247,19 +247,22 @@ public class MemberController {
 		}
 
 		MemberBean LoginMB = null;
-		MemberBean memberBeanGoogle = service.findMemberByEmail(memberBean.getEmail());
-
-		if (memberBeanGoogle.getGoogleUrl() != null) {
+		MemberBean memberEmailExist = service.findMemberByEmail(memberBean.getEmail());
+		if(memberEmailExist ==null) {
+			redirectAttributes.addFlashAttribute("error", "登錄失敗，帳號不存在");
+			return "redirect:/memberservice";
+		}else if (memberEmailExist !=null&&memberEmailExist.getGoogleUrl() != null) {
 			redirectAttributes.addFlashAttribute("error", "此帳號已使用Google登入認證，請按Google登入");
 			return "redirect:/memberservice";
 		} else {
-
+			System.out.println("memberLoginController checking member  ");
 			LoginMB = service.checkEmailPassword(memberBean.getEmail(), memberBean.getPassword());
 			if (LoginMB != null && LoginMB.getEmailActiveStatus() == true) {
+				
 				session.setAttribute("memberName", LoginMB.getName());
 				session.setAttribute("memberId", LoginMB.getMemberId());
 				session.setAttribute("LoginOK", LoginMB);
-
+				System.out.println("memberLoginController check member ok ");
 				redirectAttributes.addFlashAttribute("name", memberBean.getName());
 				redirectAttributes.addFlashAttribute("welcome", "登入成功");
 				return "redirect:/";
@@ -267,7 +270,7 @@ public class MemberController {
 				redirectAttributes.addFlashAttribute("error", LoginMB.getName() + "您好，請至信箱收信驗證後才可登入");
 				return "redirect:/memberservice";
 			} else
-				redirectAttributes.addFlashAttribute("error", "登錄失敗，帳號或密碼錯誤");
+				redirectAttributes.addFlashAttribute("error", "登錄失敗，密碼錯誤");
 			return "redirect:/memberservice";
 		}
 	}

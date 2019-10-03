@@ -109,7 +109,6 @@ public class movieController {
 			StartTimes_3D = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(date), version[1], movie.getMovieName());
 			StartTimes_IMAX = time_service.getStartTimeByDateAndVersionAndMovie(sdf.format(date), version[2], movie.getMovieName());
 			
-			
 			times.add(StartTimes_2D);
 			times.add(StartTimes_3D);
 			times.add(StartTimes_IMAX);

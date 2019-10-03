@@ -7,7 +7,7 @@ import com.web.entity.EmployeeBean;
 
 public interface BulletinDao {
 
-	List<BulletinBean> getExistenceBulletin(String targete);
+	List<BulletinBean> getExistenceBulletin(String str, String targete);
 
 	List<BulletinBean> getExpiredBulletin(String targete);
 
@@ -24,5 +24,9 @@ public interface BulletinDao {
 	BulletinBean getBulletinById(Integer bulletin_no);
 
 	List<BulletinBean> getDiscount(String date);
+
+	Integer getBuelltinPreMoon(String date);
+
+	Integer getBuelltinPreYear(String date);
 
 }

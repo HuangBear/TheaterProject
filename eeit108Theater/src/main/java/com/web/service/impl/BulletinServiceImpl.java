@@ -20,21 +20,21 @@ public class BulletinServiceImpl implements BulletinService {
 
 	@Override
 	@Transactional
-	public List<BulletinBean> getExistenceBulletin(String targete) {
-		return dao.getExistenceBulletin(targete);
+	public List<BulletinBean> getExistenceBulletin(String str, String targete) {
+		return dao.getExistenceBulletin(str, targete);
 	}
 
 	@Override
 	@Transactional
-	public List<List<BulletinBean>> getStatsBulletin(String targete) {
+	public List<List<BulletinBean>> getStatsBulletin(String str, String targete) {
 
-		List<BulletinBean> getExistenceBulletin = dao.getExistenceBulletin(targete);
+		List<BulletinBean> getExistenceBulletin = dao.getExistenceBulletin(str, targete);
 		switchImg(getExistenceBulletin);
 
-		List<BulletinBean> getExpiredBulletin = dao.getExpiredBulletin(targete);
+		List<BulletinBean> getExpiredBulletin = dao.getExpiredBulletin(str);
 		switchImg(getExpiredBulletin);
 
-		List<BulletinBean> getDeadBulletin = dao.getDeadBulletin(targete);
+		List<BulletinBean> getDeadBulletin = dao.getDeadBulletin(str);
 		switchImg(getDeadBulletin);
 
 		List<List<BulletinBean>> statusBulletin = new ArrayList<>();

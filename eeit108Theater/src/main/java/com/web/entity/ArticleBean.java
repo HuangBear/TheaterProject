@@ -33,6 +33,7 @@ public class ArticleBean implements Serializable {
 	private String title;
 	private String content;
 	private String tag;
+	private Boolean type;
 	private Date postTime;
 	private Integer likeCount;
 	private Integer dislikeCount;
@@ -51,6 +52,8 @@ public class ArticleBean implements Serializable {
 	private String movieString;
 	@Transient
 	private String availableString;
+	@Transient
+	private String typeString;
 	
 	@OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
 	private Set<ReplyBean> replys;
@@ -74,7 +77,7 @@ public class ArticleBean implements Serializable {
 		this.no = no;
 	}
 	
-	public ArticleBean(Integer no, Boolean available, String title, String content, String tag, Date postTime,
+	public ArticleBean(Integer no, Boolean available, String title, String content, String tag, Boolean type, Date postTime,
 			Integer likeCount, Integer dislikeCount, String postTimeString, Set<ReplyBean> replys, MemberBean author,
 			MovieBean movie) {
 		super();
@@ -83,6 +86,7 @@ public class ArticleBean implements Serializable {
 		this.title = title;
 		this.content = content;
 		this.tag = tag;
+		this.type = type;
 		this.postTime = postTime;
 		this.likeCount = likeCount;
 		this.dislikeCount = dislikeCount;
@@ -218,6 +222,18 @@ public class ArticleBean implements Serializable {
 	}
 	public void setMovieString(String movieString) {
 		this.movieString = movieString;
+	}
+	public String getTypeString() {
+		return typeString;
+	}
+	public void setTypeString(String typeString) {
+		this.typeString = typeString;
+	}
+	public Boolean getType() {
+		return type;
+	}
+	public void setType(Boolean type) {
+		this.type = type;
 	}
 	
 }

@@ -76,10 +76,17 @@ public class MemberDaoImpl implements MemberDao {
 		MemberBean mb= null;
 		Session session = factory.getCurrentSession();
 		String hql = "FROM MemberBean e WHERE e.email = :email";
+		System.out.println("執行HQL請求 get MemberBean ByEmail");
 		mb=(MemberBean)session.createQuery(hql).setParameter("email", email).uniqueResult();
-		
+		System.out.println("取得SQL回應 : MemberBean or null");
 		return mb;
+	
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public MemberBean getMemberById(String memberId) {

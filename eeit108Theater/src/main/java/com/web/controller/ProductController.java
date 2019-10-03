@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.web.entity.ProductBean;
 import com.web.service.ProductService;
 
