@@ -41,7 +41,7 @@
 									<th width='5%'>被BAN文章數</th>
 									<th width='5%'>狀態</th>
 									<th width='5%'>發言狀態</th>
-								    <sec:authorize access="hasAuthority('2')">	
+								    <sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
 									<th width='8%'>管理</th>
 									
 								    </sec:authorize>	
@@ -58,7 +58,7 @@
 									<th>被BAN文章數</th>
 									<th>狀態</th>
 									<th>發言狀態</th>
-									<sec:authorize access="hasAuthority('2')">	
+									<sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
 									<th>管理</th>
 									
 									</sec:authorize>	
@@ -96,7 +96,7 @@
 										</c:when>
 
 									</c:choose>
-									<sec:authorize access="hasAuthority('2')">	
+									<sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
 									<td>
 										<button class="itemTag2 btn btn-info" id="${mem.no}">
 											管理會員</button>
