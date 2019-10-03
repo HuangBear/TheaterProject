@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.ArticleDao;
+import com.web.entity.ATypeBean;
 import com.web.entity.ArticleBean;
 import com.web.entity.LikeOrDislikeBean;
 import com.web.entity.MemberBean;
@@ -32,11 +33,24 @@ public class ArticleDaoImpl implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ArticleBean> getArticlesByMovieNo(int movieNo) {
-	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie order by no desc";
+	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie and bb.type =:type order by no desc";
+	    Boolean type = false;
 	    Session session = null;
 	    List<ArticleBean> list = new ArrayList<>();
 	    session = factory.getCurrentSession();
-	    list = session.createQuery(hql).setParameter("movie", movieNo).list();
+	    list = session.createQuery(hql).setParameter("movie", movieNo).setParameter("type", type).list();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ArticleBean> getTopArticlesByMovieNo(int movieNo) {
+	    String hql = "FROM ArticleBean bb WHERE bb.movie.no = :movie and bb.type =:type";
+	    Boolean type = true;
+	    Session session = null;
+	    List<ArticleBean> list = new ArrayList<>();
+	    session = factory.getCurrentSession();
+	    list = session.createQuery(hql).setParameter("movie", movieNo).setParameter("type", type).list();
 	    return list;
 	}
 	
@@ -107,15 +121,25 @@ public class ArticleDaoImpl implements ArticleDao {
 	    return list;
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public List<String> getAllSysTags() {
-//	    String hql = "SELECT DISTINCT b.tag FROM SysTagBean b";
-//	    Session session = factory.getCurrentSession();
-//	    List<String> list = new ArrayList<>();
-//	    list = session.createQuery(hql).getResultList();
-//	    return list;
-//	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAllSysTags() {
+	    String hql = "SELECT DISTINCT b.tag FROM SysTagBean b";
+	    Session session = factory.getCurrentSession();
+	    List<String> list = new ArrayList<>();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getATypeList() {
+	    String hql = "SELECT DISTINCT b.typeName FROM ATypeBean b";
+	    Session session = factory.getCurrentSession();
+	    List<String> list = new ArrayList<>();
+	    list = session.createQuery(hql).getResultList();
+	    return list;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -207,13 +231,20 @@ public class ArticleDaoImpl implements ArticleDao {
 	    session.save(rb);
 	    
 	}
+	
+	@Override
+	public void editMember(MemberBean member) {
+	    Session session = factory.getCurrentSession();
+	    session.update(member);
+	}
+	
 	@Override
 	public MemberBean getMemberById(int memberId) {
 		MemberBean mb = null;
 	    Session session = factory.getCurrentSession();
 	    mb = session.get(MemberBean.class, memberId);
 	    return mb;
-	}	
+	}
 	
 	@Override
 	public MovieBean getMovieByNo(int movieNo) {
@@ -242,6 +273,13 @@ public class ArticleDaoImpl implements ArticleDao {
 		Session session = factory.getCurrentSession();
 		List<MovieBean> list = session.createQuery(hql).getResultList();
 		return list;
+	}
+	
+	@Override
+	public ATypeBean getAT(int no) {
+		Session session = factory.getCurrentSession();
+		ATypeBean atb = session.get(ATypeBean.class, no);
+		return atb;
 	}
 	
 }

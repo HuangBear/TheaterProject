@@ -81,19 +81,63 @@
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class='control-label col-lg-2 col-lg-4' for="tag">
-									<a>tag</a>
-								</label>
-								<div class='col-lg-10'>
-									<form:select path="tag">
-										<form:option value=" ">
-											<a>select</a>
-										</form:option>
-										<form:options items="${tagList}" />
-									</form:select>
-								</div>
-							</div>
+							<c:choose>
+								<c:when test="${LoginOK.no!=10}">
+									<div class="form-group">
+										<label class='control-label col-lg-2 col-lg-4' for="tag">
+											<a>tag</a>
+										</label>
+										<div class='col-lg-10'>
+											<form:select path="tag">
+												<form:option value=" ">
+													<a>select</a>
+												</form:option>
+												<form:options items="${tagList}" />
+											</form:select>
+										</div>
+									</div>
+								</c:when>
+								<c:when test="${LoginOK.no==10}">
+									<div class="form-group">
+										<label class='control-label col-lg-2 col-lg-4' for="tag">
+											<a>tag</a>
+										</label>
+										<div class='col-lg-10'>
+											<form:select path="tag">
+												<form:option value=" ">
+													<a>select</a>
+												</form:option>
+												<form:options items="${systagList}" />
+											</form:select>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${LoginOK.no!=10}">
+									<div class='col-lg-10'>
+											<form:select path="typeString">
+												<form:option value="一般">
+												</form:option>
+											</form:select>
+										</div>
+								</c:when>
+								<c:when test="${LoginOK.no==10}">
+									<div class="form-group">
+										<label class='control-label col-lg-2 col-lg-4' for="type">
+											<a>type</a>
+										</label>
+										<div class='col-lg-10'>
+											<form:select path="typeString">
+												<form:option value=" ">
+													<a>select</a>
+												</form:option>
+												<form:options items="${aTypeList}" />
+											</form:select>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
 
 							<div class="form-group">
 								<label class="control-label col-lg-2 col-lg-4" for='content'>
