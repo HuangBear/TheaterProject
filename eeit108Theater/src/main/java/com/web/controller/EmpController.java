@@ -109,8 +109,7 @@ public class EmpController {
 	public String EmpListA(Model model, Principal principal,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String empEmail=principal.getName();
-		List<EmployeeBean> list = service.getAllEmployees();
-		session.setAttribute("employees", list);
+	
 		model.addAttribute("empEmail", empEmail);
 		EmployeeBean eb1 = service.findByEmail(empEmail);
 		String position=service.checkEmpPermission(eb1);
@@ -138,15 +137,15 @@ public class EmpController {
 	@RequestMapping("/admin/updatePage")
 	public String updatePage(Model model, HttpServletRequest req, HttpSession session) {
 		String url = req.getParameter("url");
-		EmployeeBean employeeBean = new EmployeeBean();
-		MemberBean memberBean=new MemberBean();
-		List<MemberBean> listMem = serviceM.getAllMembers();
-		List<EmployeeBean> listEmp = service.getAllEmployees();
-		model.addAttribute("employees", listEmp);
-		model.addAttribute("members", listMem);
-		model.addAttribute("employeeBean", employeeBean);
-		model.addAttribute("memberBean", memberBean);
-		model.addAttribute("now", new Date());
+		//EmployeeBean employeeBean = new EmployeeBean();
+		//MemberBean memberBean=new MemberBean();
+		//List<MemberBean> listMem = serviceM.getAllMembers();
+		//List<EmployeeBean> listEmp = service.getAllEmployees();
+		//model.addAttribute("employees", listEmp);
+		//model.addAttribute("members", listMem);
+		//model.addAttribute("employeeBean", employeeBean);
+		//model.addAttribute("memberBean", memberBean);
+		session.setAttribute("now", new Date());
 
 		return "forward:/admin/"+url;
 	}

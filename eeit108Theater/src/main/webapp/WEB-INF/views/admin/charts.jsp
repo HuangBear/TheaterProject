@@ -15,7 +15,12 @@
 <script src="js/admin/demo/chart-pie-demo.js"></script>
 
 <!-- <script type="application/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+
 <script type="text/javascript">
+
+
+
 	google.charts.load("current", {
 		packages : [ "corechart" ]
 	});
@@ -23,19 +28,31 @@
 	google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
-		var data = google.visualization.arrayToDataTable([ [ 'Language', 'Speakers (in millions)' ],
-				[ 'German', 5.85 ], [ 'French', 1.66 ], [ 'Italian', 0.316 ], [ 'Romansh', 0.0791 ] ]);
+// 		var data = google.visualization.arrayToDataTable([ [ 'Language', 'Speakers (in millions)' ],
+// 				[ 'German', 5.85 ], [ 'French', 1.66 ], [ 'Italian', 0.316 ], [ 'Romansh', 0.0791 ] ]);
 
+
+		
+		
+	var data = google.visualization.arrayToDataTable([['Language', 'Speakers (in millions)'],
+		<c:forEach items="${buelltinPreMoon}" var="bPM" >
+			['${bPM.chartKey}', ${bPM.chartValue}],
+	 </c:forEach >
+		]);
+
+		
 		var options = {
 			legend : 'none',
 			pieSliceText : 'label',
-			title : 'Swiss Language Use (100 degree rotation)',
+			title : '每月公告',
 			pieStartAngle : 100,
 		};
 
 		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 		chart.draw(data, options);
 	}
+	
+	
 	// 		google.charts.load("current", {
 	// 			packages : [ "corechart" ]
 	// 		});
@@ -150,12 +167,21 @@
 	var myLineChart = new Chart(ctx, {
 	  type: 'bar',
 	  data: {
-	    labels: ["January", "February", "March", "April", "May", "June"],
+	    labels: [
+			<c:forEach items="${buelltinPreMoon}" var="bPM" >
+			'${bPM.chartKey}' ,
+	 </c:forEach >
+	       	
+	    	],
 	    datasets: [{
 	      label: "Revenue",
 	      backgroundColor: "rgba(2,117,216,1)",
 	      borderColor: "rgba(2,117,216,1)",
-	      data: [4215, 5312, 6251, 7841, 9821, 14984],
+	      data: [			
+	    	  <c:forEach items="${buelltinPreMoon}" var="bPM" >
+			'${bPM.chartValue}' ,
+			 </c:forEach >
+			],
 	    }],
 	  },
 	  options: {
@@ -168,14 +194,14 @@
 	          display: false
 	        },
 	        ticks: {
-	          maxTicksLimit: 6
+// 	          maxTicksLimit: 6
 	        }
 	      }],
 	      yAxes: [{
 	        ticks: {
 	          min: 0,
-	          max: 15000,
-	          maxTicksLimit: 5
+	          max: 5,
+// 	          maxTicksLimit: 5
 	        },
 	        gridLines: {
 	          display: true
@@ -215,15 +241,15 @@
 				<tr>
 
 					<td>
-						<canvas id="myAreaChart" style="width: 800px;  height: 400px;"></canvas> <%-- <canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
+						<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
 
 					</td>
 					<td>
-						<canvas id="myBarChart" style="width: 800px;  height: 400px;"></canvas> <%-- <canvas id="myBarChart" width="100%" height="50"></canvas> --%>
+						<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myBarChart" width="100%" height="50"></canvas> --%>
 
 					</td>
 					<td>
-						<canvas id="myPieChart" style="width: 800px;  height: 400px;"></canvas> <%-- <canvas id="myPieChart" width="100%" height="100"></canvas> --%>
+						<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myPieChart" width="100%" height="100"></canvas> --%>
 
 					</td>
 

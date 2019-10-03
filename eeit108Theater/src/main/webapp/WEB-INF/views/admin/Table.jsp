@@ -10,9 +10,9 @@
         
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Home</a>
+            <a href="empIndexA">Home</a>
           </li>
-          <li class="breadcrumb-item active">empTable</li>
+          <li class="breadcrumb-item active">員工清單</li>
         </ol>
 
        
@@ -36,7 +36,7 @@
 				<th width='10%'>員工ID</th>
 				<th width='15%'>員工email</th>
 				<th width='5%'>員工電話</th>
-				<th width='15%'>password</th>
+				<th width='8%'>password</th>
 				<th width='5%'>薪資</th>
 				<th width='6%'>職等</th>
 				<th width='5%'>工作狀態</th>
