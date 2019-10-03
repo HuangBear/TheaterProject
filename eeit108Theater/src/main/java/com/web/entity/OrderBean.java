@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
- * @author f8286
+ * @author Bear
  *
  */
 @Entity
@@ -46,7 +46,7 @@ public class OrderBean implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_order_id", referencedColumnName = "orderId")
-	@OrderBy("type")
+	@OrderBy("type DESC")
 	private List<OrderItemBean> orderItems = new ArrayList<OrderItemBean>(); // U, O2M
 
 	@ManyToOne(cascade = CascadeType.ALL)
