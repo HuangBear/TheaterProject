@@ -43,7 +43,7 @@
 						<c:when test="${empty LoginOK.googleUrl}">
 						<img  src="<c:url value='/images/frontend/loginicon.png' />"  ></c:when>
 						<c:when test="${!empty LoginOK.googleUrl}">
-						<img  src="${LoginOK.googleUrl}"  ></c:when>
+						<img id="prfilePic" src="${LoginOK.googleUrl}"  ></c:when>
 					</c:choose>
 				
 				</c:when>
