@@ -73,7 +73,11 @@
           <i class="fa fa-cog" aria-hidden="true"></i>
           <span>即時客服</span></a>
         </li>
-		
+		<li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="timeTable_add">
+          <i class="fas fa-fw fa-table"></i>
+          <span>新增時刻</span></a>
+        </li>
 
     </ul>
 
