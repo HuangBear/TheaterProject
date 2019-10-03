@@ -12,6 +12,13 @@
           <span>Home</span>
         </a>
         </li>
+        <sec:authorize access="hasAuthority('1') or hasAuthority('2') or hasAuthority('3')">
+        <li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="showOrder">
+          <i class="fas fa-fw fa-ticket-alt"></i>
+          <span>票務管理</span></a>
+        </li>
+        </sec:authorize>
        <sec:authorize access="hasAuthority('1') or hasAuthority('2') or hasAuthority('3')">
  		<li class=" nav-item">
         <a  class="itemTag nav-link" href="#" id="Table" >
