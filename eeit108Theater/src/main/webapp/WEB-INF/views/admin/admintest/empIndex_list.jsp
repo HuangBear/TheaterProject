@@ -56,7 +56,7 @@ tr {
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/datatables.min.css"/>
-<jsp:include page="/fragment/index_include3.jsp" />
+
 <script src="<%=request.getContextPath()%>/js/datatables.min.js"></script>
 </head>
 <body>
