@@ -1849,7 +1849,7 @@ header .icon.circled {
 
 /* 	首頁header */
 #header {
-	background-image: url("../../images/header.jpg");
+	background-image: url("../../images/header.jpg");     /*background-image: url("../../images/header.jpg");*/
 	background-size: 100%;
 	background-position: center center;
 	background-attachment: fixed;
