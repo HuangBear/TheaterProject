@@ -99,7 +99,7 @@
 									</c:when>
 									<c:when test="${article.available==false}">
 
-										<button class="btn btn-info" id="${article.no}"
+										<button class="btn btn-danger" id="${article.no}"
 											style="font-size: 24px">已封鎖</button>
 
 									</c:when>
@@ -111,7 +111,7 @@
 								<c:choose>
 									<c:when test="${article.report==true}">
 
-										<button class="reportBtn btn btn-info" id="${article.no}"
+										<button class="reportBtn btn btn-danger" id="${article.no}"
 											style="font-size: 24px">有檢舉</button>
 
 									</c:when>
@@ -130,13 +130,13 @@
 								<c:choose>
 									<c:when test="${article.available==true}">
 
-										<button class="lockBtn btn btn-info" id="${article.no}"
+										<button class="lockBtn btn btn-danger" id="${article.no}"
 											style="font-size: 24px">上鎖</button>
 
 									</c:when>
 									<c:when test="${article.available==false}">
 
-										<button class="lockBtn btn btn-info" id="${article.no}"
+										<button class="lockBtn btn btn-danger" id="${article.no}"
 											style="font-size: 24px">解鎖</button>
 
 									</c:when>
