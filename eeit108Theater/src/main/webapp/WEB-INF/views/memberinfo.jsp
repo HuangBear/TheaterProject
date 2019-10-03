@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -108,14 +109,8 @@
 								<p class="pclr" id=button3><a href="#">即時客服</a></p>
 							</div>
 							
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/favorite.png" alt="" /></a>
-							</div>
-							<div class="col-8">
-								<p>
-								<h4>個人收藏</h4>
-								<p class="pclr"><a href="#">個人喜愛的電影或影評</a></p>
-							</div>
+							
+							
 						</div>
 						
 					</div>
@@ -131,7 +126,8 @@
 						 <h3><a href="#">◎ 個人資訊</a></h3>
 						    <br>
 						    		<p>會員名稱：${LoginOK.name}</p>
-								    <p>註冊時間：${LoginOK.registerTime}</p>
+								    <p>註冊時間：<fmt:formatDate pattern="yyyy-MM-dd" value="${LoginOK.registerTime}" /></p>
+								    
 						
 						</header> 
 						   <img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"  width="400px"/>
@@ -145,10 +141,7 @@
 						    <p>${LoginOK.aboutMe}</p>
 						
 						</section> 
-						<section> 
-								<header><h4>喜愛電影類型：</h4></header>
-						    	<p>視情況輸入內文2</p>
-							</section> 
+						
 
 							</article>
 						</div>
