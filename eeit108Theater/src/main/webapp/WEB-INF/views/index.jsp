@@ -25,6 +25,8 @@
 </script>
 
 <style>
+	.foo1:hover{color:#f5ad56;}
+
 	.t1{width:600 ; height:480px ; text-align:center}
 	.tr{width:300 ; height:240px ; text-align:center}
 	.td{width:300 ; height:240px ; text-align:center}
@@ -176,17 +178,18 @@ input::placeholder{
 			<!-- header -->
 			<jsp:include page="header.jsp" />
 			<div class="inner" id="716">
-				<header>
-				<h1>
-					<a href="index" id="logo">歡迎進入<strong>716影城</strong>全新的觀影體驗</a>
-				</h1>
-				<hr />
-				<p> 以開創性概念打造的全新據點，<br>
-					為了給影迷最佳觀影體驗，本據點將採取全4K影廳規格，<br>
-					讓影像投影畫質大幅提升，並透過優化程度使影像達到最清晰、栩栩如生效果。</p>
-				</header>
-				<footer> <a href="#" class="button circled scrolly" id="enjoy">ENJOY</a>
-				</footer>
+<!-- 				<header> -->
+<!-- 				<h1> -->
+<!-- 					<a href="index" id="logo">歡迎進入<strong class="foo1">716影城</strong>全新的觀影體驗</a> -->
+<!-- 				</h1> -->
+<!-- 				<hr /> -->
+<!-- 				<p> 以開創性概念打造的全新據點，<br> -->
+<!-- 					為了給影迷最佳觀影體驗，本據點將採取全4K影廳規格，<br> -->
+<!-- 					讓影像投影畫質大幅提升，並透過優化程度使影像達到最清晰、栩栩如生效果。</p> -->
+<!-- 				</header> -->
+<!-- 				<footer> <a href="#" class="button circled scrolly" id="enjoy">ENJOY</a> -->
+<!-- 				</footer> -->
+					<header id="header" style="height:850px;margin-top:-200px;"><img src="images/frontend/mgmwhitelionlogo.png"></header>
 			</div> 			
 		</div>
 		<!-- Banner -->
