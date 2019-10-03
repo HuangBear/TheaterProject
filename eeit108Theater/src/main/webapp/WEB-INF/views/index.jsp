@@ -186,11 +186,33 @@ label {
 .hello {
 	width: 255.31px;
 }
+
+.divbox {
+	text-align: center;
+}
+
+.fakeBox {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.trueBox {
+	display: inline-block;
+	margin: 0px auto; /*div對齊效果*/
+	text-align: center; /*display: inline對齊效果*/
+}
+
+.div_le {
+	display: inline-block; /*讓div並排*/
+	vertical-align: top; /*就算個個div行數不同，也一律向上對齊*/
+/* 	width: 130px; */
+	height: 520px; 
+/* 	border: 1px solid #FF0000; */
+/* 	border-radius: 3px; */
+/* 	margin: 2px; */
+}
 </style>
 
-<script type="text/javascript">
-	
-</script>
 
 </head>
 
@@ -235,107 +257,94 @@ label {
 
 			</div>
 		</section>
-		<article>
-			<center>
-				<section style="margin: auto; display: inline-block;">
-					<div style="margin: auto; display: inline-block;">
-						<section style="margin: auto; display: inline-block;">
-							<div style="border: 1px solid gray; margin: auto; border-radius: 15px; padding: 0px 30px 0px 30px; background-color: #c5c6c7">
-								<!--#106ecc #c5c6c7*-->
-								<p>
-								<h4>
-									<a href="#" style="color: white;">快速訂票</a>
-								</h4>
-								<p>
-								<p>
-								<form action="#">
-									<fieldset>
-										<div class='a'>
-											<img src="images/frontend/showmovie.png" class="iconimg">
-										</div>
-										<div class='a'>
-											<select name="請選擇電影名稱" id="speed" class='hello'>
-												<option>請選擇電影名稱</option>
-												<c:forEach var='i' begin='0' end='20'>
-													<c:choose>
-														<c:when test='${!empty releasedMovies[i]}'>
-															<option>${releasedMovies[i].movieName}</option>
-														</c:when>
-														<c:otherwise>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-											</select>
-										</div>
-										<br> <br>
-										<div class='b'>
-											<img src="images/frontend/choosedate.png" class="iconimg">
-										</div>
-										<div class='b'>
-											<select name="請選擇查詢日期" id="files" class='hello'>
-												<option>請選擇查詢日期</option>
-												<option>${day1}</option>
-												<option>${day2}</option>
-												<option>${day3}</option>
-												<option>${day4}</option>
-												<option>${day5}</option>
-											</select>
-										</div>
-										<br> <br>
-										<div class='c'>
-											<img src="images/frontend/theaterplace.png" class="iconimg">
-										</div>
-										<div class='c'>
-											<select name="請選擇查詢廳次" id="number" class='hello'>
-												<option>請選擇查詢廳次</option>
-											</select>
-										</div>
-										<br> <br>
-										<div class='d'>
-											<img src="images/frontend/timetable.png" class="iconimg">
-										</div>
-										<div class='d'>
-											<select name="請選擇查詢場次" id="salutation" class='hello'>
-												<option>請選擇查詢場次</option>
-											</select>
-										</div>
-									</fieldset>
-									<p>
-									<center>
-										<a id='ticketing' href="<c:url value='/order/showProducts?time=${StartTime.no}'/>"><button type='button' id='submit'>前往訂票</button></a>
-										<button class="" id="" onclick="ShowR()">查詢座位</button>
-									</center>
-								</form>
-								<p>
-							</div>
-						</section>
-
-						<section style="display: inline-block; vertical-align: top;">
-							<div style="border: 1px solid gray; border-radius: 15px; padding: 0px 30px 0px 30px;">
-								<p>
-									<label style="text-align: left;"><h4>
-											最新公告/<a href="news">MORE</a>
-										</h4></label>
-								<p>
-								<ul style="text-align: left;">
-									<c:forEach items="${BulletinBean}" var="bb" end="11">
-										<li><a href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
-									</c:forEach>
-									<!-- 									<li><a href="news">2019/09/05 【大叔之愛】片尾告示</a></li> -->
-									<!-- 									<li><a href="news">2019/08/29 【第九分局】片尾告示</a></li> -->
-									<!-- 									<li><a href="news">2019/08/14 【驅魔使者】片尾公告</a></li> -->
-									<!-- 									<li><a href="news">2019/04/30 信用卡優惠影城現場購票公告</a></li> -->
-									<!-- 									<li><a href="news">2019/02/13 行動支付公告</a></li> -->
-								</ul>
-							</div>
-						</section>
-					</div>
-				</section>
-
-			</center>
-		</article>
-
 		<hr>
+
+		<div class="divbox">
+			<div class="fakeBox"></div>
+			<div class="trueBox">
+
+				<div class="div_le" style="border: 1px solid gray; border-radius: 15px; background-color: #c5c6c7; margin: 100px 40px 40px 40px; padding: 20px;">
+					<p>
+					<h4>
+						<a href="#" style="color: white;">快速訂票</a>
+					</h4>
+					<p>
+					<p>
+					<form action="#">
+						<fieldset>
+							<div class='a'>
+								<img src="images/frontend/showmovie.png" class="iconimg">
+							</div>
+							<div class='a'>
+								<select name="請選擇電影名稱" id="speed" class='hello'>
+									<option>請選擇電影名稱</option>
+									<c:forEach var='i' begin='0' end='20'>
+										<c:choose>
+											<c:when test='${!empty releasedMovies[i]}'>
+												<option>${releasedMovies[i].movieName}</option>
+											</c:when>
+											<c:otherwise>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select>
+							</div>
+							<br> <br>
+							<div class='b'>
+								<img src="images/frontend/choosedate.png" class="iconimg">
+							</div>
+							<div class='b'>
+								<select name="請選擇查詢日期" id="files" class='hello'>
+									<option>請選擇查詢日期</option>
+									<option>${day1}</option>
+									<option>${day2}</option>
+									<option>${day3}</option>
+									<option>${day4}</option>
+									<option>${day5}</option>
+								</select>
+							</div>
+							<br> <br>
+							<div class='c'>
+								<img src="images/frontend/theaterplace.png" class="iconimg">
+							</div>
+							<div class='c'>
+								<select name="請選擇查詢廳次" id="number" class='hello'>
+									<option>請選擇查詢廳次</option>
+								</select>
+							</div>
+							<br> <br>
+							<div class='d'>
+								<img src="images/frontend/timetable.png" class="iconimg">
+							</div>
+							<div class='d'>
+								<select name="請選擇查詢場次" id="salutation" class='hello'>
+									<option>請選擇查詢場次</option>
+								</select>
+							</div>
+						</fieldset>
+						<p>
+						<div style="margin: 0px auto">
+							<a id='ticketing' href="<c:url value='/order/showProducts?time=${StartTime.no}'/>"><button type='button' id='submit'>前往訂票</button></a>
+							<button class="" id="" onclick="ShowR()">查詢座位</button>
+						</div>
+					</form>
+					<p>
+				</div>
+
+				<div class="div_le" style="border: 1px solid gray; border-radius: 15px; background-color: #c5c6c7; margin: 100px 40px 40px 40px; padding: 20px;">
+					<label style="text-align: left; margin-bottom:8px ; padding-top: 8px"><h3>
+							最新公告/<a href="news">MORE</a>
+						</h3></label>
+					<ul style="text-align: left;">
+						<c:forEach items="${BulletinBean}" var="bb" end="12">
+							<li><a href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+			<div class="fakeBox"></div>
+		</div>
+
 		<jsp:include page="footer.jsp" />
 	</div>
 	<!-- Scripts -->

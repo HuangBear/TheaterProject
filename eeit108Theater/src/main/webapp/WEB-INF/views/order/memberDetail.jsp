@@ -135,7 +135,7 @@
 		<!-- Main -->
 		<div class="wrapper style1">
 
-			<div class="container">
+			<div class="container" style="min-height: 800px">
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 						<hr class="first" />
@@ -170,15 +170,15 @@
 
 								</div>
 								<div class="col-4">
-									<a href="#" class="image fit"><img src="<c:url value='/images/frontend/pic12.jpg'/>" alt="" /></a>
+									
 								</div>
 								<div class="col-8">
-									<h4>歷史記錄</h4>
+									
 
 								</div>
 							</div>
 							<footer>
-								<a href="#" class="button">會員資訊</a>
+								
 							</footer>
 						</section>
 					</div>
@@ -193,9 +193,10 @@
 
 							<div id="uncheckedTab" class="acc">
 								<c:if test="${empty uncheckedOrders}">
-									<p>
-										還沒有訂票紀錄喔～<br />趕快去訂票吧！
-									</p>
+									<h3 style="text-align: center">還沒有紀錄哦～趕快去訂票吧！</h3>
+									<div style="text-align: center">
+										<a href="<c:url value='/ticketing_1'/>"><button>去訂票</button></a>
+									</div>
 								</c:if>
 								<c:if test="${not empty uncheckedOrders}">
 									<c:forEach var="order" varStatus="index" items="${uncheckedOrders}">
@@ -229,11 +230,11 @@
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" title="人數"
-																	style="width: 25px; height: 25px;" />：${order.seatCnt}
+																	style="width: 25px; height: 25px;" />：${order.seatCnt} <c:out value=" (${order.seatsString})"/>
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconmeal.png'/>" class="iconimg" title="票種及餐點" />：
-																<c:forEach var="item" items="${order.orderItems}"><br/>${item.itemName} x ${item.quantity}</c:forEach>
+																<c:forEach var="item" items="${order.orderItems}"><br/>${item.detail}</c:forEach>
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconprice.png'/>" class="iconimg" title="總計金額" />：${order.totalPrice}
@@ -250,7 +251,7 @@
 								<c:if test="${empty checkedOrders}">
 									<h3 style="text-align: center">還沒有紀錄哦～</h3>
 									<div style="text-align: center">
-										<button>去訂票</button>
+										<a href="<c:url value='/ticketing_1'/>"><button>去訂票</button></a>
 									</div>
 								</c:if>
 								<c:if test="${not empty checkedOrders}">
@@ -269,7 +270,7 @@
 												<tbody style="padding: 10px;">
 													<tr>
 														<td style="text-align: center;">
-															<p style="color: red">未取票</p>
+															<p style="color: green">已取票</p>
 														</td>
 														<td>
 															<p>取票序號：${order.orderId}</p>
@@ -285,12 +286,12 @@
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" title="人數"
-																	style="width: 25px; height: 25px;" />：${order.seatCnt}
+																	style="width: 25px; height: 25px;" />：${order.seatCnt} <c:out value=" (${order.seatsString})"/>
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconmeal.png'/>" class="iconimg" title="票種及餐點" />：
 																<c:forEach var="item" items="${order.orderItems}">
-																	<br />${item.itemName} x ${item.quantity}
+																	<br />${item.detail}
 															</c:forEach>
 															</p>
 															<p>

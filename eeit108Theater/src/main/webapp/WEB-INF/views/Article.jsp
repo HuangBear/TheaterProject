@@ -63,7 +63,7 @@
 						</div>
 
 						<div style="width: 900px; height: 450px; font-size: 30px">
-							<p>${Article.content}</p>
+							<pre>${Article.content}</pre>
 						</div>
 					</div>
 					<p>
@@ -132,7 +132,7 @@
 								<c:when test="${reply.available==true}">
 									<div
 										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-										<p>${reply.content}</p>
+										<pre>${reply.content}</pre>
 									</div>
 								</c:when>
 								<c:when test="${reply.available==false}">

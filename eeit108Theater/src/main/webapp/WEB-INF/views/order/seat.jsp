@@ -156,10 +156,10 @@ form label {
 								<p style="text-align: center">請選擇${order.ticketCnt}個座位</p>
 							</div>
 							<div class="overflow-auto">
-								<div id="screen" style="min-width: 550px; text-align: center; margin-bottom: 10%;">
-									<button type="button" class="btn btn-secondary btn-lg" style="width: 80%" disabled>Screen</button>
+								<div id="screen" style="min-width: 882px; text-align: center; margin-bottom: 10%;">
+									<button type="button" class="btn btn-secondary btn-lg" style="width: 90%" disabled>Screen</button>
 								</div>
-								<div class="position-relative" style="width: 90%; min-width: 550px; margin: 0 auto;">
+								<div class="position-relative" style="width: 90%; min-width: 882px; margin: 0 auto;">
 									<!-- seat -->
 									<div style="width: 100%">
 										<table class="table-seat" style="margin: 0 auto; left: 0; top: 0; table-layout: fixed; width: 100%;">${seatTable}

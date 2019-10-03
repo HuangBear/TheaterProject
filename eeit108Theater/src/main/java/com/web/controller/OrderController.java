@@ -1,26 +1,20 @@
 package com.web.controller;
 
-import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -239,10 +233,10 @@ public class OrderController {
 			}
 		}
 
-		int rowCnt = 15;
-		int aZoneCnt = 5;
-		int bZoneCnt = 15;
-		int zoneNum = 2;
+		int rowCnt = 20;
+		int aZoneCnt = 8;
+		int bZoneCnt = 25;
+		int zoneNum = 3;
 //		int rowCnt = Integer.valueOf(req.getParameter("rowCnt"));
 //		int aZoneCnt = Integer.valueOf(req.getParameter("aZoneCnt"));
 //		int bZoneCnt = Integer.valueOf(req.getParameter("bZoneCnt"));
@@ -532,112 +526,4 @@ public class OrderController {
 
 		return colNow;
 	}
-
-//	// Email
-//	private String sendEmail(OrderBean ob) throws MessagingException{
-//		if(ob == null)
-//			throw new NullPointerException("the order to send email is null");
-//		if(ob.getOwnerEmail() == null || ob.getOwnerEmail().length() == 0)
-//			throw new MessagingException("Illegal email address");
-//		MimeMessage message = mailSender.createMimeMessage();
-//		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-//		String builder = "<html>" +
-//				"<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>" +
-//				"<body>" + 
-//					"<div align='center' style='font-family: Arial, Helvetica, sans-serif'>" + 
-//							"<table cellpadding='5px' style='width: 50%;line-height: 35px; min-width: 350px; ; border-radius: 10px; white-space: nowrap;'>" + 
-//								"<thead align='center'>" + 
-//									"<tr>" + 
-//										"<td colspan='2'>" + 
-//											"<div><img src='cid:logoImg' style='width: 100%;border-radius: 5px;'></div>" + 
-//										"</td>" + 
-//									"</tr>" + 
-//									"<tr>" + 
-//										"<th colspan='2'>" + 
-//											"<div style='margin-bottom: 5px'>親愛的顧客您好，以下為本次購票資訊</div>" + 
-//										"</th>" + 
-//									"</tr>" + 
-//									"<tr>" + 
-//										"<th colspan='2'>" + 
-//											"<div style='background-color: lightgray;border-radius: 5px;padding-top: 2.5px;padding-bottom: 2.5px'> 訂單資料</div>" + 
-//										"</th>" + 
-//									"</tr>" + 
-//								"</thead>" + 
-//								"<tbody style='text-align:left;'>"+
-//									"<tr>"+
-//										"<th style='width:50%'>"+
-//											"訂單編號"+
-//										"</th>"+
-//										"<th style='width:50%'>"+
-//											"#tradeNo"+
-//										"</th>"+
-//									"</tr>"+
-//									"<tr>"+
-//											"<th>"+
-//												"電影"+
-//											"</th>"+
-//											"<td>"+
-//												"#movieName"+
-//											"</td>"+
-//									"</tr>"+
-//									"<tr>"+
-//										"<th>"+
-//											"場次"+
-//										"</th>"+
-//										"<td>"+
-//											"#timeTable"+
-//										"</td>"+
-//									"</tr>"+
-//									"<tr>"+
-//										"<th>"+
-//											"座位"+
-//										"</th>"+
-//										"<td>"+
-//											"#seat"+
-//										"</td>"+
-//									"</tr>"+
-//									"<tr>"+
-//										"<th>"+
-//											"商品清單"+
-//										"</th>"+
-//											"<td>"+
-//											"#orderList"+
-//										"</td>"+
-//									"</tr>"+
-//									"<tr>"+
-//										"<th>"+
-//											"總計"+
-//										"</th>"+
-//										"<td>"+
-//											"#total"+
-//										"</td>"+
-//									"</tr>"+							
-//								"</tbody>"+
-//								"<tfoot>"+
-//									"<tr>"+
-//										"<td colspan='2'>"+
-//											"<div style='text-align:center;color:cornflowerblue'><b>7-1CINEMA</b></div>"+
-//										"</td>"+
-//									"</tr>"+
-//								"</tfoot>" +
-//							"</table>" + 
-//					"</div>" + 
-//				"</body>" + 
-//				"</html>";
-//		builder = builder.replace("#tradeNo", ob.getOrderId());
-//		builder = builder.replace("#movieName", "(" + ob.getTimeTable().getVersion() + ") " + ob.getTimeTable().getMovieName());
-//		builder = builder.replace("#timeTable", ob.getTimeTable().getStartDate() + " " + ob.getTimeTable().getStartTime());
-//		builder = builder.replace("#seat", ob.getSeatsString());
-//		builder = builder.replace("#orderList", ob.getOrderItemsDetail()); //to fix
-//		builder = builder.replace("#total", (ob.getTotalPrice()).toString());
-//		builder = builder.replace("#", "<br>");
-//		helper.setFrom(OrderController.OFFICIAL_EMAIL);
-//		helper.setTo(ob.getOwnerEmail());
-//		helper.setSubject("7-1 CINEMA 線上購票確認信");
-//		helper.setText(builder,	true);
-//		helper.addInline("logoImg", new File(context.getRealPath("/WEB-INF/resources/images/frontend/cinema.jpg")));
-////		helper.setText("<h1>就是要打中文</h1>", true);
-//		mailSender.send(message);
-//		return pac + "mailTest";
-//	}
 }

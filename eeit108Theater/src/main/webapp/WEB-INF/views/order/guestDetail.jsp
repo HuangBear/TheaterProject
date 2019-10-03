@@ -10,8 +10,8 @@
 <title>716影城 - 購票記錄</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
 
 
 <noscript>
@@ -82,7 +82,7 @@
 		<!-- Main -->
 		<div class="wrapper style1">
 
-			<div class="container">
+			<div class="container" style="min-height: 800px;">
 				<div class="row gtr-200">
 					<div class="col-4 col-12-mobile" id="sidebar">
 						<hr class="first" />
@@ -113,19 +113,8 @@
 									<h4>
 										<a class="checked">已取票</a>
 									</h4>
-
-								</div>
-								<div class="col-4">
-									<a href="#" class="image fit"><img src="<c:url value='/images/frontend/pic12.jpg'/>" alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>歷史記錄</h4>
-
-								</div>
-							</div>
-							<footer>
-								<a href="#" class="button">會員資訊</a>
-							</footer>
+								</div>								
+							</div>						
 						</section>
 					</div>
 
@@ -141,7 +130,7 @@
 								<c:if test="${empty uncheckedOrders}">
 									<h3 style="text-align: center">還沒有紀錄哦～</h3>
 									<div style="text-align: center">
-										<button>去訂票</button>
+										<a href="<c:url value='/ticketing_1'/>"><button>去訂票</button></a>
 									</div>
 								</c:if>
 								<c:if test="${not empty uncheckedOrders}">
@@ -169,18 +158,18 @@
 																<img src="<c:url value='/images/frontend/iconplace.png'/>" class="iconimg" />影廳：${order.timeTable.theater}
 															</p>
 															<p>
-																<img src="<c:url value='/images/frontend/iconfilm.png'/>" class="iconimg" />電影：${order.timeTable.movieName}
+																<img src="<c:url value='/images/frontend/iconfilm.png'/>" class="iconimg" />電影：<c:out value="(${order.timeTable.version})"/> ${order.timeTable.movieName}
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" />場次：${order.timeTable.startDate} ${order.timeTable.startTime}
 															</p>
 															<p>
-																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" style="width: 25px; height: 25px;" />人數：${order.seatCnt}
+																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" style="width: 25px; height: 25px;" />人數：${order.seatCnt} <c:out value="${order.seatsString}"/>
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconmeal.png'/>" class="iconimg" /> 票種及餐點：
 																<c:forEach var="item" items="${order.orderItems}">
-																	<br />${item.itemName} x ${item.quantity}
+																	<br />${item.detail}
 															</c:forEach>
 															</p>
 															<p>
