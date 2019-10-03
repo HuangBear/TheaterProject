@@ -7,7 +7,7 @@
 
 <html>
 <head>
-<title>No Sidebar - Helios by HTML5 UP</title>
+<title>716影城 - 影城介紹</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
