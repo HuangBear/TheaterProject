@@ -23,14 +23,15 @@ public class BulletinDaoImpl implements BulletinDao {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<BulletinBean> getExistenceBulletin(String targete) {
+	public List<BulletinBean> getExistenceBulletin(String str, String targete) {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
 		sb.append("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) from BulletinBean "
 				+ "bb WHERE bb.bortingId = b.bortingId and bb.endDate > getdate() and bb.available ="
-				+ "true group by bb.bortingId) order by b.").append(targete).append(" DESC");
-//		String in = "b." + targete;
+				+ "true group by bb.bortingId) order by b.").append(str).append(" ")
+				.append(targete);
+//		String in = "b." + targete;DESC
 //		System.out.println(in);
 		list = session.createQuery(sb.toString()).list();
 		return list;

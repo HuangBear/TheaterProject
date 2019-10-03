@@ -5,9 +5,9 @@ import java.util.List;
 import com.web.entity.BulletinBean;
 
 public interface BulletinService {
-	List<BulletinBean> getExistenceBulletin(String targete);
+	List<BulletinBean> getExistenceBulletin(String str, String targete);
 
-	List<List<BulletinBean>> getStatsBulletin(String targete);
+	List<List<BulletinBean>> getStatsBulletin(String str, String targete);
 
 	List<BulletinBean> getDiscount(String date);
 
