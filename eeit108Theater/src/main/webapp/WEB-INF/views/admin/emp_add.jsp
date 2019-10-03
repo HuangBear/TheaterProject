@@ -1,16 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-        
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="empIndexA">Home</a>
-          </li>
-          <li class="breadcrumb-item active">新增員工</li>
-        </ol>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="empIndexA">Home</a></li>
+	<li class="breadcrumb-item active">新增員工</li>
+</ol>
 
        
         <!-- DataTables Example -->
@@ -88,49 +84,45 @@
           <button type="reset" class="btn btn-primary">重填</button><br><hr>
           <button type="button" id="oneSet"  class="btn btn-success">一鍵填入</button>
 
-       
-				
-        </form:form>
-       </div>
 
-      </div>
-      </div>
-      
-      <script>
-		$('#oneSet').click(function() {
+			</form:form>
+		</div>
 
-			$('#email').val('AzureBear@gmail.com');
-			$('#employeeId').val('A129999976');
-			$('#name').val('小池熊');
-			$('#phoneNum').val('66316666');
-			$('#password').val('Do!ng123');
-			$('#gender').val('1');
-			$('#birthdayString').val('1990-01-01');
-			$('#salary').val('38000');
-		})
-	</script>
-        
-    <script>
-	
-    
-    $(".itemTag2").click(function() {
-    	
-    	var pk = $(this).attr("id");
-    	//var pquantity = $(this).val();
-    	$.ajax({
-    		url : "<c:url value='/admin/updateEMP'/>",
-    		data : {
-    			pk : pk,
-    			//quantity : pquantity
-    		},
-    		type : "GET",
-    		success : function(data) {
-    			$("#pageItems").html(data);
-    		}
-    	});
-        });
-	
-	</script>
-     
-     
-   
+	</div>
+</div>
+
+<script>
+	$('#oneSet').click(function() {
+
+		$('#email').val('AzureBear@gmail.com');
+		$('#employeeId').val('A129999976');
+		$('#name').val('小池熊');
+		$('#phoneNum').val('66316666');
+		$('#password').val('Do!ng123');
+		$('#gender').val('1');
+		$('#birthdayString').val('1990-01-01');
+		$('#salary').val('38000');
+	})
+</script>
+
+<script>
+	$(".itemTag2").click(function() {
+
+		var pk = $(this).attr("id");
+		//var pquantity = $(this).val();
+		$.ajax({
+			url : "<c:url value='/admin/updateEMP'/>",
+			data : {
+				pk : pk,
+			//quantity : pquantity
+			},
+			type : "GET",
+			success : function(data) {
+				$("#pageItems").html(data);
+			}
+		});
+	});
+</script>
+
+
+

@@ -118,7 +118,9 @@ public class OrderItemBean implements Serializable{
 	 * @return something $MMM x N
 	 */
 	public String getDetail() {
-		return this.itemName+ " $" + this.unitPrice +" x "+ this.quantity;
+		if(this.type.equals("discount"))
+			return this.itemName + " $ " + this.sumPrice;
+		return this.itemName+ " $ " + this.unitPrice +" x "+ this.quantity;
 	}
 	
 	/**OrderItem detail String
@@ -126,6 +128,8 @@ public class OrderItemBean implements Serializable{
 	 * @return $unitPrice x quantity = sumPrice
 	 */
 	public String getPriceDetail() {
-		return "$" + this.unitPrice +" x "+ this.quantity + " = " + this.sumPrice;
+		if(this.type.equals("discount"))
+			return "$ " + this.sumPrice;
+		return "$ " + this.unitPrice +" x "+ this.quantity + " = " + this.sumPrice;
 	}
 }

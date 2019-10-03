@@ -59,11 +59,11 @@ public class OrderBean implements Serializable {
 	private List<SeatBean> seats = new ArrayList<SeatBean>();// U, O2M
 
 	@Transient
-	private Map<String,OrderItemBean> itemsMap = new HashMap<>();
-	
+	private Map<String, OrderItemBean> itemsMap = new HashMap<>();
+
 	@Transient
 	private Integer ticketCnt = 0;
-	
+
 	public OrderBean() {
 		super();
 	}
@@ -204,7 +204,21 @@ public class OrderBean implements Serializable {
 		}
 		this.totalPrice = sum;
 	}
-
+	
+	public String generateOrderId() {
+		if(this.orderTime == null)
+			this.orderTime = new Timestamp(System.currentTimeMillis());
+		int obHash = this.hashCode();
+		char fst = (char) ('A' + (this.getOrderTime().getTime() % 26));
+		char sec = (char) ('A' + (-obHash % 13));
+		if (obHash > 0) {
+			sec = (char) ('N' + (obHash % 13));
+		}
+		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + Long.toHexString(obHash)).substring(0, 9)
+				.toUpperCase();
+		return tradeNo;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(available, no, orderId, orderItems, orderTime, ownerEmail, ownerId, ownerName, ownerPhone,
@@ -228,32 +242,52 @@ public class OrderBean implements Serializable {
 
 	/**
 	 * Order item string for EcPay
+	 * 
 	 * @return 電影票 x n# 餐點 x n
-	 */	 
+	 */
 	public String getOrderItemString() {
 		int ticketCnt = 0, foodCnt = 0;
 		int ticketSum = 0, foodSum = 0;
+		OrderItemBean discount = null;
 		for (OrderItemBean oi : this.getOrderItems()) {
-			if (oi.getType().equals("ticket")) {
+			String type = oi.getType();
+			switch (type) {
+			case "ticket":
 				ticketCnt += oi.getQuantity();
 				ticketSum += oi.getSumPrice().intValue();
-			} else {
+				break;
+			case "discount":
+				discount = oi;
+				break;
+			default:
 				foodCnt += oi.getQuantity();
 				foodSum += oi.getSumPrice().intValue();
+				break;
 			}
+//			if (oi.getType().equals("ticket")) {
+//				ticketCnt += oi.getQuantity();
+//				ticketSum += oi.getSumPrice().intValue();
+//			} else if (!oi.getType().equals("discount")) {
+//				foodCnt += oi.getQuantity();
+//				foodSum += oi.getSumPrice().intValue();
+//			}
 		}
-		if (foodCnt == 0)
-			return "電影票 x " + ticketCnt + " = " + ticketSum + " 元";
-
-		return "電影票 x " + ticketCnt + " = " + ticketSum + " 元#餐點 x " + foodCnt + " = " + foodSum + " 元";
+		String result = "電影票 x " + ticketCnt + " = " + ticketSum + " 元";
+		if (foodCnt != 0)
+			result += "#餐點 x " + foodCnt + " = " + foodSum + " 元";
+		if (discount != null)
+			result += "#優惠折扣 " + discount.getSumPrice();
+		return result;
 	}
 
-	public void sortOrderItem(String first,String last) {
+	public void sortOrderItem(String first, String last) {
 		List<OrderItemBean> list = this.orderItems;
 		int fstIndex = 0;
 		int i = 0;
 		OrderItemBean firstLastType = null;
-		//when the type from index item to last item are all the type which should set behind the list, the loop cannot end.
+		OrderItemBean discount = null;
+		// when the type from index item to last item are all the type which should set
+		// behind the list, the loop cannot end.
 		while (i < list.size()) {
 			String type = list.get(i).getType();
 			if (type.equals(last)) {
@@ -261,10 +295,10 @@ public class OrderBean implements Serializable {
 					break;
 				OrderItemBean temp = list.remove(i);
 				list.add(temp);
-				if(firstLastType == null) {
+				if (firstLastType == null) {
 					firstLastType = list.get(i);
 				} else {
-					if(list.get(i).equals(firstLastType))
+					if (list.get(i).equals(firstLastType))
 						break;
 				}
 				continue;
@@ -275,40 +309,52 @@ public class OrderBean implements Serializable {
 				fstIndex++;
 				i++;
 				continue;
+			} else if (type.equals("discount")) {
+				discount = list.get(i);
+				list.remove(i);
+				continue;
 			} else {
 				i++;
 			}
 		}
+		if (discount != null)
+			list.add(discount);
 	}
-	
+
 	public List<String> getSeatsList() {
 		List<String> seats = new ArrayList<>();
-		for(SeatBean sb : this.getSeats()) {
+		for (SeatBean sb : this.getSeats()) {
 			seats.add(sb.getSeatString());
 		}
 		return seats;
 	}
-	/** Seats String for display
+
+	/**
+	 * Seats String for display
+	 * 
 	 * @return Z1, Z2, Z3
-	 * */	
+	 */
 	public String getSeatsString() {
 		String result = "";
-		for(String seat : this.getSeatsList()) {
+		for (String seat : this.getSeatsList()) {
 			result += ", " + seat;
 		}
 		return result.substring(1);
 	}
-	/** All of Order Items' detail, separated by '#'
+
+	/**
+	 * All of Order Items' detail, separated by '#'
+	 * 
 	 * @return something $MMM x N#something2 $YYY x N#
-	 * */	
+	 */
 	public String getOrderItemsDetail() {
 		String result = "";
-		for(OrderItemBean oib : this.orderItems) {
-			result +=  "#" + oib.getDetail();
+		for (OrderItemBean oib : this.orderItems) {
+			result += "#" + oib.getDetail();
 		}
 		return result.substring(1);
 	}
-	
+
 	public int getSeatCnt() {
 		return this.getSeats().size();
 	}

@@ -123,7 +123,7 @@
 					</form:form>
 					<br>
 					<div class="row">
-						<c:forEach var='reply' items='${Article.replys}'>
+						<c:forEach var='reply' items='${Replys}'>
 							<div
 								style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
 								<p>${reply.author.name} 回覆時間:${reply.postTime}</p>

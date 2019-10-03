@@ -37,8 +37,26 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Transactional
 	@Override
+	public List<ArticleBean> getArticlesByMovieNo2(int movieNo) {
+		return dao.getArticlesByMovieNo2(movieNo);
+	}
+    
+//    @Transactional
+//	@Override
+//	public List<SysArticleBean> getSysArticlesByMovieNo(int movieNo) {
+//		return dao.getSysArticlesByMovieNo(movieNo);
+//	}
+    
+    @Transactional
+	@Override
 	public List<ReplyBean> getAllReplys() {
 		return dao.getAllReplys();
+	}
+    
+    @Transactional
+	@Override
+    public List<ReplyBean> getReplysByArticle(int article) {
+		return dao.getReplysByArticle(article);
 	}
     
     @Transactional
@@ -46,6 +64,12 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<String> getAllTags() {
 		return dao.getAllTags();
 	}
+    
+//    @Transactional
+//	@Override
+//	public List<String> getAllSysTags() {
+//		return dao.getAllSysTags();
+//	}
     
     @Transactional
 	@Override
@@ -58,6 +82,12 @@ public class ArticleServiceImpl implements ArticleService {
 	public ArticleBean getArticleById(int no) {
 		return dao.getArticleById(no);
 	}
+    
+//    @Transactional
+//	@Override
+//	public SysArticleBean getSysArticleById(int no) {
+//		return dao.getSysArticleById(no);
+//	}
     
     @Transactional
 	@Override
@@ -94,6 +124,12 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		
 	}
+    
+//    @Transactional
+//	@Override
+//	public void addSysArticle(SysArticleBean article) {
+//		dao.addSysArticle(article);
+//	}
     
     @Transactional
 	@Override

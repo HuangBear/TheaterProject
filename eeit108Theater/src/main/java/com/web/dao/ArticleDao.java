@@ -23,15 +23,18 @@ public interface ArticleDao {
 	List<MemberBean>  getMemberList();
 	
 	List<String>  getAllTags();
+//	List<String> getAllSysTags();
 	List<ArticleBean>  getArticlesByTag(String Tag);
 	
 	public ArticleBean getArticleById(int no);
+//	public SysArticleBean getSysArticleById(int no);
 	public ReplyBean getReplyById(int no);
 	public ReplyBean getReplyByArticleId(int article);
 	public String getLikeOrDislikeByMemberAndArticle(int memberNo,int article);
 	
 	void  addArticle(ArticleBean article);
 	void editArticle(ArticleBean article);
+//	void addSysArticle(SysArticleBean article);
 	void addReply(ReplyBean reply);
 	void editReply(ReplyBean reply);
 	void addReport(ReportBean rb);
@@ -45,6 +48,10 @@ public interface ArticleDao {
 	List<ArticleBean> getArticlesByMovieNo(int movieNo);
 
 	List<MovieBean> getAllMovies();
+
+	List<ArticleBean> getArticlesByMovieNo2(int movieNo);
+
+//	List<SysArticleBean> getSysArticlesByMovieNo(int movieNo);
 
 	
 
