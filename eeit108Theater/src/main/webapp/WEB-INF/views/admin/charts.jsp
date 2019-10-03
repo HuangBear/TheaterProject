@@ -19,8 +19,6 @@
 
 <script type="text/javascript">
 
-
-
 	google.charts.load("current", {
 		packages : [ "corechart" ]
 	});
@@ -28,11 +26,6 @@
 	google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
-// 		var data = google.visualization.arrayToDataTable([ [ 'Language', 'Speakers (in millions)' ],
-// 				[ 'German', 5.85 ], [ 'French', 1.66 ], [ 'Italian', 0.316 ], [ 'Romansh', 0.0791 ] ]);
-
-
-		
 		
 	var data = google.visualization.arrayToDataTable([['Language', 'Speakers (in millions)'],
 		<c:forEach items="${buelltinPreMoon}" var="bPM" >
