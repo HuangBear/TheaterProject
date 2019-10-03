@@ -205,11 +205,23 @@ label {
 .div_le {
 	display: inline-block; /*讓div並排*/
 	vertical-align: top; /*就算個個div行數不同，也一律向上對齊*/
-/* 	width: 130px; */
-	height: 520px; 
-/* 	border: 1px solid #FF0000; */
-/* 	border-radius: 3px; */
-/* 	margin: 2px; */
+	height: 550px;
+	border: 1px solid gray;
+	border-radius: 15px;
+	background-color: #c5c6c7;
+	margin: 40px 20px;
+	padding: 40px;
+}
+
+.title_width {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	/* 	white-space: nowrap; */
+}
+
+table {
+	table-layout: fixed;
 }
 </style>
 
@@ -263,13 +275,10 @@ label {
 			<div class="fakeBox"></div>
 			<div class="trueBox">
 
-				<div class="div_le" style="border: 1px solid gray; border-radius: 15px; background-color: #c5c6c7; margin: 100px 40px 40px 40px; padding: 20px;">
-					<p>
-					<h4>
-						<a href="#" style="color: white;">快速訂票</a>
-					</h4>
-					<p>
-					<p>
+				<div class="div_le">
+					<h3 style="text-align: left; margin: 10px 5px; padding-left: 22px">
+						<a>快速訂票</a>
+					</h3>
 					<form action="#">
 						<fieldset>
 							<div class='a'>
@@ -331,15 +340,30 @@ label {
 					<p>
 				</div>
 
-				<div class="div_le" style="border: 1px solid gray; border-radius: 15px; background-color: #c5c6c7; margin: 100px 40px 40px 40px; padding: 20px;">
-					<label style="text-align: left; margin-bottom:8px ; padding-top: 8px"><h3>
-							最新公告/<a href="news">MORE</a>
-						</h3></label>
-					<ul style="text-align: left;">
-						<c:forEach items="${BulletinBean}" var="bb" end="12">
-							<li><a href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
-						</c:forEach>
-					</ul>
+				<div class="div_le" style="width: 400px;">
+					<table>
+						<thead>
+							<tr>
+								<td>
+									<h3 style="text-align: left; margin: 10px 5px; padding-left: 22px">
+										最新公告/<a href="news">MORE</a>
+									</h3>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${BulletinBean}" var="bb" end="9">
+								<tr>
+									<td class="title_width">
+										<ul style="text-align: left; margin-bottom: 0px;padding-bottom: 5px;">
+											<li><a  href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
+										</ul>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+
 				</div>
 			</div>
 			<div class="fakeBox"></div>

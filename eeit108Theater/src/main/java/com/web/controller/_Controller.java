@@ -33,7 +33,7 @@ public class _Controller {
 	@Autowired
 	TimeTableService time_service;
 
-	@RequestMapping("/")
+	@RequestMapping(value = { "/", "/index" })
 	public String index(Model model) {
 		List<MovieBean> hello = new ArrayList<>();
 		hello = movieService.getReleasedMovies();
