@@ -15,7 +15,7 @@
        
         <!-- DataTables Example -->
         <div class="container">
-      <div class="card card-register mx-auto mt-5">
+      <div class="card card-register mx-auto mt-5 my-5">
       <div class="card-header">7-1 Cinema 新增員工</div>
       <div class="card-body">
         <form:form method="POST" action="emp_add" modelAttribute="employeeBean">

@@ -53,17 +53,17 @@ public class EmpController {
 	@Autowired
     private PasswordEncoder passwordEncoder;
 
-	@RequestMapping("/admin/indexAdmin")
-	public String backstageindex(Model model, Principal principal) {
-		model.addAttribute("empEmail", principal.getName());
-		return "admin/indexAdmin";
-	}
-	
-	@RequestMapping("/admin/indexTest")
-	public String backstageLogin(Model model, Principal principal) {
-		model.addAttribute("message", "登入者Email :" + principal.getName());
-		return "admin/indexTest";
-	}
+//	@RequestMapping("/admin/indexAdmin")
+//	public String backstageindex(Model model, Principal principal) {
+//		model.addAttribute("empEmail", principal.getName());
+//		return "admin/indexAdmin";
+//	}
+//	
+//	@RequestMapping("/admin/indexTest")
+//	public String backstageLogin(Model model, Principal principal) {
+//		model.addAttribute("message", "登入者Email :" + principal.getName());
+//		return "admin/indexTest";
+//	}
 
 	@RequestMapping("/admin/EmpLogout")
 	public String logout(HttpServletRequest request,RedirectAttributes redirectAttributes) {
@@ -106,7 +106,12 @@ public class EmpController {
 		return "admin/WebSocket";
 	}
 	@RequestMapping("admin/empIndexA")
-	public String EmpListA(Model model, Principal principal,HttpServletRequest request) {
+	public String EmpListA(Model model) {
+		
+		return "redirect:/admin/adminIndex";
+	}
+	@RequestMapping("admin/adminIndex")
+	public String EmpIndex(Model model, Principal principal,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String empEmail=principal.getName();
 	
@@ -119,7 +124,7 @@ public class EmpController {
 		session.setAttribute("positionsession",position);
 		session.setAttribute("employeeBean1",eb1);
 		session.setAttribute("empName", eb1.getName());
-		return "admin/empIndexA";
+		return "/admin/adminIndex";
 	}
 	@RequestMapping("admin/empTable")
 	public String EmpTable(Model model) {
