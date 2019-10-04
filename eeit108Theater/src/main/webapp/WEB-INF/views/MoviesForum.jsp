@@ -175,81 +175,81 @@
 						</div>
 					</div>
 
-					<div id="accordion" style="width: 800px; margin: auto;">
+<!-- 					<div id="accordion" style="width: 800px; margin: auto;"> -->
 
-						<h3>Popularity - 人氣排行</h3>
-						<div>
-							<table class="tbst">
-								<tbody style="text-align: left;">
-									<c:forEach var='Movie' items='${Movies}'>
-										<tr>
-											<td>${Movie.no}</td>
-											<td style="width: 500px; height: 50px;"><a
-												href="<spring:url value='/MoviesForum/Articles?id=${Movie.no}' />"
-												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 26px"> ${Movie.movieName} </a></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<h3>Now Showing - 現正熱映</h3>
-						<div>
-							<table class="tbst">
-								<tbody style="text-align: left;">
-									<c:forEach var='ReleasedMovie' items='${ReleasedMovies}'>
-										<tr>
-											<td>${ReleasedMovie.no}</td>
-											<td style="width: 500px; height: 50px;"><a
-												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />"
-												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 26px"> ${ReleasedMovie.movieName} </a></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<h3>Coming Soon - 即將上映</h3>
-						<div>
-							<table class="tbst">
-								<tbody style="text-align: left;">
-									<c:forEach var='ComingMovie' items='${ComingMovies}'>
-										<tr>
-											<td>${ComingMovie.no}</td>
-											<td style="width: 500px; height: 50px;"><a
-												href="<spring:url value='/MoviesForum/Articles?id=${ComingMovie.no}' />"
-												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 26px"> ${ComingMovie.movieName} </a></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<h3>Off The Cinemas - 下檔電影</h3>
-						<div>
-							<table class="tbst">
-								<tbody style="text-align: left;">
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">01
-												─ 你願意嫁給我老公嗎？</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">02
-												─ 亂世佳人</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">03
-												─ 第九分局</a></td>
-									</tr>
-									<tr>
-										<td style="width: 500px; height: 50px;"><a href="#">04
-												─ 下半場</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+<!-- 						<h3>Popularity - 人氣排行</h3> -->
+<!-- 						<div> -->
+<!-- 							<table class="tbst"> -->
+<!-- 								<tbody style="text-align: left;"> -->
+<%-- 									<c:forEach var='Movie' items='${Movies}'> --%>
+<!-- 										<tr> -->
+<%-- 											<td>${Movie.no}</td> --%>
+<!-- 											<td style="width: 500px; height: 50px;"><a -->
+<%-- 												href="<spring:url value='/MoviesForum/Articles?id=${Movie.no}' />" --%>
+<!-- 												class="btn btn-primary btn-lg btn-block" -->
+<%-- 												style="font-size: 26px"> ${Movie.movieName} </a></td> --%>
+<!-- 										</tr> -->
+<%-- 									</c:forEach> --%>
+<!-- 								</tbody> -->
+<!-- 							</table> -->
+<!-- 						</div> -->
+<!-- 						<h3>Now Showing - 現正熱映</h3> -->
+<!-- 						<div> -->
+<!-- 							<table class="tbst"> -->
+<!-- 								<tbody style="text-align: left;"> -->
+<%-- 									<c:forEach var='ReleasedMovie' items='${ReleasedMovies}'> --%>
+<!-- 										<tr> -->
+<%-- 											<td>${ReleasedMovie.no}</td> --%>
+<!-- 											<td style="width: 500px; height: 50px;"><a -->
+<%-- 												href="<spring:url value='/MoviesForum/Articles?id=${ReleasedMovie.no}' />" --%>
+<!-- 												class="btn btn-primary btn-lg btn-block" -->
+<%-- 												style="font-size: 26px"> ${ReleasedMovie.movieName} </a></td> --%>
+<!-- 										</tr> -->
+<%-- 									</c:forEach> --%>
+<!-- 								</tbody> -->
+<!-- 							</table> -->
+<!-- 						</div> -->
+<!-- 						<h3>Coming Soon - 即將上映</h3> -->
+<!-- 						<div> -->
+<!-- 							<table class="tbst"> -->
+<!-- 								<tbody style="text-align: left;"> -->
+<%-- 									<c:forEach var='ComingMovie' items='${ComingMovies}'> --%>
+<!-- 										<tr> -->
+<%-- 											<td>${ComingMovie.no}</td> --%>
+<!-- 											<td style="width: 500px; height: 50px;"><a -->
+<%-- 												href="<spring:url value='/MoviesForum/Articles?id=${ComingMovie.no}' />" --%>
+<!-- 												class="btn btn-primary btn-lg btn-block" -->
+<%-- 												style="font-size: 26px"> ${ComingMovie.movieName} </a></td> --%>
+<!-- 										</tr> -->
+<%-- 									</c:forEach> --%>
+<!-- 								</tbody> -->
+<!-- 							</table> -->
+<!-- 						</div> -->
+<!-- 						<h3>Off The Cinemas - 下檔電影</h3> -->
+<!-- 						<div> -->
+<!-- 							<table class="tbst"> -->
+<!-- 								<tbody style="text-align: left;"> -->
+<!-- 									<tr> -->
+<!-- 										<td style="width: 500px; height: 50px;"><a href="#">01 -->
+<!-- 												─ 你願意嫁給我老公嗎？</a></td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td style="width: 500px; height: 50px;"><a href="#">02 -->
+<!-- 												─ 亂世佳人</a></td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td style="width: 500px; height: 50px;"><a href="#">03 -->
+<!-- 												─ 第九分局</a></td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td style="width: 500px; height: 50px;"><a href="#">04 -->
+<!-- 												─ 下半場</a></td> -->
+<!-- 									</tr> -->
+<!-- 								</tbody> -->
+<!-- 							</table> -->
+<!-- 						</div> -->
 
-					</div>
+<!-- 					</div> -->
 
 					<!-- 				<h2> -->
 					<!-- 					<a href="#">電影 - 場外休憩區</a> -->

@@ -166,7 +166,7 @@
 											value='${reply.rnoString=reply.no}' type='hidden'
 											class='form:input-large' />
 											<div class="form-group">
-												<button type="submit" name="lockbutton" value="lock">封鎖</button>
+												<button type="submit" name="lockbutton" value="lock" style="font-size: 18px">封鎖</button>
 											</div>
 										</c:when>
 									</c:choose>
