@@ -76,7 +76,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 								</div>
 							</div>
 							<c:choose>
-								<c:when test="${LoginOK.no>2}">
+								<c:when test="${LoginOK.no>6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="tag">
 											<a>tag</a>
@@ -91,7 +91,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 										</div>
 									</div>
 								</c:when>
-								<c:when test="${LoginOK.no<=2}">
+								<c:when test="${LoginOK.no<=6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="tag">
 											<a>tag</a>
@@ -108,26 +108,26 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 								</c:when>
 							</c:choose>
 							<c:choose>
-								<c:when test="${LoginOK.no>2}">
+								<c:when test="${LoginOK.no>6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="type">
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeString">
+											<form:select path="typeName">
 												<form:option value="${ATypeBean.typeName}">
 												</form:option>
 											</form:select>
 										</div>
 									</div>
 								</c:when>
-								<c:when test="${LoginOK.no<=2}">
+								<c:when test="${LoginOK.no<=6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="type">
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeString">
+											<form:select path="typeName">
 												<form:option value="">
 													<a>select</a>
 												</form:option>

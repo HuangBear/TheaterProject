@@ -48,3 +48,36 @@ values(1,0,'¦³¤H¥i¥H¤À¨É¤@¤U³o³¡ªº½æÂI¦b­þ¶Ü?',0,0,'20150113 10:00:00 AM','³o³¡¹
 
 INSERT INTO Article(available,report,content,dislikeCount,likeCount,postTime,title,fk_author_id,fk_movie_id,tag,type)
 values(1,0,'¬°¤°»ò¥L­n¿ï¾Ü§â¤k¨à±µ¦^¨Ó¦Û¤v¾i?¦³¤H¯à¤ÀªR¤@¤U³o¨Ç¦æ¬°¸ò°Ê¾÷¶Ü?',0,0,'20150113 10:00:00 AM','¶ø´µ¥dªº¦æ¬°¸ò³o»ò°µªº²z¥Ñ',10,3,'°Q½×',0);
+
+INSERT INTO AType(type,typeName)
+values(0,'¤@¯ë');
+
+INSERT INTO AType(type,typeName)
+values(1,'¸m³»');
+
+INSERT INTO SysTag(tag)
+values('ª©³W');
+
+  INSERT INTO SysTag(tag)
+values('¼öªù');
+
+  INSERT INTO SysTag(tag)
+values('ºëµØ');
+
+  INSERT INTO SysTag(tag)
+values('°Q½×');
+
+  INSERT INTO SysTag(tag)
+values('¤ß±o');
+
+  INSERT INTO SysTag(tag)
+values('°ÝÃD');
+
+INSERT INTO Tag(tag)
+values('°Q½×');
+
+  INSERT INTO Tag(tag)
+values('¤ß±o');
+
+  INSERT INTO Tag(tag)
+values('°ÝÃD');
