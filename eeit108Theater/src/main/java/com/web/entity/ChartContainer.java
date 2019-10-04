@@ -4,6 +4,15 @@ public class ChartContainer {
 
 	String chartKey;
 	Integer chartValue;
+	Integer count = 0;
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count += count;
+	}
 
 	public void setChartMap(String chartKey, Integer chartValue) {
 		this.chartKey = chartKey;
