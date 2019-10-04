@@ -23,7 +23,11 @@
 </script>
 
 <style>
-.foo1:hover{color:#f5ad56;}
+
+
+	.foo1:hover {
+	color: #f5ad56;
+}
 
 .t1 {
 	width: 600;
@@ -238,7 +242,10 @@ table {
 
 			<jsp:include page="header.jsp" />
 			<div class="inner" id="716">
-				 <header id="header" style="height:850px;margin-top:-200px;"><img src="images/frontend/mgmwhitelionlogo.png"></header>
+
+				<header id="header" style="height: 850px; margin-top: -200px;">
+					<img src="images/frontend/mgmwhitelionlogo.png">
+				</header>
 			</div>
 
 		</div>
@@ -247,7 +254,8 @@ table {
 			<div class="reel">
 				<c:forEach var='releasedMovie' items='${releasedMovies}'>
 					<article>
-						<a href='detail_${releasedMovie.no}' class='image featured'> <img src="<c:url value = '/getPicture/${releasedMovie.no}'/>" alt='' style="width: 336px; height: 480px;">
+						<a href='detail_${releasedMovie.no}' class='image featured'> <img src="<c:url value = '/getPicture/${releasedMovie.no}'/>" alt=''
+							style="width: 336px; height: 480px;">
 						</a>
 						<header>
 							<h3>
@@ -348,8 +356,8 @@ table {
 							<c:forEach items="${BulletinBean}" var="bb" end="9">
 								<tr>
 									<td class="title_width">
-										<ul style="text-align: left; margin-bottom: 0px;padding-bottom: 5px;">
-											<li><a  href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
+										<ul style="text-align: left; margin-bottom: 0px; padding-bottom: 5px;">
+											<li><a href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
 										</ul>
 									</td>
 								</tr>
