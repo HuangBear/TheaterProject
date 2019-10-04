@@ -78,6 +78,15 @@ public class movieController {
 		model.addAttribute("link", string[0]);
 		return "detail";
 	}
+	
+	@RequestMapping("/detail2_{no}")
+	public String movieTimes2(Model model, @PathVariable Integer no) {
+		MovieBean movieDetails = service.getMovieById(no);
+		String[] string = movieDetails.getTrailerLink();
+		model.addAttribute("movie", movieDetails);
+		model.addAttribute("link", string[0]);
+		return "detail2";
+	}
 
 	@RequestMapping("/ticketing")
 	public String movieTicketingIndex(Model model) {

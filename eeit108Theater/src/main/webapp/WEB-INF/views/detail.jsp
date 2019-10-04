@@ -34,94 +34,66 @@
 }
 </style>
 <script>
-	document
-			.addEventListener(
-					"DOMContentLoaded",
-					function() {
-						let gems = document.querySelectorAll("img.gem");
-						let gemsLen = gems.length;
-						var is_clicked = false;
-						var score = 0;
-						for (let i = 0; i < gemsLen; i++) {
-							gems[i]
-									.addEventListener(
-											"mouseover",
-											function() {
-												if (!is_clicked) {
-													var j = i;
-													while (j != -1) {
-														document
-																.getElementById(`gem${j}`).src = "images/frontend/D4.png";
-														j--;
-													}
-												}
-											});
-							gems[i]
-									.addEventListener(
-											"mouseout",
-											function() {
-												if (!is_clicked) {
-													document
-															.getElementById(`gem${i}`).src = "images/frontend/D3.png";
-												}
-											});
-							gems[i]
-									.addEventListener(
-											"click",
-											function() {
-												score = i + 1;
-												if (is_clicked) {
-													var m = i;
-													var n = i + 1;
-													for (m; m >= 0; m--) {
-														document
-																.getElementById(`gem${m}`).src = "images/frontend/D4.png";
-													}
-													for (n; n < 5; n++) {
-														document
-																.getElementById(`gem${n}`).src = "images/frontend/D3.png";
-													}
-												}
-												is_clicked = true;
-												document.getElementById(`idsc`).innerHTML = `${score}`;
-											});
-						}
-						document
-								.getElementById("resetAll")
-								.addEventListener(
-										"click",
-										function() {
-											score = 0;
-											is_clicked = false;
-											document.getElementById(`idsc`).innerHTML = `${score}`;
-											for (k = 0; k < 5; k++) {
-
-												document
-														.getElementById(`gem${k}`).src = "images/frontend/D3.png";
-											}
-										});
-						document.getElementById("submitAll").addEventListener(
-								"click", function() {
-									if (score == 0) {
-										alert(`請評分後再送出。`)
-									} else {
-										alert(`謝謝評分，您給的分數為${score}分。`)
-									}
-								});
-						document
-								.getElementById("resetZone")
-								.addEventListener(
-										"mouseover",
-										function() {
-											score = 0;
-											is_clicked = false;
-											document.getElementById(`idsc`).innerHTML = `${score}`;
-											for (k = 0; k < 5; k++) {
-												document
-														.getElementById(`gem${k}`).src = "images/frontend/D4.png";
-											}
-										});
-					});
+	document.addEventListener("DOMContentLoaded", function() {
+		let gems = document.querySelectorAll("img.gem");
+		let gemsLen = gems.length;
+		var is_clicked = false;
+		var score = 0;
+		for (let i = 0; i < gemsLen; i++) {
+			gems[i].addEventListener("mouseover", function() {
+				if (!is_clicked) {													
+					var j = i;
+					while (j != -1) {
+						document.getElementById(`gem${j}`).src = "images/frontend/D4.png";
+						j--;
+					}
+				}
+			});
+			gems[i].addEventListener("mouseout", function() {
+				if (!is_clicked) {
+					document.getElementById(`gem${i}`).src = "images/frontend/D3.png";
+				}
+			});
+			gems[i].addEventListener("click",function() {
+				score = i + 1;
+				if (is_clicked) {
+					var m = i;
+					var n = i + 1;
+					for (m; m >= 0; m--) {
+						document.getElementById(`gem${m}`).src = "images/frontend/D4.png";
+					}
+					for (n; n < 5; n++) {		
+						document.getElementById(`gem${n}`).src = "images/frontend/D3.png";
+					}
+				}
+					is_clicked = true;
+					document.getElementById(`idsc`).innerHTML = `${score}`;
+			});
+		}
+			document.getElementById("resetAll").addEventListener("click",function() {
+				score = 0;
+				is_clicked = false;
+				document.getElementById(`idsc`).innerHTML = `${score}`;
+				for (k = 0; k < 5; k++) {
+					document.getElementById(`gem${k}`).src = "images/frontend/D3.png";
+				}
+			});
+			document.getElementById("submitAll").addEventListener("click", function() {
+				if (score == 0) {
+					alert(`請評分後再送出。`)
+				} else {
+					alert(`謝謝評分，您給的分數為${score}分。`)
+				}
+			});
+			document.getElementById("resetZone").addEventListener("mouseover", function() {
+				score = 0;
+				is_clicked = false;
+				document.getElementById(`idsc`).innerHTML = `${score}`;
+				for (k = 0; k < 5; k++) {
+					document.getElementById(`gem${k}`).src = "images/frontend/D4.png";
+				}
+			});
+	});
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -238,7 +210,7 @@
 								<h2>
 									<a>${movie.movieName}</a>
 								</h2>
-								<a href="ticketing" class="button">前往討論</a>
+								<a href="<spring:url value='/MoviesForum/Articles?id=${movie.no}' />" class="button">前往討論</a>
 								<p>${movie.engMovieName}</p>
 							</header>
 							<a><img src="<c:url value = '/getPicture/${movie.no}'/>"
@@ -354,7 +326,7 @@
 				</div>
 			</div>
 		</div>
-
+		</div>
 
 		<!-- Footer -->
 		<jsp:include page="footer.jsp" />
