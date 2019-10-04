@@ -29,7 +29,7 @@
 		<!-- Main -->
 		<div class="wrapper style1">
 			<div class="container">			
-				<article id="main" class="special"> 
+				<article id="main" class="special" style="width:75%;margin:auto;"> 
 					<header><h2><a href="#">關於716</a></h2>
 						<p>一個愛與包容的超優質影城</p>
 					</header> 

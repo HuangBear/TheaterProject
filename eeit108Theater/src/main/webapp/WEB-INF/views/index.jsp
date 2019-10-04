@@ -232,12 +232,15 @@ table {
 
 <body class="homepage is-preload">
 	<div id="page-wrapper">
+
 		<div id="header">
 			<!-- header -->
+
 			<jsp:include page="header.jsp" />
 			<div class="inner" id="716">
 				 <header id="header" style="height:850px;margin-top:-200px;"><img src="images/frontend/mgmwhitelionlogo.png"></header>
 			</div>
+
 		</div>
 
 		<section class="carousel">
@@ -360,6 +363,7 @@ table {
 		</div>
 
 		<jsp:include page="footer.jsp" />
+
 	</div>
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
