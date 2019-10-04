@@ -233,7 +233,8 @@ hr:after {
 .container {
 	margin: 0 auto;
 	max-width: 100%;
-	width: auto;     /*width: 1400px;*/
+	width: 1400px;
+/* 	width: auto;      */
 }
 
 @media screen and (max-width: 1680px) {

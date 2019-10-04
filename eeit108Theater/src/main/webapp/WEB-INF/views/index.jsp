@@ -258,7 +258,7 @@ table {
 <!-- 				</header> -->
 <!-- 				<footer> <a href="#" class="button circled scrolly" id="enjoy">ENJOY</a> -->
 <!-- 				</footer> -->
-					<header  style="height:850px;margin-top:200px;"><img src="images/frontend/mgmwhitelionlogo.png"></header>
+					<header id="header"  style="height:850px;margin-top:200px;"><img src="images/frontend/mgmwhitelionlogo.png"></header>
 			</div> 			
 		</div>
 
