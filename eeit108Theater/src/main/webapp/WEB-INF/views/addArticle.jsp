@@ -32,6 +32,13 @@
 	width: 640px;
 	margin: auto;
 }
+.pre{
+white-space:pre-wrap; /* css3.0 */
+white-space:-moz-pre-wrap; /* Firefox */
+white-space:-pre-wrap; /* Opera 4-6 */
+white-space:-o-pre-wrap; /* Opera 7 */
+word-wrap:break-word; /* Internet Explorer 5.5+ */
+}
 </style>
 <title>addArticle</title>
 </head>
@@ -69,7 +76,7 @@
 								</div>
 							</div>
 							<c:choose>
-								<c:when test="${LoginOK.no>2}">
+								<c:when test="${LoginOK.no>6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="tag">
 											<a>tag</a>
@@ -84,7 +91,7 @@
 										</div>
 									</div>
 								</c:when>
-								<c:when test="${LoginOK.no<=2}">
+								<c:when test="${LoginOK.no<=6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="tag">
 											<a>tag</a>
@@ -101,26 +108,26 @@
 								</c:when>
 							</c:choose>
 							<c:choose>
-								<c:when test="${LoginOK.no>2}">
+								<c:when test="${LoginOK.no>6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="type">
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeString">
-												<form:option value="一般">
+											<form:select path="typeName">
+												<form:option value="${ATypeBean.typeName}">
 												</form:option>
 											</form:select>
 										</div>
 									</div>
 								</c:when>
-								<c:when test="${LoginOK.no<=2}">
+								<c:when test="${LoginOK.no<=6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="type">
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeString">
+											<form:select path="typeName">
 												<form:option value="">
 													<a>select</a>
 												</form:option>
@@ -135,8 +142,8 @@
 									<a>Content</a>
 								</label>
 								<div class="col-lg-10">
-									<form:textarea id="content" path="content" cols="80" rows="20"
-										class='form:input-large' />
+									<form:textarea id="content" path="content" wrap="physical" cols="40" rows="20"
+										class='form:input-large' style="word-break:break-all" onKeyDown='if (this.value.length>=250){event.returnValue=false}' />
 								</div>
 							</div>
 
