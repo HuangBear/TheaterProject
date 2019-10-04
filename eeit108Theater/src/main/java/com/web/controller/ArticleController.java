@@ -204,9 +204,10 @@ public class ArticleController {
 		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
 		MovieBean mb = service.getMovieByNo(no);
-		
+		ATypeBean atb = service.getAT(1);
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("MovieBean", mb);
+		model.addAttribute("ATypeBean", atb);
 		return "addArticle";
 	}
 	
@@ -228,9 +229,9 @@ public class ArticleController {
 		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
 		{
 			errorMessage.put("titleNull", "請輸入標題");
-		} else if (ab.getTitle().length() > 30)
+		} else if (ab.getTitle().length() > 15)
 		{
-			errorMessage.put("titleOver", "字數超過30字");
+			errorMessage.put("titleOver", "字數超過15字");
 		}
 		ATypeBean atb = service.getAT(1);
 		ab.setLikeCount(0);
@@ -317,6 +318,7 @@ public class ArticleController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String getEditArticleForm(@RequestParam("id") Integer no, Model model) {
 		ArticleBean ab = service.getArticleById(no);
+		ATypeBean atb = service.getAT(1);
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 		ab.setPostTimeString(ssdf.format(ab.getPostTime()));
 		String NoS =Integer.toString(ab.getNo());
@@ -330,14 +332,16 @@ public class ArticleController {
 		String MovieS =Integer.toString(ab.getMovie().getNo());
 		ab.setMovieString(MovieS);
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("ATypeBean", atb);
 		model.addAttribute("Article", service.getArticleById(no));
 		return "editArticle";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String processEditNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
+	public String processEditNewArticleForm(@RequestParam("id") Integer no,@ModelAttribute("ArticleBean") ArticleBean ab, 
 		      BindingResult result, HttpServletRequest request ) throws ParseException{
 		System.err.println("==============");
+		ab = service.getArticleById(no);
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
 		try
@@ -352,10 +356,11 @@ public class ArticleController {
 		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
 		{
 			errorMessage.put("titleNull", "請輸入標題");
-		} else if (ab.getTitle().length() > 30)
+		} else if (ab.getTitle().length() > 15)
 		{
-			errorMessage.put("titleOver", "字數超過30字");
+			errorMessage.put("titleOver", "字數超過15字");
 		}
+		
 		ATypeBean atb = service.getAT(1);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
 		System.out.println("==postString==="+request.getParameter("noString"));
@@ -370,7 +375,18 @@ public class ArticleController {
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
-		ab.setReport(ab.getReport());
+		System.out.println("檢查問題"+ab.getReport());
+		if(ab.getReport()==null)
+		{
+			ab.setReport(false);
+		}else if(ab.getReport()==false)
+		{
+			ab.setReport(false);
+		}else if(ab.getReport()==true)
+		{
+			ab.setReport(true);
+		}
+		
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));

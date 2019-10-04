@@ -39,6 +39,17 @@
 .tb1 {
 	text-align: center;
 }
+table {
+	table-layout: fixed;
+	word-wrap:break-word;
+	
+}
+
+.title_width {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 </style>
 </head>
 </head>
@@ -63,7 +74,7 @@
 						</div>
 
 						<div style="width: 900px; height: 450px; font-size: 30px">
-							<pre>${Article.content}</pre>
+							<pre class="title_width">${Article.content}</pre>
 						</div>
 					</div>
 					<p>
@@ -132,7 +143,7 @@
 								<c:when test="${reply.available==true}">
 									<div
 										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-										<pre>${reply.content}</pre>
+										<pre class="title_width">${reply.content}</pre>
 									</div>
 								</c:when>
 								<c:when test="${reply.available==false}">
