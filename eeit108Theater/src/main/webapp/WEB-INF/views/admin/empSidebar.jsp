@@ -97,6 +97,16 @@
           <span>即時客服</span></a>
         </li>
 		</sec:authorize>
+		<sec:authorize access=" hasAuthority('2') or hasAuthority('3')">
+		<li class="nav-item">
+        <a class="itemTag nav-link" href="#" id="timeTable_add">
+          <i class="fas fa-fw fa-table"></i>
+          <span>新增時刻</span></a>
+        </li>
+        </sec:authorize>
+
+		
+
 
     </ul>
 

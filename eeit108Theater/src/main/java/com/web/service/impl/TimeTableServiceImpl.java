@@ -19,8 +19,7 @@ public class TimeTableServiceImpl implements TimeTableService{
 	
 	@Override
 	public int saveTimeTable(TimeTableBean timeTable) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.saveTimeTable(timeTable);
 	}
 
 	@Override

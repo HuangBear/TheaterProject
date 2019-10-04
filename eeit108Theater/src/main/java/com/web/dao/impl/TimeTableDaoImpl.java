@@ -3,6 +3,7 @@ package com.web.dao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,11 +27,11 @@ public class TimeTableDaoImpl implements TimeTableDao{
 	
 	@Override
 	public int saveTimeTable(TimeTableBean timeTable) {
-		if(isExist(timeTable.getNo())) {
-			return 0;		
-		}
-		factory.getCurrentSession().save(timeTable);
-		return 1;
+		int count = 0;
+		Session session = factory.getCurrentSession();
+		session.save(timeTable);
+		count++;
+		return count;
 	}
 
 	@Override

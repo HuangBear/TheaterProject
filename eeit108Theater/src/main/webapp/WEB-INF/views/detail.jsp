@@ -14,9 +14,14 @@
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/main.css" />
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 <noscript>
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
 <style>
 .content {
@@ -295,56 +300,6 @@
 								<p>${movie.introduction}</p>
 							</section>
 
-							<section>
-								<header>
-									<h3>
-										<a name="six">評分：</a>
-									</h3>
-								</header>
-								<p>
-								<div class="content">
-									<article>
-										<form>
-											<div>
-												<figure style="margin: auto; width: fit-content;">
-													<!-- <img class="" src="images/blank.png" width="50" height="100" id="resetZone"> -->
-													<img class="gem" src="images/D3.png" width="50" id="gem0">
-													<img class="gem" src="images/D3.png" width="50" id="gem1">
-													<img class="gem" src="images/D3.png" width="50" id="gem2">
-													<img class="gem" src="images/D3.png" width="50" id="gem3">
-													<img class="gem" src="images/D3.png" width="50" id="gem4">
-													<!-- <img class="" src="images/blank.png" width="50" height="100" id=""> -->
-												</figure>
-											</div>
-											<div>
-												<script>
-												<!--document.write(`<h2>鑽石 : <span id="idsc">0</span>倍 (全滿5倍)</h2>`)-->
-													
-												</script>
-											</div>
-										</form>
-									</article>
-								</div>
-								<div>
-									<input type="submit" name="submit" id="submitAll" value="送出">
-									<input type="reset" name="reset" id="resetAll" value="清除">
-								</div>
-								</p>
-							</section>
-
-							<section>
-								<header>
-									<h3>
-										<a name="seven">評論：</a>
-									</h3>
-								</header>
-								<p>
-									<textarea cols="100" rows="5"></textarea>
-									<input type="submit" value="送出"> <input type="reset"
-										value="清除">
-								</p>
-							</section>
-
 						</article>
 					</div>
 				</div>
@@ -398,22 +353,8 @@
 					</article>
 				</div>
 			</div>
-
 		</div>
 
-		<div class="toast" role="alert" aria-live="assertive"
-			aria-atomic="true">
-			<div class="toast-header">
-				<img src="..." class="rounded mr-2" alt="..."> <strong
-					class="mr-auto">Bootstrap</strong> <small>11 mins ago</small>
-				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="toast-body">Hello, world! This is a toast message.
-			</div>
-		</div>
 
 		<!-- Footer -->
 		<jsp:include page="footer.jsp" />
@@ -427,5 +368,7 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
+
+
 </body>
 </html>
