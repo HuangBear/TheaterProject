@@ -19,13 +19,8 @@
 		href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
 <style>
-	#hello img {
+	.hello {
 		height: 550px;
-	}
-	#world img {
-		width: 439.99px;
-		height: 550px;
-
 	}
 </style>
 </head>
@@ -42,13 +37,13 @@
 				<article id="main" class="special"> 
 				<h3>熱映中   NOW SHOWING</h3>
 				</article>
-				<hr />
-				<article>
+				<hr/>
+				
 				<div class="row">
 					<c:forEach var = 'releasedMovie' items = '${releasedMovies}'>
 						<article class = "col-4 col-12-mobile special">
 							<a href = "<c:url value = '/detail_${releasedMovie.no}' />" class="image featured">
-								<img src="<c:url value = '/getPicture/${releasedMovie.no}'/>" >
+								<img src="<c:url value = '/getPicture/${releasedMovie.no}'/>" class = 'hello'>
 							</a>
 						<header>
 							<h3>
@@ -66,32 +61,29 @@
 				<br>
 				<br>
 				<br>
-				<br>
-				<br>
+				<article>
 				<h3>即將上映   COMING SOON</h3>
 				</article>
 				<hr />
-				<div class="row" id = "world">
+					<div class="row">
 					<c:forEach var = 'comingMovie' items = '${comingMovies}'>
 						<article class = "col-4 col-12-mobile special">
-							<a href = "<c:url value = '/detail_${comingMovie.no}' />">
-								<img src="<c:url value = '/getPicture/${comingMovie.no}'/>">
+							<a href = "<c:url value = '/detail2_${comingMovie.no}' />" class="image featured">
+								<img src="<c:url value = '/getPicture/${comingMovie.no}'/>" class = 'hello'>
 							</a>
 						<header>
 							<h3>
 								<a href = "<c:url value = '/detail_${comingMovie.no}' />">
 									${comingMovie.movieName}
 								</a>
-								<br>
-								<br>
 							</h3>
 						</header>
 						<p>${comingMovie.engMovieName}<br>
 						上映日期：<fmt:formatDate pattern="yyyy-MM-dd"
 						value="${comingMovie.openingDate}" /></p>
 						</article>
-					</c:forEach>				
-				</div>	
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 
