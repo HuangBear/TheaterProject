@@ -92,7 +92,8 @@ public class OrderServiceImpl implements OrderService {
 			SeatBean sb = new SeatBean(tid, row, col);
 			list.add(sb);
 		}
-		System.out.println("===setSeatToOrder Result:\n" + list);
+		System.out.println(ob.getSeatsString());
+		System.out.println("===setSeatToOrderEnd===");
 		return seats.length;
 	}
 
