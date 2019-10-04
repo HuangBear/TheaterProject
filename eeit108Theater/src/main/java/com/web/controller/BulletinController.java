@@ -79,7 +79,7 @@ public class BulletinController {
 	@RequestMapping(value = "/admin/bulletin_all", method = RequestMethod.GET)
 	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
-		List<List<BulletinBean>> list = service.getStatsBulletin("startDate", "DESC");
+		List<List<BulletinBean>> list = service.getStatsBulletin("startDate", "ASC");
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";
