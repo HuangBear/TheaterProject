@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +15,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -35,8 +33,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.web.entity.EmployeeBean;
-import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
 import com.web.entity.TimeTableBean;
 import com.web.service.MovieService;
@@ -193,7 +189,7 @@ public class movieController {
 			}
 		}
 		service.saveMovie(mb);
-		String picPath = "C:\\Users\\Azure\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images\\";
+		String picPath = "C:\\Users\\User\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images\\";
 		
 		//  建立Blob物件，交由 Hibernate 寫入資料庫
 		//  將上傳的檔案移到指定的資料夾
@@ -217,7 +213,7 @@ public class movieController {
 	public String editMoviePost(@ModelAttribute("former") MovieBean formerMovieBean, Model model, Integer no) throws IOException, SerialException, SQLException {
 		MultipartFile uploadImage = formerMovieBean.getUploadImage();
 		System.out.println(formerMovieBean.getNo());
-		String picPath = "C:\\Users\\Azure\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images\\";
+		String picPath = "C:\\Users\\User\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images\\";
 		formerMovieBean.setNo(no);
 		if (uploadImage != null && !uploadImage.isEmpty()) {
 			byte[] b = uploadImage.getBytes();
@@ -243,6 +239,40 @@ public class movieController {
 		model.addAttribute("movies", list);
 		return "admin/Table2";
 	}
+	
+	@RequestMapping(value = "/admin/timeTable_add", method = RequestMethod.GET)
+	public String addTimeTableGet(Model model) {
+		TimeTableBean ttb = new TimeTableBean();
+		model.addAttribute("time", ttb);
+		return "admin/timeTable_add";
+	}
+	
+	@RequestMapping(value = "/admin/timeTable_add", method = RequestMethod.POST)
+	public String addTimeTablePost(@ModelAttribute("time") TimeTableBean ttb, Model model) {
+		String[] splitColon = ttb.getStartTime().split(":");
+		int hour = Integer.parseInt(splitColon[0]);
+		int minute = Integer.parseInt(splitColon[1]);
+		int breakTime = ttb.getBreakTime();
+		int duration = ttb.getDuration();
+		int sum = hour * 60 + minute;
+		MovieBean mb = service.getMovieByName(ttb.getMovieName());
+		ttb.setMovie(mb);
+		do {
+			time_service.saveTimeTable(ttb);
+			if (duration % 10 != 0) {
+				duration += 10 - (duration % 10);
+			}
+			sum += duration + breakTime;
+			String HH = String.valueOf(sum / 60);
+			String mm = String.valueOf(sum % 60);
+			if (Integer.parseInt(mm) < 10) {
+				mm = "0" + mm;
+			}
+			ttb.setStartTime(HH + ":" + mm);
+		} while (sum < 1440);
+		return "admin/empIndexA";
+	}
+	
 	
 	public Date tomorrow(Date today) {
         Calendar calendar = Calendar.getInstance();
