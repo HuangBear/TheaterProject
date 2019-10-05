@@ -55,9 +55,12 @@ public class BulletinController {
 	public String other2news(HttpServletRequest req, Model model) {
 		System.out.println("other2news");
 		List<BulletinBean> list = service.getExistenceBulletin("startDate", "ASC");
-
+		System.out.println("after list");
 		Integer bulletin_no = (Integer) req.getAttribute("bulletin_no");
 		System.out.println("bulletin_no=1=" + bulletin_no);
+		if (list.size() == 0) {
+			return "news";
+		}
 		if (bulletin_no == null) {
 			bulletin_no = list.get(0).getNo();
 		}
