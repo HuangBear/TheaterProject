@@ -25,17 +25,6 @@
 	
 </script>
 <style type="text/css">
-.forum {
-	width: 800px;
-	border: 1px solid gray;
-	border-radius: 25px;
-	margin: auto;
-}
-
-.forum1 ul li {
-	display: inline;
-}
-
 .tb1 {
 	text-align: center;
 }
@@ -52,19 +41,17 @@
 		<div class="wrapper style1">
 			<div class="container">
 				<article id="main" class="special">
-					<div class="row gtr-200"
-						style="width: 1500px; height: 500px; border: 1px solid gray; border-radius: 25px;">
+					<div class="row"
+						style="width: 1400px; height: 450px; border: 1px solid gray; border-radius: 25px;">
 						<h3 style="font-size: 36px">${Article.title}</h3>
-						<div style="width: 800px; height: 50px; font-size: 20px;">
-							<p
-								style="border: 1px solid gray; border-radius: 25px; text-align: center;">No.:${Article.no}
+						<div>
+							<p style="width: 800px; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px;">No.:${Article.no}
 								發文者: ${Article.author.name} 分類: ${Article.tag} 發文時間:
 								${Article.postTime}</p>
 						</div>
+						<br>
+						<pre style="font-size: 30px; white-space: pre-wrap;">${Article.content}</pre>
 
-						<div style="width: 900px; height: 450px; font-size: 30px">
-							<pre>${Article.content}</pre>
-						</div>
 					</div>
 					<p>
 						<c:choose>
@@ -126,13 +113,13 @@
 						<c:forEach var='reply' items='${Replys}'>
 							<div
 								style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
-								<p>${reply.author.name} 回覆時間:${reply.postTime}</p>
+								<p>${reply.author.name}回覆時間:${reply.postTime}</p>
 							</div>
 							<c:choose>
 								<c:when test="${reply.available==true}">
 									<div
 										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-										<pre>${reply.content}</pre>
+										<pre class="title_width">${reply.content}</pre>
 									</div>
 								</c:when>
 								<c:when test="${reply.available==false}">
@@ -157,16 +144,15 @@
 										<c:when test="${LoginOK.no!=Article.author.no}">
 										</c:when>
 										<c:when test="${LoginOK.no==Article.author.no}">
-										<form:input id="articleString" readonly="true"
-											path="articleString"
-											value='${Article.noString=Article.no}' type='hidden'
-											class='form:input-large' />
-										<form:input id="rnoString" readonly="true"
-											path="rnoString"
-											value='${reply.rnoString=reply.no}' type='hidden'
-											class='form:input-large' />
+											<form:input id="articleString" readonly="true"
+												path="articleString" value='${Article.noString=Article.no}'
+												type='hidden' class='form:input-large' />
+											<form:input id="rnoString" readonly="true" path="rnoString"
+												value='${reply.rnoString=reply.no}' type='hidden'
+												class='form:input-large' />
 											<div class="form-group">
-												<button type="submit" name="lockbutton" value="lock">封鎖</button>
+												<button type="submit" name="lockbutton" value="lock"
+													style="font-size: 18px">封鎖</button>
 											</div>
 										</c:when>
 									</c:choose>

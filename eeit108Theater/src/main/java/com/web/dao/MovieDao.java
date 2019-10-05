@@ -1,5 +1,6 @@
 package com.web.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.web.entity.MovieBean;
@@ -7,10 +8,12 @@ import com.web.entity.MovieBean;
 public interface MovieDao {
 	// new
 	int saveMovie(MovieBean movie);
+
 	// disable
 	int deleteMovieByNo(Integer movieNo);
 
 	int deleteAll();
+
 	// update
 	MovieBean updateMovie(MovieBean movie);
 
@@ -25,10 +28,19 @@ public interface MovieDao {
 
 	// by director, by cast, by genre, or by something else
 	List<MovieBean> getMoviesByColumn(String columnValue, String columnName);
+
 	List<MovieBean> getReleasedMovies();
+
 	List<MovieBean> getComingMovies();
+
 	List<MovieBean> getAllMovies();
+
 	List<MovieBean> getAllAvailable();
+
 	List<MovieBean> getOffMovies();
+
 	List<String> getMovieNames();
+  
+	// chart
+	List<MovieBean> getMoviePerMoon(Date firstDate, Date lastDate);
 }

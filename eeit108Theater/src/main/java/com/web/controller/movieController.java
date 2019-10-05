@@ -64,10 +64,12 @@ public class movieController {
 		List<MovieBean> moviesForumList = service.getAllMovies();
 		List<MovieBean> ReleasedMoviesList = service.getReleasedMovies();
 		List<MovieBean> ComingMoviesList = service.getComingMovies();
+		List<MovieBean> OffMoviesList = service.getOffMovies();
 		model.addAttribute("title", "討論版");
 		model.addAttribute("Movies", moviesForumList);
 		model.addAttribute("ReleasedMovies", ReleasedMoviesList);
 		model.addAttribute("ComingMovies", ComingMoviesList);
+		model.addAttribute("OffMovies", OffMoviesList);
 		return "MoviesForum";
 	}
 	

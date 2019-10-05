@@ -104,7 +104,7 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductBean> getAll() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p ORDER BY p.type";
-		List<ProductBean> pb = session.createQuery(hql).getResultList();
+		List<ProductBean> pb = session.createQuery(hql).list();
 		return pb;
 	}
 
@@ -113,7 +113,7 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductBean> getAllAvailableProducts() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p  WHERE p.available = :true ORDER BY p.type";
-		List<ProductBean> pb = session.createQuery(hql).setParameter("true", Boolean.TRUE).getResultList();
+		List<ProductBean> pb = session.createQuery(hql).setParameter("true", Boolean.TRUE).list();
 		return pb;
 	}
 
@@ -122,16 +122,27 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductBean> getAllUnavailableProducts() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p  WHERE p.available = :false ORDER BY p.type";
-		List<ProductBean> pb = session.createQuery(hql).setParameter("false", Boolean.FALSE).getResultList();
+		List<ProductBean> pb = session.createQuery(hql).setParameter("false", Boolean.FALSE).list();
 		return pb;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductBean> getProductsByType(String type) {
+	public List<ProductBean> getProductsByType(String type, Boolean available) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean p WHERE p.type = :type AND p.available = :ava";
+		
+		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type).setParameter("ava", available).list();
+		return pb;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductBean> getAllProductsByType(String type) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.type = :type";
-		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type).getResultList();
+
+		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type).list();
 		return pb;
 	}
 
@@ -139,10 +150,9 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<ProductBean> getTicketsByVersion(String version) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ProductBean p WHERE p.name like :version and p.type = 'ticket'";
-		List<ProductBean> pb = session.createQuery(hql).setParameter("version", "%" + version + "%").getResultList();
+		String hql = "FROM ProductBean p WHERE p.name LIKE :version AND p.type = 'ticket' AND p.available = 1";
+		List<ProductBean> pb = session.createQuery(hql).setParameter("version", "%" + version + "%").list();
 		return pb;
 	}
-
 
 }

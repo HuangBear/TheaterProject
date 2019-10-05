@@ -283,9 +283,8 @@
 			$(this).text($text);
 		}
 	});
-	if (${ErrMsg.changeMsg != null}) {
-		$("a.hide").trigger("click")
-	}
+	
+	<c:if test="${changeMsg != null}">$("a.hide").trigger("click")</c:if>
 	</script>
 
 
@@ -546,7 +545,7 @@
 												<tr>
 													<th scope="col" width="5%">#</th>
 													<th scope="col" width="25%">標題</th>
-													<th scope="col" width="10%">發布時間</th>
+
 													<th scope="col" width="10%">開始時間</th>
 													<th scope="col" width="10%">結束時間</th>
 													<th scope="col" width="10%">公告人</th>
@@ -563,7 +562,6 @@
 															<td class="hide">${sb.no}</td>
 															<th scope="row">${i.index+1}</th>
 															<td class="title">${sb.title}</td>
-															<td class="postTime">${sb.postTime}</td>
 															<td>${sb.startDate}</td>
 															<td>${sb.endDate}</td>
 															<td>${sb.employee.no}</td>

@@ -3,8 +3,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <style type="text/css">
-.hide {
-	display: none;
+.td {
+
+padding:50px;
+	width: 800px;
+	height: 500px;
+}
+
+.ww {
+/* 	width: 600px; */
+/* 	height: 500px */
 }
 </style>
 
@@ -14,87 +22,18 @@
 <script src="js/admin/demo/chart-bar-demo.js"></script>
 <script src="js/admin/demo/chart-pie-demo.js"></script>
 
-<!-- <script type="application/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
-
-
-<script type="text/javascript">
-
-	google.charts.load("current", {
-		packages : [ "corechart" ]
-	});
-
-	google.charts.setOnLoadCallback(drawChart);
-
-	function drawChart() {
-		
-	var data = google.visualization.arrayToDataTable([['Language', 'Speakers (in millions)'],
-		<c:forEach items="${buelltinPreMoon}" var="bPM" >
-			['${bPM.chartKey}', ${bPM.chartValue}],
-	 </c:forEach >
-		]);
-
-		
-		var options = {
-			legend : 'none',
-			pieSliceText : 'label',
-			title : '每月公告',
-			pieStartAngle : 100,
-		};
-
-		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-		chart.draw(data, options);
-	}
-	
-	
-	// 		google.charts.load("current", {
-	// 			packages : [ "corechart" ]
-	// 		});
-	google.charts.setOnLoadCallback(drawChart1);
-
-	function drawChart1() {
-		var data1 = google.visualization.arrayToDataTable([ [ 'Task', 'Hours per Day' ], [ 'Work', 11 ],
-				[ 'Eat', 2 ], [ 'Commute', 2 ], [ 'Watch TV', 2 ], [ 'Sleep', 7 ] ]);
-
-		var options1 = {
-			title : 'My Daily Activities',
-			is3D : true,
-		};
-
-		var chart1 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-		chart1.draw(data1, options1);
-	}
-
-	google.charts.setOnLoadCallback(drawChart2);
-
-	function drawChart2() {
-		var data = google.visualization.arrayToDataTable([ [ 'Year', 'Sales', 'Expenses' ],
-				[ '2004', 1000, 400 ], [ '2005', 1170, 460 ], [ '2006', 660, 1120 ], [ '2007', 1030, 540 ] ]);
-
-		var options = {
-			title : 'Company Performance',
-			curveType : 'function',
-			legend : {
-				position : 'bottom'
-			}
-		};
-
-		var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-		chart.draw(data, options);
-	}
-
+<script>
+//$(document).ready(function(){
+	<c:forEach items="${chart2jsp}" var="chart2jsp" varStatus="status">
 	// Area Chart Example
-	var ctx = document.getElementById("myAreaChart");
+	var ctx = document.getElementById("myAreaChart${status.index}");
 	var Today = new Date();
 	var myLineChart = new Chart(ctx, {
 		type : 'line',
 		data : {
-			labels : [ (Today.getMonth() + 1) + " 月 " + (Today.getDate() - 5) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 4) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 3) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 2) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 1) + " 日",
-					(Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日(本日)" ],
+			labels : [ 	<c:forEach items="${chart2jsp.listChartContainer}" var="c2j" >
+			'${c2j.chartKey}' ,
+	 		</c:forEach >	],
 			datasets : [ {
 				label : "Sessions",
 				lineTension : 0.3,
@@ -107,7 +46,9 @@
 				pointHoverBackgroundColor : "rgba(2,117,216,1)",
 				pointHitRadius : 50,
 				pointBorderWidth : 2,
-				data : [ 0, 3, 2, 1, 7, 2 ],
+				data : [ <c:forEach items="${chart2jsp.listInteger}" var="tc" >
+				'${tc}' ,
+		 		</c:forEach > ],
 			} ],
 		},
 		options : {
@@ -120,14 +61,14 @@
 						display : false
 					},
 					ticks : {
-						maxTicksLimit : 7
+// 						maxTicksLimit : 7
 					}
 				} ],
 				yAxes : [ {
 					ticks : {
-						min : 0,
-						max : 10,
-						maxTicksLimit : 5
+// 						min : 0,
+// 						max : 20,
+// 						maxTicksLimit : 5
 					},
 					gridLines : {
 						color : "rgba(0, 0, 0, .125)",
@@ -142,37 +83,55 @@
 	
 	
 	// Pie Chart Example
-	var ctx = document.getElementById("myPieChart");
+	var ctx = document.getElementById("myPieChart${status.index}");
 	var myPieChart = new Chart(ctx, {
 	  type: 'pie',
 	  data: {
-	    labels: ["Blue", "Red", "Yellow", "Green"],
+	    labels: [
+	    	<c:if test="${chart2jsp.fir.chartKey !=null}">"${chart2jsp.fir.chartKey}",</c:if>
+	    	<c:if test="${chart2jsp.sec.chartKey !=null}">"${chart2jsp.sec.chartKey}",</c:if>
+	    	<c:if test="${chart2jsp.thi.chartKey !=null}">"${chart2jsp.thi.chartKey}",</c:if>
+	    	<c:if test="${chart2jsp.fou.chartKey !=null}">"${chart2jsp.fou.chartKey}",</c:if>
+	    	<c:if test="${chart2jsp.fif.chartKey !=null}">"${chart2jsp.fif.chartKey}",</c:if>
+	    	<c:if test="${chart2jsp.six.chartKey !=null}">"${chart2jsp.six.chartKey}",</c:if>],
 	    datasets: [{
-	      data: [20, 30, 10, 40],
-	      backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+	      data: [
+	    	  <c:if test="${chart2jsp.fir.chartValue !=null}">"${chart2jsp.fir.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.sec.chartValue !=null}">"${chart2jsp.sec.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.thi.chartValue !=null}">"${chart2jsp.thi.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.fou.chartValue !=null}">"${chart2jsp.fou.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.fif.chartValue !=null}">"${chart2jsp.fif.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.six.chartValue !=null}">"${chart2jsp.six.chartValue}",</c:if>	    	  
+	    	  ],
+	      backgroundColor: [
+	    	  <c:if test="${chart2jsp.fir.chartKey !=null}">'#f50000',</c:if>
+	    	  <c:if test="${chart2jsp.sec.chartKey !=null}">'#ffda53',</c:if>
+	    	  <c:if test="${chart2jsp.thi.chartKey !=null}">'#55ffd5',</c:if>
+	    	  <c:if test="${chart2jsp.fou.chartKey !=null}">'#3b87ff',</c:if>
+	    	  <c:if test="${chart2jsp.fif.chartKey !=null}">'#495566',</c:if>  
+	    	  <c:if test="${chart2jsp.six.chartKey !=null}">'#7d0185',</c:if>	],
 	    }],
 	  },
 	});
 	
 	
 	// Bar Chart Example
-	var ctx = document.getElementById("myBarChart");
+	var ctx = document.getElementById("myBarChart${status.index}");
 	var myLineChart = new Chart(ctx, {
 	  type: 'bar',
 	  data: {
 	    labels: [
-			<c:forEach items="${buelltinPreMoon}" var="bPM" >
-			'${bPM.chartKey}' ,
-	 </c:forEach >
-	       	
-	    	],
+			<c:forEach items="${chart2jsp.listChartContainer}" var="c2j" >
+			'${c2j.chartKey}' ,
+	 		</c:forEach >
+	       	   	],
 	    datasets: [{
 	      label: "Revenue",
 	      backgroundColor: "rgba(2,117,216,1)",
 	      borderColor: "rgba(2,117,216,1)",
 	      data: [			
-	    	  <c:forEach items="${buelltinPreMoon}" var="bPM" >
-			'${bPM.chartValue}' ,
+	    	  <c:forEach items="${chart2jsp.listChartContainer}" var="c2j" >
+			'${c2j.chartValue}' ,
 			 </c:forEach >
 			],
 	    }],
@@ -192,8 +151,8 @@
 	      }],
 	      yAxes: [{
 	        ticks: {
-	          min: 0,
-	          max: 5,
+// 	          min: 0,
+// 	          max: 10,
 // 	          maxTicksLimit: 5
 	        },
 	        gridLines: {
@@ -206,8 +165,8 @@
 	    }
 	  }
 	});
-
-	
+	</c:forEach > 
+//})
 </script>
 
 
@@ -221,43 +180,60 @@
 
 <!-- DataTables Example -->
 
-
-
 <div class="card mb-3">
 	<div class="card-header">
 		<i class="fas fa-table"></i> 7-1 Cinema圖表
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
+			<nav>
+				<div class="nav nav-tabs mb-5" id="nav-tab" role="tablist">
 
-			<table class="columns">
-				<tr>
+					<c:forEach items="${chart2jsp}" var="chart2jsp" varStatus="status">
+						<a aria-controls="nav-${status.index}" id="nav-${status.index}-tab" data-toggle="tab" href="#nav-${status.index}" role="tab"
+							<c:if test="${status.index==0}">
+							 class="nav-item nav-link active" aria-selected="true"
+							</c:if>
+							<c:if test="${status.index>0}">
+							 class="nav-item nav-link " aria-selected="false"
+							</c:if>>${chart2jsp.str1}</a>
+					</c:forEach>
+				</div>
+			</nav>
+			<div class="tab-content " id="nav-tabContent">
+				<c:forEach items="${chart2jsp}" var="chart2jsp" varStatus="status">
+					<div <c:if test="${status.index==0}">
+					class="tab-pane fade show active" 
+					</c:if>
+						<c:if test="${status.index > 0}">
+					class="tab-pane fade"
+					</c:if> id="nav-${status.index}" role="tabpanel"
+						aria-labelledby="nav-${status.index}-tab">
+						<table class="columns">
+							<tr>
+								<td class="td">
+									<canvas id="myBarChart${status.index}" style="width: 700px; height: 400px;"></canvas>
+									<h2 style="text-align: center;">每月新增${chart2jsp.str1}數</h2>
+								</td>
+								<td class="td">
+									<canvas id="myAreaChart${status.index}" style="width: 700px; height: 400px;"></canvas>
+									<h2 style="text-align: center;">${chart2jsp.str1}總數</h2>
+								</td>
+							</tr>
+							<tr>
+								<td class="td">
+									<canvas id="myPieChart${status.index}" style="width: 700px; height: 400px;"></canvas>
+									<h2 style="text-align: center;">${chart2jsp.str1}類型</h2>
+								</td>
+								<td class="td"></td>
+							</tr>
 
-					<td>
-						<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
+						</table>
+					</div>
+				</c:forEach>
 
-					</td>
-					<td>
-						<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myBarChart" width="100%" height="50"></canvas> --%>
-
-					</td>
-					<td>
-						<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myPieChart" width="100%" height="100"></canvas> --%>
-
-					</td>
-
-					<td>
-						<div id="piechart" style="width: 900px; height: 500px;"></div>
-					</td>
-					<td>
-						<div id="piechart_3d" style="width: 900px; height: 500px;"></div>
-					</td>
-					<td>
-						<div id="curve_chart" style="width: 900px; height: 500px"></div>
-					</td>
-				</tr>
-			</table>
-
+				<div class="tab-pane fade" id="nav-emp" role="tabpanel" aria-labelledby="nav-emp-tab"></div>
+			</div>
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
