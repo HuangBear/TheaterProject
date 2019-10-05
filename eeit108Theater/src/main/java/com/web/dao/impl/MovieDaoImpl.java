@@ -143,6 +143,15 @@ public class MovieDaoImpl implements MovieDao {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getMovieNames() {
+		String hql = "SELECT m.movieName FROM MovieBean m";
+		Session session = factory.getCurrentSession();
+		List<String> list = session.createQuery(hql).getResultList();
+		return list;
+	}
+
 	// chart
 	@SuppressWarnings("unchecked")
 	@Override

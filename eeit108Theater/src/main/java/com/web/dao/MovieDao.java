@@ -39,6 +39,8 @@ public interface MovieDao {
 
 	List<MovieBean> getOffMovies();
 
+	List<String> getMovieNames();
+  
 	// chart
 	List<MovieBean> getMoviePerMoon(Date firstDate, Date lastDate);
 }

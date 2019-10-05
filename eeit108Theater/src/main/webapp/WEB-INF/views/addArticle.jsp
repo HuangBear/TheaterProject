@@ -65,7 +65,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 								value='${ArticleBean.authorString=LoginOK.no}' type='hidden'
 								class='form:input-large' />
 							<form:input id="movie" path="movie" readonly="true"
-								value='${MovieBean.no}' type='hidden' class='form:input-large' />
+								value='${ArticleBean.movieString=MovieBean.no}' type='hidden' class='form:input-large' />
 							<div class="form-group">
 								<label class="control-label col-lg-2 col-lg-4" for='title'>
 									<a>Title</a>
@@ -74,6 +74,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 									<form:input id="title" path="title" type='text'
 										class='form:input-large' />
 								</div>
+								<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 							</div>
 							<c:choose>
 								<c:when test="${LoginOK.no>6}">
@@ -114,7 +115,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeName">
+											<form:select path="typeString">
 												<form:option value="${ATypeBean.typeName}">
 												</form:option>
 											</form:select>
@@ -127,7 +128,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeName">
+											<form:select path="typeString">
 												<form:option value="">
 													<a>select</a>
 												</form:option>
@@ -145,6 +146,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 									<form:textarea id="content" path="content" wrap="physical" cols="40" rows="20"
 										class='form:input-large' style="word-break:break-all" onKeyDown='if (this.value.length>=250){event.returnValue=false}' />
 								</div>
+								<a style="color: red;">${ErrMsg.ContentNull}${ErrMsg.ContentInsufficient}</a>
 							</div>
 
 

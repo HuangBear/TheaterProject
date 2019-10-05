@@ -20,5 +20,5 @@ public interface MovieService {
 	List<MovieBean> getComingMovies();
 	List<MovieBean> getAllMovies();
 	List<MovieBean> getOffMovies();
-	
+	List<String> getMovieNames();
 }
