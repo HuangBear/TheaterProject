@@ -125,7 +125,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeName">
+											<form:select path="type">
 												<form:option value="${ATypeBean.typeName}">
 												</form:option>
 											</form:select>
@@ -138,7 +138,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
-											<form:select path="typeName">
+											<form:select path="type">
 												<form:option value="">
 													<a>select</a>
 												</form:option>
