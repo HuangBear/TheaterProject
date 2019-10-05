@@ -367,7 +367,7 @@ public class ArticleController {
 		System.out.println("postTime=" + ab.getPostTime());
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		
-		service.editArticle(ab);
+		
 		String ArticleNoS =Integer.toString(ab.getNo());
 
 		if (!errorMessage.isEmpty())
@@ -376,6 +376,7 @@ public class ArticleController {
 			return "editArticle";
 		} else
 		{
+			service.editArticle(ab);
 			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
@@ -394,7 +395,7 @@ public class ArticleController {
 	
 	@RequestMapping(value = "/addReply", method = RequestMethod.POST)
 	public String processAddReplyForm(@RequestParam("id") Integer no,@ModelAttribute("ReplyBean") ReplyBean rb, 
-		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		      BindingResult result, HttpServletRequest request,HttpSession session ) throws ParseException{
 		System.err.println("==============");
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
@@ -405,6 +406,14 @@ public class ArticleController {
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+		
+		if (rb.getContent() == null || rb.getContent().trim().length() == 0)
+		{
+			errorMessage.put("ContentNull", "請輸入內容");
+		} else if (rb.getContent().length() > 50)
+		{
+			errorMessage.put("ContentInsufficient", "字數不能超過50字");
 		}
 		ArticleBean ab = service.getArticleById(no);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
@@ -419,14 +428,17 @@ public class ArticleController {
 		System.out.println("content=" + rb.getContent());
 		System.out.println("postTime=" + rb.getPostTime());
 		
-		service.addReply(rb);
+		
 		String ArticleNoS =Integer.toString(ab.getNo());
 
 		if (!errorMessage.isEmpty())
 		{
+			session.setAttribute("ArticleBean", ab);
+			session.setAttribute("ReplyBean", rb);
 			return "addReply";
 		} else
 		{
+			service.addReply(rb);
 			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
@@ -446,9 +458,10 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value = "/editReply", method = RequestMethod.POST)
-	public String processEditReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb, 
-		      BindingResult result, HttpServletRequest request ) throws ParseException{
+	public String processEditReplyForm(@ModelAttribute("ReplyBean") ReplyBean rb,
+		      BindingResult result, HttpServletRequest request,HttpSession session ) throws ParseException{
 		System.err.println("==============");
+		System.out.println("檢查點1");
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
 		try
@@ -459,7 +472,14 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+		if (rb.getContent() == null || rb.getContent().trim().length() == 0)
+		{
+			errorMessage.put("ContentNull", "請輸入內容");
+		} else if (rb.getContent().length() > 50)
+		{
+			errorMessage.put("ContentInsufficient", "字數不能超過50字");
+		}
+		System.out.println("檢查點2");
 		System.out.println("==postString=="+request.getParameter("postTimeString"));
 		System.out.println("==postString=="+request.getParameter("rnoString"));
 		int NoS = Integer.parseInt(request.getParameter("rnoString"));
@@ -476,14 +496,22 @@ public class ArticleController {
 		System.out.println("content=" + rb.getContent());
 		System.out.println("postTime=" + rb.getPostTime());
 		
-		service.editReply(rb);
+		System.out.println("檢查點3");
 		String ArticleNoS =request.getParameter("articleString");
 
 		if (!errorMessage.isEmpty())
 		{
+			SimpleDateFormat ssdfr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			rb.setPostTimeString(ssdfr.format(rb.getPostTime()));
+			String NoSr =Integer.toString(rb.getNo());
+			rb.setrnoString(NoSr);
+			String articleNoS =Integer.toString(rb.getArticle().getNo());
+			rb.setArticleString(articleNoS);
+			session.setAttribute("ReplyBean", rb);
 			return "editReply";
 		} else
 		{
+			service.editReply(rb);
 			return "redirect:/Article?id="+ArticleNoS;
 		}
 		
