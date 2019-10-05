@@ -1,6 +1,5 @@
 package com.web.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import com.web.entity.BulletinBean;
@@ -27,5 +26,5 @@ public interface BulletinDao {
 	List<BulletinBean> getDiscount(String date);
 
 //chart
-	List<BulletinBean> getBuelltinPerMoon(Date firstDate, Date lastDate);
+	List<BulletinBean> getBuelltinPerMoon(String firstDate, String lastDate);
 }

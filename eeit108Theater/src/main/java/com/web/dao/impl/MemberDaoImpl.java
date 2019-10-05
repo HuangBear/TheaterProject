@@ -170,6 +170,7 @@ public class MemberDaoImpl implements MemberDao {
 		return mb;
 	}
 
+	// chart
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MemberBean> getMemberPerMoon(Date firstDate, Date lastDate) {
