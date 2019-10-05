@@ -193,6 +193,7 @@ public class ArticleController {
 		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
 		MovieBean mb = service.getMovieByNo(no);
+		System.out.println("測試測試"+mb.getNo());
 		ATypeBean atb = service.getAT(1);
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("MovieBean", mb);
@@ -202,7 +203,7 @@ public class ArticleController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processAddNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
-		      BindingResult result, HttpServletRequest request ) throws ParseException {
+		      BindingResult result, HttpServletRequest request,HttpSession session ) throws ParseException {
 		
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
@@ -222,15 +223,24 @@ public class ArticleController {
 		{
 			errorMessage.put("titleOver", "字數超過15字");
 		}
+		
+		if (ab.getContent() == null || ab.getContent().trim().length() == 0)
+		{
+			errorMessage.put("ContentNull", "請輸入內容");
+		} else if (ab.getContent().length() < 20)
+		{
+			errorMessage.put("ContentInsufficient", "字數要超過20字");
+		}
 		ATypeBean atbf = service.getAT(1);
 		ATypeBean atbt = service.getAT(2);
+		
 		ab.setLikeCount(0);
 		ab.setDislikeCount(0);
 		ab.setReport(false);
 		int AuthorS = Integer.parseInt(request.getParameter("author"));
 		ab.setAuthor(new MemberBean(AuthorS));
 		int MovieS = Integer.parseInt(request.getParameter("movie"));
-		ab.setMovie(new MovieBean(MovieS));
+		ab.setMovie(service.getMovieByNo(MovieS));
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
 		if(request.getParameter("typeString")==atbf.getTypeName())
@@ -246,6 +256,7 @@ public class ArticleController {
 		
 		if (!errorMessage.isEmpty())
 		{
+			session.setAttribute("MovieBean", service.getMovieByNo(MovieS));
 			return "addArticle";
 		} else
 		{
@@ -278,7 +289,7 @@ public class ArticleController {
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String processEditNewArticleForm(@RequestParam("id") Integer no,@ModelAttribute("ArticleBean") ArticleBean ab, 
-		      BindingResult result, HttpServletRequest request ) throws ParseException{
+		      BindingResult result, HttpServletRequest request,HttpSession session ) throws ParseException{
 		System.err.println("==============");
 		ab = service.getArticleById(no);
 		HashMap<String, String> errorMessage = new HashMap<>();
@@ -300,6 +311,14 @@ public class ArticleController {
 			errorMessage.put("titleOver", "字數超過15字");
 		}
 		
+		if (ab.getContent() == null || ab.getContent().trim().length() == 0)
+		{
+			errorMessage.put("ContentNull", "請輸入內容");
+		} else if (ab.getContent().length() < 20)
+		{
+			errorMessage.put("ContentInsufficient", "字數要超過20字");
+		}
+		
 		ATypeBean atbf = service.getAT(1);
 		ATypeBean atbt = service.getAT(2);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
@@ -313,9 +332,9 @@ public class ArticleController {
 		int AuthorS = Integer.parseInt(request.getParameter("authorString"));
 		ab.setAuthor(new MemberBean(AuthorS));
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
-		ab.setMovie(new MovieBean(MovieS));
+		ab.setMovie(service.getMovieByNo(MovieS));
 		ab.setAvailable(true);
-		System.out.println("檢查問題"+ab.getReport());
+		
 		if(ab.getReport()==null)
 		{
 			ab.setReport(false);
@@ -353,6 +372,7 @@ public class ArticleController {
 
 		if (!errorMessage.isEmpty())
 		{
+			session.setAttribute("MovieBean", service.getMovieByNo(MovieS));
 			return "editArticle";
 		} else
 		{
