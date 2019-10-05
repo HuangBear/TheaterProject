@@ -3,6 +3,7 @@ package com.web.controller;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.entity.BulletinBean;
 import com.web.entity.MemberBean;
@@ -85,8 +87,8 @@ public class OrderController {
 			ob.setTimeTable(pServ.getTimeTableByNo(Integer.valueOf(tid)));
 			session.setAttribute("order", ob);
 		}
-		model.addAttribute("foods", pServ.getProductsByType("food"));
-		model.addAttribute("drinks", pServ.getProductsByType("drink"));
+		model.addAttribute("foods", pServ.getProductsByType("food", true));
+		model.addAttribute("drinks", pServ.getProductsByType("drink", true));
 		model.addAttribute("tickets", pServ.getTicketsByVersion(ob.getTimeTable().getVersion()));
 		String timeTableDate = ob.getTimeTable().getStartDate();
 		System.out.println("start date = " + timeTableDate);
@@ -176,7 +178,7 @@ public class OrderController {
 			itemsMap.put(oib.getItemName(), oib);
 		}
 		if (discountIndex != null)
-			orderList.remove((int)discountIndex);
+			orderList.remove((int) discountIndex);
 		Collections.sort(ticketPrice);
 		System.out.println("ticketCnt = " + ob.getTicketCnt() + ", ticketPrice.size = " + ticketPrice.size());
 		ob.calTotalPrice();
@@ -193,7 +195,7 @@ public class OrderController {
 				discountItem.setItemName(b.getPay() + b.getDiscountPriceBuy() + b.getFree() + b.getDiscountPriceFree());
 			} else if (b.getDiscountTickBuy() != null) { // 買X送Y
 				int free = 0;
-				int times = (ticketPrice.size() / b.getDiscountTickBuy()) * b.getDiscountTickFree();
+				int times = (ticketPrice.size() / (b.getDiscountTickBuy() + b.getDiscountTickFree())) * b.getDiscountTickFree();
 				for (int i = 0; i < times; i++) {
 					free += ticketPrice.get(i);
 				}
@@ -258,7 +260,7 @@ public class OrderController {
 		ob.calTotalPrice();
 		// to set the chosen seats into order; if return value = -1, the
 		// chosen seats has been ordered already
-		System.out.println(seats);
+		System.out.println(Arrays.toString(seats));
 		if (oServ.setSeatToOrder(ob, seats) == -1) {
 			System.err.println("=== Selected seats has been sold already ===");
 			model.addAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
@@ -286,22 +288,48 @@ public class OrderController {
 	private String cancelOrder(HttpSession session) {
 		session.removeAttribute("order");
 		session.removeAttribute("discounts");
-		return "ticketing_1";
+		return "redirect:/ticketing_1";
 	}
 
 	@RequestMapping(value = "/pay")
-	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model, HttpServletRequest req) {
+	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model, HttpServletRequest req, RedirectAttributes redirect) {
 		System.out.println("type = " + idType);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		Map<String, String> errMsg = new HashMap<>();
+		model.addAttribute("errMsg", errMsg);
 		if (idType == 0) { // pay as member
 			MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
+			String memberName = req.getParameter("memberName");
+			String memberEmail = req.getParameter("memberEmail");
+			String memberPhone = req.getParameter("memberPhone");
+			if (memberPhone == null || memberPhone.trim().length() == 0) {
+				errMsg.put("memberPhone", "請輸入您的電話號碼");
+				errMsg.put("guest", "false");
+				return pac + "orderItems";
+			}
 			ob.setOwnerId(mb.getMemberId());
-			ob.setOwnerName(req.getParameter("memberName"));
-			ob.setOwnerEmail(req.getParameter("memberEmail"));
-			ob.setOwnerPhone(req.getParameter("memberPhone"));
+			ob.setOwnerName(memberName);
+			ob.setOwnerEmail(memberEmail);
+			ob.setOwnerPhone(memberPhone);
 		} else { // pay as guest
+			String guestName = req.getParameter("guestName");
+			String guestEmail = req.getParameter("guestEmail");
+			String guestPhone = req.getParameter("guestPhone");
+			if (guestName == null || guestName.trim().length() == 0) {
+				errMsg.put("guestName", "請輸入您的名字");
+			}
+			if (guestEmail == null || guestEmail.trim().length() == 0) {
+				errMsg.put("guestEmail", "請輸入您的Email");
+			}
+			if (guestPhone == null || guestPhone.trim().length() == 0) {
+				errMsg.put("guestPhone", "請輸入您的電話號碼");
+			}
+			if (!errMsg.isEmpty()) {
+				errMsg.put("guest", "true");
+				return pac + "orderItems";
+			}
 			ob.setOwnerId("GUEST");
 			ob.setOwnerName(req.getParameter("guestName"));
 			ob.setOwnerEmail(req.getParameter("guestEmail"));

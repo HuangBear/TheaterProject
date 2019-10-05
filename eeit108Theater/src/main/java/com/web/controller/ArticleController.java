@@ -50,10 +50,8 @@ public class ArticleController {
 			
 		List<ArticleBean> list = service.getArticlesByMovieNo(no);
 		List<ArticleBean> toplist = service.getTopArticlesByMovieNo(no);
-//		List<SysArticleBean> Syslist = service.getSysArticlesByMovieNo(no);
 		model.addAttribute("Articles", list);
 		model.addAttribute("TopArticles", toplist);
-//		model.addAttribute("SysArticles", Syslist);
 		MovieBean mb = service.getMovieByNo(no);
 		model.addAttribute("Movie", mb);
 		return "Articles";
@@ -189,24 +187,16 @@ public class ArticleController {
 		String NoS =Integer.toString(no);
 		return "redirect:/Article?id="+NoS;
 		}
-	
-//	@RequestMapping(value = "/SysArticle", method = RequestMethod.GET)
-//	public String getSysArticleById(@RequestParam("id") Integer no, Model model,HttpServletRequest request,HttpSession session) {
-//		session = request.getSession();
-//		
-//		model.addAttribute("SysArticle", service.getSysArticleById(no));
-//		
-//		return "SysArticle";
-//	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewArticleForm(@RequestParam("id") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		session = request.getSession();
 		ArticleBean ab = new ArticleBean();
 		MovieBean mb = service.getMovieByNo(no);
-		
+		ATypeBean atb = service.getAT(1);
 		model.addAttribute("ArticleBean", ab);
 		model.addAttribute("MovieBean", mb);
+		model.addAttribute("ATypeBean", atb);
 		return "addArticle";
 	}
 	
@@ -228,11 +218,12 @@ public class ArticleController {
 		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
 		{
 			errorMessage.put("titleNull", "請輸入標題");
-		} else if (ab.getTitle().length() > 30)
+		} else if (ab.getTitle().length() > 15)
 		{
-			errorMessage.put("titleOver", "字數超過30字");
+			errorMessage.put("titleOver", "字數超過15字");
 		}
-		ATypeBean atb = service.getAT(1);
+		ATypeBean atbf = service.getAT(1);
+		ATypeBean atbt = service.getAT(2);
 		ab.setLikeCount(0);
 		ab.setDislikeCount(0);
 		ab.setReport(false);
@@ -242,10 +233,10 @@ public class ArticleController {
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
-		if(request.getParameter("typeString")==atb.getTypeName())
+		if(request.getParameter("typeString")==atbf.getTypeName())
 		{
 			ab.setType(false);
-		} else if(request.getParameter("typeString")!=atb.getTypeName())
+		} else if(request.getParameter("typeString")==atbt.getTypeName())
 		{
 			ab.setType(true);
 		}
@@ -263,61 +254,11 @@ public class ArticleController {
 		
 	}
 	
-//	@RequestMapping(value = "/admin/addSysArticle", method = RequestMethod.GET)
-//	public String getAddNewSysArticleForm(Model model,HttpServletRequest request,HttpSession session) {
-//		session = request.getSession();
-//		SysArticleBean sb = new SysArticleBean();
-//		
-//		model.addAttribute("SysArticleBean", sb);
-//		return "addSysArticle";
-//	}
-//	
-//	@RequestMapping(value = "/admin/addSysArticle", method = RequestMethod.POST)
-//	public String processAddNewSysArticleForm(@ModelAttribute("SysArticleBean") SysArticleBean ab, 
-//		      BindingResult result, HttpServletRequest request ) throws ParseException {
-//		
-//		HashMap<String, String> errorMessage = new HashMap<>();
-//		request.setAttribute("ErrMsg", errorMessage);
-//		try
-//		{
-//			request.setCharacterEncoding("UTF-8");
-//		} catch (UnsupportedEncodingException e1)
-//		{
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
-//		{
-//			errorMessage.put("titleNull", "請輸入標題");
-//		} else if (ab.getTitle().length() > 30)
-//		{
-//			errorMessage.put("titleOver", "字數超過30字");
-//		}
-//		int AuthorS = Integer.parseInt(request.getParameter("author"));
-//		ab.setAuthor(new EmployeeBean(AuthorS));
-//		int MovieS = Integer.parseInt(request.getParameter("movie"));
-//		ab.setMovie(new MovieBean(MovieS));
-//		ab.setAvailable(true);
-//		ab.setPostTime(new Date());
-//		service.addSysArticle(ab);
-//		
-//		if (!errorMessage.isEmpty())
-//		{
-//			return "addSysArticle";
-//		} else
-//		{
-//			return "redirect:/admin/empIndexA";
-//		}
-//		
-//	}
-
-
-	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String getEditArticleForm(@RequestParam("id") Integer no, Model model) {
 		ArticleBean ab = service.getArticleById(no);
-		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		ATypeBean atb = service.getAT(1);
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		ab.setPostTimeString(ssdf.format(ab.getPostTime()));
 		String NoS =Integer.toString(ab.getNo());
 		ab.setNoString(NoS);
@@ -330,14 +271,16 @@ public class ArticleController {
 		String MovieS =Integer.toString(ab.getMovie().getNo());
 		ab.setMovieString(MovieS);
 		model.addAttribute("ArticleBean", ab);
+		model.addAttribute("ATypeBean", atb);
 		model.addAttribute("Article", service.getArticleById(no));
 		return "editArticle";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String processEditNewArticleForm(@ModelAttribute("ArticleBean") ArticleBean ab, 
+	public String processEditNewArticleForm(@RequestParam("id") Integer no,@ModelAttribute("ArticleBean") ArticleBean ab, 
 		      BindingResult result, HttpServletRequest request ) throws ParseException{
 		System.err.println("==============");
+		ab = service.getArticleById(no);
 		HashMap<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrMsg", errorMessage);
 		try
@@ -352,11 +295,13 @@ public class ArticleController {
 		if (ab.getTitle() == null || ab.getTitle().trim().length() == 0)
 		{
 			errorMessage.put("titleNull", "請輸入標題");
-		} else if (ab.getTitle().length() > 30)
+		} else if (ab.getTitle().length() > 15)
 		{
-			errorMessage.put("titleOver", "字數超過30字");
+			errorMessage.put("titleOver", "字數超過15字");
 		}
-		ATypeBean atb = service.getAT(1);
+		
+		ATypeBean atbf = service.getAT(1);
+		ATypeBean atbt = service.getAT(2);
 		System.out.println("==postString==="+request.getParameter("postTimeString"));
 		System.out.println("==postString==="+request.getParameter("noString"));
 		int NoS = Integer.parseInt(request.getParameter("noString"));
@@ -370,14 +315,25 @@ public class ArticleController {
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
 		ab.setMovie(new MovieBean(MovieS));
 		ab.setAvailable(true);
-		ab.setReport(ab.getReport());
-		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("檢查問題"+ab.getReport());
+		if(ab.getReport()==null)
+		{
+			ab.setReport(false);
+		}else if(ab.getReport()==false)
+		{
+			ab.setReport(false);
+		}else if(ab.getReport()==true)
+		{
+			ab.setReport(true);
+		}
+		
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
-		if(request.getParameter("typeString")==atb.getTypeName())
+		if(request.getParameter("typeName")==atbf.getTypeName())
 		{
 			ab.setType(false);
-		} else if(request.getParameter("typeString")!=atb.getTypeName())
+		} else if(request.getParameter("typeName")==atbt.getTypeName())
 		{
 			ab.setType(true);
 		}
@@ -459,7 +415,7 @@ public class ArticleController {
 	@RequestMapping(value = "/editReply", method = RequestMethod.GET)
 	public String getEditReplyForm(@RequestParam("id") Integer no, Model model) {
 		ReplyBean rb = service.getReplyById(no);
-		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		rb.setPostTimeString(ssdf.format(rb.getPostTime()));
 		String NoS =Integer.toString(rb.getNo());
 		rb.setrnoString(NoS);
@@ -493,7 +449,7 @@ public class ArticleController {
 		int ArticleS = Integer.parseInt(request.getParameter("articleString"));
 		rb.setArticle(new ArticleBean(ArticleS));
 		rb.setAvailable(true);
-		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		System.out.println("postTimeString=" + rb.getPostTimeString());
 		rb.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
 		

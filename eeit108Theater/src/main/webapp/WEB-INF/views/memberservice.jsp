@@ -189,7 +189,7 @@
 							<dl>
 							<dd>
 								<label for="email" style="text-align:left">*電子信箱：</label>
-								<form:input id="email" path="email" class="text"
+								<form:input id="email1" path="email" class="text"
 									type="text" placeholder="請輸入e-mail" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
@@ -204,7 +204,7 @@
 							<dl>
 							<dd>
 								<label for="account" style="text-align:left">*密碼：</label>
-								<form:input id="password" path="password" class="text"
+								<form:input id="password1" path="password" class="text"
 									type="password" placeholder="請輸入密碼 (英文大小寫有差別 )" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
@@ -244,7 +244,7 @@
 							</dd>
 							</dl>
 								<input id="type" name="form" type='hidden' value='true' />
-								
+								<button type="button" id="oneSetRegister" >一鍵填入 新會員:Joker</button>
 								
 							
 					            
@@ -253,7 +253,18 @@
 				    </div>
 
 				</header> 
-				
+				<script>
+			$('#oneSetRegister').click(function() {
+
+			$('#name').val('eeit_Joker');
+			$('#email1').val('eeit108Joker@gmail.com');
+			$('#phoneNum').val('6631666');
+			$('#memberId').val('G66547364');
+			$('#birthdayString').val('1990-01-01');
+			$('#password1').val('Do!ng123');
+		
+			})
+			</script>
 	
 					</article>
 				</div>
