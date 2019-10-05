@@ -154,7 +154,7 @@
 												<div>尚未登入</div>
 											</div>
 											<div class="form-group" style="text-align: center">
-												<button type="button">登入</button>
+												<button type="button" data-toggle="modal" data-target="#loginModal">登入</button>
 											</div>
 
 
