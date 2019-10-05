@@ -349,10 +349,10 @@ public class ArticleController {
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
-		if(request.getParameter("typeName")==atbf.getTypeName())
+		if(request.getParameter("typeString")==atbf.getTypeName())
 		{
 			ab.setType(false);
-		} else if(request.getParameter("typeName")==atbt.getTypeName())
+		} else if(request.getParameter("typeString")==atbt.getTypeName())
 		{
 			ab.setType(true);
 		}
