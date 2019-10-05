@@ -23,6 +23,12 @@
 </script>
 
 <style>
+
+
+	.foo1:hover {
+	color: #f5ad56;
+}
+
 .t1 {
 	width: 600;
 	height: 480px;
@@ -230,31 +236,26 @@ table {
 
 <body class="homepage is-preload">
 	<div id="page-wrapper">
+
 		<div id="header">
 			<!-- header -->
+
 			<jsp:include page="header.jsp" />
 			<div class="inner" id="716">
-				<header>
-					<h1>
-						<a href="index" id="logo">歡迎進入<strong>716影城</strong>全新的觀影體驗
-						</a>
-					</h1>
-					<hr />
-					<p>
-						以開創性概念打造的全新據點，<br> 為了給影迷最佳觀影體驗，本據點將採取全4K影廳規格，<br> 讓影像投影畫質大幅提升，並透過優化程度使影像達到最清晰、栩栩如生效果。
-					</p>
+
+				<header id="header" style="height: 850px; margin-top: -200px;">
+					<img src="images/frontend/mgmwhitelionlogo.png">
 				</header>
-				<footer>
-					<a href="#" class="button circled scrolly" id="enjoy">ENJOY</a>
-				</footer>
 			</div>
+
 		</div>
 
 		<section class="carousel">
 			<div class="reel">
 				<c:forEach var='releasedMovie' items='${releasedMovies}'>
 					<article>
-						<a href='#' class='image featured'> <img src="<c:url value = '/getPicture/${releasedMovie.no}'/>" alt='' style="width: 336px; height: 480px;">
+						<a href='detail_${releasedMovie.no}' class='image featured'> <img src="<c:url value = '/getPicture/${releasedMovie.no}'/>" alt=''
+							style="width: 336px; height: 480px;">
 						</a>
 						<header>
 							<h3>
@@ -355,8 +356,8 @@ table {
 							<c:forEach items="${BulletinBean}" var="bb" end="9">
 								<tr>
 									<td class="title_width">
-										<ul style="text-align: left; margin-bottom: 0px;padding-bottom: 5px;">
-											<li><a  href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
+										<ul style="text-align: left; margin-bottom: 0px; padding-bottom: 5px;">
+											<li><a href='<c:url value="/news/${bb.no}" />'>${bb.startDate}&emsp;${bb.title}</a></li>
 										</ul>
 									</td>
 								</tr>
@@ -370,6 +371,7 @@ table {
 		</div>
 
 		<jsp:include page="footer.jsp" />
+
 	</div>
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>

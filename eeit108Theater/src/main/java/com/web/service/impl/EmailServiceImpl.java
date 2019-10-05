@@ -58,7 +58,7 @@ public class EmailServiceImpl implements EmailService {
 								"<tbody style='text-align:left;'>"+
 									"<tr>"+
 										"<th style='width:50%'>"+
-											"訂單編號"+
+											"取票序號"+
 										"</th>"+
 										"<th style='width:50%'>"+
 											"#tradeNo"+

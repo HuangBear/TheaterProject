@@ -19,69 +19,6 @@
 
 <script type="text/javascript">
 
-	google.charts.load("current", {
-		packages : [ "corechart" ]
-	});
-
-	google.charts.setOnLoadCallback(drawChart);
-
-	function drawChart() {
-		
-	var data = google.visualization.arrayToDataTable([['Language', 'Speakers (in millions)'],
-		<c:forEach items="${buelltinPreMoon}" var="bPM" >
-			['${bPM.chartKey}', ${bPM.chartValue}],
-	 </c:forEach >
-		]);
-
-		
-		var options = {
-			legend : 'none',
-			pieSliceText : 'label',
-			title : '每月公告',
-			pieStartAngle : 100,
-		};
-
-		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-		chart.draw(data, options);
-	}
-	
-	
-	// 		google.charts.load("current", {
-	// 			packages : [ "corechart" ]
-	// 		});
-	google.charts.setOnLoadCallback(drawChart1);
-
-	function drawChart1() {
-		var data1 = google.visualization.arrayToDataTable([ [ 'Task', 'Hours per Day' ], [ 'Work', 11 ],
-				[ 'Eat', 2 ], [ 'Commute', 2 ], [ 'Watch TV', 2 ], [ 'Sleep', 7 ] ]);
-
-		var options1 = {
-			title : 'My Daily Activities',
-			is3D : true,
-		};
-
-		var chart1 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-		chart1.draw(data1, options1);
-	}
-
-	google.charts.setOnLoadCallback(drawChart2);
-
-	function drawChart2() {
-		var data = google.visualization.arrayToDataTable([ [ 'Year', 'Sales', 'Expenses' ],
-				[ '2004', 1000, 400 ], [ '2005', 1170, 460 ], [ '2006', 660, 1120 ], [ '2007', 1030, 540 ] ]);
-
-		var options = {
-			title : 'Company Performance',
-			curveType : 'function',
-			legend : {
-				position : 'bottom'
-			}
-		};
-
-		var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-		chart.draw(data, options);
-	}
 
 	// Area Chart Example
 	var ctx = document.getElementById("myAreaChart");
@@ -89,12 +26,9 @@
 	var myLineChart = new Chart(ctx, {
 		type : 'line',
 		data : {
-			labels : [ (Today.getMonth() + 1) + " 月 " + (Today.getDate() - 5) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 4) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 3) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 2) + " 日",
-					(Today.getMonth() + 1) + " 月 " + (Today.getDate() - 1) + " 日",
-					(Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日(本日)" ],
+			labels : [ 	<c:forEach items="${chart2jsp[0].listChartContainer}" var="bPM" >
+			'${bPM.chartKey}' ,
+	 		</c:forEach > ],
 			datasets : [ {
 				label : "Sessions",
 				lineTension : 0.3,
@@ -107,7 +41,9 @@
 				pointHoverBackgroundColor : "rgba(2,117,216,1)",
 				pointHitRadius : 50,
 				pointBorderWidth : 2,
-				data : [ 0, 3, 2, 1, 7, 2 ],
+				data : [ <c:forEach items="${chart2jsp[0].listInteger}" var="tc" >
+				'${tc}' ,
+		 		</c:forEach > ],
 			} ],
 		},
 		options : {
@@ -120,14 +56,14 @@
 						display : false
 					},
 					ticks : {
-						maxTicksLimit : 7
+// 						maxTicksLimit : 7
 					}
 				} ],
 				yAxes : [ {
 					ticks : {
 						min : 0,
-						max : 10,
-						maxTicksLimit : 5
+						max : 20,
+// 						maxTicksLimit : 5
 					},
 					gridLines : {
 						color : "rgba(0, 0, 0, .125)",
@@ -146,10 +82,10 @@
 	var myPieChart = new Chart(ctx, {
 	  type: 'pie',
 	  data: {
-	    labels: ["Blue", "Red", "Yellow", "Green"],
+	    labels: [ "${chart2jsp[0].fir.chartKey}", "${chart2jsp[0].sec.chartKey}", "${chart2jsp[0].thi.chartKey}"],
 	    datasets: [{
-	      data: [20, 30, 10, 40],
-	      backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+	      data: [${chart2jsp[0].fir.chartValue}, ${chart2jsp[0].sec.chartValue}, ${chart2jsp[0].thi.chartValue}],
+	      backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
 	    }],
 	  },
 	});
@@ -161,9 +97,9 @@
 	  type: 'bar',
 	  data: {
 	    labels: [
-			<c:forEach items="${buelltinPreMoon}" var="bPM" >
+			<c:forEach items="${chart2jsp[0].listChartContainer}" var="bPM" >
 			'${bPM.chartKey}' ,
-	 </c:forEach >
+	 		</c:forEach >
 	       	
 	    	],
 	    datasets: [{
@@ -171,7 +107,7 @@
 	      backgroundColor: "rgba(2,117,216,1)",
 	      borderColor: "rgba(2,117,216,1)",
 	      data: [			
-	    	  <c:forEach items="${buelltinPreMoon}" var="bPM" >
+	    	  <c:forEach items="${chart2jsp[0].listChartContainer}" var="bPM" >
 			'${bPM.chartValue}' ,
 			 </c:forEach >
 			],
@@ -193,7 +129,7 @@
 	      yAxes: [{
 	        ticks: {
 	          min: 0,
-	          max: 5,
+	          max: 10,
 // 	          maxTicksLimit: 5
 	        },
 	        gridLines: {
@@ -207,7 +143,6 @@
 	  }
 	});
 
-	
 </script>
 
 
@@ -230,34 +165,56 @@
 	<div class="card-body">
 		<div class="table-responsive">
 
-			<table class="columns">
-				<tr>
+			<nav>
+				<div class="nav nav-tabs mb-5" id="nav-tab" role="tablist">
+					<a class="nav-item nav-link active" id="nav-bul-tab" data-toggle="tab" href="#nav-bul" role="tab" aria-controls="nav-bul" aria-selected="true">公告</a> <a
+						class="nav-item nav-link" id="nav-mem-tab" data-toggle="tab" href="#nav-mem" role="tab" aria-controls="nav-mem" aria-selected="false">會員</a> <a
+						class="nav-item nav-link" id="nav-emp-tab" data-toggle="tab" href="#nav-emp" role="tab" aria-controls="nav-emp" aria-selected="false">員工</a>
+				</div>
+			</nav>
+			<div class="tab-content " id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-bul" role="tabpanel" aria-labelledby="nav-bul-tab">
+					<table class="columns">
+						<tr>
+							<td>
+								<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas>
+								<h2 style="text-align: center;">每月公告數</h2>
+							</td>
+							<td>
+								<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas>
+								<h2 style="text-align: center;">公告總數</h2>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas>
+								<h2 style="text-align: center;">公告類型統計</h2>
+							</td>
+						</tr>
 
-					<td>
-						<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myAreaChart" width="100%" height="30"></canvas> --%>
+					</table>
 
-					</td>
-					<td>
-						<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myBarChart" width="100%" height="50"></canvas> --%>
-
-					</td>
-					<td>
-						<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas> <%-- <canvas id="myPieChart" width="100%" height="100"></canvas> --%>
-
-					</td>
-
-					<td>
-						<div id="piechart" style="width: 900px; height: 500px;"></div>
-					</td>
-					<td>
-						<div id="piechart_3d" style="width: 900px; height: 500px;"></div>
-					</td>
-					<td>
-						<div id="curve_chart" style="width: 900px; height: 500px"></div>
-					</td>
-				</tr>
-			</table>
-
+				</div>
+				<div class="tab-pane fade" id="nav-mem" role="tabpanel" aria-labelledby="nav-mem-tab">
+					<table class="columns">
+						<tr>
+							<td>
+								<canvas id="myBarChart" style="width: 800px; height: 400px;"></canvas>
+								<h2 style="text-align: center;">每月公告數</h2>
+							</td>
+							<td>
+								<canvas id="myPieChart" style="width: 800px; height: 400px;"></canvas>
+								<h2 style="text-align: center;">公告類型統計</h2>
+							</td>
+							<td>
+								<canvas id="myAreaChart" style="width: 800px; height: 400px;"></canvas>
+								<h2 style="text-align: center;">公告總數</h2>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="tab-pane fade" id="nav-emp" role="tabpanel" aria-labelledby="nav-emp-tab"></div>
+			</div>
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>

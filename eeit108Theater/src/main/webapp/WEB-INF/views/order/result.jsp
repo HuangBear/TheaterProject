@@ -82,9 +82,9 @@ p {
 									<tr class="table-warning">
 										<th>
 											<div class="h2">
-												<strong>訂單編號 : ${order.orderId}</strong>
+												<strong>取票序號 : ${order.orderId}</strong>
 											</div>
-											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，請妥善保存訂單編號及訂購人資料以便日後查詢該筆訂單</small>
+											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，請妥善保存取票序號及訂購人資料以便日後查詢該筆訂單</small>
 										</th>
 									</tr>
 								</thead>
