@@ -236,11 +236,10 @@ table {
 		
 // 	});
 
-	if (${changeMsg != null}) {
-		$("a.hide").trigger("click")
-	};
+<c:if test="${changeMsg != null}">$("a.hide").trigger("click")</c:if>
 </script>
 <!-- load 視窗 -->
+
 <a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
 <div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -432,11 +431,11 @@ table {
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="25%">標題</th>
-								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="20%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
-								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="5%">公告人</th>
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
@@ -448,8 +447,8 @@ table {
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td class="title_width" >${sb.title}</td>
-									<td><fmt:formatDate value="${sb.postTime}" pattern='yyyy-MM-dd' /></td>
+									<td class="title_width">${sb.title}</td>
+									<td class="title_width">${sb.context}</td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
@@ -471,11 +470,11 @@ table {
 							</c:forEach>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="25%">標題</th>
-								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="20%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
-								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="5%">公告人</th>
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
@@ -489,11 +488,11 @@ table {
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="25%">標題</th>
-								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="20%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
-								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="5%">公告人</th>
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
@@ -505,8 +504,8 @@ table {
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td class="title_width" >${sb.title}</td>
-									<td><fmt:formatDate value="${sb.postTime}" pattern='yyyy-MM-dd' /></td>
+									<td class="title_width">${sb.title}</td>
+									<td class="title_width">${sb.context}</td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
@@ -530,11 +529,11 @@ table {
 							</c:forEach>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="25%">標題</th>
-								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="20%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
-								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="5%">公告人</th>
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
@@ -548,15 +547,15 @@ table {
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="25%">標題</th>
-								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="20%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
-								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="5%">公告人</th>
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
-								<th scope="col" width="5%"></th>
-								<th scope="col" width="5%">恢復</th>
+								<th scope="col" width="5%">修改</th>
+								<th scope="col" width="5%">刪除</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -564,8 +563,8 @@ table {
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
-									<td class="title_width" >${sb.title}</td>
-									<td><fmt:formatDate value="${sb.postTime}" pattern='yyyy-MM-dd' /></td>
+									<td class="title_width">${sb.title}</td>
+									<td class="title_width">${sb.context}</td>
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
@@ -586,15 +585,15 @@ table {
 							</c:forEach>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="25%">標題</th>
-								<th scope="col" width="10%">發布時間</th>
+								<th scope="col" width="20%">標題</th>
+								<th scope="col" width="20%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
-								<th scope="col" width="10%">公告人</th>
+								<th scope="col" width="5%">公告人</th>
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
-								<th scope="col" width="5%"></th>
-								<th scope="col" width="5%">恢復</th>
+								<th scope="col" width="5%">修改</th>
+								<th scope="col" width="5%">刪除</th>
 							</tr>
 						</tbody>
 					</table>
