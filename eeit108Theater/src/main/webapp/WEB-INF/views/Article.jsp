@@ -51,7 +51,7 @@
 								${Article.postTime}</p>
 						</div>
 						<br>
-						<pre style="font-size: 30px; white-space: pre-wrap;">${Article.content}</pre>
+						<pre style="font-size: 30px; white-space: pre-wrap;margin-bottom:20px">${Article.content}</pre>
 
 					</div>
 					<p>
