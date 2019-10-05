@@ -30,4 +30,5 @@ public interface MovieDao {
 	List<MovieBean> getAllMovies();
 	List<MovieBean> getAllAvailable();
 	List<MovieBean> getOffMovies();
+	List<String> getMovieNames();
 }
