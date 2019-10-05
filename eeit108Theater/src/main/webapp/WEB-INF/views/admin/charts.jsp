@@ -3,8 +3,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <style type="text/css">
-.hide {
-	display: none;
+.td {
+
+padding:50px;
+	width: 800px;
+	height: 500px;
+}
+
+.ww {
+/* 	width: 600px; */
+/* 	height: 500px */
 }
 </style>
 
@@ -85,9 +93,16 @@
 	    	<c:if test="${chart2jsp.thi.chartKey !=null}">"${chart2jsp.thi.chartKey}",</c:if>
 	    	<c:if test="${chart2jsp.fou.chartKey !=null}">"${chart2jsp.fou.chartKey}",</c:if>
 	    	<c:if test="${chart2jsp.fif.chartKey !=null}">"${chart2jsp.fif.chartKey}",</c:if>
-	    	<c:if test="${chart2jsp.six.chartKey !=null}">"${chart2jsp.six.chartKey}",</c:if>	],
+	    	<c:if test="${chart2jsp.six.chartKey !=null}">"${chart2jsp.six.chartKey}",</c:if>],
 	    datasets: [{
-	      data: [${chart2jsp.fir.chartValue}, ${chart2jsp.sec.chartValue}, ${chart2jsp.thi.chartValue}, ${chart2jsp.fou.chartValue}, ${chart2jsp.fif.chartValue}, ${chart2jsp.six.chartValue}],
+	      data: [
+	    	  <c:if test="${chart2jsp.fir.chartValue !=null}">"${chart2jsp.fir.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.sec.chartValue !=null}">"${chart2jsp.sec.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.thi.chartValue !=null}">"${chart2jsp.thi.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.fou.chartValue !=null}">"${chart2jsp.fou.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.fif.chartValue !=null}">"${chart2jsp.fif.chartValue}",</c:if>
+		    	<c:if test="${chart2jsp.six.chartValue !=null}">"${chart2jsp.six.chartValue}",</c:if>	    	  
+	    	  ],
 	      backgroundColor: [
 	    	  <c:if test="${chart2jsp.fir.chartKey !=null}">'#f50000',</c:if>
 	    	  <c:if test="${chart2jsp.sec.chartKey !=null}">'#ffda53',</c:if>
@@ -173,6 +188,7 @@
 		<div class="table-responsive">
 			<nav>
 				<div class="nav nav-tabs mb-5" id="nav-tab" role="tablist">
+
 					<c:forEach items="${chart2jsp}" var="chart2jsp" varStatus="status">
 						<a aria-controls="nav-${status.index}" id="nav-${status.index}-tab" data-toggle="tab" href="#nav-${status.index}" role="tab"
 							<c:if test="${status.index==0}">
@@ -186,23 +202,30 @@
 			</nav>
 			<div class="tab-content " id="nav-tabContent">
 				<c:forEach items="${chart2jsp}" var="chart2jsp" varStatus="status">
-					<div class="tab-pane fade show active" id="nav-${status.index}" role="tabpanel" aria-labelledby="nav-${status.index}-tab">
+					<div <c:if test="${status.index==0}">
+					class="tab-pane fade show active" 
+					</c:if>
+						<c:if test="${status.index > 0}">
+					class="tab-pane fade"
+					</c:if> id="nav-${status.index}" role="tabpanel"
+						aria-labelledby="nav-${status.index}-tab">
 						<table class="columns">
 							<tr>
-								<td>
-									<canvas id="myBarChart${status.index}" style="width: auto; height: auto;"></canvas>
+								<td class="td">
+									<canvas id="myBarChart${status.index}" style="width: 700px; height: 400px;"></canvas>
 									<h2 style="text-align: center;">每月新增${chart2jsp.str1}數</h2>
 								</td>
-								<td>
-									<canvas id="myAreaChart${status.index}" style="width: auto; height: auto;"></canvas>
+								<td class="td">
+									<canvas id="myAreaChart${status.index}" style="width: 700px; height: 400px;"></canvas>
 									<h2 style="text-align: center;">${chart2jsp.str1}總數</h2>
 								</td>
 							</tr>
 							<tr>
-								<td>
-									<canvas id="myPieChart${status.index}" style="width: auto; height: auto;"></canvas>
+								<td class="td">
+									<canvas id="myPieChart${status.index}" style="width: 700px; height: 400px;"></canvas>
 									<h2 style="text-align: center;">${chart2jsp.str1}類型</h2>
 								</td>
+								<td class="td"></td>
 							</tr>
 
 						</table>
