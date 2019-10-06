@@ -23,13 +23,6 @@
 </script>
 
 <style>
-<<<<<<< HEAD
-
-	.foo1:hover{color:#f5ad56;}
-=======
->>>>>>> refs/remotes/RemoteBear/master
-
-<<<<<<< HEAD
 /* 	.t1{width:600 ; height:480px ; text-align:center} */
 /* 	.tr{width:300 ; height:240px ; text-align:center} */
 /* 	.td{width:300 ; height:240px ; text-align:center} */
@@ -38,12 +31,9 @@
 /* 	height:150px; */
 /* 	margin:auto; */
 /* 	margin-left:10px; */
-=======
-
-	.foo1:hover {
+.foo1:hover {
 	color: #f5ad56;
 }
->>>>>>> refs/remotes/RemoteBear/master
 
 .t1 {
 	width: 600;
@@ -352,7 +342,7 @@ table {
 						<p>
 						<div style="margin: 0px auto">
 							<a id='ticketing' href="<c:url value='/order/showProducts?time=${StartTime.no}'/>"><button type='button' id='submit'>前往訂票</button></a>
-							<button class="" id="" onclick="ShowR()">查詢座位</button>
+							<a id='peekSeat' target="_blank"><button type="button">查詢座位</button></a>
 						</div>
 					</form>
 					<p>
@@ -468,6 +458,7 @@ table {
 					success : function(data) {
 						console.log(data[0]);
 						$("#ticketing").attr("href", "/eeit108Theater/order/showProducts?time=" + data[0]);
+						$("#peekSeat").attr("href", "/eeit108Theater/order/peekSeat?time=" + data[0]);
 					}
 				})
 			});
