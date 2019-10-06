@@ -95,10 +95,10 @@
 	$('#oneSet').click(function() {
 
 		$('#email').val('AzureBear@gmail.com');
-		$('#employeeId').val('A129999976');
+		$('#employeeId').val('A129111976');
 		$('#name').val('小池熊');
 		$('#phoneNum').val('66316666');
-		$('#password').val('Do!ng123');
+		$('#password').val('1234');
 		$('#gender').val('1');
 		$('#birthdayString').val('1990-01-01');
 		$('#salary').val('38000');
