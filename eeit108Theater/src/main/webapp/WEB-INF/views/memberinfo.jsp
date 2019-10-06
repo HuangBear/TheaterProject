@@ -256,15 +256,25 @@
 						    		<p>會員名稱：${LoginOK.name}</p>
 								    
 						   
-						    <section>
+						   
+						    
 						    <div id="websocketdiv">
-								<textarea id="area" style="font-size: 20px; font-family: '微軟正黑體';
-								 margin-top: 20px;" readonly="readonly" rows="10" cols="42"></textarea>
-								<input type="text" id="text" size="53" />
-								<input id="sendmsg" type="button" value="送出" />
+						   
+								<textarea id="area" class="form-control rounded-0" style="font-size: 20px; font-family: '微軟正黑體';
+								 margin-top:10px;" readonly="readonly" rows="10" cols="80"></textarea>
+								<input class="form-control rounded-0" style="font-size: 20px; font-family: '微軟正黑體';
+								 margin:10px;" type="text" id="text" size=70%  />
+<!-- 								<input id="sendmsg" type="button" value="送出" size=40% /> -->
+								<div class="text-center col-md-12 mt-3 mb-2">			
+								<button type="button" id="sendmsg" class="btn btn-success btn-block btn-rounded z-depth-1">送出</button>
+							     </div>
 							</div>
-							</section> 
+							
+							
+						
 							</article>
+							
+
 						</div>
 
 

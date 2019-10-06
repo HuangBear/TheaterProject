@@ -24,6 +24,7 @@ public class WebSocketNoHTTP {
 	static Set<Session> users = Collections.synchronizedSet(new HashSet<Session>());
 	private String user = "";
 	static private List<Object> recordmsg = new ArrayList<Object>();
+	private static int onlineCount = 0;
 
 	@OnOpen
 	public void handleOpen(EndpointConfig endpointConfig, Session userSession) {
