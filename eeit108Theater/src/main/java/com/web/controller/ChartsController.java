@@ -110,7 +110,6 @@ public class ChartsController {
 				case 2:
 					discount2++;
 					cc.setChartMap("discount2", discount2);
-
 					break;
 				}
 				b++;
@@ -126,7 +125,6 @@ public class ChartsController {
 			discount2Count.setCount(discount2);
 			System.out.println("inputKey=" + inputKey);
 			System.out.println("次數=" + b);
-
 		}
 		Chart2jsp chart2jsp = new Chart2jsp();
 		chart2jsp.setIncreasePerMoon(buelltinPerMoon);
@@ -149,14 +147,6 @@ public class ChartsController {
 
 		return chart2jsp;
 	}
-
-//	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET, produces = "application/pdf")
-//	public String queryAllBulletinPDF(Model model) {
-//
-////		List<BulletinBean> members = service.getBuelltinPerMoon();
-////		model.addAttribute("allMembers", members);
-//		return "_01/cnvr/showMembers";
-//	}
 
 //	memberPerMoon
 	public Chart2jsp memberPerMoon(HttpSession session) {
