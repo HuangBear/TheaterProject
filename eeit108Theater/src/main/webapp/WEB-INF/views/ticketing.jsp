@@ -29,6 +29,7 @@
 		$(".hello").click(function() {
 			$("#minfo01").show();
 		});
+		$("#first").css("background", "#dadee3");
 		$("#day1").show();
 		$("#day2").hide();
 		$("#day3").hide();
@@ -36,6 +37,11 @@
 		$("#day5").hide();
 		
 		$("#first").click(function() {
+			$("#first").css("background", "#dadee3");
+			$("#second").css("background", "white");
+			$("#third").css("background", "white");
+			$("#fourth").css("background", "white");
+			$("#fifth").css("background", "white");
 			$("#day1").show();
 			$("#day2").hide();
 			$("#day3").hide();
@@ -44,6 +50,11 @@
 		});
 		
 		$("#second").click(function() {
+			$("#first").css("background", "white");
+			$("#second").css("background", "#dadee3");
+			$("#third").css("background", "white");
+			$("#fourth").css("background", "white");
+			$("#fifth").css("background", "white");
 			$("#day1").hide();
 			$("#day2").show();
 			$("#day3").hide();
@@ -52,6 +63,11 @@
 		});
 		
 		$("#third").click(function() {
+			$("#first").css("background", "white");
+			$("#second").css("background", "white");
+			$("#third").css("background", "#dadee3");
+			$("#fourth").css("background", "white");
+			$("#fifth").css("background", "white");
 			$("#day1").hide();
 			$("#day2").hide();
 			$("#day3").show();
@@ -60,6 +76,11 @@
 		});
 		
 		$("#fourth").click(function() {
+			$("#first").css("background", "white");
+			$("#second").css("background", "white");
+			$("#third").css("background", "white");
+			$("#fourth").css("background", "#dadee3");
+			$("#fifth").css("background", "white");
 			$("#day1").hide();
 			$("#day2").hide();
 			$("#day3").hide();
@@ -68,6 +89,11 @@
 		});
 		
 		$("#fifth").click(function() {
+			$("#first").css("background", "white");
+			$("#second").css("background", "white");
+			$("#third").css("background", "white");
+			$("#fourth").css("background", "white");
+			$("#fifth").css("background", "#dadee3");
 			$("#day1").hide();
 			$("#day2").hide();
 			$("#day3").hide();
@@ -102,7 +128,11 @@
 			margin:0px 25px 0px 0px;
 			}
 			
-	.foo:hover { background: #dadee3; }		
+ 	.foos:hover { background: #dadee3; }
+ 	
+ 	td {
+ 		width: 220px;
+ 	}	
 </style>
 
 
@@ -133,12 +163,7 @@
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-
-
 				</table>
-
-					
-
 			</center>		
 		</div>
 		</div>
@@ -181,6 +206,7 @@
 								<p>片長：${movie.duration}</p>
 								<p>類型：${movie.genres}</p>
 							</div>
+						</div>
 							<footer>
 								<a href="detail_${movie.no}" class="button">電影介紹</a>
 							</footer>
@@ -224,7 +250,7 @@
 												<br>
 												<dt>
 												<c:forEach var = 'StartTime' items = '${times[j]}'>
-													<dd class = 'dtdd foo'><a href = "<c:url value='/order/showProducts?time=${StartTime.no}'/>">${StartTime.startTime}</a></dd>
+													<dd class = 'dtdd foos'><a href = "<c:url value='/order/showProducts?time=${StartTime.no}'/>">${StartTime.startTime}</a></dd>
 												</c:forEach>
 												<br>
 												<br>
@@ -236,11 +262,7 @@
 									<br>
 								</div>
 							</c:forEach>
-							</div>
-						<footer> 
-							<a href="seat" class="button">選擇座位</a>
-						</footer> 
-						
+							</div>					
 						</section> </article>
 					</div>
 				</div>
@@ -262,7 +284,7 @@
 						4.未滿２歲且不佔位之兒童無需購票可免費入場觀賞【普遍級】影片，每位兒童需由至少一位已購票之成人陪伴。<br>
 						5.需佔位或２歲以上未滿１２歲之兒童；需購買優待票。<br>
 						6.購票完成可至超商進行取票，若交易內含餐飲品項，須至購票影城臨櫃領取電影票與餐點。<br> 7.網路訂票每張票需加收
-						NT$20 手續費。<br> 8.片長 150分鐘(含)以上之電影需加價NT$10，每增加30分鐘需另再加價NT$10。
+						NT$20 手續費。<br> 8.片長 1500分鐘(含)以上之電影需加價NT$10，每增加30分鐘需另再加價NT$10。
 					</p>
 				</section>
 				<section>
@@ -278,6 +300,7 @@
 				</section>
 			</div>
 		</center>
+		</div>
 
 		<!-- Footer -->
 		<jsp:include page="footer.jsp" />

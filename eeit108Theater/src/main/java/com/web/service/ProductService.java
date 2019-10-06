@@ -36,7 +36,8 @@ public interface ProductService {
 	List<ProductBean> getAllAvailableProducts();
 	List<ProductBean> getAllUnavailableProducts();
 
-	List<ProductBean> getProductsByType(String type);
+	List<ProductBean> getAllProductsByType(String type);
+	List<ProductBean> getProductsByType(String type, Boolean available);
 	List<ProductBean> getTicketsByVersion(String version);
 	List<SeatBean> getSeatsByTimeTable(Integer timeTableNo);
 

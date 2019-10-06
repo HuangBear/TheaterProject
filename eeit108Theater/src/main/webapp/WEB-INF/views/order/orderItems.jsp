@@ -32,9 +32,23 @@
 <script src="<c:url value='/js/order/popper.min.js'/>" crossorigin="anonymous"></script>
 <script src="<c:url value='/js/order/bootstrap.min.js'/>" crossorigin="anonymous"></script>
 <script>
+	var guest = ${empty errMsg['guest']? "null": errMsg['guest'] == "true"? true :false};
 	$(function() {
-		$("#tab").tabs();
+		$("#tab").tabs({
+			show : true
+		});
+		if(guest != null){
+			if(guest){
+				$( "#tab" ).tabs( "option", "active", 1 );
+			}
+			$('html, body').animate({
+			    scrollTop: ($('#scroll').offset().top)
+			},500);
+		}
 		$("#sidebarOrderList").html("");
+		if($("#memberPhone").val() == null || $("#memberPhone").val() == ""){
+			$("#memberPhone").prop("readonly", false);
+		}
 	});
 </script>
 </head>
@@ -116,7 +130,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div style="color: white; background-color: grey;" class="my-3 py-2">
+						<div style="color: white; background-color: grey;" class="my-3 py-2" id="scroll">
 							<div class="h2" style="text-align: center">請選擇付款身份</div>
 							<p style="text-align: center">欲以會員身份付款請先登入</p>
 						</div>
@@ -140,7 +154,7 @@
 												<div>尚未登入</div>
 											</div>
 											<div class="form-group" style="text-align: center">
-												<button type="button">登入</button>
+												<button type="button" data-toggle="modal" data-target="#loginModal">登入</button>
 											</div>
 
 
@@ -158,11 +172,12 @@
 													value="${LoginOK.email}" readonly>
 												<small id="m-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
 											</div>
+											
 											<div class="form-group">
 												<label for="memberPhone">Phone number</label>
 												<input type="text" class="form-control" id="memberPhone" name="memberPhone" aria-describedby="m-phoneHelp"
 													value="${LoginOK.phoneNum}" readonly>
-												<small id="m-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
+												<small id="m-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small><span style="color: red">${errMsg['memberPhone']}</span>
 											</div>
 											<div class="form-group" style="text-align: center">
 												<button id="btn-submit" class="btn-primary" type="submit">確認付款</button>
@@ -176,19 +191,19 @@
 											<label for="guestName">Name</label>
 											<input type="text" class="form-control" id="guestName" name="guestName" aria-describedby="g-nameHelp"
 												placeholder="Enter your name, please">
-											<small id="g-nameHelp" class="form-text text-muted">請輸入訂購人姓名</small>
+											<small id="g-nameHelp" class="form-text text-muted">請輸入訂購人姓名</small><span style="color: red">${errMsg['guestName']}</span>
 										</div>
 										<div class="form-group">
 											<label for="guestEmail">Email address</label>
 											<input type="email" class="form-control" id="guestEmail" name="guestEmail" aria-describedby="g-emailHelp"
 												placeholder="Enter your email, please">
-											<small id="g-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small>
+											<small id="g-emailHelp" class="form-text text-muted">訂單完成後將寄送至此信箱</small><span style="color: red">${errMsg['guestEmail']}</span>
 										</div>
 										<div class="form-group">
 											<label for="guestPhone">Phone number</label>
 											<input type="text" class="form-control" id="guestPhone" name="guestPhone" aria-describedby="g-phoneHelp"
 												placeholder="Enter your phone, please">
-											<small id="g-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small>
+											<small id="g-phoneHelp" class="form-text text-muted">作為查詢訂單時之驗證資訊</small><span style="color: red">${errMsg['guestPhone']}</span>
 										</div>
 										<div class="form-group" style="text-align: center">
 											<button id="btn-submit" class="btn-primary" type="submit">確認付款</button>
@@ -206,7 +221,7 @@
 						</a>
 					</div>
 					<div class="col-md-auto col-12-mobile">
-						<button class="btn-danger rounded">取消</button>
+						<a href="<c:url value='/order/cancel'/>"><button class="btn-danger rounded">取消</button></a>
 					</div>
 				</div>
 			</div>

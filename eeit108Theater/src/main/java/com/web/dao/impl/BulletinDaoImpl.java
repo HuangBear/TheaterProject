@@ -1,9 +1,6 @@
 package com.web.dao.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -67,7 +64,7 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum desc")
+				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum ASC")
 				.setParameter("no", no).list();
 //		System.out.println(list);
 		return list;
@@ -117,48 +114,20 @@ public class BulletinDaoImpl implements BulletinDao {
 		return list;
 	}
 
+//chart
+	@SuppressWarnings("unchecked")
 	@Override
-	public Integer getBuelltinPreMoon(String date) {
-		String frist = date + "-01 00:00:00";
-		String last = date + "-31 00:00:00";
+	public List<BulletinBean> getBuelltinPerMoon(String firstDate, String lastDate) {
 
-		Date fristDate = null, lastDate = null;
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
-		try {
-			fristDate = sdf.parse(frist);
-			lastDate = sdf.parse(last);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		System.out.println(fristDate);
-		System.out.println(lastDate);
 		Session session = factory.getCurrentSession();
-		Object buelltinPreMoon = session
-				.createQuery("SELECT COUNT(*) FROM BulletinBean b WHERE b.countNum = "
-						+ "(select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = "
-						+ "b.bortingId and bb.postTime BETWEEN :fristDate and :lastDate)")
-				.setParameter("fristDate", fristDate).setParameter("lastDate", lastDate)
-				.uniqueResult();
-		int bPM = Integer.parseInt(buelltinPreMoon.toString());
-		System.out.println(bPM);
-		return bPM;
+		List<BulletinBean> list = new ArrayList<>();
+		list = session
+				.createQuery("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) "
+						+ "from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.startDate "
+						+ "BETWEEN :fristDate and :lastDate)")
+				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
+		System.out.println(list);
+		return list;
 	}
 
-//	@Override
-	public Integer getBuelltinPreYear(String date) {
-		String fristDate = date + "-01-01";
-		String lastDate = date + "-12-31";
-		Session session = factory.getCurrentSession();
-		Object buelltinPreYear = session
-				.createQuery("SELECT COUNT(*) FROM BulletinBean b WHERE b.countNum = "
-						+ "(select MAX(countNum) from BulletinBean bb WHERE bb.bortingId = "
-						+ "b.bortingId and bb.postTime BETWEEN :fristDate and :lastDate)")
-				.setParameter("fristDate", fristDate).setParameter("lastDate", lastDate)
-				.uniqueResult();
-		int bPY = Integer.parseInt(buelltinPreYear.toString());
-		System.out.println(bPY);
-		return bPY;
-	}
 }

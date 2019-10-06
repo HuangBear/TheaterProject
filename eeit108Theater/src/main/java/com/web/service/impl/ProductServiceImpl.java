@@ -93,8 +93,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductBean> getProductsByType(String type) {
-		return pdao.getProductsByType(type);
+	public List<ProductBean> getAllProductsByType(String type) {
+		return pdao.getAllProductsByType(type);
+	}
+
+	@Override
+	public List<ProductBean> getProductsByType(String type, Boolean available) {
+		return pdao.getProductsByType(type, available);
 	}
 
 	@Override
