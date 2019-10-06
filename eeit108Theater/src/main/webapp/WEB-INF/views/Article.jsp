@@ -42,11 +42,11 @@
 			<div class="container">
 				<article id="main" class="special">
 					<div class="row"
-						style="width: 1400px; height: auto; border: 1px solid gray; border-radius: 25px;">
+						style="width: 1300px; height: auto; border: 1px solid gray; border-radius: 25px;">
 						<h3 style="font-size: 36px">${Article.title}</h3>
 						<div>
 							<p
-								style="width: 800px; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px;">No.${Article.no}
+								style="width: 800px; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px;">
 								發文者: ${Article.author.name} 分類: ${Article.tag} 發文時間:
 								${Article.postTime}</p>
 						</div>
@@ -111,9 +111,10 @@
 						</fieldset>
 					</form:form>
 					<br>
-					<div
-						style="width: 1080px; height: auto; display: flex; flex-wrap: wrap; border: 1px solid gray; border-radius: 25px; font-size: 26px">
-						<c:forEach var='reply' items='${Replys}'>
+
+					<c:forEach var='reply' items='${Replys}'>
+						<div
+							style="width: 1080px; height: auto; display: flex; flex-wrap: wrap; border: 1px solid gray; border-radius: 25px; font-size: 26px">
 
 							<div
 								style="width: 700px; height: 50px; font-size: 26px; text-align: center; margin: 25px">
@@ -125,29 +126,36 @@
 										class="btn btn-primary btn-lg"
 										style="font-size: 26px; margin: 25px">編輯</a>
 								</c:when>
+								<c:when test="${LoginOK.no!=reply.author.no}">
+									<a class="btn btn-disabled btn-lg"
+										style="font-size: 26px; margin: 25px"></a>
+								</c:when>
 							</c:choose>
 							<form:form method='POST' modelAttribute="Reply"
 								class='form-horizontal' enctype="multipart/form-data">
 								<fieldset>
-									<c:choose>
-										<c:when test="${LoginOK.no!=Article.author.no}">
-										</c:when>
-										<c:when test="${LoginOK.no==Article.author.no}">
-											<form:input id="articleString" readonly="true"
-												path="articleString" value='${Article.noString=Article.no}'
-												type='hidden' class='form:input-large' />
-											<form:input id="rnoString" readonly="true" path="rnoString"
-												value='${reply.rnoString=reply.no}' type='hidden'
-												class='form:input-large' />
-											<div class="form-group">
-												<button type="submit" name="lockbutton" value="lock"
-													style="font-size: 18px; margin: 25px">封鎖</button>
-											</div>
-										</c:when>
-									</c:choose>
 
 									<c:choose>
 										<c:when test="${LoginOK.no>6}">
+											<c:choose>
+												<c:when test="${LoginOK.no!=Article.author.no}">
+
+												</c:when>
+												<c:when test="${LoginOK.no==Article.author.no}">
+													<form:input id="articleString" readonly="true"
+														path="articleString"
+														value='${Article.noString=Article.no}' type='hidden'
+														class='form:input-large' />
+													<form:input id="rnoString" readonly="true" path="rnoString"
+														value='${reply.rnoString=reply.no}' type='hidden'
+														class='form:input-large' />
+													<div class="form-group">
+														<button type="submit" name="lockbutton" value="lock"
+															style="font-size: 18px; margin: 25px">封鎖</button>
+													</div>
+												</c:when>
+											</c:choose>
+
 										</c:when>
 										<c:when test="${LoginOK.no<=6}">
 											<form:input id="articleString" readonly="true"
@@ -165,6 +173,11 @@
 								</fieldset>
 							</form:form>
 
+						</div>
+
+
+						<div
+							style="width: 1080px; height: auto; display: flex; flex-wrap: wrap; border: 1px solid gray; border-radius: 25px; font-size: 26px">
 							<c:choose>
 								<c:when test="${reply.available==true}">
 
@@ -177,10 +190,9 @@
 
 								</c:when>
 							</c:choose>
-
-
-						</c:forEach>
-					</div>
+						</div>
+						<br>
+					</c:forEach>
 					<hr class="first" />
 					<p>
 						<a
