@@ -54,7 +54,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 			<div class="container">
 				<article id="main" class="special">
 					<h2>
-						<a href="#">add Article</a>
+						<a href="#">新增文章</a>
 					</h2>
 
 					<form:form method='POST' modelAttribute="ArticleBean"

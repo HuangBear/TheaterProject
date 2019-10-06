@@ -243,15 +243,17 @@ public class ArticleController {
 		ab.setMovie(service.getMovieByNo(MovieS));
 		ab.setAvailable(true);
 		ab.setPostTime(new Date());
-		if(request.getParameter("typeString")==atbf.getTypeName())
+		if(request.getParameter("typeString").equals(atbf.getTypeName()))
 		{
+			
 			ab.setType(false);
-		} else if(request.getParameter("typeString")==atbt.getTypeName())
+		} else if(request.getParameter("typeString").equals(atbt.getTypeName()))
 		{
+			
 			ab.setType(true);
 		}
 		
-		service.addArticle(ab);
+		
 		String MovieNoS =Integer.toString(ab.getMovie().getNo());
 		
 		if (!errorMessage.isEmpty())
@@ -260,6 +262,7 @@ public class ArticleController {
 			return "addArticle";
 		} else
 		{
+			service.addArticle(ab);
 			return "redirect:/MoviesForum/Articles?id="+MovieNoS;
 		}
 		
@@ -325,12 +328,16 @@ public class ArticleController {
 		System.out.println("==postString==="+request.getParameter("noString"));
 		int NoS = Integer.parseInt(request.getParameter("noString"));
 		ab.setNo(NoS);
+		ab.setNoString(request.getParameter("noString"));
 		int LikeS = Integer.parseInt(request.getParameter("likeCountString"));
 		ab.setLikeCount(LikeS);
+		ab.setLikeCountString(request.getParameter("likeCountString"));
 		int DislikeS = Integer.parseInt(request.getParameter("dislikeCountString"));
 		ab.setDislikeCount(DislikeS);
+		ab.setDislikeCountString(request.getParameter("dislikeCountString"));
 		int AuthorS = Integer.parseInt(request.getParameter("authorString"));
 		ab.setAuthor(new MemberBean(AuthorS));
+		ab.setAuthorString(request.getParameter("authorString"));
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
 		ab.setMovie(service.getMovieByNo(MovieS));
 		ab.setAvailable(true);
@@ -349,10 +356,11 @@ public class ArticleController {
 		SimpleDateFormat ssdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
 		System.out.println("postTimeString=" + ab.getPostTimeString());
 		ab.setPostTime(ssdf.parse(request.getParameter("postTimeString")));
-		if(request.getParameter("typeString")==atbf.getTypeName())
+		ab.setPostTimeString(request.getParameter("postTimeString"));
+		if(request.getParameter("typeString").equals(atbf.getTypeName()))
 		{
 			ab.setType(false);
-		} else if(request.getParameter("typeString")==atbt.getTypeName())
+		} else if(request.getParameter("typeString").equals(atbt.getTypeName()))
 		{
 			ab.setType(true);
 		}
@@ -373,6 +381,7 @@ public class ArticleController {
 		if (!errorMessage.isEmpty())
 		{
 			session.setAttribute("MovieBean", service.getMovieByNo(MovieS));
+			session.setAttribute("Article", ab);
 			return "editArticle";
 		} else
 		{
