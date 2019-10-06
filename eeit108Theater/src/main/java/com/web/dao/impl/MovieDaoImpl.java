@@ -12,10 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import com.web.dao.MovieDao;
 import com.web.entity.MovieBean;
+
 @Repository
-public class MovieDaoImpl implements MovieDao{
+public class MovieDaoImpl implements MovieDao {
 	@Autowired
 	SessionFactory factory;
+
 	@Override
 	public int saveMovie(MovieBean movie) {
 		int count = 0;
@@ -49,14 +51,15 @@ public class MovieDaoImpl implements MovieDao{
 		Session session = factory.getCurrentSession();
 		MovieBean mb = session.get(MovieBean.class, no);
 		return mb;
-				
+
 	}
-	
+
 	@Override
 	public MovieBean getMovieByName(String name) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM MovieBean m WHERE m.movieName = :name";
-		MovieBean mb = (MovieBean) session.createQuery(hql).setParameter("name", name).uniqueResult();
+		MovieBean mb = (MovieBean) session.createQuery(hql).setParameter("name", name)
+				.uniqueResult();
 		return mb;
 	}
 
@@ -65,7 +68,7 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getOffMovies() {
@@ -140,6 +143,27 @@ public class MovieDaoImpl implements MovieDao{
 		return null;
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getMovieNames() {
+		String hql = "SELECT m.movieName FROM MovieBean m";
+		Session session = factory.getCurrentSession();
+		List<String> list = session.createQuery(hql).getResultList();
+		return list;
+	}
+
+	// chart
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MovieBean> getMoviePerMoon(Date firstDate, Date lastDate) {
+		Session session = factory.getCurrentSession();
+		List<MovieBean> list = new ArrayList<>();
+		list = session
+				.createQuery("FROM MovieBean m WHERE m.openingDate "
+						+ "BETWEEN :fristDate and :lastDate)")
+				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
+		System.out.println(list);
+		return list;
+	}
 
 }

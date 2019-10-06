@@ -19,12 +19,20 @@
           <div class="card-body">
 		<div class="container-fluid" id="pageItems">
 		
-			<textarea id="talkarea"
-				style="font-size: 1em; resize: none; color: black;"
-				readonly="readonly" rows="20em" cols=90%></textarea>
-			<hr />
-			<input type="text" id="talktext" size=80% style="color: black" />
-			<input id="sendmsg" style="color: black" type="button" value="送出" />
+<!-- 			<textarea id="talkarea" -->
+<!-- 				style="font-size: 1em; resize: none; color: black;" -->
+<!-- 				readonly="readonly" rows="20" ></textarea> -->
+<!-- 			<hr /> -->
+<!-- 			<input type="text" id="talktext" size=45% style="color: black" /> -->
+<!-- 			<input id="sendmsg" style="color: black" type="button" value="送出" /> -->
+			
+<div class="form-group">
+  
+  <textarea class="form-control rounded-0" id="talkarea" readonly="readonly" rows="10"></textarea>
+	<hr />
+			<input type="text" class="form-control rounded-0" id="talktext"  style="color: black" />
+			<input id="sendmsg" class="form-control" style="color: black" type="button"   value="送出" />
+</div>
 
 
 	</div>

@@ -1,7 +1,6 @@
 package com.web.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -65,7 +64,7 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum desc")
+				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum ASC")
 				.setParameter("no", no).list();
 //		System.out.println(list);
 		return list;
@@ -115,14 +114,16 @@ public class BulletinDaoImpl implements BulletinDao {
 		return list;
 	}
 
+//chart
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BulletinBean> getBuelltinPerMoon(Date firstDate, Date lastDate) {
+	public List<BulletinBean> getBuelltinPerMoon(String firstDate, String lastDate) {
+
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session
 				.createQuery("FROM BulletinBean b WHERE b.countNum = (select MAX(countNum) "
-						+ "from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.postTime "
+						+ "from BulletinBean bb WHERE bb.bortingId = b.bortingId and bb.startDate "
 						+ "BETWEEN :fristDate and :lastDate)")
 				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
 		System.out.println(list);

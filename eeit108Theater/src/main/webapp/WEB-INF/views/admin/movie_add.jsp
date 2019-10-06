@@ -141,14 +141,17 @@
       <script>
 		$('#oneSet').click(function() {
 
-			$('#email').val('AzureBear@gmail.com');
-			$('#employeeId').val('A129999976');
-			$('#name').val('小池熊');
-			$('#phoneNum').val('66316666');
-			$('#password').val('Do!ng123');
-			$('#gender').val('1');
-			$('#birthdayString').val('1990-01-01');
-			$('#salary').val('38000');
+			$('#movieName').val('壞壞萌雪怪');
+			$('#directors').val('吉爾庫爾頓(Jill Culton)');
+			$('#casts').val('莎拉保羅森(Sarah Paulson)');
+			$('#duration').val('98');
+			$('#engMovieName').val('Abominable');
+			$('#genres').val('動畫');
+			$('#languages').val('英語');
+			$('#introduction').val('當少女小宜（漫威影集《神盾局特工》汪可盈 配音）在她居住的上海公寓大樓屋頂遇到一個雪怪，她就和她淘氣調皮的死黨阿靖（登舍諾吉特雷納 配音）和潘潘（蔡丞恩 配音），替他取名為“埃佛勒斯”，然後踏上一場驚險刺激、史詩般的冒險旅程，試圖把這個魔法雪怪帶到地球的最高峰，再度與他的家人團聚。');
+			$('#rating').val('普遍級');
+			$('#trailerLink').val('https://www.youtube.com/embed/rRx88zI-RO0');
+			$('#company').val('環球影片');
 		})
 	</script>
         

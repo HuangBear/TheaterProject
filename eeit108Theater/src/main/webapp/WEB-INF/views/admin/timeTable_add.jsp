@@ -19,12 +19,31 @@
       <div class="card-header">7-1 Cinema 新增時刻</div>
       <div class="card-body">                            
         <form:form method="POST" modelAttribute="time" action = 'timeTable_add'>
-        
+          
+<!--           <div class="form-group">     -->
+<!--                 <div class="form-label-group"> -->
+<!--                 	<span>選擇電影：　</span> -->
+<!--                 	<select id = 'movie'> -->
+<!--                 		<option>請選擇電影</option> -->
+<%--                 		<c:forEach var = 'movie' items = '${movies}'> --%>
+<%--                 			<option>${movie}</option> --%>
+<%--                 		</c:forEach> --%>
+<!--                 	</select> -->
+<!--                 </div> -->
+<!--          </div> -->
+		<div class="form-group">
+        <select class="form-control form-control-lg" id = 'movie'>
+  				<option>請選擇電影</option>
+  				<c:forEach var = 'movie' items = '${movies}'>
+                			<option>${movie}</option>
+                </c:forEach>
+		</select>
+		</div>
+          
           <div class="form-group">    
                 <div class="form-label-group">
-                  <form:input type="text" id="movieName" class="form-control" 
+                  <form:input type="hidden" id="movieName" class="form-control" 
                   placeholder="movieName" required="required" autofocus="autofocus" path="movieName"/>
-                  <label for="movieName">片名</label>
                 </div>
          </div>
          <div class="form-group">    
@@ -37,14 +56,14 @@
            
            <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="startDate" class="form-control" 
+              <form:input type="date" id="startDate" class="form-control" 
               placeholder="startDate" required="required" path="startDate"/>
               <label for="startDate">上映日期</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="startTime" class="form-control" 
+              <form:input type="time" id="startTime" class="form-control" 
               placeholder="startTime" required="required" path="startTime"/>
               <label for="startTime">上映時間</label>
             </div>
@@ -58,16 +77,30 @@
           </div>
           
           <div class="form-group">
+        	<select class="form-control form-control-lg" id = 'selectVersion'>
+  				<option>請選擇片種</option>
+  				<option>2D</option>
+  				<option>3D</option>
+  				<option>IMAX</option>
+		</select>
+		</div>
+          
+          <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="version" class="form-control" 
+              <form:input type="hidden" id="version" class="form-control" 
               placeholder="version" required="required" path="version"/>
-              <label for="version">片種</label>
             </div>
           </div>
           
           <div class="form-group">
+        	<select class="form-control form-control-lg" id = 'selectTheater'>
+  				<option>請選擇廳院</option>
+		</select>
+		</div>
+          
+          <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="theater" class="form-control" 
+              <form:input type="hidden" id="theater" class="form-control" 
                placeholder="theater" required="required" path="theater"/> 
               <label for="theater">廳院</label>
             </div>
@@ -83,13 +116,6 @@
             </div>
           </div>
           
-<!--           <div class="form-group"> -->
-<!--             <div class="form-label-group"> -->
-<%--               <form:input type="text" id="movie" class="form-control"  --%>
-<%--               placeholder="movie" required="required" path="movie"/> --%>
-<!--               <label for="movie">FK</label> -->
-<!--             </div> -->
-<!--           </div> -->
           
           <button type="submit" class="btn btn-primary">送出</button>
           <button type="reset" class="btn btn-primary">重填</button><br><hr>
@@ -105,15 +131,14 @@
       
       <script>
 		$('#oneSet').click(function() {
-
-			$('#movieName').val('冰鳥');
+			$('#movieName').val('壞壞萌雪怪');
 			$('#startDate').val('2019-10-06');
 			$('#startTime').val('09:00');
-			$('#duration').val('90');
+			$('#duration').val('98');
 			$('#version').val('IMAX');
 			$('#theater').val('Z廳');
 			$('#breakTime').val('30');
-			$('#movie').val('1');
+			$('#movie').val('20');
 		})
 	</script>
         
@@ -136,7 +161,51 @@
     		}
     	});
         });
-	
+    $(document).ready(function() {
+		$("#movie").change(function() {
+			var selectedMovie = $("#movie option:selected").text();
+			console.log(selectedMovie);
+			$.ajax({
+				url : "<c:url value = '/getMovieDetail' />",
+				data : {"movieName" : selectedMovie},
+				dataType : 'json',
+				type : "GET",
+				success : function(data) {
+					console.log(data);
+					alert("hello");
+ 					if (data.length > 0) {
+ 						$("#movieName").val(data[0]);
+ 						$("#duration").val(data[1]);
+ 					}
+				}
+			})
+		});
+		$("#selectVersion").change(function() {
+			var selectedVersion = $("#selectVersion option:selected").text();
+			$("#version").val(selectedVersion);
+			if (selectedVersion == 'IMAX') {
+				$('#selectTheater').append($('<option></option>').text('A廳'));
+				$('#selectTheater').append($('<option></option>').text('B廳'));
+				$('#selectTheater').append($('<option></option>').text('C廳'));
+				$('#selectTheater').append($('<option></option>').text('D廳'));
+			} else if (selectedVersion == '3D') {
+				$('#selectTheater').append($('<option></option>').text('E廳'));
+				$('#selectTheater').append($('<option></option>').text('F廳'));
+			} else if (selectedVersion == '2D') {
+				$('#selectTheater').append($('<option></option>').text('G廳'));
+				$('#selectTheater').append($('<option></option>').text('H廳'));
+				$('#selectTheater').append($('<option></option>').text('I廳'));
+				$('#selectTheater').append($('<option></option>').text('J廳'));
+				$('#selectTheater').append($('<option></option>').text('K廳'));
+				$('#selectTheater').append($('<option></option>').text('L廳'));
+				$('#selectTheater').append($('<option></option>').text('M廳'));
+			}
+		});
+		$("#selectTheater").change(function() {
+			var selectedTheater = $("#selectTheater option:selected").text();
+			$("#theater").val(selectedTheater);
+		})
+    });
 	</script>
      
      

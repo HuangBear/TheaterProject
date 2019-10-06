@@ -23,11 +23,27 @@
 </script>
 
 <style>
+<<<<<<< HEAD
 
+	.foo1:hover{color:#f5ad56;}
+=======
+>>>>>>> refs/remotes/RemoteBear/master
+
+<<<<<<< HEAD
+/* 	.t1{width:600 ; height:480px ; text-align:center} */
+/* 	.tr{width:300 ; height:240px ; text-align:center} */
+/* 	.td{width:300 ; height:240px ; text-align:center} */
+	
+/* 	.img{ */
+/* 	height:150px; */
+/* 	margin:auto; */
+/* 	margin-left:10px; */
+=======
 
 	.foo1:hover {
 	color: #f5ad56;
 }
+>>>>>>> refs/remotes/RemoteBear/master
 
 .t1 {
 	width: 600;
@@ -242,6 +258,7 @@ table {
 
 			<jsp:include page="header.jsp" />
 			<div class="inner" id="716">
+
 
 				<header id="header" style="height: 850px; margin-top: -200px;">
 					<img src="images/frontend/mgmwhitelionlogo.png">
