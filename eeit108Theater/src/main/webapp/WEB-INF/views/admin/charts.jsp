@@ -31,7 +31,7 @@ padding:50px;
 	var myLineChart = new Chart(ctx, {
 		type : 'line',
 		data : {
-			labels : [ 	<c:forEach items="${chart2jsp.listChartContainer}" var="c2j" >
+			labels : [ 	<c:forEach items="${chart2jsp.increasePerMoon}" var="c2j" >
 			'${c2j.chartKey}' ,
 	 		</c:forEach >	],
 			datasets : [ {
@@ -46,7 +46,7 @@ padding:50px;
 				pointHoverBackgroundColor : "rgba(2,117,216,1)",
 				pointHitRadius : 50,
 				pointBorderWidth : 2,
-				data : [ <c:forEach items="${chart2jsp.listInteger}" var="tc" >
+				data : [ <c:forEach items="${chart2jsp.numberPerMoon}" var="tc" >
 				'${tc}' ,
 		 		</c:forEach > ],
 			} ],
@@ -121,7 +121,7 @@ padding:50px;
 	  type: 'bar',
 	  data: {
 	    labels: [
-			<c:forEach items="${chart2jsp.listChartContainer}" var="c2j" >
+			<c:forEach items="${chart2jsp.increasePerMoon}" var="c2j" >
 			'${c2j.chartKey}' ,
 	 		</c:forEach >
 	       	   	],
@@ -130,7 +130,7 @@ padding:50px;
 	      backgroundColor: "rgba(2,117,216,1)",
 	      borderColor: "rgba(2,117,216,1)",
 	      data: [			
-	    	  <c:forEach items="${chart2jsp.listChartContainer}" var="c2j" >
+	    	  <c:forEach items="${chart2jsp.increasePerMoon}" var="c2j" >
 			'${c2j.chartValue}' ,
 			 </c:forEach >
 			],
@@ -217,7 +217,7 @@ padding:50px;
 								</td>
 								<td class="td">
 									<canvas id="myAreaChart${status.index}" style="width: 700px; height: 400px;"></canvas>
-									<h2 style="text-align: center;">${chart2jsp.str1}總數</h2>
+									<h2 style="text-align: center;">${chart2jsp.str1}累積總數</h2>
 								</td>
 							</tr>
 							<tr>
@@ -237,7 +237,7 @@ padding:50px;
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
-
+          <a href="<c:url value='/admin/ireport'/>">pdf</a>
 </div>
 
 

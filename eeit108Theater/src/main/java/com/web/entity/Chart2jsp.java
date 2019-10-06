@@ -3,8 +3,9 @@ package com.web.entity;
 import java.util.List;
 
 public class Chart2jsp {
-	List<Integer> listInteger;
-	List<ChartContainer> listChartContainer;
+	List<Integer> numberPerMoon;
+	List<ChartContainer> increasePerMoon;
+	List<ChartContainer> speciesPerMoon;
 	ChartContainer fir;
 	ChartContainer sec;
 	ChartContainer thi;
@@ -15,20 +16,28 @@ public class Chart2jsp {
 	String str2;
 	String str3;
 
-	public List<Integer> getListInteger() {
-		return listInteger;
+	public List<Integer> getNumberPerMoon() {
+		return numberPerMoon;
 	}
 
-	public void setListInteger(List<Integer> listInteger) {
-		this.listInteger = listInteger;
+	public void setNumberPerMoon(List<Integer> numberPerMoon) {
+		this.numberPerMoon = numberPerMoon;
 	}
 
-	public List<ChartContainer> getListChartContainer() {
-		return listChartContainer;
+	public List<ChartContainer> getIncreasePerMoon() {
+		return increasePerMoon;
 	}
 
-	public void setListChartContainer(List<ChartContainer> listChartContainer) {
-		this.listChartContainer = listChartContainer;
+	public void setIncreasePerMoon(List<ChartContainer> increasePerMoon) {
+		this.increasePerMoon = increasePerMoon;
+	}
+
+	public List<ChartContainer> getSpeciesPerMoon() {
+		return speciesPerMoon;
+	}
+
+	public void setSpeciesPerMoon(List<ChartContainer> speciesPerMoon) {
+		this.speciesPerMoon = speciesPerMoon;
 	}
 
 	public ChartContainer getFir() {

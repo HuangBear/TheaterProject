@@ -58,7 +58,7 @@ public class BulletinController {
 		System.out.println("after list");
 		Integer bulletin_no = (Integer) req.getAttribute("bulletin_no");
 		System.out.println("bulletin_no=1=" + bulletin_no);
-		if (list.size() == 0) {
+		if (list.isEmpty()) {
 			return "news";
 		}
 		if (bulletin_no == null) {
