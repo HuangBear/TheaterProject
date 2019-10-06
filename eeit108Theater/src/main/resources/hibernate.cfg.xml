@@ -40,6 +40,7 @@
 		<mapping class="com.web.entity.ReportBean"></mapping>
 		<mapping class="com.web.entity.LikeOrDislikeBean"></mapping>
 		<mapping class="com.web.entity.ReportBean"></mapping>
+		<mapping class="com.web.entity.TheaterBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>
