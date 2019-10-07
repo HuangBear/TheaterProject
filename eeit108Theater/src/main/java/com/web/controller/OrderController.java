@@ -75,7 +75,8 @@ public class OrderController {
 			// Exception due to lack of time table id.
 		}
 		OrderBean ob = (OrderBean) session.getAttribute("order");
-		if (ob == null || !ob.getTimeTable().getNo().equals(Integer.valueOf(tid))) { // if user not from seat
+		if (ob == null || !ob.getTimeTable().getNo().equals(Integer.valueOf(tid))) { // if user not
+																						// from seat
 			if (ob == null)
 				System.out.println("its null order");
 			else {
@@ -106,7 +107,8 @@ public class OrderController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/calDiscount")
-	public String calDiscount(@RequestParam("chosenDiscount") Integer discountId, HttpSession session) {
+	public String calDiscount(@RequestParam("chosenDiscount") Integer discountId,
+			HttpSession session) {
 		System.out.println("cal discount begin : discountId = " + discountId);
 		List<BulletinBean> discounts = (List<BulletinBean>) session.getAttribute("discounts");
 		if (discountId == 0) {
@@ -180,7 +182,8 @@ public class OrderController {
 		if (discountIndex != null)
 			orderList.remove((int) discountIndex);
 		Collections.sort(ticketPrice);
-		System.out.println("ticketCnt = " + ob.getTicketCnt() + ", ticketPrice.size = " + ticketPrice.size());
+		System.out.println(
+				"ticketCnt = " + ob.getTicketCnt() + ", ticketPrice.size = " + ticketPrice.size());
 		ob.calTotalPrice();
 
 		BulletinBean b = (BulletinBean) session.getAttribute("chosenDiscount");
@@ -191,16 +194,21 @@ public class OrderController {
 			discountItem.setQuantity(1);
 			if (b.getDiscountPriceBuy() != null) { // 滿X送Y
 				discountItem.setUnitPrice(
-						(double) -(((int) (ob.getTotalPrice() / b.getDiscountPriceBuy())) * b.getDiscountPriceFree()));
-				discountItem.setItemName(b.getPay() + b.getDiscountPriceBuy() + b.getFree() + b.getDiscountPriceFree());
-			} else if (b.getDiscountTickBuy() != null) { // 買X送Y
+						(double) -(((int) (ob.getTotalPrice() / b.getDiscountPriceBuy()))
+								* b.getDiscountPriceFree()));
+				discountItem.setItemName(b.getPay() + b.getDiscountPriceBuy() + b.getFree()
+						+ b.getDiscountPriceFree());
+			} else if (b.getDiscountTicketBuy() != null) { // 買X送Y
 				int free = 0;
-				int times = (ticketPrice.size() / (b.getDiscountTickBuy() + b.getDiscountTickFree())) * b.getDiscountTickFree();
+				int times = (ticketPrice.size()
+						/ (b.getDiscountTicketBuy() + b.getDiscountTicketFree()))
+						* b.getDiscountTicketFree();
 				for (int i = 0; i < times; i++) {
 					free += ticketPrice.get(i);
 				}
 				discountItem.setUnitPrice((double) -free);
-				discountItem.setItemName(b.getPay() + b.getDiscountTickBuy() + b.getFree() + b.getDiscountTickFree());
+				discountItem.setItemName(b.getPay() + b.getDiscountTicketBuy() + b.getFree()
+						+ b.getDiscountTicketFree());
 			}
 			discountItem.calSumPrice();
 			orderList.add(discountItem);
@@ -292,7 +300,8 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/pay")
-	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model, HttpServletRequest req, RedirectAttributes redirect) {
+	public String payByEcPay(HttpSession session, @RequestParam Integer idType, Model model,
+			HttpServletRequest req, RedirectAttributes redirect) {
 		System.out.println("type = " + idType);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		OrderBean ob = (OrderBean) session.getAttribute("order");
@@ -345,7 +354,8 @@ public class OrderController {
 			model.addAttribute("seatSoldErr", "很抱歉，您所選擇的座位稍早已售出，請重新選擇座位。");
 			return "forward:/" + pac + "seat";
 		}
-		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath(); // http:localhost:XXXX/eeit108Theater
+		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
+				+ req.getContextPath(); // http:localhost:XXXX/eeit108Theater
 		// EcPay Begin
 		// EcPay對各項method都有簡單註解說明，可以將滑鼠移動到方法上查看
 		AllInOne all = new AllInOne("");
@@ -373,7 +383,8 @@ public class OrderController {
 		return pac + "ecpay";
 	}
 
-	@RequestMapping("/receive") // this method may not be called, because, so far, the server is localhost
+	@RequestMapping("/receive") // this method may not be called, because, so far, the server is
+								// localhost
 	public String receive(HttpServletRequest req) {
 		System.err.println("=====GOT FROM ECPAY=====");
 		Map<String, String[]> map = req.getParameterMap();
@@ -394,7 +405,8 @@ public class OrderController {
 		System.err.println("=====CLIENT BACK From EcPay=====");
 		Map<String, String[]> map = req.getParameterMap();
 
-		if (map == null || map.size() == 0) { // if the parameter map is null or empty -> Fail to get any information
+		if (map == null || map.size() == 0) { // if the parameter map is null or empty -> Fail to
+												// get any information
 												// from EcPay
 			System.out.println("result map is empty");
 			model.addAttribute("rtnMsg", new String[] { "Result Map is Empty" });
@@ -504,7 +516,8 @@ public class OrderController {
 		return pac + "guestDetail";
 	}
 
-	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum, Map<String, Boolean> soldSeats) {
+	private String getSeatTable(int rowCnt, int aZoneCnt, int bZoneCnt, int zoneNum,
+			Map<String, Boolean> soldSeats) {
 		StringBuilder s = new StringBuilder(65536);
 		char row = 'A';
 		for (int i = 0; i < rowCnt; i++) {
@@ -529,21 +542,22 @@ public class OrderController {
 		return s.toString();
 	}
 
-	private int generateZone(StringBuilder s, char row, int colNow, int zoneCnt, Map<String, Boolean> soldSeats) {
+	private int generateZone(StringBuilder s, char row, int colNow, int zoneCnt,
+			Map<String, Boolean> soldSeats) {
 		if (soldSeats.isEmpty()) {
 			for (int col = 0; col < zoneCnt; col++, colNow++) {
 				String rowCol = row + String.valueOf(colNow);
 				s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
-						+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\"" + rowCol
-						+ "\"></td>");
+						+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol
+						+ "\"value=\"" + rowCol + "\"></td>");
 			}
 		} else {
 			for (int col = 0; col < zoneCnt; col++, colNow++) {
 				String rowCol = row + String.valueOf(colNow);
 				if (!soldSeats.containsKey(rowCol)) {
 					s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
-							+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol + "\"value=\""
-							+ rowCol + "\"></td>");
+							+ "\"></label><input type=\"checkbox\"name=\"seat\"id=\"seat" + rowCol
+							+ "\"value=\"" + rowCol + "\"></td>");
 				} else {
 					s.append("<td><label for=\"seat" + rowCol + "\"title=\"" + rowCol
 							+ "\"class=\"sold-label\"></label><input class=\"sold\"type=\"checkbox\"name=\"seat\"id=\"seat"

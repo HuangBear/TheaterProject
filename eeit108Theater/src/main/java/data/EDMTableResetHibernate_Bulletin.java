@@ -58,9 +58,9 @@ public class EDMTableResetHibernate_Bulletin {
 					bulletin.setEndDate(token[4]);
 					bulletin.setPostTime(sdf.parse(token[5]));
 					bulletin.setDiscount(Integer.valueOf(token[6]));
-					bulletin.setDiscountTickBuy(
+					bulletin.setDiscountTicketBuy(
 							token[7].equals("") ? null : Integer.valueOf(token[7]));
-					bulletin.setDiscountTickFree(
+					bulletin.setDiscountTicketFree(
 							token[8].equals("") ? null : Integer.valueOf(token[8]));
 					bulletin.setDiscountPriceBuy(
 							token[9].equals("") ? null : Integer.valueOf(token[9]));

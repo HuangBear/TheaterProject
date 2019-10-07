@@ -34,8 +34,8 @@ public class BulletinBean implements Serializable {
 	private String endDate;
 	private Date postTime;
 	private Integer discount;
-	private Integer discountTickBuy;
-	private Integer discountTickFree;
+	private Integer discountTicketBuy;
+	private Integer discountTicketFree;
 	private Integer discountPriceBuy;
 	private Integer discountPriceFree;
 	@Transient
@@ -151,20 +151,20 @@ public class BulletinBean implements Serializable {
 		this.discount = discount;
 	}
 
-	public Integer getDiscountTickBuy() {
-		return discountTickBuy;
+	public Integer getDiscountTicketBuy() {
+		return discountTicketBuy;
 	}
 
-	public void setDiscountTickBuy(Integer discountTickBuy) {
-		this.discountTickBuy = discountTickBuy;
+	public void setDiscountTicketBuy(Integer discountTicketBuy) {
+		this.discountTicketBuy = discountTicketBuy;
 	}
 
-	public Integer getDiscountTickFree() {
-		return discountTickFree;
+	public Integer getDiscountTicketFree() {
+		return discountTicketFree;
 	}
 
-	public void setDiscountTickFree(Integer discountTickFree) {
-		this.discountTickFree = discountTickFree;
+	public void setDiscountTicketFree(Integer discountTicketFree) {
+		this.discountTicketFree = discountTicketFree;
 	}
 
 	public Integer getDiscountPriceBuy() {
