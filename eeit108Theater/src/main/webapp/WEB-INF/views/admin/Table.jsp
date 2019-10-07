@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 
@@ -26,29 +27,43 @@
           <em>${error}</em>
               
             <c:if test='${not empty employees}'>
+		<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
 			<c:forEach var='emp' varStatus='vs' items='${employees}'>
+			
 			<c:if test ='${vs.first }'>
-				<c:out value="<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>" escapeXml='false'/>
-				<c:out value=" 
+				
+				 
 				<thead><tr>
 				<th width='5%'>員工編號</th>
 				<th width='8%'>姓名</th>
 				<th width='10%'>員工ID</th>
 				<th width='15%'>員工email</th>
 				<th width='5%'>員工電話</th>
-				<th width='8%'>password</th>
+
+				<sec:authorize access=" hasAuthority('3')">
 				<th width='5%'>薪資</th>
 				<th width='6%'>職等</th>
 				<th width='5%'>工作狀態</th>
 				<th width='5%'>更新</th>
 				<th width='5%'>離職</th>
+				</sec:authorize>
 				</tr></thead>
-				<tfoot><tr><th>員工編號</th><th>姓名</th>
-				<th>員工ID</th><th>員工email</th><th>員工電話</th>
-				<th>password</th><th>薪資</th><th>職等</th><th>工作狀態</th><th>更新</th>
+				<tfoot><tr>
+				<th>員工編號</th>
+				<th>姓名</th>
+				<th>員工ID</th>
+				<th>員工email</th>
+				<th>員工電話</th>
+
+				<sec:authorize access=" hasAuthority('3')">
+				<th>薪資</th>
+				<th>職等</th>
+				<th>工作狀態</th>
+				<th>更新</th>
 				<th>離職</th>
+				</sec:authorize>
 				</tr> </tfoot><tbody>
-				" escapeXml='false'/>
+				
 			</c:if>
 			
 			<tr>
@@ -57,7 +72,8 @@
 				<td>${emp.employeeId}</td>
 				<td>${emp.email}</td>
 				<td>${emp.phoneNum}</td>
-				<td>${emp.password}</td>
+
+				<sec:authorize access=" hasAuthority('3')">
 				<td>${emp.salary}</td>
 				<c:choose> 
 				<c:when test="${emp.permission == 1}">
@@ -91,12 +107,11 @@
 				<td><button class='btn btn-danger'
  				onclick='javascrtpt:window.location.href="EmpResign?pk=${emp.no}"'>離職</button></td> 
 				
-
+				</sec:authorize>
 			</tr>
-			<c:if test ='${vs.last }'>
-				<c:out value="</tbody></table><hr>" escapeXml='false'/>
-			</c:if>
+			
 		</c:forEach>
+		</tbody></table><hr>
 	</c:if>
                             
             </div>
