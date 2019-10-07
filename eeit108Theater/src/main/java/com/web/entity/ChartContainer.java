@@ -1,6 +1,13 @@
 package com.web.entity;
 
-public class ChartContainer {
+import java.io.Serializable;
+
+public class ChartContainer implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	String chartKey;
 	Integer chartValue;
