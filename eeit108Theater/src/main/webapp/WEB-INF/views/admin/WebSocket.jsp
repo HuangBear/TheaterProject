@@ -28,7 +28,12 @@
 			
 <div class="form-group">
   
-  <textarea class="form-control rounded-0" id="talkarea" readonly="readonly" rows="10"></textarea>
+  <textarea class="form-control rounded-0" id="talkarea" readonly="readonly" rows="10">
+  
+  
+  
+  
+  </textarea>
 	<hr />
 			<input type="text" class="form-control rounded-0" id="talktext"  style="color: black" />
 			<input id="sendmsg" class="form-control" style="color: black" type="button"   value="送出" />

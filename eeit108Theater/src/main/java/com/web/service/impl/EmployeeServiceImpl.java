@@ -50,6 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public void resignEmp(EmployeeBean empBean) {
 		EmployeeBean oldEmpBean=employeeDao.getEmployeeByNo(empBean.getNo());
 		oldEmpBean.setAvailable(false);
+		oldEmpBean.setPermission(0);
 		oldEmpBean.setResignTime(new Date());;
 		employeeDao.updateEmployee(oldEmpBean);
 	}

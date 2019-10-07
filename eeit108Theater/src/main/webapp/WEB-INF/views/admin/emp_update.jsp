@@ -16,7 +16,7 @@
 
  <!-- DataTables Example -->
         <div class="container">
-    <div class="card card-register mx-auto mt-5">
+    <div class="card card-register mx-auto mt-5 my-5">
       <div class="card-header">7-1 Cinema 員工編輯</div>
       <div class="card-body">
         <form:form method="POST" action="emp_update" modelAttribute="employeeBean" enctype="multipart/form-data">
@@ -66,8 +66,22 @@
             <div class="form-label-group">
               <form:select  id="gender" class="form-control" 
                required="required" path="gender">
-               <form:option value="1" selected="selected">男</form:option>
-				<form:option value="2" >女</form:option>
+ 
+               <c:choose> 
+				<c:when test="${eb.gender == 1}">
+					<form:option value="1" selected="selected">男</form:option>
+					<form:option value="2" >女</form:option>	
+				</c:when>
+				<c:when test="${eb.gender == 2}">
+					<form:option value="1" >男</form:option>
+					<form:option value="2" selected="selected">女</form:option>
+				</c:when>
+				<c:otherwise>
+                    <form:option value="1" >男</form:option>
+					<form:option value="2" >女</form:option>
+            	</c:otherwise>
+				 </c:choose>
+               
                </form:select>
 
             </div>
@@ -84,13 +98,36 @@
           
           <div class="form-group">
             <div class="form-label-group">
-              <form:select  id="permission" class="form-control" 
-               required="required" path="permission">
+              <form:select  id="permission" class="form-control" required="required" path="permission">
               
-               <form:option value="0" >無權限</form:option>
-				<form:option value="1" selected="selected">一般員工</form:option>
-				<form:option value="2" >影城經理</form:option>
-				<form:option value="3" >主管</form:option>
+           
+				<c:choose> 
+				<c:when test="${eb.permission == 1}">
+					<form:option value="0" >無權限</form:option>
+				  	<form:option value="1" selected="selected">一般員工</form:option>
+					<form:option value="2" >影城經理</form:option>
+					<form:option value="3" >主管</form:option>
+				</c:when>
+				<c:when test="${eb.permission == 2}">
+					<form:option value="0" >無權限</form:option>
+					<form:option value="1" >一般員工</form:option>
+					<form:option value="2" selected="selected">影城經理</form:option>
+					<form:option value="3" >主管</form:option>
+				</c:when>
+				<c:when test="${eb.permission == 3}">
+					<form:option value="0" >無權限</form:option>
+					<form:option value="1" >一般員工</form:option>
+					<form:option value="2" >影城經理</form:option>
+					<form:option value="3" selected="selected">主管</form:option>	
+				</c:when>
+				<c:otherwise>
+                   <form:option value="0" selected="selected">無權限</form:option>
+					<form:option value="1" >一般員工</form:option>
+					<form:option value="2" >影城經理</form:option>
+					<form:option value="3" >主管</form:option>
+            	</c:otherwise>
+				 </c:choose>
+				
                </form:select>
                
 
@@ -98,11 +135,22 @@
           </div>
            <div class="form-group">
             <div class="form-label-group">
-              <form:select  id="available" class="form-control" 
-               required="required" path="available">
+              <form:select  id="available" class="form-control"   required="required" path="available">
              
-               <form:option value="0" >已離職</form:option>
-				<form:option value="1" selected="selected">受雇中</form:option>			
+<%--                <form:option value="0" >已離職</form:option> --%>
+<%-- 				<form:option value="1" selected="selected">受雇中</form:option>	 --%>
+				
+				<c:choose> 
+				<c:when test="${eb.available == true}">
+					<form:option value="0" >已離職</form:option>
+				    <form:option value="1" selected="selected">受雇中</form:option>	
+				</c:when>
+				<c:otherwise>
+                    <form:option value="0" selected="selected">已離職</form:option>
+				    <form:option value="1" >受雇中</form:option>	
+            	</c:otherwise>
+				 </c:choose>
+						
                </form:select>
           </div>
           </div>
@@ -128,6 +176,7 @@
 
       </div>
     
+     </div>
      
      
      <!-- ------------------------------------------------------------------------------------------------- -->	
