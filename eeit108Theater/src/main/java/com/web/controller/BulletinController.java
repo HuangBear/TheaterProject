@@ -362,7 +362,7 @@ public class BulletinController {
 		return str;
 	}
 
-	// edit_bulletin_all2bulletin_add
+	// edit_bulletin_all2bulletin_edit
 	@RequestMapping(value = "/admin/bulletin_all/edit", method = RequestMethod.GET)
 	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
 		System.out.println("edit_bulletin_all2bulletin_add");
@@ -490,18 +490,17 @@ public class BulletinController {
 		String discountPriceBuy = "0", discountPriceFree = "0", discountTicketBuy = "0",
 				discountTicketFree = "0";
 		discount = Integer.valueOf(req.getParameter("discount"));
-//		System.out.println("discount=" + req.getParameter("discount"));
-//		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
-//		System.out.println("discountPriceFree" + req.getParameter("discountPriceFree"));
-//		System.out.println("DiscountTicketBuy" + req.getParameter("DiscountTicketBuy"));
-//		System.out.println("DiscountTicketFree" + req.getParameter("DiscountTicketFree"));
+		System.out.println("discount=" + req.getParameter("discount"));
+		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
+		System.out.println("discountPriceFree=" + req.getParameter("discountPriceFree"));
+		System.out.println("discountTicketBuy=" + req.getParameter("discountTicketBuy"));
+		System.out.println("discountTicketFree=" + req.getParameter("discountTicketFree"));
 
 		switch (discount)
 		{
 		case 1:
 			discountPriceBuy = req.getParameter("discountPriceBuy");
 			discountPriceFree = req.getParameter("discountPriceFree");
-
 			if (discountPriceBuy.strip().length() == 0) {
 				discountPriceBuy = "0";
 			}
@@ -509,10 +508,10 @@ public class BulletinController {
 				discountPriceFree = "0";
 			}
 			break;
-		case 2:
 
-			discountTicketBuy = req.getParameter("DiscountTicketBuy");
-			discountTicketFree = req.getParameter("DiscountTicketFree");
+		case 2:
+			discountTicketBuy = req.getParameter("discountTicketBuy");
+			discountTicketFree = req.getParameter("discountTicketFree");
 			if (discountTicketBuy == null) {
 				discountTicketBuy = "0";
 			}

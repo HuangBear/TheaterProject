@@ -587,11 +587,12 @@
 												</tr>
 											</thead>
 											<tbody>
+										
 												<c:forEach var='sb' items='${sameBulletinBean}' begin="1" varStatus="i">
 													<tr>
 														<c:if test="${sb.available}">
 															<td class="hide">${sb.no}</td>
-															<th scope="row">${i.index+1}</th>
+															<th scope="row">${i.index}</th>
 															<td class="title">${sb.title}</td>
 															<td class="title">${sb.context}</td>
 															<td>${sb.startDate}</td>
