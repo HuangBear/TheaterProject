@@ -133,6 +133,6 @@ public class TimeTableServiceImpl implements TimeTableService{
 	public List<TimeTableBean> getTimeNoByDateAndVersionAndMovieAndTime(String startDate, String version,
 			String movieName, String startTime) {
 		return dao.getTimeNoByDateAndVersionAndMovieAndTime(startDate, version, movieName, startTime);
-	}	 
-	
+	}
+
 }

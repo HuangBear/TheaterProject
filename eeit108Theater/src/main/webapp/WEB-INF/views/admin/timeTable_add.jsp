@@ -70,9 +70,8 @@
           </div>
       	<div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="duration" class="form-control" 
+              <form:input type="hidden" id="duration" class="form-control" 
               placeholder="duration" required="required" path="duration"/>
-              <label for="duration">片長</label>
             </div>
           </div>
           
@@ -102,17 +101,19 @@
             <div class="form-label-group">
               <form:input type="hidden" id="theater" class="form-control" 
                placeholder="theater" required="required" path="theater"/> 
-              <label for="theater">廳院</label>
             </div>
           </div>
           
-           
+          <div class="form-group">
+        	<select class="form-control form-control-lg" id = 'selectBreakTime'>
+  				<option>請選擇間隔</option>
+		</select>
+		</div>
           
           <div class="form-group">
             <div class="form-label-group">
-              <form:input type="text" id="breakTime" class="form-control" 
+              <form:input type="hidden" id="breakTime" class="form-control" 
               placeholder="breakTime" required="required" path="breakTime"/> 
-              <label for="breakTime">間隔</label>
             </div>
           </div>
           
@@ -172,7 +173,6 @@
 				type : "GET",
 				success : function(data) {
 					console.log(data);
-					alert("hello");
  					if (data.length > 0) {
  						$("#movieName").val(data[0]);
  						$("#duration").val(data[1]);
@@ -181,6 +181,7 @@
 			})
 		});
 		$("#selectVersion").change(function() {
+			$("#selectTheater").empty();
 			var selectedVersion = $("#selectVersion option:selected").text();
 			$("#version").val(selectedVersion);
 			if (selectedVersion == 'IMAX') {
@@ -202,9 +203,19 @@
 			}
 		});
 		$("#selectTheater").change(function() {
+			$("selectBreakTime").empty();
 			var selectedTheater = $("#selectTheater option:selected").text();
 			$("#theater").val(selectedTheater);
-		})
+			for (let i = 1 ; i <= 10; i++) {
+				$('#selectBreakTime').append($('<option></option>').text(i * 30));
+			}
+			
+		});
+		
+		$("#selectBreakTime").change(function() {
+			var selectedBreakTime = $("#selectBreakTime option:selected").text();
+			$("#breakTime").val(selectedBreakTime);
+		});
     });
 	</script>
      
