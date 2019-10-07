@@ -32,8 +32,15 @@ public interface ProductDao {
 	List<ProductBean> getAllAvailableProducts();
 	
 	List<ProductBean> getAllUnavailableProducts();
-
-	List<ProductBean> getProductsByType(String type);
+/**
+ * 
+ * @param type the type of products to query
+ * @param available query all of the products, or available products only.
+ * @return
+ */
+	List<ProductBean> getProductsByType(String type, Boolean available);
+	
+	List<ProductBean> getAllProductsByType(String type);
 	
 	List<ProductBean> getTicketsByVersion(String version);
 }

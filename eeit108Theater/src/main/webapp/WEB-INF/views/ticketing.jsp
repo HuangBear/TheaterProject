@@ -128,7 +128,11 @@
 			margin:0px 25px 0px 0px;
 			}
 			
- 	.foos:hover { background: #dadee3; }	
+ 	.foos:hover { background: #dadee3; }
+ 	
+ 	td {
+ 		width: 220px;
+ 	}	
 </style>
 
 
@@ -159,12 +163,7 @@
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-
-
 				</table>
-
-					
-
 			</center>		
 		</div>
 		</div>
@@ -207,6 +206,7 @@
 								<p>片長：${movie.duration}</p>
 								<p>類型：${movie.genres}</p>
 							</div>
+						</div>
 							<footer>
 								<a href="detail_${movie.no}" class="button">電影介紹</a>
 							</footer>
@@ -300,6 +300,7 @@
 				</section>
 			</div>
 		</center>
+		</div>
 
 		<!-- Footer -->
 		<jsp:include page="footer.jsp" />

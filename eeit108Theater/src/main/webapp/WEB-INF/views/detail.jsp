@@ -34,6 +34,8 @@
 }
 </style>
 
+
+
 </head>
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
@@ -149,7 +151,7 @@
 								<h2>
 									<a>${movie.movieName}</a>
 								</h2>
-								<a href="ticketing" class="button">前往討論</a>
+								<a href="<spring:url value='/MoviesForum/Articles?id=${movie.no}' />" class="button">前往討論</a>
 								<p>${movie.engMovieName}</p>
 							</header>
 							<a><img src="<c:url value = '/getPicture/${movie.no}'/>"
@@ -265,7 +267,7 @@
 				</div>
 			</div>
 		</div>
-
+		</div>
 
 		<!-- Footer -->
 		<jsp:include page="footer.jsp" />

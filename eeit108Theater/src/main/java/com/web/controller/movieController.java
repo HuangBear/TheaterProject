@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.web.entity.MovieBean;
@@ -63,10 +64,12 @@ public class movieController {
 		List<MovieBean> moviesForumList = service.getAllMovies();
 		List<MovieBean> ReleasedMoviesList = service.getReleasedMovies();
 		List<MovieBean> ComingMoviesList = service.getComingMovies();
+		List<MovieBean> OffMoviesList = service.getOffMovies();
 		model.addAttribute("title", "討論版");
 		model.addAttribute("Movies", moviesForumList);
 		model.addAttribute("ReleasedMovies", ReleasedMoviesList);
 		model.addAttribute("ComingMovies", ComingMoviesList);
+		model.addAttribute("OffMovies", OffMoviesList);
 		return "MoviesForum";
 	}
 	
@@ -77,6 +80,15 @@ public class movieController {
 		model.addAttribute("movie", movieDetails);
 		model.addAttribute("link", string[0]);
 		return "detail";
+	}
+	
+	@RequestMapping("/detail2_{no}")
+	public String movieTimes2(Model model, @PathVariable Integer no) {
+		MovieBean movieDetails = service.getMovieById(no);
+		String[] string = movieDetails.getTrailerLink();
+		model.addAttribute("movie", movieDetails);
+		model.addAttribute("link", string[0]);
+		return "detail2";
 	}
 
 	@RequestMapping("/ticketing")
@@ -200,7 +212,7 @@ public class movieController {
 			e.printStackTrace();
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 		}
-		return "/admin/empIndexA";
+		return "redirect:/admin/empIndexA";
 	}
 	@RequestMapping(value = "/admin/movie_edit", method = RequestMethod.GET)
 	public String editMovieGet(@RequestParam(value = "no", required = false) Integer no, Model model, HttpServletRequest req) throws SQLException {
@@ -231,7 +243,7 @@ public class movieController {
 			formerMovieBean.setMovieImage(blob);
 		}
 		service.updateMovie(formerMovieBean);
-		return "admin/empIndexA";
+		return "admin/adminIndex";
 	}
 	@RequestMapping("/admin/Table2")
 	public String EmpTable1(Model model) {
@@ -244,11 +256,19 @@ public class movieController {
 	public String addTimeTableGet(Model model) {
 		TimeTableBean ttb = new TimeTableBean();
 		model.addAttribute("time", ttb);
+		List<String> list = new ArrayList<>();
+		list = service.getMovieNames();
+		String[] movieName = new String[30];
+		for (int i = 0; i < list.size(); i++) {
+			movieName[i] = list.get(i);
+		}
+		model.addAttribute("movies", list);
 		return "admin/timeTable_add";
 	}
 	
 	@RequestMapping(value = "/admin/timeTable_add", method = RequestMethod.POST)
 	public String addTimeTablePost(@ModelAttribute("time") TimeTableBean ttb, Model model) {
+		
 		String[] splitColon = ttb.getStartTime().split(":");
 		int hour = Integer.parseInt(splitColon[0]);
 		int minute = Integer.parseInt(splitColon[1]);
@@ -270,9 +290,21 @@ public class movieController {
 			}
 			ttb.setStartTime(HH + ":" + mm);
 		} while (sum < 1440);
-		return "admin/empIndexA";
+		return "redirect:/admin/empIndexA";
 	}
-	
+	@RequestMapping("/getMovieDetail")
+	@ResponseBody
+	public List<String> getMovieDetail(Model model, String movieName) {
+		MovieBean mb = service.getMovieByName(movieName);
+		System.out.println(mb.getMovieName());
+		System.out.println(mb.getDuration());
+		System.out.println(mb.getNo());
+		List<String> list = new ArrayList<>();
+		list.add(mb.getMovieName());
+		list.add(mb.getDuration().toString());
+		list.add(mb.getNo().toString());
+		return list;
+	}
 	
 	public Date tomorrow(Date today) {
         Calendar calendar = Calendar.getInstance();

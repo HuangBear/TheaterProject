@@ -47,7 +47,7 @@
 			<div class="container">
 				<article id="main" class="special">
 					<h2>
-						<a href="#">edit Reply</a>
+						<a href="#">編輯回覆</a>
 					</h2>
 					<form:form method='POST' modelAttribute="ReplyBean"
 						class='form-horizontal' enctype="multipart/form-data">
@@ -56,13 +56,13 @@
 								<div class="col-lg-10">
 									<form:input id="articleString" readonly="true"
 										path="articleString" value='${ReplyBean.articleString}'
-										type='hidden' class='form:input-large' />
+										type='test' class='form:input-large' />
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10">
 									<form:input id="rnoString" readonly="true" path="rnoString"
-										value='${ReplyBean.rnoString}' type='hidden'
+										value='${ReplyBean.rnoString}' type='test'
 										class='form:input-large' />
 								</div>
 							</div>
@@ -75,17 +75,18 @@
 									<form:textarea id="content" path="content"
 										value='${ReplyBean.content}' cols="80" rows="20"
 										class='form:input-large' />
+									<a style="color: red;">${ErrMsg.ContentNull}${ErrMsg.ContentInsufficient}</a>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10">
 									<form:input id="postTimeString" readonly="true"
 										path="postTimeString" value='${ReplyBean.postTimeString}'
-										type='hidden' class='form:input-large' />
+										type='test' class='form:input-large' />
 								</div>
 							</div>
 							<form:input id="author" path="author" readonly="true"
-								value='${LoginOK.no}' type='hidden' class='form:input-large' />
+								value='${LoginOK.no}' type='test' class='form:input-large' />
 
 							<div class="form-group">
 								<div class='col-lg-offset-2 col-lg-2'>

@@ -22,7 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -50,8 +49,7 @@ public class EmpController {
 	EmployeeService service;
 	@Autowired
 	MemberService serviceM;
-	@Autowired
-    private PasswordEncoder passwordEncoder;
+
 
 //	@RequestMapping("/admin/indexAdmin")
 //	public String backstageindex(Model model, Principal principal) {
@@ -195,10 +193,10 @@ public class EmpController {
 			employeeBean.setPassword(employeeBean.getPassword());
 			
 			service.save(employeeBean);
-			return "admin/empIndexA";
+			return "redirect:/admin/adminIndex";
 		} else {
 			redirectAttributes.addFlashAttribute("error", "註冊失敗，該信箱已經有人使用");
-			return "admin/empIndexA";
+			return "redirect:/admin/adminIndex";
 		}
 	}
 	@RequestMapping("/admin/updateEMP")
@@ -282,7 +280,9 @@ public class EmpController {
 		
 		employeeBean= service.findByPrimaryKey(pk);
 		service.resignEmp(employeeBean);
-		return "redirect:/admin/empTable";
+		List<EmployeeBean> list = service.getAllEmployees();
+		model.addAttribute("employees", list);
+		return "redirect:/admin/empIndexA#Table";
 	}
 
 	@RequestMapping(value = "/getEmpPicture/{pk}", method = RequestMethod.GET)

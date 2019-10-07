@@ -25,17 +25,6 @@
 	
 </script>
 <style type="text/css">
-.forum {
-	width: 800px;
-	border: 1px solid gray;
-	border-radius: 25px;
-	margin: auto;
-}
-
-.forum1 ul li {
-	display: inline;
-}
-
 .tb1 {
 	text-align: center;
 }
@@ -52,19 +41,19 @@
 		<div class="wrapper style1">
 			<div class="container">
 				<article id="main" class="special">
-					<div class="row gtr-200"
-						style="width: 1500px; height: 500px; border: 1px solid gray; border-radius: 25px;">
+					<div class="row"
+						style="width: 1300px; height: auto; border: 1px solid gray; border-radius: 25px;">
 						<h3 style="font-size: 36px">${Article.title}</h3>
-						<div style="width: 800px; height: 50px; font-size: 20px;">
+						<div>
 							<p
-								style="border: 1px solid gray; border-radius: 25px; text-align: center;">No.:${Article.no}
+								style="width: auto; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px;padding-top: 1px; padding-left: 20px; padding-right: 20px">
 								發文者: ${Article.author.name} 分類: ${Article.tag} 發文時間:
 								${Article.postTime}</p>
 						</div>
+						<br>
+						<pre
+							style="font-size: 30px; white-space: pre-wrap; margin-bottom: 20px">${Article.content}</pre>
 
-						<div style="width: 900px; height: 450px; font-size: 30px">
-							<pre>${Article.content}</pre>
-						</div>
 					</div>
 					<p>
 						<c:choose>
@@ -122,60 +111,88 @@
 						</fieldset>
 					</form:form>
 					<br>
-					<div class="row">
-						<c:forEach var='reply' items='${Replys}'>
+
+					<c:forEach var='reply' items='${Replys}'>
+						<div
+							style="width: 1080px; height: auto; display: flex; flex-wrap: wrap; border: 1px solid gray; border-radius: 25px; font-size: 26px">
+
 							<div
-								style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
-								<p>${reply.author.name} 回覆時間:${reply.postTime}</p>
+								style="width: 700px; height: 50px; font-size: 26px; text-align: center; margin: 25px">
+								<p>${reply.author.name}回覆時間:${reply.postTime}</p>
 							</div>
 							<c:choose>
-								<c:when test="${reply.available==true}">
-									<div
-										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-										<pre>${reply.content}</pre>
-									</div>
+								<c:when test="${LoginOK.no==reply.author.no}">
+									<a href="<spring:url value='/editReply?id=${reply.no}' />"
+										class="btn btn-primary btn-lg"
+										style="font-size: 26px; margin: 25px">編輯</a>
 								</c:when>
-								<c:when test="${reply.available==false}">
-									<div
-										style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
-										<p>這篇回覆已經被封鎖</p>
-									</div>
+								<c:when test="${LoginOK.no!=reply.author.no}">
+									<a class="btn btn-disabled btn-lg"
+										style="font-size: 26px; margin: 25px"></a>
 								</c:when>
 							</c:choose>
-							<p>
-								<c:choose>
-									<c:when test="${LoginOK.no==reply.author.no}">
-										<a href="<spring:url value='/editReply?id=${reply.no}' />"
-											class="btn btn-primary btn-lg" style="font-size: 26px">編輯</a>
-									</c:when>
-								</c:choose>
-							</p>
 							<form:form method='POST' modelAttribute="Reply"
 								class='form-horizontal' enctype="multipart/form-data">
 								<fieldset>
+
 									<c:choose>
-										<c:when test="${LoginOK.no!=Article.author.no}">
+										<c:when test="${LoginOK.no>6}">
+											<c:choose>
+												<c:when test="${LoginOK.no!=Article.author.no}">
+
+												</c:when>
+												<c:when test="${LoginOK.no==Article.author.no}">
+													<form:input id="articleString" readonly="true"
+														path="articleString"
+														value='${Article.noString=Article.no}' type='hidden'
+														class='form:input-large' />
+													<form:input id="rnoString" readonly="true" path="rnoString"
+														value='${reply.rnoString=reply.no}' type='hidden'
+														class='form:input-large' />
+													<div class="form-group">
+														<button type="submit" name="lockbutton" value="lock"
+															style="font-size: 18px; margin: 25px">封鎖</button>
+													</div>
+												</c:when>
+											</c:choose>
+
 										</c:when>
-										<c:when test="${LoginOK.no==Article.author.no}">
-										<form:input id="articleString" readonly="true"
-											path="articleString"
-											value='${Article.noString=Article.no}' type='hidden'
-											class='form:input-large' />
-										<form:input id="rnoString" readonly="true"
-											path="rnoString"
-											value='${reply.rnoString=reply.no}' type='hidden'
-											class='form:input-large' />
+										<c:when test="${LoginOK.no<=6}">
+											<form:input id="articleString" readonly="true"
+												path="articleString" value='${Article.noString=Article.no}'
+												type='hidden' class='form:input-large' />
+											<form:input id="rnoString" readonly="true" path="rnoString"
+												value='${reply.rnoString=reply.no}' type='hidden'
+												class='form:input-large' />
 											<div class="form-group">
-												<button type="submit" name="lockbutton" value="lock">封鎖</button>
+												<button type="submit" name="lockbutton" value="lock"
+													style="font-size: 18px; margin: 25px">封鎖</button>
 											</div>
 										</c:when>
 									</c:choose>
-									<hr class="first" />
 								</fieldset>
 							</form:form>
-							<br>
-						</c:forEach>
-					</div>
+
+						</div>
+
+
+						<div
+							style="width: 1080px; height: auto; display: flex; flex-wrap: wrap; border: 1px solid gray; border-radius: 25px; font-size: 26px">
+							<c:choose>
+								<c:when test="${reply.available==true}">
+
+									<pre class="title_width" style="margin: 25px">${reply.content}</pre>
+
+								</c:when>
+								<c:when test="${reply.available==false}">
+
+									<pre class="title_width" style="margin: 25px">這篇回覆已經被封鎖</pre>
+
+								</c:when>
+							</c:choose>
+						</div>
+						<br>
+					</c:forEach>
 					<hr class="first" />
 					<p>
 						<a

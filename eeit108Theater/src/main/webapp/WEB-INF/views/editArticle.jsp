@@ -32,6 +32,13 @@
 	width: 640px;
 	margin: auto;
 }
+.pre{
+white-space:pre-wrap; /* css3.0 */
+white-space:-moz-pre-wrap; /* Firefox */
+white-space:-pre-wrap; /* Opera 4-6 */
+white-space:-o-pre-wrap; /* Opera 7 */
+word-wrap:break-word; /* Internet Explorer 5.5+ */
+}
 </style>
 <title>editArticle</title>
 </head>
@@ -47,7 +54,7 @@
 			<div class="container">
 				<article id="main" class="special">
 					<h2>
-						<a href="#">edit Article</a>
+						<a href="#">編輯文章</a>
 					</h2>
 					<form:form method='POST' modelAttribute="ArticleBean"
 						class='form-horizontal' enctype="multipart/form-data">
@@ -68,12 +75,11 @@
 									<form:input id="title" path="title" value='${Article.title}'
 										type='text' class='form:input-large' />
 								</div>
+								<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 							</div>
 
 							<div class="form-group">
-								<label class="control-label col-lg-2 col-lg-4"
-									for='postTimeString'> <a>PostTime</a>
-								</label>
+								
 								<div class="col-lg-10">
 									<form:input id="postTimeString" readonly="true"
 										path="postTimeString" value='${Article.postTimeString}'
@@ -82,7 +88,7 @@
 							</div>
 
 							<c:choose>
-								<c:when test="${LoginOK.no>2}">
+								<c:when test="${LoginOK.no>6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="tag">
 											<a>tag</a>
@@ -97,7 +103,7 @@
 										</div>
 									</div>
 								</c:when>
-								<c:when test="${LoginOK.no<=2}">
+								<c:when test="${LoginOK.no<=6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="tag">
 											<a>tag</a>
@@ -114,20 +120,20 @@
 								</c:when>
 							</c:choose>
 							<c:choose>
-								<c:when test="${LoginOK.no>2}">
+								<c:when test="${LoginOK.no>6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="type">
 											<a>type</a>
 										</label>
 										<div class='col-lg-10'>
 											<form:select path="typeString">
-												<form:option value="一般">
+												<form:option value="${ATypeBean.typeName}">
 												</form:option>
 											</form:select>
 										</div>
 									</div>
 								</c:when>
-								<c:when test="${LoginOK.no<=2}">
+								<c:when test="${LoginOK.no<=6}">
 									<div class="form-group">
 										<label class='control-label col-lg-2 col-lg-4' for="type">
 											<a>type</a>
@@ -150,9 +156,10 @@
 								</label>
 								<div class="col-lg-10">
 									<form:textarea id="content" path="content"
-										value='${Article.content}' cols="80" rows="20"
-										class='form:input-large' />
+										value='${Article.content}' cols="40" rows="20"
+										class='form:input-large' style="word-break:break-all" onKeyDown='if (this.value.length>=250){event.returnValue=false}' />
 								</div>
+								<a style="color: red;">${ErrMsg.ContentNull}${ErrMsg.ContentInsufficient}</a>
 							</div>
 
 							<div class="form-group">
@@ -183,7 +190,7 @@
 							<div class="form-group">
 								<div class="col-lg-10">
 									<form:input id="movieString" readonly="true" path="movieString"
-										value='${Article.movieString}' type='hidden'
+										value='${Article.movieString=MovieBean.no}' type='hidden'
 										class='form:input-large' />
 								</div>
 							</div>

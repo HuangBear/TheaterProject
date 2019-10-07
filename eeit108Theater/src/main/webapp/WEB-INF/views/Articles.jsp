@@ -73,10 +73,10 @@
 								<c:choose>
 									<c:when test="${TopArticle.available==true}">
 										<div class="col-sm-6 col-md-5"
-											style="width: 1080px; border: 1px solid gray; border-radius: 25px; margin: auto; height: 90px; margin: auto; padding: 15px 20px; text-align: center;">
+											style="width: 1080px; border: 1px solid gray; border-radius: 25px; margin: auto; height: 90px; margin: auto; padding: 15px 20px;background-color:#FFBB73; text-align: center;">
 											<a href="<spring:url value='/Article?id=${TopArticle.no}' />"
 												class="btn btn-primary btn-lg btn-block"
-												style="font-size: 26px;"> <span
+												style="font-size: 26px;background-color:#FFBB73;"> <span
 												class="glyphicon-info-sigh glyphicon"></span>[${TopArticle.tag}]
 												${TopArticle.title}
 

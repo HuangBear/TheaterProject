@@ -46,18 +46,18 @@
 			<div class="container">
 				<article id="main" class="special">
 					<h2>
-						<a href="#">add Reply</a>
+						<a href="#">新增回覆</a>
 					</h2>
 					<form:form method='POST' modelAttribute="ReplyBean"
 						class='form-horizontal' enctype="multipart/form-data">
 						<fieldset>
-<!-- 							<div class="form-group"> -->
-<!-- 								<div class="col-lg-10"> -->
-<%-- 									<form:input id="articleString" readonly="true" --%>
-<%--  										path="articleString" value='${ArticleBean.noString}'  --%>
-<%--  										type='hidden' class='form:input-large' />  --%>
-<!-- 								</div> -->
-<!-- 							</div> -->
+							<!-- 							<div class="form-group"> -->
+							<!-- 								<div class="col-lg-10"> -->
+							<%-- 									<form:input id="articleString" readonly="true" --%>
+							<%--  										path="articleString" value='${ArticleBean.noString}'  --%>
+							<%--  										type='hidden' class='form:input-large' />  --%>
+							<!-- 								</div> -->
+							<!-- 							</div> -->
 
 							<div class="form-group">
 								<label class="control-label col-lg-2 col-lg-4" for='content'>
@@ -66,6 +66,7 @@
 								<div class="col-lg-10">
 									<form:textarea id="content" path="content" cols="80" rows="20"
 										class='form:input-large' />
+									<a style="color: red;">${ErrMsg.ContentNull}${ErrMsg.ContentInsufficient}</a>
 								</div>
 							</div>
 

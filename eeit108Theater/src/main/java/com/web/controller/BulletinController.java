@@ -55,9 +55,12 @@ public class BulletinController {
 	public String other2news(HttpServletRequest req, Model model) {
 		System.out.println("other2news");
 		List<BulletinBean> list = service.getExistenceBulletin("startDate", "ASC");
-
+		System.out.println("after list");
 		Integer bulletin_no = (Integer) req.getAttribute("bulletin_no");
 		System.out.println("bulletin_no=1=" + bulletin_no);
+		if (list.isEmpty()) {
+			return "news";
+		}
 		if (bulletin_no == null) {
 			bulletin_no = list.get(0).getNo();
 		}
@@ -79,7 +82,7 @@ public class BulletinController {
 	@RequestMapping(value = "/admin/bulletin_all", method = RequestMethod.GET)
 	public String other2bulletin_all(HttpSession session, Model model, HttpServletRequest req) {
 		System.out.println("other2bulletin_all");
-		List<List<BulletinBean>> list = service.getStatsBulletin("startDate", "DESC");
+		List<List<BulletinBean>> list = service.getStatsBulletin("startDate", "ASC");
 		model.addAttribute("updatedTime", new Date());
 		model.addAttribute("statusBulletin", list);
 		return Root + "bulletin_all";

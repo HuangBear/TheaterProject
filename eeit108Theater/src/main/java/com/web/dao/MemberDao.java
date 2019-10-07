@@ -1,8 +1,8 @@
 package com.web.dao;
 
+import java.util.Date;
 import java.util.List;
 
-import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 
 public interface MemberDao {
@@ -22,7 +22,7 @@ public interface MemberDao {
 	int discontinueAll(); // 全部下架
 
 	int continueAll(); // 全部上架
-	
+
 	// query
 	MemberBean checkMemberEmail(String email);
 
@@ -31,16 +31,20 @@ public interface MemberDao {
 	MemberBean getMemberByEmail(String email);
 
 	MemberBean getMemberById(String memberId);
-	
-	MemberBean getMemberBeanByEmailPassword(String email,String password);
+
+	MemberBean getMemberBeanByEmailPassword(String email, String password);
 
 	List<MemberBean> getAllMembers();
 
 	List<MemberBean> getAllAvailable();
-	
+
 	Object getPermissionByMemberEmail(String email);
 
 	int activeUser(String emailCode);
 
 	MemberBean findMemberByCode(String code);
+
+//chart
+	List<MemberBean> getMemberPerMoon(Date firstDate, Date lastDate);
+
 }

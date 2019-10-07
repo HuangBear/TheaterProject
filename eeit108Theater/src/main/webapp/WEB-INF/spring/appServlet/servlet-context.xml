@@ -1,0 +1,9 @@
+<!-- 注册XmlViewResolver，用于iReport & JasperReports报表生成 -->  
+<beans:bean id="jasperReportResolver" class="org.springframework.web.servlet.view.XmlViewResolver">  
+    <beans:property name="order">  
+        <beans:value>0</beans:value>  
+    </beans:property>  
+    <beans:property name="location">  
+        <beans:value>WEB-INF/jasper/jasper-defs.xml</beans:value>  
+    </beans:property>  
+</beans:bean>  
