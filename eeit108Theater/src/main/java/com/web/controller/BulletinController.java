@@ -338,7 +338,7 @@ public class BulletinController {
 //		System.out.println(blob.toString());
 		// 得到图片的二进制数据
 		byte[] image = blob.getBytes(1, (int) blob.length());
-		System.out.println("JSON.toJSONString(image)=" + JSON.toJSONString(image));
+//		System.out.println("JSON.toJSONString(image)=" + JSON.toJSONString(image));
 		return JSON.toJSONString(image);
 	}
 
