@@ -23,19 +23,19 @@
 			<div class="wrapper style1">
 				<div class="container">
 					<article id="main" class="special">
-						<div class="row gtr-200"
-							style="width: 1500px; height: 500px; border: 1px solid gray; border-radius: 25px;">
-							<h3 style="font-size: 36px">${Article.title}</h3>
-							<div style="width: 800px; height: 50px; font-size: 20px;">
+						<div class="row"
+							style="width: 1300px; height: auto; border: 1px solid gray; border-radius: 25px">
+							<h3 style="font-size: 36px; margin: 20px">${Article.title}</h3>
+							<div>
 								<p
-									style="border: 1px solid gray; border-radius: 25px; text-align: center;">No.:${Article.no}
+									style="width: auto; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px; padding-top: 1px; padding-left: 20px; padding-right: 20px; margin: 20px">
 									發文者: ${Article.author.name} 分類: ${Article.tag} 發文時間:
 									${Article.postTime}</p>
 							</div>
+							<br>
+							<pre
+								style="font-size: 30px; white-space: pre-wrap; margin-bottom: 20px; margin: 20px">${Article.content}</pre>
 
-							<div style="width: 900px; height: 450px; font-size: 30px">
-								<p>${Article.content}</p>
-							</div>
 						</div>
 					</article>
 				</div>
@@ -43,12 +43,12 @@
 			</div>
 
 			<div class="row">
-			<br>
-	
+				<br>
+
 				<c:forEach var='report' items='${Article.reports}'>
 					<div
 						style="width: 1080px; height: 50px; font-size: 26px; margin: auto; padding: 15px 20px;">
-						<p>${report.author.name}檢舉時間:${report.postTime}</p>
+						<p>${report.author.name} 檢舉時間:${report.postTime}</p>
 					</div>
 					<div
 						style="width: 1080px; height: 150px; font-size: 26px; border: 1px solid gray; border-radius: 25px; margin: auto; padding: 15px 20px;">
@@ -57,7 +57,7 @@
 				</c:forEach>
 			</div>
 			<button class="backBtn btn btn-info" id="${article.no}"
-											style="font-size: 24px">回列表</button>
+				style="font-size: 24px">回列表</button>
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at 00:00 PM</div>
