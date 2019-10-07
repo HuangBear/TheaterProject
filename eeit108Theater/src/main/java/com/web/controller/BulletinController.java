@@ -226,7 +226,7 @@ public class BulletinController {
 		String originalFilename = bulletinImage.getOriginalFilename();
 		System.out.println(originalFilename);
 		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
-		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
+//		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
 		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 		url = context.getRealPath(url);
 		byte[] b = bulletinImage.getBytes();
@@ -501,10 +501,10 @@ public class BulletinController {
 		case 1:
 			discountPriceBuy = req.getParameter("discountPriceBuy");
 			discountPriceFree = req.getParameter("discountPriceFree");
-			if (discountPriceBuy.strip().length() == 0) {
+			if (discountPriceBuy.length() == 0) {
 				discountPriceBuy = "0";
 			}
-			if (discountPriceFree.strip().length() == 0) {
+			if (discountPriceFree.length() == 0) {
 				discountPriceFree = "0";
 			}
 			break;
@@ -528,7 +528,6 @@ public class BulletinController {
 		bb.setDiscount(discount);
 		if (discount != null) {
 			System.out.println("discount=" + discount);
-
 			if (discount == 1) {
 				if (pb == 0 || pf == 0) {
 					errorMessage.put("discountP", "請輸入阿拉伯數字");
