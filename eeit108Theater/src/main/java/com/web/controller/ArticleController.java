@@ -625,7 +625,7 @@ public class ArticleController {
 	@RequestMapping(value = "/reArticles", method = RequestMethod.POST)
 	public String getReArticle(@RequestParam("no") Integer no,Model model,HttpServletRequest request,HttpSession session) {
 		
-		List<ArticleBean> list = service.getArticlesByMovieNo2(no);
+		List<ArticleBean> list = service.getAllArticles();
 		List<MovieBean> moviesForumList = service.getAllMovies();
 		model.addAttribute("Articles", list);
 		model.addAttribute("Movies", moviesForumList);
@@ -669,6 +669,7 @@ public class ArticleController {
             service.editArticle(ab);
             service.editMember(mb);
         }
+		
 
 		return "forward:/reArticles";
 	}

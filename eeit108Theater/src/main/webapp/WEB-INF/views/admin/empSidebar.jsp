@@ -45,7 +45,7 @@
           <span>電影清單</span></a>
         </li>
         </sec:authorize>
-         <sec:authorize access=" hasAuthority('2') or hasAuthority('3')">
+         <sec:authorize access="  hasAuthority('3')">
         <li class="nav-item">
         <a class="itemTag nav-link"  id="emp_add">
           <i class="fas fa-fw fa-user-circle"></i>

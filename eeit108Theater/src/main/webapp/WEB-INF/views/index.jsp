@@ -396,6 +396,34 @@ table {
 		$(document).ready(function() {
 			$("#speed").change(function() {
 				var selectedMovie = $("#speed option:selected").text();
+				$("#salutation").empty();
+				$('#salutation').append($('<option></option>').val('').text('請選擇查詢場次'));
+				$.ajax({
+					url : "<c:url value = '/getVersion' />",
+					data : {
+						"movieName" : selectedMovie
+					},
+					dataType : 'json',
+					type : "GET",
+					success : function(data) {
+						console.log(data);
+						if (data.length > 0) {
+							$.each(data, function(i, item) {
+								$('#number').empty();
+								$('#number').append($('<option></option>').val('').text('請選擇查詢廳次'));
+								$('#number').append($('<option></option>').text(data[i]));
+							});
+						}
+					}
+				});
+			});
+
+			$("#files").change(function() {
+				$("#salutation").empty();
+				$('#salutation').append($('<option></option>').val('').text('請選擇查詢場次'));
+				var selectedMovie = $("#speed option:selected").text();
+				var selectedVersion = $("#number option:selected").text();
+				var selectedDate = $("#files option:selected").text();
 				$.ajax({
 					url : "<c:url value = '/getVersion' />",
 					data : {
@@ -413,7 +441,27 @@ table {
 							});
 						}
 					}
-				})
+				});
+				$.ajax({
+					url : "<c:url value = '/getStartTimes' />",
+					data : {
+						"movieName" : selectedMovie,
+						"version" : selectedVersion,
+						"Date" : selectedDate
+					},
+					dataType : 'json',
+					type : "GET",
+					success : function(data) {
+						console.log(data);
+						if (data.length > 0) {
+							$('#salutation').empty();
+							$('#salutation').append($('<option></option>').val('').text('請選擇查詢時刻'));
+							$.each(data, function(i, item) {
+								$('#salutation').append($('<option></option>').text(data[i]));
+							});
+						}
+					}
+				});
 			});
 			$("#number").change(function() {
 				var selectedMovie = $("#speed option:selected").text();
@@ -435,10 +483,12 @@ table {
 							$('#salutation').append($('<option></option>').val('').text('請選擇查詢時刻'));
 							$.each(data, function(i, item) {
 								$('#salutation').append($('<option></option>').text(data[i]));
-							});
+							});	
+						} else {
+							$('#salutation').append($('<option></option>').text("本日無上映時間"));
 						}
 					}
-				})
+				});
 			});
 			$("#salutation").change(function() {
 				var selectedMovie = $("#speed option:selected").text();

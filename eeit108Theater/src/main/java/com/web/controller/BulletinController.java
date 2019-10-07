@@ -362,7 +362,7 @@ public class BulletinController {
 		return str;
 	}
 
-	// edit_bulletin_all2bulletin_add
+	// edit_bulletin_all2bulletin_edit
 	@RequestMapping(value = "/admin/bulletin_all/edit", method = RequestMethod.GET)
 	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
 		System.out.println("edit_bulletin_all2bulletin_add");
@@ -486,54 +486,60 @@ public class BulletinController {
 	// 折扣
 	public void testDiscount(BulletinBean bb, HttpServletRequest req,
 			HashMap<String, String> errorMessage) {
-		Integer discount, discountPriceBuy, discountPriceFree, discountTickBuy, discountTickFree;
+		Integer discount;
+		String discountPriceBuy = "0", discountPriceFree = "0", discountTicketBuy = "0",
+				discountTicketFree = "0";
 		discount = Integer.valueOf(req.getParameter("discount"));
-//		System.out.println("discount=" + req.getParameter("discount"));
-//		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
-//		System.out.println("discountPriceFree" + req.getParameter("discountPriceFree"));
-//		System.out.println("discountTickBuy" + req.getParameter("discountTickBuy"));
-//		System.out.println("discountTickFree" + req.getParameter("discountTickFree"));
+		System.out.println("discount=" + req.getParameter("discount"));
+		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
+		System.out.println("discountPriceFree=" + req.getParameter("discountPriceFree"));
+		System.out.println("discountTicketBuy=" + req.getParameter("discountTicketBuy"));
+		System.out.println("discountTicketFree=" + req.getParameter("discountTicketFree"));
 
 		switch (discount)
 		{
 		case 1:
-			discountPriceBuy = Integer.valueOf(req.getParameter("discountPriceBuy"));
-			discountPriceFree = Integer.valueOf(req.getParameter("discountPriceFree"));
-			discountTickBuy = null;
-			discountTickFree = null;
+			discountPriceBuy = req.getParameter("discountPriceBuy");
+			discountPriceFree = req.getParameter("discountPriceFree");
+			if (discountPriceBuy.strip().length() == 0) {
+				discountPriceBuy = "0";
+			}
+			if (discountPriceFree.strip().length() == 0) {
+				discountPriceFree = "0";
+			}
 			break;
+
 		case 2:
-			discountPriceBuy = null;
-			discountPriceFree = null;
-			discountTickBuy = Integer.valueOf(req.getParameter("discountTickBuy"));
-			discountTickFree = Integer.valueOf(req.getParameter("discountTickFree"));
-			break;
-		default:
-			discountPriceBuy = null;
-			discountPriceFree = null;
-			discountTickBuy = null;
-			discountTickFree = null;
+			discountTicketBuy = req.getParameter("discountTicketBuy");
+			discountTicketFree = req.getParameter("discountTicketFree");
+			if (discountTicketBuy == null) {
+				discountTicketBuy = "0";
+			}
+			if (discountTicketFree == null) {
+				discountTicketFree = "0";
+			}
 			break;
 		}
 
-		Integer pb = discountPriceBuy;
-		Integer pf = discountPriceFree;
-		Integer tb = discountTickBuy;
-		Integer tf = discountTickFree;
+		Integer pb = Integer.valueOf(discountPriceBuy);
+		Integer pf = Integer.valueOf(discountPriceFree);
+		Integer tb = Integer.valueOf(discountTicketBuy);
+		Integer tf = Integer.valueOf(discountTicketFree);
 		bb.setDiscount(discount);
 		if (discount != null) {
 			System.out.println("discount=" + discount);
 
 			if (discount == 1) {
-				if (pb == null || pf == null) {
+				if (pb == 0 || pf == 0) {
 					errorMessage.put("discountP", "請輸入阿拉伯數字");
+					pb = pf = null;
 				} else if (pf > pb) {
 					errorMessage.put("discountP", "折扣比消費金額高?你確定?");
 				}
 				bb.setDiscountPriceBuy(pb);
 				bb.setDiscountPriceFree(pf);
-				bb.setDiscountTickBuy(null);
-				bb.setDiscountTickFree(null);
+				bb.setDiscountTicketBuy(null);
+				bb.setDiscountTicketFree(null);
 
 			} else if (discount == 2) {
 				if (tb == 0 || tf == 0) {
@@ -543,19 +549,19 @@ public class BulletinController {
 				}
 				bb.setDiscountPriceBuy(null);
 				bb.setDiscountPriceFree(null);
-				bb.setDiscountTickBuy(tb);
-				bb.setDiscountTickFree(tf);
+				bb.setDiscountTicketBuy(tb);
+				bb.setDiscountTicketFree(tf);
 			} else {
 				bb.setDiscountPriceBuy(null);
 				bb.setDiscountPriceFree(null);
-				bb.setDiscountTickBuy(null);
-				bb.setDiscountTickFree(null);
+				bb.setDiscountTicketBuy(null);
+				bb.setDiscountTicketFree(null);
 			}
 		}
 		System.out.println("bb.getDiscountPriceBuy()=" + bb.getDiscountPriceBuy());
 		System.out.println("bb.getDiscountPriceFree()=" + bb.getDiscountPriceFree());
-		System.out.println("bb.getDiscountTickBuy()=" + bb.getDiscountTickBuy());
-		System.out.println("bb.getDiscountTickFree()=" + bb.getDiscountTickFree());
+		System.out.println("bb.getDiscountTicketBuy()=" + bb.getDiscountTicketBuy());
+		System.out.println("bb.getDiscountTicketFree()=" + bb.getDiscountTicketFree());
 	}
 
 	// find id

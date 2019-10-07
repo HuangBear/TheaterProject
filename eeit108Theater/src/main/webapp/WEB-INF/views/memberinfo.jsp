@@ -82,22 +82,22 @@
 								<p class="pclr" id="button2"><a href="#">個人資訊修改</a></p>
 							</div>
 							
-							<div class="col-4">
-								<a href="#" class="image fit"><img src="images/frontend/order.png" alt="" /></a>
-							</div>							
-							<div class="col-8">
-								<p>
-								<h4>訂單查詢</h4>
-								<p class="pclr"><a href="#">當前購票資訊</a></p>
-							</div>
+<!-- 							<div class="col-4"> -->
+<!-- 								<a href="#" class="image fit"><img src="images/frontend/order.png" alt="" /></a> -->
+<!-- 							</div>							 -->
+<!-- 							<div class="col-8"> -->
+<!-- 								<p> -->
+<!-- 								<h4>訂單查詢</h4> -->
+<!-- 								<p class="pclr"><a href="#">當前購票資訊</a></p> -->
+<!-- 							</div> -->
 							
 							<div class="col-4">
 								<a href="#" class="image fit"><img src="images/frontend/record.png" alt="" /></a>
 							</div>							
 							<div class="col-8">
 								<p>
-								<h4>消費紀錄</h4>
-								<p class="pclr"><a href="#">歷史觀影紀錄</a></p>
+								<h4>訂單查詢</h4>
+								<p class="pclr"><a href="#">會員購票資訊</a></p>
 							</div>
 							
 							<div class="col-4">
@@ -195,13 +195,13 @@
 									autocomplete="off" maxlength="50" />
 							</dl>
 														
-							<dl>
-							<dd>
-								<label for="password" style="text-align:left">*密碼：</label>
-								<form:input id="password" path="password" class="text"
-									type="password" value="${LoginOK.password}" tabindex="2"
-									autocomplete="off" maxlength="50" />
-							</dl>
+<!-- 							<dl> -->
+<!-- 							<dd> -->
+<!-- 								<label for="password" style="text-align:left">*密碼：</label> -->
+								<form:input id="password"  path="password" class="text"
+									type="hidden" value="${LoginOK.password}" tabindex="2" 
+									autocomplete="off" maxlength="50" /> 
+<!-- 							</dl> -->
 
 							<dl>
 							<dd>
