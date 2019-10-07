@@ -1,8 +1,13 @@
 package com.web.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Chart2jsp {
+public class Chart2jsp implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	List<Integer> numberPerMoon;
 	List<ChartContainer> increasePerMoon;
 	List<ChartContainer> speciesPerMoon;

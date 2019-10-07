@@ -4,15 +4,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <style type="text/css">
 .td {
-
-padding:50px;
+	padding: 50px;
 	width: 800px;
 	height: 500px;
 }
 
 .ww {
-/* 	width: 600px; */
-/* 	height: 500px */
+	/* 	width: 600px; */
+	/* 	height: 500px */
+	
 }
 </style>
 
@@ -96,12 +96,12 @@ padding:50px;
 	    	<c:if test="${chart2jsp.six.chartKey !=null}">"${chart2jsp.six.chartKey}",</c:if>],
 	    datasets: [{
 	      data: [
-	    	  <c:if test="${chart2jsp.fir.chartValue !=null}">"${chart2jsp.fir.chartValue}",</c:if>
-		    	<c:if test="${chart2jsp.sec.chartValue !=null}">"${chart2jsp.sec.chartValue}",</c:if>
-		    	<c:if test="${chart2jsp.thi.chartValue !=null}">"${chart2jsp.thi.chartValue}",</c:if>
-		    	<c:if test="${chart2jsp.fou.chartValue !=null}">"${chart2jsp.fou.chartValue}",</c:if>
-		    	<c:if test="${chart2jsp.fif.chartValue !=null}">"${chart2jsp.fif.chartValue}",</c:if>
-		    	<c:if test="${chart2jsp.six.chartValue !=null}">"${chart2jsp.six.chartValue}",</c:if>	    	  
+	    	<c:if test="${chart2jsp.fir.chartValue !=null}">"${chart2jsp.fir.chartValue}",</c:if>
+		    <c:if test="${chart2jsp.sec.chartValue !=null}">"${chart2jsp.sec.chartValue}",</c:if>
+		    <c:if test="${chart2jsp.thi.chartValue !=null}">"${chart2jsp.thi.chartValue}",</c:if>
+		    <c:if test="${chart2jsp.fou.chartValue !=null}">"${chart2jsp.fou.chartValue}",</c:if>
+		    <c:if test="${chart2jsp.fif.chartValue !=null}">"${chart2jsp.fif.chartValue}",</c:if>
+		    <c:if test="${chart2jsp.six.chartValue !=null}">"${chart2jsp.six.chartValue}",</c:if>	    	  
 	    	  ],
 	      backgroundColor: [
 	    	  <c:if test="${chart2jsp.fir.chartKey !=null}">'#f50000',</c:if>
@@ -237,8 +237,8 @@ padding:50px;
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
-          <a href="<c:url value='/admin/ireport'/>">pdf</a>
-</div>
+	<a href="<c:url value='/admin/ireport'/>">pdf</a>
+	</div>
 
 
 
