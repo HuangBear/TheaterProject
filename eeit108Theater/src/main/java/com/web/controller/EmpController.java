@@ -280,7 +280,9 @@ public class EmpController {
 		
 		employeeBean= service.findByPrimaryKey(pk);
 		service.resignEmp(employeeBean);
-		return "redirect:/admin/empTable";
+		List<EmployeeBean> list = service.getAllEmployees();
+		model.addAttribute("employees", list);
+		return "redirect:/admin/empIndexA#Table";
 	}
 
 	@RequestMapping(value = "/getEmpPicture/{pk}", method = RequestMethod.GET)
