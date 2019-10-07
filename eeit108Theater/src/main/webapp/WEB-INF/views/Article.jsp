@@ -46,7 +46,7 @@
 						<h3 style="font-size: 36px">${Article.title}</h3>
 						<div>
 							<p
-								style="width: 800px; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px;">
+								style="width: auto; height: 50px; border: 1px solid gray; border-radius: 25px; text-align: center; font-size: 20px;padding-top: 1px; padding-left: 20px; padding-right: 20px">
 								發文者: ${Article.author.name} 分類: ${Article.tag} 發文時間:
 								${Article.postTime}</p>
 						</div>
