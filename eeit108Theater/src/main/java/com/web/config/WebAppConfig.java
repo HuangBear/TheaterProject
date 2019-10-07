@@ -86,6 +86,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
 		resolvers.add(jspViewResolver());
 		resolvers.add(pdfViewResolver());
+//		resolvers.add(jasperReportResolver());
 //		views.add((ViewResolver) jsonView());
 		resolver.setViewResolvers(resolvers);
 		return resolver;
@@ -97,6 +98,22 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 //		MappingJackson2JsonView view = new MappingJackson2JsonView();
 //		view.setPrettyPrint(true);
 //		return view;
+//	}
+
+//	@Bean
+//	public static ApplicationIReportView iReportView() {
+//		ApplicationIReportView iReport = new ApplicationIReportView();
+//		iReport.setReportDataKey("jrMainDataSource");
+//		return iReport;
+//	}
+
+//	@Bean
+//	public ViewResolver jasperReportResolver() {
+//		XmlViewResolver view = new XmlViewResolver();
+//		view.setOrder(0);
+//		view.setLocation();
+//		return view;
+//
 //	}
 
 	@Bean
