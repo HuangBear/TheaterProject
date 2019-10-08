@@ -77,6 +77,8 @@ form label {
 	var labelActive = "ui-state-active ";
 	var labelDisabled = "ui-checkboxradio-disabled "
 	$(function() {
+		$(".nullSeat").html("");
+		$(".nullSeat").attr("title", "");
 		$("input[name='seat']").checkboxradio({
 			icon : false
 		});

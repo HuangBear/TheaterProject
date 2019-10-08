@@ -1,5 +1,7 @@
 package com.web.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +42,13 @@ public class TheaterDaoImpl implements TheaterDao {
 	public TheaterBean getTheaterByNo(Integer no) {
 		String hql = "FROM TheaterBean tb WHERE tb.no = :no";
 		return (TheaterBean) factory.getCurrentSession().createQuery(hql).setParameter("no", no).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TheaterBean> getAllTheaters() {
+		String hql = "FROM TheaterBean tb ORDER BY tb.theater";
+		return factory.getCurrentSession().createQuery(hql).list();
 	}
 
 }

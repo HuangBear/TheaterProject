@@ -46,7 +46,7 @@
 									<c:if test="${empty chosenDiscount}">
 										<option id="discount0" value="0" selected>無</option>
 										<c:forEach var="discount" items="${discounts}">
-											<option id="discount${discount.no}" value="${discount.no}">${discount.pay}${discount.discountTickBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTickFree}${discount.discountPriceFree}</option>
+											<option id="discount${discount.no}" value="${discount.no}">${discount.pay}${discount.discountTicketBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTicketFree}${discount.discountPriceFree}</option>
 										</c:forEach>
 
 									</c:if>
@@ -54,10 +54,10 @@
 										<option id="discount0" value="0">無</option>
 										<c:forEach var="discount" items="${discounts}">
 											<c:if test="${discount.no == chosenDiscount.no}">
-												<option id="discount${discount.no}" value="${discount.no}" selected>${discount.pay}${discount.discountTickBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTickFree}${discount.discountPriceFree}</option>
+												<option id="discount${discount.no}" value="${discount.no}" selected>${discount.pay}${discount.discountTicketBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTicketFree}${discount.discountPriceFree}</option>
 											</c:if>
 											<c:if test="${discount.no != chosenDiscount.no}">
-												<option id="discount${discount.no}" value="${discount.no}">${discount.pay}${discount.discountTickBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTickFree}${discount.discountPriceFree}</option>
+												<option id="discount${discount.no}" value="${discount.no}">${discount.pay}${discount.discountTicketBuy}${discount.discountPriceBuy}${discount.free}${discount.discountTicketFree}${discount.discountPriceFree}</option>
 											</c:if>
 										</c:forEach>
 									</c:if>
