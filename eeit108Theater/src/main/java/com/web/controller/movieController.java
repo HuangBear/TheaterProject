@@ -201,17 +201,6 @@ public class movieController {
 			}
 		}
 		service.saveMovie(mb);
-		String picPath = "C:\\Users\\User\\git\\TheaterProject\\eeit108Theater\\data\\movie\\images\\";
-		
-		//  建立Blob物件，交由 Hibernate 寫入資料庫
-		//  將上傳的檔案移到指定的資料夾
-		try {
-			File file = new File(picPath, mb.getNo().toString() + ".jpeg");
-			uploadImage.transferTo(file);
-		} catch(Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
-		}
 		return "redirect:/admin/empIndexA";
 	}
 	@RequestMapping(value = "/admin/movie_edit", method = RequestMethod.GET)
@@ -231,16 +220,9 @@ public class movieController {
 			byte[] b = uploadImage.getBytes();
 			Blob blob = new SerialBlob(b);
 			formerMovieBean.setMovieImage(blob);
-			try {
-				File file = new File(picPath, formerMovieBean.getNo().toString() + ".jpeg");
-				uploadImage.transferTo(file);
-			} catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
-			}
 		} else {
-			Blob blob = SystemUtils2018.fileToBlob(picPath + formerMovieBean.getNo().toString() + ".jpeg");
-			formerMovieBean.setMovieImage(blob);
+			MovieBean hello = service.getMovieByName(formerMovieBean.getMovieName());
+			formerMovieBean.setMovieImage(hello.getMovieImage());
 		}
 		service.updateMovie(formerMovieBean);
 		return "admin/adminIndex";
