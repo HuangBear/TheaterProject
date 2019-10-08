@@ -9,8 +9,7 @@
 
 	#prfilePic {
     border-radius: 50%;
-  }
-    
+  }   
 
 </style>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -102,3 +101,4 @@
 	</ul>
 
 </nav>
+

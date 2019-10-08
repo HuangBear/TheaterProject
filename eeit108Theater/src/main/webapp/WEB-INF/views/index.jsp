@@ -245,17 +245,24 @@ table {
 
 		<div id="header">
 			<!-- header -->
-
 			<jsp:include page="header.jsp" />
-			<div class="inner" id="716">
-
-
-				<header id="header" style="height: 850px; margin-top: -200px;">
-					<img src="images/frontend/mgmwhitelionlogo.png">
+<!-- 	 		<div>	class="inner" id="lion" -->
+				<header id="lion inner"  >
+					<img src="images/frontend/mgmwhitelionlogo.png" >
 				</header>
-			</div>
+<!-- 			</div> -->
 
 		</div>
+		
+<!-- 		<div id="header"> -->
+<!--             header -->
+<%--             <jsp:include page="header.jsp" /> --%>
+<!--             <div class="inner" id="716"> -->
+<!--                 <header id="header" style="height: 850px; margin-top: -200px;"> -->
+<!--                     <img src="images/frontend/mgmwhitelionlogo.png"> -->
+<!--                 </header> -->
+<!--             </div> -->
+<!--         </div> -->
 
 		<section class="carousel">
 			<div class="reel">

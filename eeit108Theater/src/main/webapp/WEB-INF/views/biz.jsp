@@ -45,8 +45,8 @@
 			  	slideLayout : 'fill',     /* "contain" (fit according to aspect ratio), "fill" (stretches object to fill) and "cover" (overflows box but maintains ratio) */
 			  	animation: 'slide3D', 	/* slide | scroll | fade | zoomInSlide | zoomInScroll | slide3D */
 			  	animationCurve: 'ease',
-			  	animationDuration: 1000,
-			  	animationInterval: 1000,
+			  	animationDuration: 500,
+			  	animationInterval: 500,
 			  	slideClass: 'jR3DCarouselCustomSlide',
 			  	autoplay: true,
 			  	controls: true,			/* control buttons */
