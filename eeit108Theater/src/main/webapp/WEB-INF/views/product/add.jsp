@@ -65,8 +65,8 @@
 <script>
 	$('#oneSet').click(function() {
 
-		$('#name').val('肥宅快樂水');
-		$('#price').val('9487');
+		$('#name').val('更好喝的奶茶');
+		$('#price').val('80');
 		$('#type').val('drink');
 	})
 </script>

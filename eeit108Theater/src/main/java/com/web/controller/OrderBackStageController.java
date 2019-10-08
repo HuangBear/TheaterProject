@@ -21,7 +21,7 @@ public class OrderBackStageController {
 
 	@RequestMapping(value = "/admin/ticket", method = RequestMethod.GET)
 	public String showChoose() {
-		return pac + "choose";
+		return pac + "findOrder";
 	}
 
 	@RequestMapping(value = "/backOrder/queryOrder", method = RequestMethod.GET)
