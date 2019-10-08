@@ -215,8 +215,8 @@ public class OrderBean implements Serializable {
 			sec = (char) ('N' + (obHash % 13));
 		}
 		String temp = Long.toHexString(Math.abs(obHash));
-		temp += (temp + temp + temp);
-		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + temp).substring(5, 15)
+		temp += (temp + temp + temp + temp);
+		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + temp.substring(3, 11)).substring(0, 9)
 				.toUpperCase();
 		return tradeNo;
 	}
