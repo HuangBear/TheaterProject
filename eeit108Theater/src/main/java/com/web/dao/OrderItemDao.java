@@ -30,4 +30,10 @@ public interface OrderItemDao {
 	List<OrderItemBean> getAllAvailable();
 
 	List<OrderItemBean> getOrderItemsByOrderId(String orderId);
+
+	Integer getAllTicket();
+
+	Integer getAllFood();
+
+	Integer getAllDrink();
 }

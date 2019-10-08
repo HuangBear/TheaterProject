@@ -6,7 +6,6 @@ import com.web.entity.BulletinBean;
 import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
-import com.web.entity.OrderBean;
 
 public interface ChartsService {
 	List<BulletinBean> getBuelltinPerMoon(String date);
@@ -17,5 +16,11 @@ public interface ChartsService {
 
 	List<MovieBean> getMoviePerMoon(String date);
 
-	List<OrderBean> getOrderPerMoon(String date);
+	List<Double> getOrderPerMoon(String date);
+
+	public Integer getAllFood();
+
+	public Integer getAllDrink();
+
+	public Integer getAllTicket();
 }

@@ -18,6 +18,7 @@ import com.web.dao.EmployeeDao;
 import com.web.dao.MemberDao;
 import com.web.dao.MovieDao;
 import com.web.dao.OrderDao;
+import com.web.dao.OrderItemDao;
 import com.web.entity.BulletinBean;
 import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
@@ -39,6 +40,8 @@ public class ChartsServiceImpl implements ChartsService {
 	MovieDao movieDao;
 	@Autowired
 	OrderDao orderDao;
+	@Autowired
+	OrderItemDao orderItemDao;
 
 	@Override
 	@Transactional
@@ -84,15 +87,30 @@ public class ChartsServiceImpl implements ChartsService {
 
 	@Override
 	@Transactional
-	public List<OrderBean> getOrderPerMoon(String date) {
+	public List<Double> getOrderPerMoon(String date) {
 		Map<String, Date> map = changeDate(date);
 		Date firstDate = map.get("min");
 		Date lastDate = map.get("max");
-		List<OrderBean> moviePerMoon = orderDao.getOrderPerMoon(firstDate, lastDate);
-		for (OrderBean ob : moviePerMoon) {
-			cancelLazy(ob);
-		}
+		List<Double> moviePerMoon = orderDao.getOrderPerMoon(firstDate, lastDate);
 		return moviePerMoon;
+	}
+
+	@Override
+	@Transactional
+	public Integer getAllFood() {
+		return orderItemDao.getAllFood();
+	}
+
+	@Override
+	@Transactional
+	public Integer getAllDrink() {
+		return orderItemDao.getAllDrink();
+	}
+
+	@Override
+	@Transactional
+	public Integer getAllTicket() {
+		return orderItemDao.getAllTicket();
 	}
 
 	// ActualMaximum Day
