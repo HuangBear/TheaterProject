@@ -112,6 +112,7 @@ public class EDMTableResetHibernate_Order {
 							sb.setTimeTableId(tb.getNo());
 						}
 						ob.setSeats(seatList);
+						ob.calTotalPrice();
 						session.detach(theater);
 					}
 					Date orderDate = sdf.parse(tb.getStartDate());

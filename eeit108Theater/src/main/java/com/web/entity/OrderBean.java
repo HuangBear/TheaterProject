@@ -341,6 +341,8 @@ public class OrderBean implements Serializable {
 		for (String seat : this.getSeatsList()) {
 			result += ", " + seat;
 		}
+		if(result.length() == 0)
+			return "";
 		return result.substring(1);
 	}
 

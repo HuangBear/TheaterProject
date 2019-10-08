@@ -164,7 +164,7 @@
 																<img src="<c:url value='/images/frontend/icontime.png'/>" class="iconimg" />場次：${order.timeTable.startDate} ${order.timeTable.startTime}
 															</p>
 															<p>
-																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" style="width: 25px; height: 25px;" />人數：${order.seatCnt} <c:out value="${order.seatsString}"/>
+																<img src="<c:url value='/images/frontend/iconpeople.png'/>" class="iconimg" style="width: 25px; height: 25px;" />人數：${order.seatCnt} <c:out value="(${order.seatsString})"/>
 															</p>
 															<p>
 																<img src="<c:url value='/images/frontend/iconmeal.png'/>" class="iconimg" /> 票種及餐點：
