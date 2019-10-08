@@ -275,52 +275,52 @@ public class MemberController {
 		}
 	}
 
-//	@RequestMapping(value = "memberLoginModal", method = RequestMethod.POST)
-//	public String ModalMemberLoginProcess(HttpServletRequest request, RedirectAttributes redirectAttributes,
-//			Model model, HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException {
-//		System.out.println("Modal login begin");
-//		Map<String, String> errMsg = new HashMap<>();
-//		String account = request.getParameter("account");
-//		String pwd = request.getParameter("password");
-//		session = request.getSession();
-//
-//		if (account == null || account.trim().length() == 0) {
-//			errMsg.put("account", "*帳號必須輸入;");
-//		}
-//		if (pwd == null || pwd.trim().length() == 0) {
-//			errMsg.put("password", "*密碼必須輸入;");
-//		}
-//		if (errMsg.isEmpty()) {
-//			MemberBean LoginMB = null;
-//			LoginMB = service.checkEmailPassword(account, pwd);
-//			if (LoginMB != null && LoginMB.getEmailActiveStatus() == true) {
-//				session.setAttribute("memberName", LoginMB.getName());
-//				session.setAttribute("memberId", LoginMB.getMemberId());
-//				session.setAttribute("LoginOK", LoginMB);
-//				System.out.println("login success");
-////				redirectAttributes.addFlashAttribute("name", LoginMB.getName());
-////				redirectAttributes.addFlashAttribute("welcome", "登入成功");
-////				return "redirect:/";
-//			} else if (LoginMB != null && LoginMB.getEmailActiveStatus() == false) {
-//				redirectAttributes.addFlashAttribute("error", LoginMB.getName() + "您好，請至信箱收信驗證後才可登入");
-//				errMsg.put("error", "此帳號尚未經過驗證，請至信箱收信驗證");
-//				System.out.println("login fail, due to unactive account");
-//			} else {
-//				errMsg.put("error", "登入失敗，帳號或密碼錯誤");
-//				System.out.println("login fail, due to wrong account or password");
-//			}
-//		}
-//		System.out.println("Modal login end");
-//		if (errMsg.isEmpty()) {
-//			response.setStatus(Response.SC_RESET_CONTENT);
-//			
-//			return "order/start";
-//		} else {
-//			model.addAttribute("errMsg", errMsg);
-//			
-//			return "order/loginModalForm";
-//		}
-//	}
+	@RequestMapping(value = "memberLoginModal", method = RequestMethod.POST)
+	public String ModalMemberLoginProcess(HttpServletRequest request, RedirectAttributes redirectAttributes,
+			Model model, HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException {
+		System.out.println("Modal login begin");
+		Map<String, String> errMsg = new HashMap<>();
+		String account = request.getParameter("account");
+		String pwd = request.getParameter("password");
+		session = request.getSession();
+
+		if (account == null || account.trim().length() == 0) {
+			errMsg.put("account", "*帳號必須輸入;");
+		}
+		if (pwd == null || pwd.trim().length() == 0) {
+			errMsg.put("password", "*密碼必須輸入;");
+		}
+		if (errMsg.isEmpty()) {
+			MemberBean LoginMB = null;
+			LoginMB = service.checkEmailPassword(account, pwd);
+			if (LoginMB != null && LoginMB.getEmailActiveStatus() == true) {
+				session.setAttribute("memberName", LoginMB.getName());
+				session.setAttribute("memberId", LoginMB.getMemberId());
+				session.setAttribute("LoginOK", LoginMB);
+				System.out.println("login success");
+//				redirectAttributes.addFlashAttribute("name", LoginMB.getName());
+//				redirectAttributes.addFlashAttribute("welcome", "登入成功");
+//				return "redirect:/";
+			} else if (LoginMB != null && LoginMB.getEmailActiveStatus() == false) {
+				redirectAttributes.addFlashAttribute("error", LoginMB.getName() + "您好，請至信箱收信驗證後才可登入");
+				errMsg.put("error", "此帳號尚未經過驗證，請至信箱收信驗證");
+				System.out.println("login fail, due to unactive account");
+			} else {
+				errMsg.put("error", "登入失敗，帳號或密碼錯誤");
+				System.out.println("login fail, due to wrong account or password");
+			}
+		}
+		System.out.println("Modal login end");
+		if (errMsg.isEmpty()) {
+			response.setStatus(Response.SC_RESET_CONTENT);
+			
+			return "order/start";
+		} else {
+			model.addAttribute("errMsg", errMsg);
+			
+			return "order/loginModalForm";
+		}
+	}
 
 	// 會員登出
 	@RequestMapping("memberLogout")

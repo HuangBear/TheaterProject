@@ -240,7 +240,7 @@
 		</div>
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
-	<a href="<c:url value='/admin/ireport'/>">pdf</a>
+<%-- 	<a href="<c:url value='/admin/ireport'/>">pdf</a> --%>
 </div>
 
 

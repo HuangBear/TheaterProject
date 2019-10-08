@@ -18,8 +18,6 @@ import com.web.entity.ChartContainer;
 import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
-import com.web.entity.OrderBean;
-import com.web.entity.OrderItemBean;
 import com.web.service.ChartsService;
 
 @Controller
@@ -435,7 +433,6 @@ public class ChartsController {
 
 		List<Integer> totalCountList = new ArrayList<>();
 		ChartContainer totalCount = new ChartContainer();
-		List<ChartContainer> speciesPerMoon = new ArrayList<>();
 
 		for (Integer i = moonStart; i < moonEnd; i++) {
 			if (i < 10) {
@@ -456,44 +453,32 @@ public class ChartsController {
 			}
 			// 取回
 			System.out.println("inputValue=" + inputValue);
-			List<OrderBean> orderBean = service.getOrderPerMoon(inputValue);
+			List<Double> totalPrice = service.getOrderPerMoon(inputValue);
 			// 讀取
-			Integer type1 = 0, type2 = 0, type3 = 0, b = 0;
-			for (OrderBean ob : orderBean) {
-
-				List<OrderItemBean> OrderItemBean = ob.getOrderItems();
-				for (OrderItemBean oib : OrderItemBean) {
-					String type = oib.getType();
-					if (type.compareTo("ticket") == 0) {
-						type1++;
-					}
-					if (type.compareTo("food") == 0) {
-						type2++;
-					}
-					if (type.compareTo("drink") == 0) {
-						type3++;
-					}
-				}
-
-				b = (Integer) ob.getTotalPrice().intValue();
-
+			Integer iob = 0, b = 0;
+			for (Double ob : totalPrice) {
+				iob = (Integer) ob.intValue();
+				totalCount.setCount(iob);
+				b += iob;
 			}
 			ChartContainer orderCount = new ChartContainer();
 			orderCount.setChartMap(inputKey, b);
 			orderPerMoon.add(orderCount);
-			totalCount.setCount(b);
 			totalCountList.add(totalCount.getCount());
-			t1.setCount(type1);
-			t2.setCount(type2);
-			t3.setCount(type3);
 
 			System.out.println("inputKey=" + inputKey);
 			System.out.println("銷售額=" + b);
 		}
+		Integer type1 = service.getAllTicket();
+		Integer type2 = service.getAllFood();
+		Integer type3 = service.getAllDrink();
+		t1.setCount(type1);
+		t2.setCount(type2);
+		t3.setCount(type3);
+
 		Chart2jsp chart2jsp = new Chart2jsp();
 		chart2jsp.setIncreasePerMoon(orderPerMoon);
 		chart2jsp.setNumberPerMoon(totalCountList);
-		chart2jsp.setSpeciesPerMoon(speciesPerMoon);
 
 		ChartContainer Fir = new ChartContainer();
 		Fir.setChartMap("ticket", t1.getCount());

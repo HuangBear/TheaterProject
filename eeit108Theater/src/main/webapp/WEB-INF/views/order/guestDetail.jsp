@@ -104,16 +104,7 @@
 										<a>未取票</a>
 									</h4>
 
-								</div>
-								<div class="col-4" style="opacity: 0.5">
-									<a class="image fit checked"><img src="<c:url value='/images/frontend/pickup.png'/>" title="已取票" /></a>
-								</div>
-								<div class="col-8" id="done" style="opacity: 0.5">
-									<br />
-									<h4>
-										<a class="checked">已取票</a>
-									</h4>
-								</div>								
+								</div>				
 							</div>						
 						</section>
 					</div>

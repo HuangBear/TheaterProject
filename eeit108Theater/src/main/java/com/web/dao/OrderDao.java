@@ -36,5 +36,5 @@ public interface OrderDao {
 
 	List<OrderBean> getAllAvailable();
 
-	List<OrderBean> getOrderPerMoon(Date firstDate, Date lastDate);
+	List<Double> getOrderPerMoon(Date firstDate, Date lastDate);
 }

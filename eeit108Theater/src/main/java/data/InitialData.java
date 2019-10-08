@@ -15,6 +15,7 @@ public class InitialData {
 		new EDMTableResetHibernate_Movie().initData(factory);
 		new EDMTableResetHibernate_TimeTable().initData(factory);
 		new EDMTableResetHibernate_Theater().initData(factory);
+		new EDMTableResetHibernate_Order().initData(factory);
 		factory.close();
 	}
 

@@ -129,12 +129,12 @@ public class OrderDaoImpl implements OrderDao {
 	// chart
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderBean> getOrderPerMoon(Date firstDate, Date lastDate) {
+	public List<Double> getOrderPerMoon(Date firstDate, Date lastDate) {
 
 		Session session = factory.getCurrentSession();
-		List<OrderBean> list = new ArrayList<>();
-		list = session
-				.createQuery("FROM OrderBean o WHERE o.orderTime BETWEEN :fristDate and :lastDate")
+		List<Double> list = new ArrayList<>();
+		list = session.createQuery(
+				"SELECT o.totalPrice FROM OrderBean o WHERE o.orderTime BETWEEN :fristDate and :lastDate")
 				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
 		System.out.println(list);
 		return list;
