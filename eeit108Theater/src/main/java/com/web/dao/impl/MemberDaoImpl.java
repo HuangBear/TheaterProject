@@ -178,7 +178,7 @@ public class MemberDaoImpl implements MemberDao {
 		List<MemberBean> list = new ArrayList<>();
 		list = session
 				.createQuery("FROM MemberBean m WHERE m.registerTime "
-						+ "BETWEEN :fristDate and :lastDate)")
+						+ "BETWEEN :fristDate and :lastDate")
 				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
 		System.out.println(list);
 		return list;

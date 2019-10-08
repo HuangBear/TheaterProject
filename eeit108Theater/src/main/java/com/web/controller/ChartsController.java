@@ -18,6 +18,8 @@ import com.web.entity.ChartContainer;
 import com.web.entity.EmployeeBean;
 import com.web.entity.MemberBean;
 import com.web.entity.MovieBean;
+import com.web.entity.OrderBean;
+import com.web.entity.OrderItemBean;
 import com.web.service.ChartsService;
 
 @Controller
@@ -46,6 +48,9 @@ public class ChartsController {
 
 		Chart2jsp movie = moviePerMoon(session);
 		list.add(movie);
+
+		Chart2jsp order = orderPerMoon(session);
+		list.add(order);
 
 		session.setAttribute("chart2jsp", list);
 		session.setAttribute("updatedTime", new Date());
@@ -413,6 +418,96 @@ public class ChartsController {
 		chart2jsp.setFou(Fou);
 
 		chart2jsp.setStr1("電影");
+
+		return chart2jsp;
+	}
+
+//	orderPerMoon
+	public Chart2jsp orderPerMoon(HttpSession session) {
+		// 格式2019-11
+		System.out.println("orderPerMoon");
+		List<ChartContainer> orderPerMoon = new ArrayList<>();
+		String inputValue = null, inputKey = null;
+
+		ChartContainer t1 = new ChartContainer();
+		ChartContainer t2 = new ChartContainer();
+		ChartContainer t3 = new ChartContainer();
+
+		List<Integer> totalCountList = new ArrayList<>();
+		ChartContainer totalCount = new ChartContainer();
+		List<ChartContainer> speciesPerMoon = new ArrayList<>();
+
+		for (Integer i = moonStart; i < moonEnd; i++) {
+			if (i < 10) {
+				inputValue = yearStart + "-0" + i;
+				inputKey = yearStart + "年0" + i + "月";
+			} else if (10 <= i && i < 13) {
+				inputValue = yearStart + "-" + i;
+				inputKey = yearStart + "年" + i + "月";
+			} else if (i >= 13) {
+				int q = i - 12;
+				if (q < 10) {
+					inputValue = yearStart + 1 + "-0" + q;
+					inputKey = yearStart + 1 + "年0" + q + "月";
+				} else {
+					inputValue = yearStart + 1 + "-" + q;
+					inputKey = yearStart + 1 + "年" + q + "月";
+				}
+			}
+			// 取回
+			System.out.println("inputValue=" + inputValue);
+			List<OrderBean> orderBean = service.getOrderPerMoon(inputValue);
+			// 讀取
+			Integer type1 = 0, type2 = 0, type3 = 0, b = 0;
+			for (OrderBean ob : orderBean) {
+
+				List<OrderItemBean> OrderItemBean = ob.getOrderItems();
+				for (OrderItemBean oib : OrderItemBean) {
+					String type = oib.getType();
+					if (type.compareTo("ticket") == 0) {
+						type1++;
+					}
+					if (type.compareTo("food") == 0) {
+						type2++;
+					}
+					if (type.compareTo("drink") == 0) {
+						type3++;
+					}
+				}
+
+				b = (Integer) ob.getTotalPrice().intValue();
+
+			}
+			ChartContainer orderCount = new ChartContainer();
+			orderCount.setChartMap(inputKey, b);
+			orderPerMoon.add(orderCount);
+			totalCount.setCount(b);
+			totalCountList.add(totalCount.getCount());
+			t1.setCount(type1);
+			t2.setCount(type2);
+			t3.setCount(type3);
+
+			System.out.println("inputKey=" + inputKey);
+			System.out.println("銷售額=" + b);
+		}
+		Chart2jsp chart2jsp = new Chart2jsp();
+		chart2jsp.setIncreasePerMoon(orderPerMoon);
+		chart2jsp.setNumberPerMoon(totalCountList);
+		chart2jsp.setSpeciesPerMoon(speciesPerMoon);
+
+		ChartContainer Fir = new ChartContainer();
+		Fir.setChartMap("ticket", t1.getCount());
+		chart2jsp.setFir(Fir);
+
+		ChartContainer Sec = new ChartContainer();
+		Sec.setChartMap("food", t2.getCount());
+		chart2jsp.setSec(Sec);
+
+		ChartContainer Thi = new ChartContainer();
+		Thi.setChartMap("drink", t3.getCount());
+		chart2jsp.setThi(Thi);
+
+		chart2jsp.setStr1("銷售額");
 
 		return chart2jsp;
 	}
