@@ -174,7 +174,6 @@
 							</table>
 						</div>
 					</div>
-					<hr />
 				</article>
 			</div>
 		</div>

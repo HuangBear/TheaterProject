@@ -246,12 +246,11 @@ table {
 		<div id="header">
 			<!-- header -->
 			<jsp:include page="header.jsp" />
-<!-- 	 		<div>	class="inner" id="lion" -->
-				<header id="lion inner"  >
-					<img src="images/frontend/mgmwhitelionlogo.png" >
+	 			<div class="header1 inner" id="lion" style="margin-top:-150px;">	<!-- class="inner" id="lion"-->
+				<header >
+					<img src="images/frontend/mgmwhitelionlogo.png">
 				</header>
-<!-- 			</div> -->
-
+				</div>
 		</div>
 		
 <!-- 		<div id="header"> -->
