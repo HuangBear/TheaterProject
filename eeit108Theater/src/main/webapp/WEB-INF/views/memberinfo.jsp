@@ -82,14 +82,7 @@
 								<p class="pclr" id="button2"><a href="#">個人資訊修改</a></p>
 							</div>
 							
-<!-- 							<div class="col-4"> -->
-<!-- 								<a href="#" class="image fit"><img src="images/frontend/order.png" alt="" /></a> -->
-<!-- 							</div>							 -->
-<!-- 							<div class="col-8"> -->
-<!-- 								<p> -->
-<!-- 								<h4>訂單查詢</h4> -->
-<!-- 								<p class="pclr"><a href="#">當前購票資訊</a></p> -->
-<!-- 							</div> -->
+
 							
 							<div class="col-4">
 								<a href="#" class="image fit"><img src="images/frontend/record.png" alt="" /></a>
@@ -105,8 +98,8 @@
 							</div>
 							<div class="col-8">
 								<p>
-								<h4>申訴進度</h4>
-								<p class="pclr" id=button3><a href="#">即時客服</a></p>
+								<h4>客服中心</h4>
+								<p class="pclr" id=button3><a href="#">聯繫客服</a></p>
 							</div>
 							
 							
