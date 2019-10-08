@@ -9,14 +9,14 @@
 
 	#prfilePic {
     border-radius: 50%;
-  }
-    
+  }   
 
 </style>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="309951267841-3oupgh1elatdub7tc7f4iah7eorg5h31.apps.googleusercontent.com">
 
 <nav id="nav">
+
 	<ul>
 
 		<li><a class="nav_logo" href="<c:url value='/'/>"><img src="<c:url value='/images/frontend/716logo.png'/>"style="width: 80px;"> </a>
@@ -86,4 +86,6 @@
 			</script>
 		</li>
 	</ul>
+
 </nav>
+

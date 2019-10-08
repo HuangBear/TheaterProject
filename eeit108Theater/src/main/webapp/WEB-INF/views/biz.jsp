@@ -45,8 +45,8 @@
 			  	slideLayout : 'fill',     /* "contain" (fit according to aspect ratio), "fill" (stretches object to fill) and "cover" (overflows box but maintains ratio) */
 			  	animation: 'slide3D', 	/* slide | scroll | fade | zoomInSlide | zoomInScroll | slide3D */
 			  	animationCurve: 'ease',
-			  	animationDuration: 1000,
-			  	animationInterval: 1000,
+			  	animationDuration: 500,
+			  	animationInterval: 500,
 			  	slideClass: 'jR3DCarouselCustomSlide',
 			  	autoplay: true,
 			  	controls: true,			/* control buttons */
@@ -181,46 +181,6 @@
 						*新片上映首週、假日與假日前一晚,需搭配可樂爆米花組合餐飲。 <br>
 						-電影介紹 開放下載中 請點選上方附件(不定期更新)</p>
 				</section></article>
-				
-				<hr />
-				<div class="row">
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/pic07.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">Gravida aliquam penatibus</a>
-					</h3>
-					</header>
-					<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-						sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-						cubilia ultrices tempor sagittis. Nisl fermentum consequat integer
-						interdum.</p>
-					</article>
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/pic08.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">Sed quis rhoncus placerat</a>
-					</h3>
-					</header>
-					<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-						sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-						cubilia ultrices tempor sagittis. Nisl fermentum consequat integer
-						interdum.</p>
-					</article>
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/pic09.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">Magna laoreet et aliquam</a>
-					</h3>
-					</header>
-					<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-						sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-						cubilia ultrices tempor sagittis. Nisl fermentum consequat integer
-						interdum.</p>
-					</article>
-				</div>
 			</div>
 
 		</div>

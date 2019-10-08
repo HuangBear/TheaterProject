@@ -50,76 +50,8 @@
 						<br>
 							本據點共3座影廳  30席座位、2席無障礙座位，內含：<br>	
 							1座4DX影廳 140個座位</p>
-					<section> 
-						<header><h3>Ultrices tempor sagittis nisl</h3></header>
-							<p>Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus
-								ultrices porttitor sollicitudin imperdiet at pretium tellus in
-								euismod a integer sodales neque. Nibh quis dui quis mattis eget
-					imperdiet venenatis feugiat. Neque primis ligula cum erat aenean
-					tristique luctus risus ipsum praesent iaculis. Fermentum elit
-					fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium
-					sodales porttitor lacus. Phasellus egestas odio nisl duis sociis
-					purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.</p>
-				<p>Eleifend auctor turpis magnis sed porta nisl pretium. Aenean
-					suspendisse nulla eget sed etiam parturient orci cursus nibh.
-					Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim
-					cras rutrum consectetur ut penatibus fermentum nibh erat malesuada
-					varius.</p>
-				</section> <section> <header>
-				<h3>Augue euismod feugiat tempus</h3>
-				</header>
-				<p>Pretium tellus in euismod a integer sodales neque. Nibh quis
-					dui quis mattis eget imperdiet venenatis feugiat. Neque primis
-					ligula cum erat aenean tristique luctus risus ipsum praesent
-					iaculis. Fermentum elit ut nunc urna volutpat donec cubilia commodo
-					risus morbi. Lobortis vestibulum velit malesuada ante egestas odio
-					nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis
-					pharetra magna.</p>
-				</section> </article>
-				
-				<footer> <a href="essay" class="button">回首頁</a></footer>
-				<hr />
-				
-				<div class="row">
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/pic07.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">Gravida aliquam penatibus</a>
-					</h3>
-					</header>
-					<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-						sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-						cubilia ultrices tempor sagittis. Nisl fermentum consequat integer
-						interdum.</p>
-					</article>
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/pic08.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">Sed quis rhoncus placerat</a>
-					</h3>
-					</header>
-					<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-						sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-						cubilia ultrices tempor sagittis. Nisl fermentum consequat integer
-						interdum.</p>
-					</article>
-					<article class="col-4 col-12-mobile special"> <a href="#"
-						class="image featured"><img src="images/frontend/pic09.jpg" alt="" /></a>
-					<header>
-					<h3>
-						<a href="#">Magna laoreet et aliquam</a>
-					</h3>
-					</header>
-					<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-						sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-						cubilia ultrices tempor sagittis. Nisl fermentum consequat integer
-						interdum.</p>
-					</article>
-				</div>
+				</article>
 			</div>
-
 		</div>
 
 		<!-- Footer -->
