@@ -90,7 +90,7 @@
          <sec:authorize access="hasAuthority('3')">
         <li class="nav-item">
         <a class="itemTag nav-link" id="theaterManagement">
-          <i class="fas fa-fw  fa-cart-plus"></i>
+          <i class="fas fa-fw  fa-couch"></i>
           <span>影廳管理</span></a>
         </li>
         </sec:authorize>
