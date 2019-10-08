@@ -1,5 +1,7 @@
 package com.web.dao;
 
+import java.util.List;
+
 import com.web.entity.TheaterBean;
 
 public interface TheaterDao {
@@ -13,5 +15,7 @@ public interface TheaterDao {
 	TheaterBean getTheater(String theater);
 
 	TheaterBean getTheaterByNo(Integer no);
+	
+	List<TheaterBean> getAllTheaters();
 
 }

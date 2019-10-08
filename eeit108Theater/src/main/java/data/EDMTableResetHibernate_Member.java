@@ -18,7 +18,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.web.entity.MemberBean;
-import com.web.entity.MovieBean;
 
 import data.util.HibernateUtils;
 import data.util.SystemUtils2018;
@@ -26,30 +25,23 @@ import data.util.SystemUtils2018;
 public class EDMTableResetHibernate_Member {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
-	public static void main(String args[])
-	{
-
+	public void initData(SessionFactory factory) {
 		String line = "";
-		SessionFactory factory = HibernateUtils.getSessionFactory();
+		// SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
-		try
-		{
+		try {
 			tx = session.beginTransaction();
 			File file = new File("data/member/memberlist.dat");
-			try (
-				FileInputStream fis = new FileInputStream(file);
-				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-				BufferedReader br = new BufferedReader(isr);
+			try (FileInputStream fis = new FileInputStream(file);
+					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+					BufferedReader br = new BufferedReader(isr);
 
-			)
-			{
-				while ((line = br.readLine()) != null)
-				{
+			) {
+				while ((line = br.readLine()) != null) {
 					System.out.println("line=" + line);
 					// 去除 UTF8_BOM: \uFEFF
-					if (line.startsWith(UTF8_BOM))
-					{
+					if (line.startsWith(UTF8_BOM)) {
 						line = line.substring(1);
 					}
 					String[] token = line.split(",");
@@ -60,7 +52,6 @@ public class EDMTableResetHibernate_Member {
 					member.setBirthday(sdf.parse(token[15]));
 					member.setCommentPermission(true);
 					member.setEmail(token[4]);
-					
 
 					member.setGender(Integer.parseInt(token[5]));
 					member.setMemberId(token[6]);
@@ -70,12 +61,11 @@ public class EDMTableResetHibernate_Member {
 					member.setName(token[8]);
 					member.setPassword(token[9]);
 					member.setPhoneNum(token[10]);
-					
 
 					member.setRegisterTime(sdf.parse(token[14]));
 					member.setAboutMe(token[12]);
 					member.setEmailActiveStatus(true);
-					
+
 					session.save(member);
 					System.out.println("新增member紀錄一筆成功");
 				}
@@ -84,16 +74,20 @@ public class EDMTableResetHibernate_Member {
 				System.out.println("member資料新增成功");
 
 				tx.commit();
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				e.printStackTrace();
 				tx.rollback();
 			}
 
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String args[]) {
+	
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		new EDMTableResetHibernate_Member().initData(factory);
 		factory.close();
 
 	}

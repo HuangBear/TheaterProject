@@ -185,6 +185,6 @@ public class TimeTableDaoImpl implements TimeTableDao{
 		List<TimeTableBean> list = factory.getCurrentSession().createQuery(hql).setParameter("mstartDate", startDate).setParameter("mversion", version).setParameter("mmovieName", movieName).setParameter("mstartTime", startTime).getResultList();
 		return list;
 	}
-	
+
 }
 

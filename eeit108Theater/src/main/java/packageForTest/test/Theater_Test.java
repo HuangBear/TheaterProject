@@ -26,15 +26,15 @@ public class Theater_Test {
 		try {
 			tx = session.beginTransaction();
 			TheaterBean tb = new TheaterBean();
-			tb.setNo(1);
-			tb.setMiddle(10);
+			tb.setNo(41);
+			tb.setMiddle(15);
 			tb.setRowCnt(15);
-			tb.setSide(5);
-			tb.setSpaceRow(new Integer[]{3,7});
+			tb.setSide(10);
+			tb.setSpaceRow(new Integer[]{5,7,8,9});
 			tb.setTheater("A廳");
 			tb.setZone(3);
-			tb.setOptionSeat(new String[]{"A1=nullSeat","A2=nullSeat","A3=nullSeat","A4=nullSeat","A5=preserveSeat"});
-			session.save(tb);
+			tb.setPreserveSeat(new String[]{"A1=preserveSeat","A2=preserveSeat","A3=preserveSeat","A4=preserveSeat","A5=preserveSeat"});
+			session.update(tb);
 			tx.commit();
 			System.out.println("insert one order success");
 		} catch (Exception e) {

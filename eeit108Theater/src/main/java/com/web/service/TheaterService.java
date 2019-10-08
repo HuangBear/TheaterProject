@@ -17,6 +17,8 @@ public interface TheaterService {
 	TheaterBean getTheater(String theater);
 
 	TheaterBean getTheaterByNo(Integer no);
+	
+	List<TheaterBean> getAllTheaters();
 
 	List<SeatBean> getSeatsByTimeTable(Integer timeTableNo);
 
