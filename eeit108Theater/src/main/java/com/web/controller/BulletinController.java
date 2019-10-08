@@ -430,7 +430,7 @@ public class BulletinController {
 		String to = req.getParameter("to");
 
 		if (from.length() == 0 || to.length() == 0) {
-			errorMessage.put("dateChoice", "選擇開始與結束日期");
+			errorMessage.put("dateChoice", "請選擇日期");
 		} else {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = new Date();

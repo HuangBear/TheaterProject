@@ -429,7 +429,7 @@ table {
 			</nav>
 			<div class="tab-content " id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-status" role="tabpanel" aria-labelledby="nav-status-tab">
-					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
+					<table class=' table table-hover' id='dataTable'>
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
@@ -486,7 +486,7 @@ table {
 					</table>
 				</div>
 				<div class="tab-pane fade" id="nav-expired" role="tabpanel" aria-labelledby="nav-expired-tab">
-					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
+					<table class=' table table-hover' id='dataTable'>
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
@@ -545,7 +545,7 @@ table {
 					</table>
 				</div>
 				<div class="tab-pane fade" id="nav-dead" role="tabpanel" aria-labelledby="nav-dead-tab">
-					<table class=' table table-hover' id='dataTable' width='70%' cellspacing='0'>
+					<table class=' table table-hover' id='dataTable' >
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>

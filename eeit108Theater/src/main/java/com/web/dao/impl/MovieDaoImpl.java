@@ -160,7 +160,7 @@ public class MovieDaoImpl implements MovieDao {
 		List<MovieBean> list = new ArrayList<>();
 		list = session
 				.createQuery("FROM MovieBean m WHERE m.openingDate "
-						+ "BETWEEN :fristDate and :lastDate)")
+						+ "BETWEEN :fristDate and :lastDate")
 				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
 		System.out.println(list);
 		return list;

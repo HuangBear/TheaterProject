@@ -175,7 +175,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		List<EmployeeBean> list = new ArrayList<>();
 		list = session
 				.createQuery("FROM EmployeeBean e WHERE e.registerTime "
-						+ "BETWEEN :fristDate and :lastDate)")
+						+ "BETWEEN :fristDate and :lastDate")
 				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
 		System.out.println(list);
 		return list;

@@ -31,6 +31,7 @@
 	var myLineChart = new Chart(ctx, {
 		type : 'line',
 		data : {
+			
 			labels : [ 	<c:forEach items="${chart2jsp.increasePerMoon}" var="c2j" >
 			'${c2j.chartKey}' ,
 	 		</c:forEach >	],
@@ -213,8 +214,10 @@
 							<tr>
 								<td class="td">
 									<canvas id="myBarChart${status.index}" style="width: 700px; height: 400px;"></canvas>
-									<h2 style="text-align: center;">每月新增${chart2jsp.str1}數</h2>
+									<h2 style="text-align: center;">每月新增${chart2jsp.str1}</h2>
 								</td>
+<!-- 							</tr> -->
+<!-- 							<tr> -->
 								<td class="td">
 									<canvas id="myAreaChart${status.index}" style="width: 700px; height: 400px;"></canvas>
 									<h2 style="text-align: center;">${chart2jsp.str1}累積總數</h2>
@@ -238,7 +241,7 @@
 	</div>
 	<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
 	<a href="<c:url value='/admin/ireport'/>">pdf</a>
-	</div>
+</div>
 
 
 
