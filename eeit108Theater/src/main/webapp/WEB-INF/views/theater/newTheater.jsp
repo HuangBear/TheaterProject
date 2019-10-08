@@ -82,7 +82,7 @@ form label {
 	</div>
 	<div class="card-body" id="available" style="padding: 2% 10%">
 		<form id="modifyForm" class="row">
-			<div class="col-9">
+			<div class="col-9" id="theaterDisplay">
 				<jsp:include page="/WEB-INF/views/order/theaterStatus.jsp" />
 			</div>
 			<div class="col-3 mt-5">
@@ -96,7 +96,7 @@ form label {
 				</div>
 				<div class="form-group">
 					<div class="form-label-group">
-						<p>區域</p>
+						<p>區域配置</p>
 						<select id="zone" name="zone" class="form-control" required="required">
 							<option value="1">A</option>
 							<option value="2">BA</option>
@@ -144,7 +144,7 @@ form label {
 					</div>
 				</div>
 				<div class="form-group">
-					<button class="btn btn-primary" type="submit">確認</button>
+					<button class="btn btn-primary" id="submitNew" type="button">確認</button>
 					<button class="btn btn-info" type="button" data-toggle="modal" data-target="#previewModal">預覽</button>
 					<button class="btn btn-secondary back" type="button">回影廳管理</button>
 				</div>
@@ -179,18 +179,30 @@ form label {
 	</form>
 </div>
 <script type="text/javascript">
+function init(){
+	$("input[type='checkbox']").checkboxradio({
+		icon : false,
+	});
+	$("input.emptySeat").filter("[name='seat']").prop("checked", true)
+			.change();
+	$("input[name='seat-legend']").checkboxradio({
+		icon : false,
+		disabled : true,
+	});
+}
 	$(function() {
 		var zoneValue = ${newTheater.zone};
 		$("#zone").val(zoneValue);
-		$("input[type='checkbox']").checkboxradio({
-			icon : false,
-		});
-		$("input.emptySeat").filter("[name='seat']").prop("checked", true)
-				.change();
-		$("input[name='seat-legend']").checkboxradio({
-			icon : false,
-			disabled : true,
-		});
+		init();
+// 		$("input[type='checkbox']").checkboxradio({
+// 			icon : false,
+// 		});
+// 		$("input.emptySeat").filter("[name='seat']").prop("checked", true)
+// 				.change();
+// 		$("input[name='seat-legend']").checkboxradio({
+// 			icon : false,
+// 			disabled : true,
+// 		});
 		$(".back").click(function() {
 			$.ajax({
 				type : "GET",
@@ -200,9 +212,8 @@ form label {
 				}
 			});
 		});
-		$("#modifyForm").submit(function(event) {
-			event.preventDefault();
-			var form = new FormData(this);
+		$("#submitNew").click(function() {
+			var form = new FormData(document.getElementById("modifyForm"));
 			$.ajax({
 				url : "<c:url value='/theater/new'/>",
 				type : "POST",
@@ -213,6 +224,27 @@ form label {
 				success : function(data) {
 					console.log("new theater confirm success");
 					$("#pageItems").html(data);
+				},
+				error : function() {
+					console.log("fail to confirm new theater");
+				}
+			});
+		});
+		$("#modifyForm").submit(function(event) {
+			event.preventDefault();
+			alert("submit form");
+			var form = new FormData(this);
+			$.ajax({
+				url : "<c:url value='/theater/refresh'/>",
+				type : "POST",
+				data : form,
+				datatype : "json",
+				contentType : false,
+				processData : false,
+				success : function(data) {
+					console.log("new theater confirm success");
+					$("#theaterDisplay").html(data);
+					init();
 				},
 				error : function() {
 					console.log("fail to confirm new theater");
@@ -231,7 +263,8 @@ form label {
 				processData : false,
 				success : function(data) {
 					console.log("refresh theater success");
-					$("#pageItems").html(data);
+					$("#theaterDisplay").html(data);
+					init();
 				},
 				error : function() {
 					console.log("fail to refresh theater");

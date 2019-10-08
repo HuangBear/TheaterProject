@@ -214,7 +214,9 @@ public class OrderBean implements Serializable {
 		if (obHash > 0) {
 			sec = (char) ('N' + (obHash % 13));
 		}
-		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + Long.toHexString(Math.abs(obHash))).substring(0, 9)
+		String temp = Long.toHexString(Math.abs(obHash));
+		temp += (temp + temp + temp + temp);
+		String tradeNo = (String.valueOf(fst) + String.valueOf(sec) + temp.substring(3, 11)).substring(0, 9)
 				.toUpperCase();
 		return tradeNo;
 	}
@@ -339,6 +341,8 @@ public class OrderBean implements Serializable {
 		for (String seat : this.getSeatsList()) {
 			result += ", " + seat;
 		}
+		if(result.length() == 0)
+			return "";
 		return result.substring(1);
 	}
 

@@ -1,5 +1,6 @@
 package com.web.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.web.entity.OrderBean;
@@ -27,11 +28,13 @@ public interface OrderDao {
 
 	List<OrderBean> getOrdersByOwnerId(String memberId);
 
-	List<OrderBean> getGuestOrders(String ownerEmail,String ownerPhone, Boolean checkStatus);
+	List<OrderBean> getGuestOrders(String ownerEmail, String ownerPhone, Boolean checkStatus);
 
 	List<OrderBean> getMemberOrders(String memberId, Boolean checkStatus);
 
 	List<OrderBean> getAllOrders();
 
 	List<OrderBean> getAllAvailable();
+
+	List<OrderBean> getOrderPerMoon(Date firstDate, Date lastDate);
 }
