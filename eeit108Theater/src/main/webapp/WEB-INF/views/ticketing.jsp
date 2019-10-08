@@ -218,8 +218,6 @@
 						<h2>
 <%-- 							<a href="#">${movie.movieName}</a> --%>
 						</h2>
-						<p>Morbi convallis lectus malesuada sed fermentum dolore amet
-						</p>
 
 						</header>
 						<section>
