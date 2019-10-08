@@ -97,7 +97,7 @@
 							<div class="col-8">
 								<p>
 								<h4>訂單查詢</h4>
-								<p class="pclr"><a href="#">會員購票資訊</a></p>
+								<p class="pclr"><a href="<c:url value='/visitorticket'/>">會員購票資訊</a></p>
 							</div>
 							
 							<div class="col-4">
@@ -173,6 +173,13 @@
 									value="${LoginOK.no}" />     
 							<dl>
 							<dd>
+								<label for="email" style="text-align:left">電子信箱：</label>
+								<input id="email"  class="text"
+									type="text" value="${LoginOK.email}" tabindex="2" readonly="readonly"
+									autocomplete="off" maxlength="50" />
+							</dl>
+							<dl>
+							<dd>
 								<label for="name" style="text-align:left">*您的姓名：</label>
 								<form:input id="name" path="name" class="text" type="text"
 									value="${LoginOK.name}" tabindex="1" autocomplete="off"
@@ -181,9 +188,9 @@
 							
 							<dl>
 							<dd>
-								<label for="email" style="text-align:left">*電子信箱：</label>
+<!-- 								<label for="email" style="text-align:left">電子信箱：</label> -->
 								<form:input id="email" path="email" class="text"
-									type="text" value="${LoginOK.email}" tabindex="2"
+									type="hidden" value="${LoginOK.email}" tabindex="2" readonly="readonly"
 									autocomplete="off" maxlength="50" />
 							</dl>
 							
@@ -205,9 +212,9 @@
 
 							<dl>
 							<dd>
-								<label for="memberId" style="text-align:left">*身分證字號：</label>
+<!-- 								<label for="memberId" style="text-align:left">*身分證字號：</label> -->
 								<form:input id="memberId" path="memberId" class="text"
-									type="text" value="${LoginOK.memberId}" tabindex="2"
+									type="hidden"  value="${LoginOK.memberId}" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
 
@@ -232,7 +239,17 @@
 							<dl>
 							<dd>
 								<label for="uploadImage" style="text-align:left">上傳照片：</label>							
-                            	<img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"   width="250">
+<%--                             	<img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"   width="250"> --%>
+                     <c:choose>
+                     	<c:when test="${!empty LoginOK.memberImage}">
+						<img id="prfilePic" src="<c:url value='/getMemberPicture/${LoginOK.no}'/>" width="250">
+						</c:when>
+						<c:when test="${empty LoginOK.googleUrl}">
+						<img  src="<c:url value='/images/frontend/loginicon.png' />" width="250" ></c:when>
+						<c:when test="${!empty LoginOK.googleUrl}">
+						<img id="prfilePic" src="${LoginOK.googleUrl}"  width="400px"></c:when>
+					</c:choose>
+                            	
                             	<br><form:input type="file" id="uploadImage" class="form-control" 
                                 	path="uploadImage"/> 							
 							</dl>									

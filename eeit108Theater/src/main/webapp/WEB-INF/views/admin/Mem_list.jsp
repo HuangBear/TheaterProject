@@ -38,7 +38,8 @@
 									<th width='10%'>會員ID</th>
 									<th width='15%'>會員email</th>
 									<th width='8%'>會員電話</th>
-									<th width='5%'>被BAN文章數</th>
+									<th width='6%'>被BAN文章數</th>
+									<th width='5%'>email認證</th>
 									<th width='5%'>狀態</th>
 									<th width='5%'>發言狀態</th>
 								    <sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
@@ -56,6 +57,7 @@
 									<th>會員email</th>
 									<th>會員電話</th>
 									<th>被BAN文章數</th>
+									<th>email認證</th>
 									<th>狀態</th>
 									<th>發言狀態</th>
 									<sec:authorize access="hasAuthority('2') or hasAuthority('3')">	
@@ -76,7 +78,21 @@
 									<td>${mem.email}</td>
 									<td>${mem.phoneNum}</td>
 									<td>${mem.banCounter}</td>
+									
 
+									<c:choose>
+										<c:when test="${mem.emailActiveStatus == true}">
+											<td>已認證</td> 
+										</c:when>
+										<c:when test="${mem.emailActiveStatus == null}">
+											<td>Google會員</td> 
+										</c:when>
+										<c:otherwise>
+											<td>尚未認證</td>
+										</c:otherwise>
+									</c:choose>
+									
+									
 									<c:choose>
 										<c:when test="${mem.available == true}">
 											<td>一般會員</td> 
