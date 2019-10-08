@@ -17,7 +17,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-
+<link rel="shortcut icon"   href="/favicon.ico"/>
 <title>7-1 Cinema</title>
 
 <!-- Custom fonts for this template-->
@@ -45,7 +45,7 @@
 <!-- Page level plugin JavaScript-->
 <script src="vendor/chart.js/Chart.min.js"></script>
 <script type="application/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<!-- <script src="vendor/datatables/jquery.dataTables.js"></script> -->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
 <!-- Custom scripts for all pages-->
@@ -78,6 +78,7 @@
 		
 	});
 </script>
+
 
 <style type="text/css">
 .demo-bg{
