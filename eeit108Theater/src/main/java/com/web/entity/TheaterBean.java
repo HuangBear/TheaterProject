@@ -108,7 +108,7 @@ public class TheaterBean implements Serializable {
 		
 		//System.out.println("get option seat pre seat = " + Arrays.toString(preserveSeat));
 		//System.out.println("get option seat null seat = " + Arrays.toString(nullSeat));
-		System.out.println("get option seat = " + Arrays.toString(result));
+		//System.out.println("get option seat = " + Arrays.toString(result));
 		return result;
 	}
 

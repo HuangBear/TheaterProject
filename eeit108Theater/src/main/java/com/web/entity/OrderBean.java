@@ -209,7 +209,7 @@ public class OrderBean implements Serializable {
 		if(this.orderTime == null)
 			this.orderTime = new Timestamp(System.currentTimeMillis());
 		int obHash = this.hashCode();
-		char fst = (char) ('A' + (this.getOrderTime().getTime() % 26));
+		char fst = (char) ('A' + ((this.getOrderTime().getTime() * Math.random() * 100) % 26));
 		char sec = (char) ('A' + (-obHash % 13));
 		if (obHash > 0) {
 			sec = (char) ('N' + (obHash % 13));

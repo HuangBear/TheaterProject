@@ -47,29 +47,47 @@ public class EDMTableResetHibernate_Order {
 		// SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
+		List<TimeTableBean> timeList = null;
+		List<MemberBean> memberList = null;
+		Map<String, List<ProductBean>> ticketList = new HashMap<>();
+		List<ProductBean> drinkList = null;
+		List<ProductBean> foodList = null;
+
 		try {
 			tx = session.beginTransaction();
-			List<TimeTableBean> timeList = session.createQuery("FROM TimeTableBean t").list();
-			List<MemberBean> memberList = session.createQuery("FROM MemberBean").list();
+			timeList = session.createQuery("FROM TimeTableBean t").list();
+//			timeList = session.createQuery("FROM TimeTableBean t WHERE t.no = 294").list();
+			memberList = session.createQuery("FROM MemberBean").list();
 			memberList.addAll(getGuestList());
-			Map<String, List<ProductBean>> ticketList = new HashMap<>();
+			ticketList = new HashMap<>();
 			ticketList.put("2D", session.createQuery(TICKET_HQL).setParameter("version", "%2D%").list());
 			ticketList.put("3D", session.createQuery(TICKET_HQL).setParameter("version", "%3D%").list());
 			ticketList.put("IMAX", session.createQuery(TICKET_HQL).setParameter("version", "%IMAX%").list());
-			List<ProductBean> drinkList = session.createQuery(PRODUCT_HQL).setParameter("type", "drink").list();
-			List<ProductBean> foodList = session.createQuery(PRODUCT_HQL).setParameter("type", "food").list();
-			int cnt = 0;
-			int timeTableCnt = 0;
-			int totalTime = timeList.size();
-			for (TimeTableBean tb : timeList) {
+			drinkList = session.createQuery(PRODUCT_HQL).setParameter("type", "drink").list();
+			foodList = session.createQuery(PRODUCT_HQL).setParameter("type", "food").list();
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			tx.rollback();
+			System.out.println("取得資料失敗");
+		}
+		int cnt = 0;
+		int timeTableCnt = 0;
+		int totalTime = timeList.size();
+		
+//		for (int i = 0; i < 3; i++) {TimeTableBean tb = timeList.get(0);
+		for (TimeTableBean tb : timeList) {
+			session = factory.getCurrentSession();
+			try {
+				tx = session.beginTransaction();
 				timeTableCnt++;
 				int dataNum;
-				if(tb.getVersion().equals("2D"))
-					dataNum = random(1,3);
-				else if(tb.getVersion().equals("3D"))
-					dataNum = random(3,5);
+				if (tb.getVersion().equals("2D"))
+					dataNum = random(1, 5);
+				else if (tb.getVersion().equals("3D"))
+					dataNum = random(3, 8);
 				else
-					dataNum = random(1,random(5,8));
+					dataNum = random(8, 15);
 				Map<String, Boolean> seatMap = new HashMap<>();
 				List<SeatBean> tempSeatList = session.createQuery(SEAT_HQL).setParameter("tid", tb.getNo()).list();
 				for (SeatBean sb : tempSeatList) {
@@ -119,23 +137,31 @@ public class EDMTableResetHibernate_Order {
 						session.detach(theater);
 					}
 					Date orderDate = sdf.parse(tb.getStartDate());
-					int month = orderDate.getMonth();
-					orderDate.setMonth(random(0, month));
+					int month = (int) Math.ceil((Math.pow(random(1, 10000), 0.25))) - 1;
+					if (month == 9) {
+						if (dice(2, 3))
+							month = 8;
+						if(month == 8) {
+							if(dice(1,2))
+								month = 7;
+						}
+					}
+					orderDate.setMonth(month);
 					ob.setOrderTime(new Timestamp(orderDate.getTime()));
 					ob.setOrderId(ob.generateOrderId());
 					session.save(ob);
-					
+
 					System.out.println("新增一筆訂單成功 :" + ++cnt + "，時刻表：" + timeTableCnt + " / " + totalTime);
 				}
+				tx.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				tx.rollback();
+				System.out.println("新增資料失敗");
 			}
+		} // end for
 
-			tx.commit();
-			System.out.println("新增Order, OrderItem, Seat資料成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-			System.out.println("新增資料失敗");
-		}
+		System.out.println("新增Order, OrderItem, Seat資料成功");
 		factory.close();
 
 	}
@@ -168,7 +194,7 @@ public class EDMTableResetHibernate_Order {
 
 	private boolean dice(int numerator, int denominator) {
 		int random = (int) (Math.random() * denominator) + 1;
-		//System.out.println("random = " + random);
+		// System.out.println("random = " + random);
 		if (random > numerator)
 			return true;
 		return false;
@@ -188,7 +214,7 @@ public class EDMTableResetHibernate_Order {
 				BufferedReader br = new BufferedReader(isr);) {
 			while ((line = br.readLine()) != null) {
 				MemberBean guest = new MemberBean();
-				//System.out.println("line=" + line);
+				// System.out.println("line=" + line);
 				// 去除 UTF8_BOM: \uFEFF
 				if (line.startsWith(UTF8_BOM)) {
 					line = line.substring(1);

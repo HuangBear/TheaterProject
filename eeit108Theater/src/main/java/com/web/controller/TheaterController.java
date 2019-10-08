@@ -28,9 +28,9 @@ public class TheaterController {
 	@RequestMapping("/admin/theaterManagement")
 	public String allTheater(Model model) {
 		List<TheaterBean> list = tServ.getAllTheaters();
-		for (TheaterBean tb : list) {
-			System.out.println(tb.toString());
-		}
+//		for (TheaterBean tb : list) {
+//			System.out.println(tb.toString());
+//		}
 		model.addAttribute("theaters", list);
 		return pac + "allTheater";
 	}

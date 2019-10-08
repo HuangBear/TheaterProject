@@ -10,19 +10,17 @@
 <title>716影城 - 購票記錄</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" />
 
 
 <noscript>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/noscript.css" />
 </noscript>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="<c:url value='/js/order/jquery-1.12.4.min.js'/>"></script>
+<script src="<c:url value='/js/order/jquery-ui.min.js'/>"></script>
+<script src="<c:url value='/js/order/popper.min.js'/>" crossorigin="anonymous"></script>
+<script src="<c:url value='/js/order/bootstrap.min.js'/>" crossorigin="anonymous"></script>
 
 
 

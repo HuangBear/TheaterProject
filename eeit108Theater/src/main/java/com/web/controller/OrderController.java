@@ -255,7 +255,7 @@ public class OrderController {
 		String s = tServ.getTheaterStatus(tb, ob.getTimeTable().getNo());
 		model.addAttribute("seatTable", s);
 		model.addAttribute("minWidth", minWidth);
-		System.out.println(s);
+		//System.out.println(s);
 		System.err.println("====showSeat END====");
 		return pac + "seat";
 	}
