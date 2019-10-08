@@ -278,9 +278,9 @@
 						    <div id="websocketdiv">
 						   
 								<textarea id="area" class="form-control rounded-0" style="font-size: 20px; font-family: '微軟正黑體';
-								 margin-top:10px;" readonly="readonly" rows="10" cols="80"></textarea>
+								 margin-top:10px;" readonly="readonly" rows="10" cols="50"></textarea>
 								<input class="form-control rounded-0" style="font-size: 20px; font-family: '微軟正黑體';
-								 margin:10px;" type="text" id="text" size=70%  />
+								 margin:10px;" type="text" id="text" size=50%  />
 <!-- 								<input id="sendmsg" type="button" value="送出" size=40% /> -->
 								<div class="text-center col-md-12 mt-3 mb-2">			
 								<button type="button" id="sendmsg" class="btn btn-success btn-block btn-rounded z-depth-1">送出</button>
