@@ -65,7 +65,7 @@ p {
 							</div>
 							<div class="col-md-7 h2 col-xs-8">
 									<div><c:out value="(${order.timeTable.version})"/> ${order.timeTable.movieName}</div>
-									<div><c:out value="(${order.timeTable.version})"/> ${order.timeTable.movie.engMovieName}</div>
+									<div style="opacity: 0.6;"><c:out value="(${order.timeTable.version})"/> ${order.timeTable.movie.engMovieName}</div>
 								</div>
 							<div class="col-md-3 col-xs-12">
 								<div>時間 ${order.timeTable.startDate} ${order.timeTable.startTime}</div>

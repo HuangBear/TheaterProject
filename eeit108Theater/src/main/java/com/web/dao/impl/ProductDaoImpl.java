@@ -18,7 +18,8 @@ public class ProductDaoImpl implements ProductDao {
 	public Boolean isExist(Integer productNo) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.no = :no";
-		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("no", productNo).uniqueResult();
+		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("no", productNo)
+				.uniqueResult();
 		if (pb != null)
 			return true;
 		return false;
@@ -85,7 +86,8 @@ public class ProductDaoImpl implements ProductDao {
 	public ProductBean getProductByName(String productName) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.name = :name";
-		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("name", productName).uniqueResult();
+		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("name", productName)
+				.uniqueResult();
 		return pb;
 	}
 
@@ -95,7 +97,8 @@ public class ProductDaoImpl implements ProductDao {
 		// 是因為若該product在current session已取過，而又再取一次會丟exception
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.no = :no";
-		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("no", productNo).uniqueResult();
+		ProductBean pb = (ProductBean) session.createQuery(hql).setParameter("no", productNo)
+				.uniqueResult();
 		return pb;
 	}
 
@@ -131,8 +134,9 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductBean> getProductsByType(String type, Boolean available) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.type = :type AND p.available = :ava";
-		
-		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type).setParameter("ava", available).list();
+
+		List<ProductBean> pb = session.createQuery(hql).setParameter("type", type)
+				.setParameter("ava", available).list();
 		return pb;
 	}
 
@@ -151,8 +155,23 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductBean> getTicketsByVersion(String version) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ProductBean p WHERE p.name LIKE :version AND p.type = 'ticket' AND p.available = 1";
-		List<ProductBean> pb = session.createQuery(hql).setParameter("version", "%" + version + "%").list();
+		List<ProductBean> pb = session.createQuery(hql).setParameter("version", "%" + version + "%")
+				.list();
 		return pb;
 	}
+
+	// chart
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<ProductBean> getProductMemberPerMoon(Date firstDate, Date lastDate) {
+//		Session session = factory.getCurrentSession();
+//		List<ProductBean> list = new ArrayList<>();
+//		list = session
+//				.createQuery("FROM ProductBean p WHERE m.registerTime "
+//						+ "BETWEEN :fristDate and :lastDate)")
+//				.setParameter("fristDate", firstDate).setParameter("lastDate", lastDate).list();
+//		System.out.println(list);
+//		return list;
+//	}
 
 }

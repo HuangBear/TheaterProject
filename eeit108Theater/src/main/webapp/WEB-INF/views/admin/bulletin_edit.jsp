@@ -204,18 +204,18 @@
 			var o = "discountP";
 			var buy = '${bulletinBean.discountPriceBuy}';
 			var free = '${bulletinBean.discountPriceFree}';
-			$("#discountTickBuy").val(buy);
-			$("#discountTickFree").val(free);
+			$("#discountTicketBuy").val(buy);
+			$("#discountTicketFree").val(free);
 			break;
 
 		case "2":
 			// 			alert("2");
 			var i = "discount2";
 			var o = "discountT";
-			var buy = '${bulletinBean.discountTickBuy}';
-			var free = '${bulletinBean.discountTickFree}';
-			$("#discountTickBuy").val(buy);
-			$("#discountTickFree").val(free);
+			var buy = '${bulletinBean.discountTicketBuy}';
+			var free = '${bulletinBean.discountTicketFree}';
+			$("#discountTicketBuy").val(buy);
+			$("#discountTicketFree").val(free);
 			break;
 
 		default:
@@ -284,7 +284,11 @@
 		}
 	});
 	
-	<c:if test="${changeMsg != null}">$("a.hide").trigger("click")</c:if>
+
+	if (${ErrMsg.changeMsg != null}){
+		$("a.hide_but").trigger("click");
+	}
+	
 	</script>
 
 
@@ -307,6 +311,33 @@
 
 		<div class="table-responsive">
 			<div class="accordion" id="accordionExample">
+
+
+
+
+	
+				<a class="hide_but" data-toggle="modal" data-target="#changeMsgCenter">sss</a>
+				<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">${ErrMsg.changeMsg}</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
 
 				<div class="card">
 					<div class="card-header " id="headingOne">
@@ -463,11 +494,11 @@
 											</div>
 
 											<div class=" col-md-1  discountT hide">
-												<label for="discountTickBuy">買</label>
+												<label for="discountTicketBuy">買</label>
 											</div>
 
 											<div class=" col-md-4  discountT hide">
-												<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
+												<select class="custom-select " id="discountTicketBuy" name="discountTicketBuy">
 													<option value="0">購買票數</option>
 													<c:forEach begin="1" end="5" var="inputTB">
 														<option value="${inputTB}">${inputTB}</option>
@@ -476,11 +507,11 @@
 											</div>
 
 											<div class=" col-md-1  discountT hide">
-												<label for="discountTickFree">送</label>
+												<label for="discountTicketFree">送</label>
 											</div>
 
 											<div class=" col-md-4  discountT hide">
-												<select class="custom-select " id="discountTickFree" name="discountTickFree">
+												<select class="custom-select " id="discountTicketFree" name="discountTicketFree">
 													<option value="0">贈送票數</option>
 													<c:forEach begin="1" end="4" var="inputTF">
 														<option value="${inputTF}">${inputTF}</option>
@@ -508,8 +539,8 @@
 											<div class="col-md-10 ">
 
 												<div style="text-align: center">
-													<input id="btnEdit" type="submit" class='btn btn-info btn-lg  ' value="編輯送出"> 
-													<input id="btnReset" type="button"		class='btn btn-danger btn-lg' value="取消編輯">
+													<input id="btnEdit" type="submit" class='btn btn-info btn-lg  ' value="編輯送出"> <input id="btnReset" type="button"
+														class='btn btn-danger btn-lg' value="取消編輯">
 												</div>
 											</div>
 										</div>
@@ -521,7 +552,7 @@
 									</form>
 								</div>
 								<div class="col-md-5">
-									<img id="showPhoto"  width="500px" src="<c:url value='/admin/getBulletinPicture/${bulletinBean.no}' />" />
+									<img id="showPhoto" width="500px" src="<c:url value='/admin/getBulletinPicture/${bulletinBean.no}' />" />
 								</div>
 							</div>
 						</div>
@@ -544,8 +575,8 @@
 											<thead>
 												<tr>
 													<th scope="col" width="5%">#</th>
-													<th scope="col" width="25%">標題</th>
-
+													<th scope="col" width="15%">標題</th>
+													<th scope="col" width="25%">內文</th>
 													<th scope="col" width="10%">開始時間</th>
 													<th scope="col" width="10%">結束時間</th>
 													<th scope="col" width="10%">公告人</th>
@@ -556,17 +587,19 @@
 												</tr>
 											</thead>
 											<tbody>
+										
 												<c:forEach var='sb' items='${sameBulletinBean}' begin="1" varStatus="i">
 													<tr>
 														<c:if test="${sb.available}">
 															<td class="hide">${sb.no}</td>
-															<th scope="row">${i.index+1}</th>
+															<th scope="row">${i.index}</th>
 															<td class="title">${sb.title}</td>
+															<td class="title">${sb.context}</td>
 															<td>${sb.startDate}</td>
 															<td>${sb.endDate}</td>
 															<td>${sb.employee.no}</td>
 															<td><img width="20px" src="${pageContext.request.contextPath}${sb.imgUrlString}"></td>
-															<td>${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+															<td>${sb.pay}${sb.discountTicketBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTicketFree}${sb.discountPriceFree}</td>
 															<td><img name="img_effect" data-toggle="modal" data-target="#div_unavai_cont_${sb.no}" width="30px"
 																src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 															<td></td>
@@ -592,7 +625,7 @@
 																	</div>
 																	<img id="showPhoto" width="250" src="<c:url value='/admin/getBulletinPicture/${sb.no}' />" />
 																</div>
-																
+
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
 																</div>
@@ -603,6 +636,10 @@
 												</c:forEach>
 											</tbody>
 										</table>
+
+										<!-- load 視窗 -->
+
+
 									</div>
 								</div>
 							</div>
@@ -613,23 +650,6 @@
 		</div>
 		<div class="card-footer small text-muted">Updated at ${updatedTime}</div>
 
-		<!-- load 視窗 -->
-		<a class="hide" data-toggle="modal" data-target="#changeMsgCenter"></a>
-		<div class="modal fade" id="changeMsgCenter" tabindex="-1" role="dialog" aria-labelledby="changeMsgCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="changeMsgCenterTitle">系統提示</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">${ErrMsg.changeMsg}</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
-					</div>
-				</div>
-			</div>
-		</div>
+
 	</div>
 </div>

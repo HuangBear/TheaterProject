@@ -29,11 +29,11 @@ public class BulletinEquator {
 		} else if (!equator.isEquals(obb.getDiscountPriceFree(), bb.getDiscountPriceFree())) {
 			System.out.println("BulletinEquator_getDiscountPriceFree=false");
 			return false;
-		} else if (!equator.isEquals(obb.getDiscountTickBuy(), bb.getDiscountTickBuy())) {
-			System.out.println("BulletinEquator_getDiscountTickBuy=false");
+		} else if (!equator.isEquals(obb.getDiscountTicketBuy(), bb.getDiscountTicketBuy())) {
+			System.out.println("BulletinEquator_getDiscountTicketBuy=false");
 			return false;
-		} else if (!equator.isEquals(obb.getDiscountTickFree(), bb.getDiscountTickFree())) {
-			System.out.println("BulletinEquator_getDiscountTickFree=false");
+		} else if (!equator.isEquals(obb.getDiscountTicketFree(), bb.getDiscountTicketFree())) {
+			System.out.println("BulletinEquator_getDiscountTicketFree=false");
 			return false;
 //		} else if (!equator.isEquals(obb.getEmployee().getNo(), bb.getEmployeeId())) {
 //			System.out.println("BulletinEquator_getEmployee().getEmployeeId()=false");

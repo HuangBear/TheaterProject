@@ -236,7 +236,9 @@ table {
 		
 // 	});
 
-<c:if test="${changeMsg != null}">$("a.hide").trigger("click")</c:if>
+	if (${changeMsg != null}){
+		$("a.hide").trigger("click");
+	}
 </script>
 <!-- load 視窗 -->
 
@@ -431,8 +433,8 @@ table {
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
-								<th scope="col" width="20%">內文</th>
+								<th scope="col" width="15%">標題</th>
+								<th scope="col" width="25%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="5%">公告人</th>
@@ -452,7 +454,7 @@ table {
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
-									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTicketBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTicketFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<c:choose>
@@ -470,8 +472,8 @@ table {
 							</c:forEach>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
-								<th scope="col" width="20%">內文</th>
+								<th scope="col" width="15%">標題</th>
+								<th scope="col" width="25%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="5%">公告人</th>
@@ -488,8 +490,8 @@ table {
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
-								<th scope="col" width="20%">內文</th>
+								<th scope="col" width="15%">標題</th>
+								<th scope="col" width="25%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="5%">公告人</th>
@@ -510,7 +512,7 @@ table {
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
 									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;
-										${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+										${sb.pay}${sb.discountTicketBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTicketFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<c:choose>
@@ -529,8 +531,8 @@ table {
 							</c:forEach>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
-								<th scope="col" width="20%">內文</th>
+								<th scope="col" width="15%">標題</th>
+								<th scope="col" width="25%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="5%">公告人</th>
@@ -547,8 +549,8 @@ table {
 						<thead>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
-								<th scope="col" width="20%">內文</th>
+								<th scope="col" width="15%">標題</th>
+								<th scope="col" width="25%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="5%">公告人</th>
@@ -568,7 +570,7 @@ table {
 									<td>${sb.startDate}</td>
 									<td>${sb.endDate}</td>
 									<td>${sb.employee.no}</td>
-									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTickBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTickFree}${sb.discountPriceFree}</td>
+									<td><img width="30px" src="${pageContext.request.contextPath}${sb.imgUrlString}">&emsp;${sb.pay}${sb.discountTicketBuy}${sb.discountPriceBuy}${sb.free}${sb.discountTicketFree}${sb.discountPriceFree}</td>
 									<td><img name="context_box" id="context_box_${sb.no}" data-toggle="modal" data-target="#exampleModalCenter" width="30px"
 										src="${pageContext.request.contextPath}/images/icons/backstage/bulletin/context.png"></td>
 									<td></td>
@@ -585,8 +587,8 @@ table {
 							</c:forEach>
 							<tr>
 								<th scope="col" width="5%">#</th>
-								<th scope="col" width="20%">標題</th>
-								<th scope="col" width="20%">內文</th>
+								<th scope="col" width="15%">標題</th>
+								<th scope="col" width="25%">內文</th>
 								<th scope="col" width="10%">開始時間</th>
 								<th scope="col" width="10%">結束時間</th>
 								<th scope="col" width="5%">公告人</th>

@@ -108,7 +108,7 @@ public class EmailServiceImpl implements EmailService {
 								"<tfoot>"+
 									"<tr>"+
 										"<td colspan='2'>"+
-											"<div style='text-align:center;color:cornflowerblue'><b>7-1CINEMA</b></div>"+
+											"<div style='text-align:center;color:cornflowerblue'><b>716 CINEMA</b></div>"+
 										"</td>"+
 									"</tr>"+
 								"</tfoot>" +

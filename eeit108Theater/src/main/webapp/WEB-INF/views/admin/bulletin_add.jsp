@@ -115,14 +115,24 @@
 		});
 	});
 	//一鍵輸入
-	$('#oneSet').click(function() {
-		$('#title').val('開幕限時優惠');
-		$('#context').val('慶開幕，開幕優惠期間到716電影院看電影，兩人同行沒有優惠，五人同行還是沒有，不管來幾個都沒有!!!');
+	$('#oneSet1').click(function() {
+		$('#title').val('2019/10/09 純公告測試，雙十連假特殊活動');
+		$('#context').val('告急告急!!!\n雙十連假慶開幕，開幕優惠期間到716電影院看電影，兩人同行沒有優惠，五人同行還是沒有，不管來幾個都沒有!!!');
 		$('#from').val('2019-10-10');
 		$('#to').val('2019-11-11');
 		$('[name=disount]').val('0');
-		$('#discountTickBuy').val('');
-		$('#discountTickFree').val('');
+		$('#discountTicketBuy').val('');
+		$('#discountTicketFree').val('');
+	});
+	
+	$('#oneSet2').click(function() {
+		$('#title').val('2019/10/09 現金折扣公告測試，雙十連假優惠活動');
+		$('#context').val('來了來了終於有優惠了!!!\n千呼喚換終於有折扣，消費滿兩千送兩百!!!\n兩千送兩百!!!');
+		$('#from').val('2019-10-10');
+		$('#to').val('2019-11-11');
+		$('[name=disount]').val('1');
+		$('#discountTicketBuy').val('2000');
+		$('#discountTicketFree').val('200');
 	});
 
 	$("#bulletinBean").submit(function(event) {
@@ -157,18 +167,18 @@
 			var o = "discountP";
 			var buy = '${bulletinBean.discountPriceBuy}';
 			var free = '${bulletinBean.discountPriceFree}';
-			$("#discountTickBuy").val(buy);
-			$("#discountTickFree").val(free);
+			$("#discountTicketBuy").val(buy);
+			$("#discountTicketFree").val(free);
 			break;
 
 		case "2":
 			// 			alert("2");
 			var i = "discount2";
 			var o = "discountT";
-			var buy = '${bulletinBean.discountTickBuy}';
-			var free = '${bulletinBean.discountTickFree}';
-			$("#discountTickBuy").val(buy);
-			$("#discountTickFree").val(free);
+			var buy = '${bulletinBean.discountTicketBuy}';
+			var free = '${bulletinBean.discountTicketFree}';
+			$("#discountTicketBuy").val(buy);
+			$("#discountTicketFree").val(free);
 			break;
 
 		default:
@@ -255,7 +265,6 @@
 											<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 										</div>
 
-
 										<div class="form-row  mb-5 mt-3 ">
 											<div class="col-md-5  ">
 												<div class="custom-control custom-radio">
@@ -264,6 +273,7 @@
 												</div>
 											</div>
 										</div>
+										
 										<div class="form-row mb-5">
 											<div class="col-md-2  ">
 												<div class="custom-control custom-radio">
@@ -301,11 +311,11 @@
 											</div>
 
 											<div class=" col-md-1  discountT hide">
-												<label for="discountTickBuy">買</label>
+												<label for="discountTicketBuy">買</label>
 											</div>
 
 											<div class=" col-md-4  discountT hide">
-												<select class="custom-select " id="discountTickBuy" name="discountTickBuy">
+												<select class="custom-select " id="discountTicketBuy" name="discountTicketBuy">
 													<option value="0">購買票數</option>
 													<c:forEach begin="1" end="5" var="inputTB">
 														<option value="${inputTB}">${inputTB}</option>
@@ -314,11 +324,11 @@
 											</div>
 
 											<div class=" col-md-1  discountT hide">
-												<label for="discountTickFree">送</label>
+												<label for="discountTicketFree">送</label>
 											</div>
 
 											<div class=" col-md-4  discountT hide">
-												<select class="custom-select " id="discountTickFree" name="discountTickFree">
+												<select class="custom-select " id="discountTicketFree" name="discountTicketFree">
 													<option value="0">贈送票數</option>
 													<c:forEach begin="1" end="4" var="inputTF">
 														<option value="${inputTF}">${inputTF}</option>
@@ -346,7 +356,7 @@
 											<div class="col-md-10 ">
 
 												<div style="text-align: center">
-													<input id="oneSet" type="button" value="一鍵輸入" class='btn btn-secondary'> <input id="btnAdd" type='submit' value="新增公告"
+													<input id="oneSet1" type="button" value="純公告" class='btn btn-secondary'> <input id="oneSet2" type="button" value="優惠公告" class='btn btn-secondary'> <input id="btnAdd" type='submit' value="新增公告"
 														class='btn btn-primary'>
 												</div>
 											</div>

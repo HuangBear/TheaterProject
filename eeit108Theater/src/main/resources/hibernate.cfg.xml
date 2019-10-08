@@ -39,7 +39,10 @@
 		<mapping class="com.web.entity.ReplyBean"></mapping>
 		<mapping class="com.web.entity.ReportBean"></mapping>
 		<mapping class="com.web.entity.LikeOrDislikeBean"></mapping>
-		<mapping class="com.web.entity.ReportBean"></mapping>
+		<mapping class="com.web.entity.SysTagBean"></mapping>
+		<mapping class="com.web.entity.TagBean"></mapping>
+		<mapping class="com.web.entity.ATypeBean"></mapping>
+		<mapping class="com.web.entity.TheaterBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>

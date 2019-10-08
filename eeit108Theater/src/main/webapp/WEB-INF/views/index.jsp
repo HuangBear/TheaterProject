@@ -23,13 +23,6 @@
 </script>
 
 <style>
-<<<<<<< HEAD
-
-	.foo1:hover{color:#f5ad56;}
-=======
->>>>>>> refs/remotes/RemoteBear/master
-
-<<<<<<< HEAD
 /* 	.t1{width:600 ; height:480px ; text-align:center} */
 /* 	.tr{width:300 ; height:240px ; text-align:center} */
 /* 	.td{width:300 ; height:240px ; text-align:center} */
@@ -38,12 +31,9 @@
 /* 	height:150px; */
 /* 	margin:auto; */
 /* 	margin-left:10px; */
-=======
-
-	.foo1:hover {
+.foo1:hover {
 	color: #f5ad56;
 }
->>>>>>> refs/remotes/RemoteBear/master
 
 .t1 {
 	width: 600;
@@ -352,7 +342,7 @@ table {
 						<p>
 						<div style="margin: 0px auto">
 							<a id='ticketing' href="<c:url value='/order/showProducts?time=${StartTime.no}'/>"><button type='button' id='submit'>前往訂票</button></a>
-							<button class="" id="" onclick="ShowR()">查詢座位</button>
+							<a id='peekSeat' target="_blank"><button type="button">查詢座位</button></a>
 						</div>
 					</form>
 					<p>
@@ -406,6 +396,34 @@ table {
 		$(document).ready(function() {
 			$("#speed").change(function() {
 				var selectedMovie = $("#speed option:selected").text();
+				$("#salutation").empty();
+				$('#salutation').append($('<option></option>').val('').text('請選擇查詢場次'));
+				$.ajax({
+					url : "<c:url value = '/getVersion' />",
+					data : {
+						"movieName" : selectedMovie
+					},
+					dataType : 'json',
+					type : "GET",
+					success : function(data) {
+						console.log(data);
+						if (data.length > 0) {
+							$.each(data, function(i, item) {
+								$('#number').empty();
+								$('#number').append($('<option></option>').val('').text('請選擇查詢廳次'));
+								$('#number').append($('<option></option>').text(data[i]));
+							});
+						}
+					}
+				});
+			});
+
+			$("#files").change(function() {
+				$("#salutation").empty();
+				$('#salutation').append($('<option></option>').val('').text('請選擇查詢場次'));
+				var selectedMovie = $("#speed option:selected").text();
+				var selectedVersion = $("#number option:selected").text();
+				var selectedDate = $("#files option:selected").text();
 				$.ajax({
 					url : "<c:url value = '/getVersion' />",
 					data : {
@@ -423,7 +441,27 @@ table {
 							});
 						}
 					}
-				})
+				});
+				$.ajax({
+					url : "<c:url value = '/getStartTimes' />",
+					data : {
+						"movieName" : selectedMovie,
+						"version" : selectedVersion,
+						"Date" : selectedDate
+					},
+					dataType : 'json',
+					type : "GET",
+					success : function(data) {
+						console.log(data);
+						if (data.length > 0) {
+							$('#salutation').empty();
+							$('#salutation').append($('<option></option>').val('').text('請選擇查詢時刻'));
+							$.each(data, function(i, item) {
+								$('#salutation').append($('<option></option>').text(data[i]));
+							});
+						}
+					}
+				});
 			});
 			$("#number").change(function() {
 				var selectedMovie = $("#speed option:selected").text();
@@ -445,10 +483,12 @@ table {
 							$('#salutation').append($('<option></option>').val('').text('請選擇查詢時刻'));
 							$.each(data, function(i, item) {
 								$('#salutation').append($('<option></option>').text(data[i]));
-							});
+							});	
+						} else {
+							$('#salutation').append($('<option></option>').text("本日無上映時間"));
 						}
 					}
-				})
+				});
 			});
 			$("#salutation").change(function() {
 				var selectedMovie = $("#speed option:selected").text();
@@ -468,6 +508,7 @@ table {
 					success : function(data) {
 						console.log(data[0]);
 						$("#ticketing").attr("href", "/eeit108Theater/order/showProducts?time=" + data[0]);
+						$("#peekSeat").attr("href", "/eeit108Theater/order/peekSeat?time=" + data[0]);
 					}
 				})
 			});

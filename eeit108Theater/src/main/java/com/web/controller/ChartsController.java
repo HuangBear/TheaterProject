@@ -66,6 +66,7 @@ public class ChartsController {
 		ChartContainer discount0Count = new ChartContainer();
 		ChartContainer discount1Count = new ChartContainer();
 		ChartContainer discount2Count = new ChartContainer();
+
 		List<Integer> totalCountList = new ArrayList<>();
 		ChartContainer totalCount = new ChartContainer();
 		List<ChartContainer> speciesPerMoon = new ArrayList<>();
@@ -101,16 +102,18 @@ public class ChartsController {
 				{
 				case 0:
 					discount0++;
+					discount0Count.setCount(discount0);
 					cc.setChartMap("discount0", discount0);
 					break;
 				case 1:
 					discount1++;
+					discount1Count.setCount(discount1);
 					cc.setChartMap("discount1", discount1);
 					break;
 				case 2:
 					discount2++;
+					discount2Count.setCount(discount2);
 					cc.setChartMap("discount2", discount2);
-
 					break;
 				}
 				b++;
@@ -121,12 +124,11 @@ public class ChartsController {
 			buelltinPerMoon.add(bulletinCount);
 			totalCount.setCount(b);
 			totalCountList.add(totalCount.getCount());
-			discount0Count.setCount(discount0);
-			discount1Count.setCount(discount1);
-			discount2Count.setCount(discount2);
+//			discount0Count.setCount(discount0);
+//			discount1Count.setCount(discount1);
+//			discount2Count.setCount(discount2);
 			System.out.println("inputKey=" + inputKey);
 			System.out.println("次數=" + b);
-
 		}
 		Chart2jsp chart2jsp = new Chart2jsp();
 		chart2jsp.setIncreasePerMoon(buelltinPerMoon);
@@ -134,29 +136,21 @@ public class ChartsController {
 		chart2jsp.setSpeciesPerMoon(speciesPerMoon);
 
 		ChartContainer Fir = new ChartContainer();
-		Fir.setChartMap("純公告", discount0Count.getCount());
+		Fir.setChartMap("單純公告", discount0Count.getCount());
 		chart2jsp.setFir(Fir);
 
 		ChartContainer Sec = new ChartContainer();
-		Sec.setChartMap("純公告", discount1Count.getCount());
+		Sec.setChartMap("現金折扣", discount1Count.getCount());
 		chart2jsp.setSec(Sec);
 
 		ChartContainer Thi = new ChartContainer();
-		Thi.setChartMap("純公告", discount2Count.getCount());
+		Thi.setChartMap("票券折扣", discount2Count.getCount());
 		chart2jsp.setThi(Thi);
 
 		chart2jsp.setStr1("公告");
 
 		return chart2jsp;
 	}
-
-//	@RequestMapping(value = "/allBulletin", method = RequestMethod.GET, produces = "application/pdf")
-//	public String queryAllBulletinPDF(Model model) {
-//
-////		List<BulletinBean> members = service.getBuelltinPerMoon();
-////		model.addAttribute("allMembers", members);
-//		return "_01/cnvr/showMembers";
-//	}
 
 //	memberPerMoon
 	public Chart2jsp memberPerMoon(HttpSession session) {
@@ -200,26 +194,25 @@ public class ChartsController {
 				{
 				case 1:
 					gender1++;
-//					speciesPerMoon.add(gender1);
+					male.setCount(gender1);
 					break;
 				case 2:
 					gender2++;
-//					speciesPerMoon.add(gender2);
+					female.setCount(gender2);
 					break;
 				case 0:
 					gender0++;
+					noInf.setCount(gender0);
 					break;
 				}
 				b++;
 			}
+
 			ChartContainer memberCount = new ChartContainer();
 			memberCount.setChartMap(inputKey, b);
 			memberPerMoon.add(memberCount);
 			totalCount.setCount(b);
 			totalCountList.add(totalCount.getCount());
-			male.setCount(gender1);
-			female.setCount(gender2);
-			noInf.setCount(gender0);
 			System.out.println("inputKey=" + inputKey);
 			System.out.println("次數=" + b);
 		}
@@ -238,7 +231,7 @@ public class ChartsController {
 
 		ChartContainer Thi = new ChartContainer();
 		Thi.setChartMap("未知", noInf.getCount());
-		chart2jsp.setSec(Thi);
+		chart2jsp.setThi(Thi);
 
 		chart2jsp.setStr1("會員");
 
