@@ -94,9 +94,9 @@
 <script>
 	$('#oneSet').click(function() {
 
-		$('#email').val('AzureBear@gmail.com');
-		$('#employeeId').val('A129111976');
-		$('#name').val('小池熊');
+		$('#email').val('BearLOVETOM@gmail.com');
+		$('#employeeId').val('A129384938');
+		$('#name').val('小熊');
 		$('#phoneNum').val('66316666');
 		$('#password').val('1234');
 		$('#gender').val('1');

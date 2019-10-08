@@ -131,8 +131,12 @@
 		$('#from').val('2019-10-10');
 		$('#to').val('2019-11-11');
 		$('[name=disount]').val('1');
-		$('#discountTicketBuy').val('2000');
-		$('#discountTicketFree').val('200');
+		document.getElementById('discount1').setAttribute("checked", "checked");
+		var targete = $('.discountP');
+		$(".hide").not(targete).hide();
+		$(targete).show();
+		$('#discountPriceBuy').val('1000');
+		$('#discountPriceFree').val('716');
 	});
 
 	$("#bulletinBean").submit(function(event) {
@@ -228,27 +232,29 @@
 										<div class="form-row mb-5 mt-1">
 											<div class="col-md-2">
 												<label for="title">標題:</label>
+												<br><a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
 											</div>
 											<div class="col-md-10">
 												<input class="form-control " id="title" name="title" type="text" placeholder="輸入標題,請勿超過50字" maxlength="50" value="${bulletinBean.title}"
 													class="form-control">
 											</div>
-											<a style="color: red;">${ErrMsg.titleNull}${ErrMsg.titleOver}</a>
+										
 										</div>
 
 										<div class="form-row  mb-5 ">
 											<div class="col-md-2">
 												<label class="context">公告內容:</label>
+												<br><a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 											</div>
 											<div class="col-md-10">
 												<textarea id="context" class="form-control " name="context" placeholder="輸入公告內容，字數請勿大於300字 " maxlength="300" class="form-control">${bulletinBean.context}</textarea>
 											</div>
-											<a style="color: red;">${ErrMsg.contextNull}${ErrMsg.contextOver}</a>
 										</div>
 
 										<div class="form-row mb-5 ">
 											<div class="col-md-2">
-												<label>公告有效時間</label>
+												<label>公告有效時間</label> <br>
+												<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 											</div>
 											<div class="col-md-1">
 												<label for="from">開始</label>
@@ -262,7 +268,6 @@
 											<div class="col-md-4">
 												<input type="text" id="to" name="to" class="form-control" id="endDate" value="${bulletinBean.endDate}" />
 											</div>
-											<a style="color: red;">${ErrMsg.dateChoice}${ErrMsg.datePassOver}</a>
 										</div>
 
 										<div class="form-row  mb-5 mt-3 ">
@@ -273,12 +278,12 @@
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="form-row mb-5">
 											<div class="col-md-2  ">
 												<div class="custom-control custom-radio">
 													<input type="radio" class="custom-control-input" id="discount1" name="discount" value="1" /> <label class="custom-control-label" for="discount1">現金折扣</label>
-													<a style="color: red;">${ErrMsg.discountP}</a>
+													<br><a style="color: red;">${ErrMsg.discountP}</a>
 												</div>
 											</div>
 
@@ -306,7 +311,7 @@
 											<div class="col-md-2 ">
 												<div class="custom-control custom-radio">
 													<input type="radio" class="custom-control-input" id="discount2" name="discount" value="2" /> <label class="custom-control-label" for="discount2">票券折扣</label>
-													<a style="color: red;">${ErrMsg.discountT}</a>
+													<br><a style="color: red;">${ErrMsg.discountT}</a>
 												</div>
 											</div>
 
@@ -344,7 +349,7 @@
 											<div class="col-md-10 mb-3">
 												<div class="custom-file">
 													<input type="file" class="custom-file-input" id="bulletinImage" name="bulletinImage"> <label class="custom-file-label" for="bulletinImage">只支援jpg/png/jpeg。使用者不上傳時會有預設圖片</label>
-													<a style="color: red;">${ErrMsg.photo}</a>
+													<br><a style="color: red;">${ErrMsg.photo}</a>
 												</div>
 											</div>
 										</div>
@@ -356,15 +361,15 @@
 											<div class="col-md-10 ">
 
 												<div style="text-align: center">
-													<input id="oneSet1" type="button" value="純公告" class='btn btn-secondary'> <input id="oneSet2" type="button" value="優惠公告" class='btn btn-secondary'> <input id="btnAdd" type='submit' value="新增公告"
-														class='btn btn-primary'>
+													<input id="oneSet1" type="button" value="純公告" class='btn btn-secondary'> <input id="oneSet2" type="button" value="優惠公告"
+														class='btn btn-secondary'> <input id="btnAdd" type='submit' value="新增公告" class='btn btn-primary'>
 												</div>
 											</div>
 										</div>
 									</form>
 								</div>
 								<div class="col-md-5">
-									<img id="showPhoto"  width="500px" />
+									<img id="showPhoto" width="500px" />
 								</div>
 							</div>
 						</div>

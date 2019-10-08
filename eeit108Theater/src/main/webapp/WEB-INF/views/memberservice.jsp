@@ -69,7 +69,7 @@
 				</h2>
 				
 				<div class="sv1">
-					<div class="sv2">
+					<div class="sv2" style="margin-top:10px">
 						<button class="button1" id="login" onclick="ShowL()">會員登入</button>
 						<button class="button2" id="signin" onclick="ShowR()">訪客註冊</button>
 					</div>
@@ -87,7 +87,7 @@
 								<form:input id="email" path="email" class="text" type="text"
 									placeholder="請輸入會員email" tabindex="1" autocomplete="off"
 									value="${cookie.account.value}" maxlength="50"  />  
-									   <!-- autofocus="autofocus" --></dd>
+									   </dd>
 							</dl>
 							<dl>
 							<dd>
@@ -100,16 +100,15 @@
 							
 							<dl>
 							<dd>
-								
-				            	
-								
 								<form:button  type="submit"  style="font-size: 20px;width: 450px; height: 60px;">
 									 登入</form:button><br></dd></dl>
 									 
-								<dl><dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
-									 重填</form:button><br>	
+							<dl>
+							<dd><form:button  type="reset" style="font-size: 20px;width: 450px; height: 60px;">
+									 重填</form:button><br><hr>
+							 
 						        <button type="button" id="oneSet" >一鍵填入 會員:Azure</button>
-				
+				 				<button type="button" id="oneSet2" >一鍵填入 會員:Taiger</button>
 								
 							</dd>
 							</dl>
@@ -160,7 +159,15 @@
 		
 			$('#password').val('Do!ng123');
 		
-			})
+			});
+			$('#oneSet2').click(function() {
+
+				$('#email').val('taigeranan@gmail.com');
+			
+				$('#password').val('Do!ng123');
+			
+				})
+			
 			</script>
 		
 			<script>
@@ -184,21 +191,21 @@
 								<label for="name" style="text-align:left">*您的姓名：</label>
 								<form:input id="name" path="name" class="text" type="text"
 									placeholder="請輸入姓名" tabindex="1" autocomplete="off"
-									maxlength="50"  />     
+									maxlength="50" required="required" />     
 							</dl>
 							<dl>
 							<dd>
 								<label for="email" style="text-align:left">*電子信箱：</label>
 								<form:input id="email1" path="email" class="text"
 									type="text" placeholder="請輸入e-mail" tabindex="2"
-									autocomplete="off" maxlength="50" />
+									autocomplete="off" maxlength="50" required="required" />
 							</dl>
 							<dl>
 							<dd>
 								<label for="phoneNum" style="text-align:left">*行動電話：</label>
 								<form:input id="phoneNum" path="phoneNum" class="text"
 									type="text" placeholder="請輸入行動電話號碼" tabindex="2"
-									autocomplete="off" maxlength="50" />
+									autocomplete="off" maxlength="50" required="required" />
 							</dl>
 							
 							<dl>
@@ -206,7 +213,7 @@
 								<label for="account" style="text-align:left">*密碼：</label>
 								<form:input id="password1" path="password" class="text"
 									type="password" placeholder="請輸入密碼 (英文大小寫有差別 )" tabindex="2"
-									autocomplete="off" maxlength="50" />
+									autocomplete="off" maxlength="50" required="required" />
 							</dl>
 
 
@@ -216,14 +223,14 @@
 								<label for="memberId" style="text-align:left">*身分證字號：</label>
 								<form:input id="memberId" path="memberId" class="text"
 									type="text" placeholder="請輸入身分證字號" tabindex="2"
-									autocomplete="off" maxlength="50" />
+									autocomplete="off" maxlength="50" required="required"/>
 							</dl>
 							<dl>
 							<dd>
 								<label for="birthday" style="text-align:left">*生日：</label>
 								<form:input id="birthdayString" path="birthdayString" class="text"
 									type="date" placeholder="請輸入出生年月日" tabindex="2"
-									autocomplete="off" maxlength="50" />
+									autocomplete="off" maxlength="50" required="required"/>
 							</dl>
 							<dl>
 							<dd>
@@ -240,12 +247,14 @@
 							<dl>
 							<dd>
 								<a><input id="submit" type="submit" value="註冊"
+									style="font-size: 20px; width: 450px; height: 60px;margin-bottom:10px"></a>
+								<a><input id="reset" type="reset" value="重填"
 									style="font-size: 20px; width: 450px; height: 60px;"></a>
 							</dd>
 							</dl>
 								<input id="type" name="form" type='hidden' value='true' />
-								<button type="button" id="oneSetRegister" >一鍵填入 新會員:Joker</button>
-								
+								<button type="button" id="oneSetRegister" >一鍵填入 舊會員:Joker</button>
+								<button type="button" id="oneSetRegister2" >一鍵填入 新會員:Taiger</button>
 							
 					            
 						</form:form>
@@ -256,14 +265,24 @@
 				<script>
 			$('#oneSetRegister').click(function() {
 
-			$('#name').val('eeit_Joker');
-			$('#email1').val('eeit108Joker@gmail.com');
+			$('#name').val('Joker');
+			$('#email1').val('Joker_eeit@gmail.com');
 			$('#phoneNum').val('6631666');
-			$('#memberId').val('G66547364');
+			$('#memberId').val('G354667690');
 			$('#birthdayString').val('1990-01-01');
 			$('#password1').val('Do!ng123');
 		
-			})
+			});
+			$('#oneSetRegister2').click(function() {
+
+				$('#name').val('Taiger');
+				$('#email1').val('taigeranan@gmail.com');
+				$('#phoneNum').val('6631666');
+				$('#memberId').val('F254658767');
+				$('#birthdayString').val('1990-03-01');
+				$('#password1').val('Do!ng123');
+			
+				});
 			</script>
 	
 					</article>
