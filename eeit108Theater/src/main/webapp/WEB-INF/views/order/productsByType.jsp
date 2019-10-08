@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Products By Type</title>
+<title>選擇商品</title>
 <link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/css/order/bootstrap.min.css'/>" crossorigin="anonymous">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />

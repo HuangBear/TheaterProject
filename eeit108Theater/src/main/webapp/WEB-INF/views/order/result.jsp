@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Result</title>
+<title>交易結果</title>
 <link rel="stylesheet" href="<c:url value='/css/order/bootstrap.min.css'/>" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
@@ -84,7 +84,7 @@ p {
 											<div class="h2">
 												<strong>取票序號 : ${order.orderId}</strong>
 											</div>
-											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，請妥善保存取票序號及訂購人資料以便日後查詢該筆訂單</small>
+											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，並已經將相關資訊寄送到您的信箱，請妥善保存取票序號及訂購人資料以便日後查詢該筆訂單</small>
 										</th>
 									</tr>
 								</thead>

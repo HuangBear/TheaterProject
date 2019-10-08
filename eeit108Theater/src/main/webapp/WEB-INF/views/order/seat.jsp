@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Seat</title>
+<title>選擇座位</title>
 <link rel="stylesheet" href="<c:url value='/css/order/bootstrap.min.css'/>" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css/order/jquery-ui.min.css'/>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
