@@ -181,12 +181,12 @@
 							<c:choose>
 								<c:when test="${reply.available==true}">
 
-									<pre class="title_width" style="margin: 25px">${reply.content}</pre>
+									<pre class="title_width" style="white-space: pre-wrap;margin: 25px">${reply.content}</pre>
 
 								</c:when>
 								<c:when test="${reply.available==false}">
 
-									<pre class="title_width" style="margin: 25px">這篇回覆已經被封鎖</pre>
+									<pre class="title_width" style="white-space: pre-wrap;margin: 25px">這篇回覆已經被封鎖</pre>
 
 								</c:when>
 							</c:choose>

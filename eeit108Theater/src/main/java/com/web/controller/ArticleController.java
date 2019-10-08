@@ -231,6 +231,10 @@ public class ArticleController {
 		{
 			errorMessage.put("ContentInsufficient", "字數要超過20字");
 		}
+		else if (ab.getContent().length() > 250)
+		{
+			errorMessage.put("ContentInsufficient", "字數不要超過250字");
+		}
 		ATypeBean atbf = service.getAT(1);
 		ATypeBean atbt = service.getAT(2);
 		
@@ -321,6 +325,10 @@ public class ArticleController {
 		{
 			errorMessage.put("ContentInsufficient", "字數要超過20字");
 		}
+		else if (ab.getContent().length() > 250)
+		{
+			errorMessage.put("ContentInsufficient", "字數不要超過250字");
+		}
 		
 		ATypeBean atbf = service.getAT(1);
 		ATypeBean atbt = service.getAT(2);
@@ -341,7 +349,7 @@ public class ArticleController {
 		int MovieS = Integer.parseInt(request.getParameter("movieString"));
 		ab.setMovie(service.getMovieByNo(MovieS));
 		ab.setAvailable(true);
-		
+		ab.setContent(request.getParameter("content"));
 		if(ab.getReport()==null)
 		{
 			ab.setReport(false);
@@ -567,6 +575,14 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		if (rb.getContent() == null || rb.getContent().trim().length() == 0)
+		{
+			errorMessage.put("ContentNull", "請輸入內容");
+		} else if (rb.getContent().length() > 50)
+		{
+			errorMessage.put("ContentInsufficient", "字數不能超過50字");
+		}
 		System.out.println("==postString=="+request.getParameter("postTimeString"));
 		System.out.println("==postString=="+request.getParameter("noString"));
 		ArticleBean ab = service.getArticleById(no);
@@ -583,8 +599,7 @@ public class ArticleController {
 		System.out.println("content=" + rb.getContent());
 		System.out.println("postTime=" + rb.getPostTime());
 		
-		service.addReport(rb);
-		service.editArticle(ab);
+		
 		String ArticleNoS =Integer.toString(ab.getNo());
 
 		if (!errorMessage.isEmpty())
@@ -592,6 +607,8 @@ public class ArticleController {
 			return "addReport";
 		} else
 		{
+			service.addReport(rb);
+			service.editArticle(ab);
 			return "redirect:/Article?id="+ArticleNoS;
 		}
 		

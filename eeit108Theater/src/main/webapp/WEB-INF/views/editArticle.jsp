@@ -157,7 +157,7 @@ word-wrap:break-word; /* Internet Explorer 5.5+ */
 								<div class="col-lg-10">
 									<form:textarea id="content" path="content"
 										value='${Article.content}' cols="40" rows="20"
-										class='form:input-large' style="word-break:break-all" onKeyDown='if (this.value.length>=250){event.returnValue=false}' />
+										class='form:input-large' onKeyDown='if (this.value.length>=250){event.returnValue=false}' />
 								</div>
 								<a style="color: red;">${ErrMsg.ContentNull}${ErrMsg.ContentInsufficient}</a>
 							</div>
