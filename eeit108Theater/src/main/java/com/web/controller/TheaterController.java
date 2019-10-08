@@ -55,14 +55,22 @@ public class TheaterController {
 		} else {
 			tb.setPreserveSeat(seat);
 		}
-		tServ.update(tb);
+		try {
+			tServ.update(tb);
+			model.addAttribute("message", true);
+			model.addAttribute("sysMsg", "修改" + tb.getTheater() + "成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("message", true);
+			model.addAttribute("errMsg", "修改" + tb.getTheater() + "失敗");
+		}
 		System.out.println(Arrays.toString(seat));
-		String status = tServ.getTheaterStatus(tb);
+		String status = tServ.getTheaterStatus(tb.getTheater());
 		model.addAttribute("seatTable", status);
 		model.addAttribute("minWidth", tb.getTheaterWidth());
 		model.addAttribute("theater", tb.getTheater());
 		model.addAttribute("theaterNo", theaterNo);
-		return pac + "modifyTheater";
+		return "forward:/theater/adjustResult";
 	}
 
 	@RequestMapping(value = "/theater/redesign", method = RequestMethod.GET)
@@ -85,14 +93,22 @@ public class TheaterController {
 		} else {
 			tb.setNullSeat(seat);
 		}
-		tServ.update(tb);
+		try {
+			tServ.update(tb);
+			model.addAttribute("message", true);
+			model.addAttribute("sysMsg", "重新規劃" + tb.getTheater() + "成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("message", true);
+			model.addAttribute("errMsg", "重新規劃" + tb.getTheater() + "失敗");
+		}
 		System.out.println("design seat = " + Arrays.toString(seat));
-		String status = tServ.getTheaterStatus(tb);
+		String status = tServ.getTheaterStatus(tb.getTheater());
 		model.addAttribute("seatTable", status);
 		model.addAttribute("minWidth", tb.getTheaterWidth());
 		model.addAttribute("theater", tb.getTheater());
 		model.addAttribute("theaterNo", theaterNo);
-		return pac + "redesignTheater";
+		return "forward:/theater/adjustResult";
 	}
 
 	@RequestMapping(value = "/theater/new", method = RequestMethod.GET)
@@ -109,6 +125,7 @@ public class TheaterController {
 	@RequestMapping(value = "/theater/new", method = RequestMethod.POST)
 	public String newTheaterConfirm(Model model, HttpSession session, @SessionAttribute("newTheater") TheaterBean tb,
 			HttpServletRequest req) {
+		System.out.println("new POST");
 		tb.setTheater(req.getParameter("theater"));
 		tb.setZone(Integer.valueOf(req.getParameter("zone")));
 		tb.setRowCnt(Integer.valueOf(req.getParameter("rowCnt")));
@@ -121,12 +138,23 @@ public class TheaterController {
 		} else {
 			tb.setNullSeat(req.getParameterValues("seat"));
 		}
-		tServ.save(tb);
-		session.removeAttribute("newTheater");
-		// String status = tServ.getTheaterStatus(tb);
-		// model.addAttribute("seatTable", status);
-		// model.addAttribute("minWidth", tb.getTheaterWidth());
-		return "redirect:/admin/theaterManagement";
+		try {
+			session.removeAttribute("newTheater");
+			tServ.save(tb);
+			model.addAttribute("message", true);
+			model.addAttribute("sysMsg", "新增" + tb.getTheater() + "成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("message", true);
+			model.addAttribute("errMsg", "新增" + tb.getTheater() + "失敗");
+			return "forward:/admin/theaterManagement";
+		}
+		String status = tServ.getTheaterStatus(tb.getTheater());
+		model.addAttribute("seatTable", status);
+		model.addAttribute("minWidth", tb.getTheaterWidth());
+		model.addAttribute("theater", tb.getTheater());
+		//model.addAttribute("theaterNo", theaterNo);
+		return "forward:/theater/adjustResult";
 	}
 
 	@RequestMapping("/theater/refresh")
@@ -147,7 +175,7 @@ public class TheaterController {
 		String status = tServ.getTheaterStatus(tb);
 		model.addAttribute("seatTable", status);
 		model.addAttribute("minWidth", tb.getTheaterWidth());
-		return pac + "newTheater";
+		return pac + "refreshTheater";
 	}
 
 	@RequestMapping("/theater/detail")
@@ -159,9 +187,15 @@ public class TheaterController {
 		model.addAttribute("theater", tb.getTheater());
 		return pac + "detailTheater";
 	}
+	
+	@RequestMapping("/theater/adjustResult")
+	public String adjustResult() {
+		return pac + "detailTheater";
+	}
+
 	@RequestMapping("/theater/preview")
-	public String previewTheater(Model model, @SessionAttribute("newTheater") TheaterBean tb,HttpServletRequest req) {
-		//TheaterBean tb = tServ.getTheaterByNo(theaterNo);
+	public String previewTheater(Model model, @SessionAttribute("newTheater") TheaterBean tb, HttpServletRequest req) {
+		// TheaterBean tb = tServ.getTheaterByNo(theaterNo);
 		tb.setTheater(req.getParameter("theater"));
 		tb.setZone(Integer.valueOf(req.getParameter("zone")));
 		tb.setRowCnt(Integer.valueOf(req.getParameter("rowCnt")));

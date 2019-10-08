@@ -9,27 +9,30 @@
 /* 	opacity: 1; */
 /* } */
 div#legend label.preserve {
- 	background-color: rgb(255, 214, 78); 
-	border-color: rgb(255, 196, 0); 
-	opacity: 1; 
- } 
-
-.ui-state-active,ui-button:active{
-	background-color: rgb(255, 214, 78) !important;
-	border-color: rgb(255, 196, 0)!important;
-	opacity: 1;
-}
-.ui-button:active{
-	background-color: rgb(255, 214, 78) !important;
-	border-color: rgb(255, 196, 0)!important;
-}
-.ui-state-active.ui-button:active{
 	background-color: rgb(255, 214, 78);
 	border-color: rgb(255, 196, 0);
 	opacity: 1;
 }
-.ui-visual-focus{
-	box-shadow: 0 0 3px 1px rgb(255, 214,78);
+
+.ui-state-active, ui-button:active {
+	background-color: rgb(255, 214, 78) !important;
+	border-color: rgb(255, 196, 0) !important;
+	opacity: 1;
+}
+
+.ui-button:active {
+	background-color: rgb(255, 214, 78) !important;
+	border-color: rgb(255, 196, 0) !important;
+}
+
+.ui-state-active.ui-button:active {
+	background-color: rgb(255, 214, 78);
+	border-color: rgb(255, 196, 0);
+	opacity: 1;
+}
+
+.ui-visual-focus {
+	box-shadow: 0 0 3px 1px rgb(255, 214, 78);
 }
 
 label.sold {
@@ -37,6 +40,7 @@ label.sold {
 	border-color: rgb(255, 0, 0);
 	opacity: 1;
 }
+
 .table-seat tr {
 	line-height: 30px;
 }
@@ -76,9 +80,12 @@ form label {
 			</div>
 		</div>
 	</div>
-	<div class="card-body" id="available" style="padding:2% 10%">
+	<div class="card-body" id="available" style="padding: 2% 10%">
+		<div>
+			<h3>${theater}</h3>
+		</div>
 		<form id="modifyForm">
-		<input type="text" name="theaterNo" value="${theaterNo}" hidden>
+			<input type="text" name="theaterNo" value="${theaterNo}" hidden>
 			<div>
 				<jsp:include page="/WEB-INF/views/order/theaterStatus.jsp" />
 			</div>
@@ -97,21 +104,22 @@ form label {
 		$("input[type='checkbox']").checkboxradio({
 			icon : false,
 		});
-		$("input.preserve").filter("[name='seat']").prop("checked", true).change();
+		$("input.preserve").filter("[name='seat']").prop("checked", true)
+				.change();
 		$("input[name='seat-legend']").checkboxradio({
 			icon : false,
 			disabled : true,
 		});
-		$(".back").click(function(){
+		$(".back").click(function() {
 			$.ajax({
 				type : "GET",
 				url : "<c:url value='/admin/theaterManagement'/>",
-				success : function(data){
+				success : function(data) {
 					$("#pageItems").html(data);
 				}
 			});
 		});
-		$("#modifyForm").submit(function(event){
+		$("#modifyForm").submit(function(event) {
 			event.preventDefault();
 			var form = new FormData(this);
 			$.ajax({
