@@ -8,32 +8,25 @@ package data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Arrays;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.web.entity.MovieBean;
-import com.web.entity.TimeTableBean;
 
 import data.util.HibernateUtils;
 import data.util.SystemUtils2018;
 
 public class EDMTableResetHibernate_Movie {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
-
-	public static void main(String args[])
-	{
-
+	public void initData(SessionFactory factory) {
 		String line = "";
-		SessionFactory factory = HibernateUtils.getSessionFactory();
+		//SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		try
@@ -94,6 +87,12 @@ public class EDMTableResetHibernate_Movie {
 		{
 			e.printStackTrace();
 		}
+	}
+	public static void main(String args[])
+	{
+
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		new EDMTableResetHibernate_Movie().initData(factory);
 		factory.close();
 
 	}
