@@ -64,7 +64,7 @@ public class BulletinDaoImpl implements BulletinDao {
 		Session session = factory.getCurrentSession();
 		List<BulletinBean> list = new ArrayList<>();
 		list = session.createQuery(
-				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum ASC")
+				"FROM BulletinBean b WHERE b.bortingId = (select bb.bortingId from BulletinBean bb WHERE bb.no = :no )order by b.countNum DESC")
 				.setParameter("no", no).list();
 //		System.out.println(list);
 		return list;

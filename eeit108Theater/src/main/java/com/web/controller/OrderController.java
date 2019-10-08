@@ -61,7 +61,6 @@ public class OrderController {
 	TimeTableService timeServ;
 
 	final String pac = "order/";
-	final static String OFFICIAL_EMAIL = "eeit108sevenminusone@gmail.com";
 
 	@RequestMapping("/allPro") // test for all products
 	public String showAllProduct(Model model) {

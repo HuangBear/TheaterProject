@@ -96,18 +96,15 @@ public class ArticleDaoImpl implements ArticleDao {
 	    return list;
 	}
 	
-	@SuppressWarnings("unused")
 	@Override
 	public void addGp(LikeOrDislikeBean likeOrDislike) {
 		Session session = factory.getCurrentSession();
 		session.save(likeOrDislike);
 	}
 	
-	@SuppressWarnings("unused")
 	@Override
 	public void updateGp(LikeOrDislikeBean likeOrDislike) {
 		Session session = factory.getCurrentSession();
-		System.out.println("確認2");
 		session.update(likeOrDislike);
 	}
 

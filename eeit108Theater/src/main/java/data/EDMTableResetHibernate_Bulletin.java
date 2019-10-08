@@ -25,11 +25,8 @@ import data.util.SystemUtils2018;
 
 public class EDMTableResetHibernate_Bulletin {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
-
-	public static void main(String args[]) {
-
+	public void initData(SessionFactory factory) {
 		String line = "";
-		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		try {
@@ -88,6 +85,11 @@ public class EDMTableResetHibernate_Bulletin {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public static void main(String args[]) {
+
+		SessionFactory factory = HibernateUtils.getSessionFactory();
+		new EDMTableResetHibernate_Bulletin().initData(factory);
 		factory.close();
 
 	}

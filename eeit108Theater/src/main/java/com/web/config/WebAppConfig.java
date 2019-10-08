@@ -106,7 +106,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 //		iReport.setReportDataKey("jrMainDataSource");
 //		return iReport;
 //	}
-
+//
 //	@Bean
 //	public ViewResolver jasperReportResolver() {
 //		XmlViewResolver view = new XmlViewResolver();

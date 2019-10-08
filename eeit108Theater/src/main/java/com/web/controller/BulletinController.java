@@ -226,7 +226,7 @@ public class BulletinController {
 		String originalFilename = bulletinImage.getOriginalFilename();
 		System.out.println(originalFilename);
 		String url = "/WEB-INF/resources/images/bulletin/defaultBulletin.png";
-		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
+//		String imgFilename = url.substring(url.lastIndexOf("/") + 1);
 		String photoType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 		url = context.getRealPath(url);
 		byte[] b = bulletinImage.getBytes();
@@ -338,7 +338,7 @@ public class BulletinController {
 //		System.out.println(blob.toString());
 		// 得到图片的二进制数据
 		byte[] image = blob.getBytes(1, (int) blob.length());
-		System.out.println("JSON.toJSONString(image)=" + JSON.toJSONString(image));
+//		System.out.println("JSON.toJSONString(image)=" + JSON.toJSONString(image));
 		return JSON.toJSONString(image);
 	}
 
@@ -362,7 +362,7 @@ public class BulletinController {
 		return str;
 	}
 
-	// edit_bulletin_all2bulletin_add
+	// edit_bulletin_all2bulletin_edit
 	@RequestMapping(value = "/admin/bulletin_all/edit", method = RequestMethod.GET)
 	public String edit_bulletin_all2bulletin_add(Model model, HttpServletRequest req) {
 		System.out.println("edit_bulletin_all2bulletin_add");
@@ -490,29 +490,28 @@ public class BulletinController {
 		String discountPriceBuy = "0", discountPriceFree = "0", discountTicketBuy = "0",
 				discountTicketFree = "0";
 		discount = Integer.valueOf(req.getParameter("discount"));
-//		System.out.println("discount=" + req.getParameter("discount"));
-//		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
-//		System.out.println("discountPriceFree" + req.getParameter("discountPriceFree"));
-//		System.out.println("DiscountTicketBuy" + req.getParameter("DiscountTicketBuy"));
-//		System.out.println("DiscountTicketFree" + req.getParameter("DiscountTicketFree"));
+		System.out.println("discount=" + req.getParameter("discount"));
+		System.out.println("discountPriceBuy=" + req.getParameter("discountPriceBuy"));
+		System.out.println("discountPriceFree=" + req.getParameter("discountPriceFree"));
+		System.out.println("discountTicketBuy=" + req.getParameter("discountTicketBuy"));
+		System.out.println("discountTicketFree=" + req.getParameter("discountTicketFree"));
 
 		switch (discount)
 		{
 		case 1:
 			discountPriceBuy = req.getParameter("discountPriceBuy");
 			discountPriceFree = req.getParameter("discountPriceFree");
-
-			if (discountPriceBuy.strip().length() == 0) {
+			if (discountPriceBuy.length() == 0) {
 				discountPriceBuy = "0";
 			}
-			if (discountPriceFree.strip().length() == 0) {
+			if (discountPriceFree.length() == 0) {
 				discountPriceFree = "0";
 			}
 			break;
-		case 2:
 
-			discountTicketBuy = req.getParameter("DiscountTicketBuy");
-			discountTicketFree = req.getParameter("DiscountTicketFree");
+		case 2:
+			discountTicketBuy = req.getParameter("discountTicketBuy");
+			discountTicketFree = req.getParameter("discountTicketFree");
 			if (discountTicketBuy == null) {
 				discountTicketBuy = "0";
 			}
@@ -529,7 +528,6 @@ public class BulletinController {
 		bb.setDiscount(discount);
 		if (discount != null) {
 			System.out.println("discount=" + discount);
-
 			if (discount == 1) {
 				if (pb == 0 || pf == 0) {
 					errorMessage.put("discountP", "請輸入阿拉伯數字");

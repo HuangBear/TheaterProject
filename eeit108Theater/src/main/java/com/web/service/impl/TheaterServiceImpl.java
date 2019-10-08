@@ -24,8 +24,9 @@ public class TheaterServiceImpl implements TheaterService {
 	TheaterDao tdao;
 	@Autowired
 	SeatDao sdao;
-
-	final static String SEAT_TAG_EMPTY = "<td></td>";
+	final static String SPACE_SEAT = "<td></td>";
+	
+	final static String SEAT_TAG_EMPTY = "<td title='#ROWCOL' class='nullSeat'><label for='seat#ROWCOL' class='emptySeat'></label><input class='emptySeat'type='checkbox'name='seat'id='seat#ROWCOL'value='#ROWCOL'></td>";
 	/**
 	 * Replace "<b>#ROWCOL</b>" before use it.
 	 */
@@ -66,6 +67,11 @@ public class TheaterServiceImpl implements TheaterService {
 	public TheaterBean getTheaterByNo(Integer no) {
 		return tdao.getTheaterByNo(no);
 	}
+	
+	@Override
+	public List<TheaterBean> getAllTheaters() {
+		return tdao.getAllTheaters();
+	}
 
 	@Override
 	public List<SeatBean> getSeatsByTimeTable(Integer timeTableNo) {
@@ -76,10 +82,11 @@ public class TheaterServiceImpl implements TheaterService {
 	public String getTheaterStatus(String theater, Integer timeTableId) {
 		TheaterBean tb = tdao.getTheater(theater);
 		Map<String, String> notAvailableSeats = seatListToMap(getSeatsByTimeTable(timeTableId));
-		for (String seat : tb.getOptionSeat()) {
-			String[] seatStatus = seat.split("=");
-			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
-		}
+		notAvailableSeats.putAll(tb.getOptionSeatMap());
+//		for (String seat : tb.getOptionSeat()) {
+//			String[] seatStatus = seat.split("=");
+//			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
+//		}
 
 		return getSeatTable(tb, notAvailableSeats);
 	}
@@ -87,30 +94,36 @@ public class TheaterServiceImpl implements TheaterService {
 	public String getTheaterStatus(TimeTableBean time) {
 		TheaterBean tb = tdao.getTheater(time.getTheater());
 		Map<String, String> notAvailableSeats = seatListToMap(getSeatsByTimeTable(time.getNo()));
-		for (String seat : tb.getOptionSeat()) {
-			String[] seatStatus = seat.split("=");
-			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
-		}
+		notAvailableSeats.putAll(tb.getOptionSeatMap());
+
+//		for (String seat : tb.getOptionSeat()) {
+//			String[] seatStatus = seat.split("=");
+//			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
+//		}
 		
 		return getSeatTable(tb, notAvailableSeats);
 	}
 	@Override
 	public String getTheaterStatus(TheaterBean tb, Integer timeTableId) {
 		Map<String, String> notAvailableSeats = seatListToMap(getSeatsByTimeTable(timeTableId));
-		for (String seat : tb.getOptionSeat()) {
-			String[] seatStatus = seat.split("=");
-			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
-		}
+		notAvailableSeats.putAll(tb.getOptionSeatMap());
+
+//		for (String seat : tb.getOptionSeat()) {
+//			String[] seatStatus = seat.split("=");
+//			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
+//		}
 		
 		return getSeatTable(tb, notAvailableSeats);
 	}
 	@Override
 	public String getTheaterStatus(TheaterBean tb, TimeTableBean time) {
 		Map<String, String> notAvailableSeats = seatListToMap(getSeatsByTimeTable(time.getNo()));
-		for (String seat : tb.getOptionSeat()) {
-			String[] seatStatus = seat.split("=");
-			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
-		}
+		notAvailableSeats.putAll(tb.getOptionSeatMap());
+
+//		for (String seat : tb.getOptionSeat()) {
+//			String[] seatStatus = seat.split("=");
+//			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
+//		}
 		
 		return getSeatTable(tb, notAvailableSeats);
 	}
@@ -119,19 +132,23 @@ public class TheaterServiceImpl implements TheaterService {
 	public String getTheaterStatus(String theater) {
 		TheaterBean tb = tdao.getTheater(theater);
 		Map<String, String> notAvailableSeats = new HashMap<>();
-		for (String seat : tb.getOptionSeat()) {
-			String[] seatStatus = seat.split(",");
-			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
-		}		
+		notAvailableSeats.putAll(tb.getOptionSeatMap());
+
+//		for (String seat : tb.getOptionSeat()) {
+//			String[] seatStatus = seat.split("=");
+//			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
+//		}		
 		return getSeatTable(tb, notAvailableSeats);
 	}
 	@Override
 	public String getTheaterStatus(TheaterBean tb) {
 		Map<String, String> notAvailableSeats = new HashMap<>();
-		for (String seat : tb.getOptionSeat()) {
-			String[] seatStatus = seat.split(",");
-			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
-		}		
+		notAvailableSeats.putAll(tb.getOptionSeatMap());
+
+//		for (String seat : tb.getOptionSeat()) {
+//			String[] seatStatus = seat.split("=");
+//			notAvailableSeats.put(seatStatus[0], seatStatus[1]);
+//		}		
 		return getSeatTable(tb, notAvailableSeats);
 	}
 
@@ -173,7 +190,7 @@ public class TheaterServiceImpl implements TheaterService {
 
 		int col = 1;
 		for (int zoneCnt : pattern) {
-			s.append(SEAT_TAG_EMPTY);
+			s.append(SPACE_SEAT);
 			if (notAvailableSeats == null || notAvailableSeats.isEmpty()) {
 				for (int i = 0; i < zoneCnt; i++, col++) {
 					String rowCol = row + String.valueOf(col);
@@ -195,7 +212,7 @@ public class TheaterServiceImpl implements TheaterService {
 							s.append(SEAT_TAG_OPTION.replace("#ROWCOL", rowCol).replace("#OPTION", OPTION_PRESERVE));
 							break;
 						case TheaterBean.NULL_SEAT:
-							s.append(SEAT_TAG_EMPTY);
+							s.append(SEAT_TAG_EMPTY.replace("#ROWCOL", rowCol));
 							break;
 						default:
 							s.append(SEAT_TAG_AVAILABLE.replace("#ROWCOL", rowCol));
@@ -207,4 +224,6 @@ public class TheaterServiceImpl implements TheaterService {
 		}
 		return;
 	}
+
+	
 }
