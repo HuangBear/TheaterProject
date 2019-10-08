@@ -82,14 +82,7 @@
 								<p class="pclr" id="button2"><a href="#">個人資訊修改</a></p>
 							</div>
 							
-<!-- 							<div class="col-4"> -->
-<!-- 								<a href="#" class="image fit"><img src="images/frontend/order.png" alt="" /></a> -->
-<!-- 							</div>							 -->
-<!-- 							<div class="col-8"> -->
-<!-- 								<p> -->
-<!-- 								<h4>訂單查詢</h4> -->
-<!-- 								<p class="pclr"><a href="#">當前購票資訊</a></p> -->
-<!-- 							</div> -->
+
 							
 							<div class="col-4">
 								<a href="#" class="image fit"><img src="images/frontend/record.png" alt="" /></a>
@@ -97,7 +90,7 @@
 							<div class="col-8">
 								<p>
 								<h4>訂單查詢</h4>
-								<p class="pclr"><a href="#">會員購票資訊</a></p>
+								<p class="pclr"><a href="<c:url value='/visitorticket'/>">會員購票資訊</a></p>
 							</div>
 							
 							<div class="col-4">
@@ -105,8 +98,8 @@
 							</div>
 							<div class="col-8">
 								<p>
-								<h4>申訴進度</h4>
-								<p class="pclr" id=button3><a href="#">即時客服</a></p>
+								<h4>客服中心</h4>
+								<p class="pclr" id=button3><a href="#">聯繫客服</a></p>
 							</div>
 							
 							
@@ -173,6 +166,13 @@
 									value="${LoginOK.no}" />     
 							<dl>
 							<dd>
+								<label for="email" style="text-align:left">電子信箱：</label>
+								<input id="email"  class="text"
+									type="text" value="${LoginOK.email}" tabindex="2" readonly="readonly"
+									autocomplete="off" maxlength="50" />
+							</dl>
+							<dl>
+							<dd>
 								<label for="name" style="text-align:left">*您的姓名：</label>
 								<form:input id="name" path="name" class="text" type="text"
 									value="${LoginOK.name}" tabindex="1" autocomplete="off"
@@ -181,9 +181,9 @@
 							
 							<dl>
 							<dd>
-								<label for="email" style="text-align:left">*電子信箱：</label>
+<!-- 								<label for="email" style="text-align:left">電子信箱：</label> -->
 								<form:input id="email" path="email" class="text"
-									type="text" value="${LoginOK.email}" tabindex="2"
+									type="hidden" value="${LoginOK.email}" tabindex="2" readonly="readonly"
 									autocomplete="off" maxlength="50" />
 							</dl>
 							
@@ -205,9 +205,9 @@
 
 							<dl>
 							<dd>
-								<label for="memberId" style="text-align:left">*身分證字號：</label>
+<!-- 								<label for="memberId" style="text-align:left">*身分證字號：</label> -->
 								<form:input id="memberId" path="memberId" class="text"
-									type="text" value="${LoginOK.memberId}" tabindex="2"
+									type="hidden"  value="${LoginOK.memberId}" tabindex="2"
 									autocomplete="off" maxlength="50" />
 							</dl>
 
@@ -232,7 +232,17 @@
 							<dl>
 							<dd>
 								<label for="uploadImage" style="text-align:left">上傳照片：</label>							
-                            	<img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"   width="250">
+<%--                             	<img src="${pageContext.request.contextPath}/getMemberPicture/${LoginOK.no}"   width="250"> --%>
+                     <c:choose>
+                     	<c:when test="${!empty LoginOK.memberImage}">
+						<img id="prfilePic" src="<c:url value='/getMemberPicture/${LoginOK.no}'/>" width="250">
+						</c:when>
+						<c:when test="${empty LoginOK.googleUrl}">
+						<img  src="<c:url value='/images/frontend/loginicon.png' />" width="250" ></c:when>
+						<c:when test="${!empty LoginOK.googleUrl}">
+						<img id="prfilePic" src="${LoginOK.googleUrl}"  width="400px"></c:when>
+					</c:choose>
+                            	
                             	<br><form:input type="file" id="uploadImage" class="form-control" 
                                 	path="uploadImage"/> 							
 							</dl>									
@@ -261,9 +271,9 @@
 						    <div id="websocketdiv">
 						   
 								<textarea id="area" class="form-control rounded-0" style="font-size: 20px; font-family: '微軟正黑體';
-								 margin-top:10px;" readonly="readonly" rows="10" cols="80"></textarea>
+								 margin-top:10px;" readonly="readonly" rows="10" cols="50"></textarea>
 								<input class="form-control rounded-0" style="font-size: 20px; font-family: '微軟正黑體';
-								 margin:10px;" type="text" id="text" size=70%  />
+								 margin:10px;" type="text" id="text" size=50%  />
 <!-- 								<input id="sendmsg" type="button" value="送出" size=40% /> -->
 								<div class="text-center col-md-12 mt-3 mb-2">			
 								<button type="button" id="sendmsg" class="btn btn-success btn-block btn-rounded z-depth-1">送出</button>

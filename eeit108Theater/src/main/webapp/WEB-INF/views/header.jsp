@@ -54,10 +54,7 @@
 				</c:when>
 				                        
 		</c:choose>  
-		
-	
-		 
-		 
+	 
 		 <c:choose> 
 				<c:when test="${empty LoginOK}">
 				<a href="<c:url value='/memberservice'/>">會員中心</a>
@@ -69,9 +66,9 @@
 				<ul>
 			    
 			    <li><a href="<c:url value='/memberinfo'/>">歡迎您 ${LoginOK.name}</a></li>
-				<li><a href="<c:url value='/memberinfo'/>">會員設定</a></li>
+				<li><a href="<c:url value='/memberinfo'/>">會員中心</a></li>
 				<li><a href="<c:url value='/showticket'/>">訂票記錄</a></li>
-				<li><a href="<c:url value='/qaservice'/>">客服中心</a></li>
+<%-- 				<li><a href="<c:url value='/qaservice'/>">客服中心</a></li> --%>
 				<li><a href="<c:url value='/memberLogout'/>" onclick="googleLogOut()">登出</a></li>
 				
 				</ul>
@@ -79,24 +76,14 @@
 				
 				</c:when>                        
 		</c:choose>  
-		<div class="g-signin2" data-onsuccess="onSignIn" id="myP"  style="visibility:hidden"></div>
-		<script>
+			<div class="g-signin2" data-onsuccess="onSignIn" id="myP"  style="visibility:hidden"></div>
+			<script>
 			function googleLogOut() {
 			
 			gapi.auth2.getAuthInstance().disconnect();
     		location.reload();
 			}
 			</script>
-<!-- 		<a href="memberservice">會員中心</a> -->
-		
-		
-<!-- 			<ul> -->
-<%-- 			    <li><a href="showticket">${memberName}</a></li> --%>
-<!-- 				<li><a href="showticket">訂票記錄</a></li> -->
-<!-- 				<li><a href="memberinfo">會員設定</a></li></ul> -->
-				
-			<!-- 這個不要刪掉，平衡用--></li><!--這個不要刪掉，平衡用 -->
-
-		<!-- 		<li></li> -->
+		</li>
 	</ul>
 </nav>
