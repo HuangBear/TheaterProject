@@ -113,6 +113,7 @@
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">登入</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button id="oneset" type="button" class="btn btn-info">一鍵輸入</button>
 				</div>
 			</div>
 		</div>
@@ -168,6 +169,10 @@
 					console.log(status);
 				}
 			});
+		});
+		$("#oneset").click(function(){
+			$("#account").val("taigeranan@gmail.com");
+			$("#password").val("Do!ng123");
 		});
 	});
 </script>

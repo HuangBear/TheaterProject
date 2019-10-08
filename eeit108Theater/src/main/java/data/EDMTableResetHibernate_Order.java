@@ -67,9 +67,9 @@ public class EDMTableResetHibernate_Order {
 				if(tb.getVersion().equals("2D"))
 					dataNum = random(1,3);
 				else if(tb.getVersion().equals("3D"))
-					dataNum = random(2,5);
+					dataNum = random(3,5);
 				else
-					dataNum = random(5,random(6,10));
+					dataNum = random(1,random(5,8));
 				Map<String, Boolean> seatMap = new HashMap<>();
 				List<SeatBean> tempSeatList = session.createQuery(SEAT_HQL).setParameter("tid", tb.getNo()).list();
 				for (SeatBean sb : tempSeatList) {
