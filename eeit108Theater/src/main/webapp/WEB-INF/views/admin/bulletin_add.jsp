@@ -131,8 +131,12 @@
 		$('#from').val('2019-10-10');
 		$('#to').val('2019-11-11');
 		$('[name=disount]').val('1');
-		$('#discountTicketBuy').val('2000');
-		$('#discountTicketFree').val('200');
+		document.getElementById('discount1').setAttribute("checked", "checked");
+		var targete = $('.discountP');
+		$(".hide").not(targete).hide();
+		$(targete).show();
+		$('#discountPriceBuy').val('2000');
+		$('#discountPriceFree').val('200');
 	});
 
 	$("#bulletinBean").submit(function(event) {

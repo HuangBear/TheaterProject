@@ -530,7 +530,7 @@ public class BulletinController {
 			System.out.println("discount=" + discount);
 			if (discount == 1) {
 				if (pb == 0 || pf == 0) {
-					errorMessage.put("discountP", "請輸入阿拉伯數字");
+					errorMessage.put("discountP", "請輸入數字");
 					pb = pf = null;
 				} else if (pf > pb) {
 					errorMessage.put("discountP", "折扣比消費金額高?你確定?");
