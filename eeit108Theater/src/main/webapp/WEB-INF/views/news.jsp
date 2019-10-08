@@ -98,7 +98,7 @@ span {
 									<p>活動期間&ensp; :&ensp;${sb.startDate }&ensp;到&ensp;${sb.endDate}</p>
 									<p>${sb.context }</p>
 								</header>
-								<img id="showPhoto_${sb.no}" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
+								<img id="showPhoto_${sb.no}"  width="700px" src="<c:url value='/getBulletinPicture/${sb.no}' />" />
 							</article>
 						</div>
 					</c:forEach>
