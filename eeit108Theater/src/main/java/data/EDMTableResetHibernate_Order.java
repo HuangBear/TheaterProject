@@ -59,7 +59,10 @@ public class EDMTableResetHibernate_Order {
 			List<ProductBean> drinkList = session.createQuery(PRODUCT_HQL).setParameter("type", "drink").list();
 			List<ProductBean> foodList = session.createQuery(PRODUCT_HQL).setParameter("type", "food").list();
 			int cnt = 0;
+			int timeTableCnt = 0;
+			int totalTime = timeList.size();
 			for (TimeTableBean tb : timeList) {
+				timeTableCnt++;
 				int dataNum;
 				if(tb.getVersion().equals("2D"))
 					dataNum = random(1,3);
@@ -122,7 +125,7 @@ public class EDMTableResetHibernate_Order {
 					ob.setOrderId(ob.generateOrderId());
 					session.save(ob);
 					
-					System.out.println("新增一筆訂單成功 :" + ++cnt);
+					System.out.println("新增一筆訂單成功 :" + ++cnt + "，時刻表：" + timeTableCnt + " / " + totalTime);
 				}
 			}
 
