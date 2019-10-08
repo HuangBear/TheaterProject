@@ -45,6 +45,8 @@ public class OrderBackStageController {
 			return pac + "findOrder";
 		}
 		OrderBean ob = oServ.getOrderById(orderId);
+		if(!ob.getAvailable())
+			ob = null;
 		if (ob == null) {
 			System.out.println("Order: " + orderId + " not found");
 			errMsg.put("notFound", "該筆訂單不存在");

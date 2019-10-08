@@ -110,7 +110,7 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public List<OrderBean> getGuestOrders(String ownerEmail, String ownerPhone,
 			Boolean checkStatus) {
-		String hql = "FROM OrderBean o WHERE o.ownerEmail = :email AND o.ownerPhone = :phone AND o.checked = :check ORDER BY o.orderTime";
+		String hql = "FROM OrderBean o WHERE o.ownerEmail = :email AND o.ownerPhone = :phone AND o.checked = :check AND o.available = 1 ORDER BY o.orderTime";
 		List<OrderBean> list = factory.getCurrentSession().createQuery(hql)
 				.setParameter("email", ownerEmail).setParameter("phone", ownerPhone)
 				.setParameter("check", checkStatus).list();
@@ -120,7 +120,7 @@ public class OrderDaoImpl implements OrderDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderBean> getMemberOrders(String memberId, Boolean checkStatus) {
-		String hql = "FROM OrderBean o WHERE o.ownerId = :mid AND o.checked = :check ORDER BY o.orderTime";
+		String hql = "FROM OrderBean o WHERE o.ownerId = :mid AND o.checked = :check AND o.available = 1 ORDER BY o.orderTime";
 		List<OrderBean> list = factory.getCurrentSession().createQuery(hql)
 				.setParameter("mid", memberId).setParameter("check", checkStatus).list();
 		return list;

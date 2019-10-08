@@ -104,7 +104,7 @@ public class ProductController {
 		Double price = null;
 		Integer pno = Integer.valueOf(req.getParameter("pno"));
 		Map<String, String> errMsg = new HashMap<>();
-		model.addAttribute("errMsg", errMsg);
+		
 		// check input value
 		ProductBean pbOrig = pServ.getProductByNo(pno);
 		try {
@@ -146,6 +146,7 @@ public class ProductController {
 
 		// if any error, return the edit form with error message
 		if (!errMsg.isEmpty()) {
+			model.addAttribute("errMsg", errMsg);
 			model.addAttribute("product", pbOrig);
 			model.addAttribute("pno", pno);
 			return pac + "edit";
