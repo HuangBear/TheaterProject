@@ -557,11 +557,11 @@ table {
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
-								<th scope="col" width="5%">刪除</th>
+								<th scope="col" width="5%">恢復</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var='sb' items='${statusBulletin[2]}' varStatus="i" end="5">
+							<c:forEach var='sb' items='${statusBulletin[2]}' varStatus="i" end="10">
 								<tr>
 									<td class="hide">${sb.no}</td>
 									<th scope="row">${i.index+1}</th>
@@ -595,7 +595,7 @@ table {
 								<th scope="col" width="15%">優惠方案</th>
 								<th scope="col" width="5%">詳情</th>
 								<th scope="col" width="5%">修改</th>
-								<th scope="col" width="5%">刪除</th>
+								<th scope="col" width="5%">恢復</th>
 							</tr>
 						</tbody>
 					</table>
