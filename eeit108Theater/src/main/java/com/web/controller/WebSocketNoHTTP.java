@@ -95,6 +95,7 @@ public class WebSocketNoHTTP {
 	@OnClose
 	public void handleClose(Session userSession) {
 		System.out.println("WebSocket Close");
+		recordmsg =  new ArrayList<Object>();
 		users.remove(userSession);
 		try {
 			userSession.close();
